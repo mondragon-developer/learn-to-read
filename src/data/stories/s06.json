@@ -1,0 +1,69 @@
+{
+  "id": "s06",
+  "title": "Beth and the Fish",
+  "tier": "decodable",
+  "unit": 8,
+  "skill": "sequence",
+  "reward": "🐟",
+  "sentences": [
+    "Beth has a pet fish.",
+    "The fish is in a big dish.",
+    "First, Beth gets a cup.",
+    "Next, she fills the cup.",
+    "Then, she dumps the cup in the dish.",
+    "Last, she shuts the lid.",
+    "The fish is glad."
+  ],
+  "questions": [
+    {
+      "prompt": "What does Beth do first?",
+      "options": [
+        "She shuts the lid.",
+        "She gets a cup.",
+        "She dumps the cup."
+      ],
+      "answer": 1,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What does Beth do after she fills the cup?",
+      "options": [
+        "She dumps the cup in the dish.",
+        "She gets a cup.",
+        "She gets a pet."
+      ],
+      "answer": 0,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What does Beth do last?",
+      "options": [
+        "She fills the cup.",
+        "She gets a fish.",
+        "She shuts the lid."
+      ],
+      "answer": 2,
+      "skill": "sequence"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "Which word tells when?",
+    "options": [
+      "fish",
+      "next",
+      "cup"
+    ],
+    "answer": 1
+  },
+  "order": [
+    2,
+    4,
+    5
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4",
+    "ELA.1.F.1.3.a"
+  ]
+}

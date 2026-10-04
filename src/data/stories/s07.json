@@ -1,0 +1,68 @@
+{
+  "id": "s07",
+  "title": "The Frog Club",
+  "tier": "decodable",
+  "unit": 11,
+  "skill": "sequence",
+  "reward": "🐸",
+  "sentences": [
+    "Fred and Glen have a frog club.",
+    "First, the frogs swim in the pond.",
+    "Next, they hop on a flat rock.",
+    "Then, they grab a bug to munch.",
+    "Last, the frogs nap in the sun.",
+    "The frog club is the best!"
+  ],
+  "questions": [
+    {
+      "prompt": "What do the frogs do first?",
+      "options": [
+        "They nap in the sun.",
+        "They swim in the pond.",
+        "They grab a bug."
+      ],
+      "answer": 1,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What do the frogs do after they hop on a rock?",
+      "options": [
+        "They grab a bug.",
+        "They swim in the pond.",
+        "They go home."
+      ],
+      "answer": 0,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What do the frogs do last?",
+      "options": [
+        "They hop on a rock.",
+        "They swim in the pond.",
+        "They nap in the sun."
+      ],
+      "answer": 2,
+      "skill": "sequence"
+    }
+  ],
+  "bonus": {
+    "kind": "rhyme",
+    "prompt": "Which word rhymes with frog?",
+    "options": [
+      "log",
+      "flag",
+      "swim"
+    ],
+    "answer": 0
+  },
+  "order": [
+    1,
+    2,
+    4
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4",
+    "ELA.1.F.1.3.a"
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "id": "u03",
+  "order": 3,
+  "title": "Short o",
+  "focus": "The letter o says /o/, like in dog.",
+  "teaches": [
+    "o",
+    "l",
+    "x"
+  ],
+  "words": [
+    {
+      "text": "dog",
+      "graphemes": [
+        "d",
+        "o",
+        "g"
+      ],
+      "es": "perro",
+      "reward": "🐶"
+    },
+    {
+      "text": "hot",
+      "graphemes": [
+        "h",
+        "o",
+        "t"
+      ],
+      "es": "caliente",
+      "reward": "🔥"
+    },
+    {
+      "text": "log",
+      "graphemes": [
+        "l",
+        "o",
+        "g"
+      ],
+      "es": "tronco",
+      "reward": "🪵"
+    },
+    {
+      "text": "top",
+      "graphemes": [
+        "t",
+        "o",
+        "p"
+      ],
+      "es": "arriba / tapa",
+      "reward": "🔝"
+    },
+    {
+      "text": "mop",
+      "graphemes": [
+        "m",
+        "o",
+        "p"
+      ],
+      "es": "trapeador",
+      "reward": "🧹"
+    },
+    {
+      "text": "box",
+      "graphemes": [
+        "b",
+        "o",
+        "x"
+      ],
+      "es": "caja",
+      "reward": "📦"
+    },
+    {
+      "text": "fox",
+      "graphemes": [
+        "f",
+        "o",
+        "x"
+      ],
+      "es": "zorro",
+      "reward": "🦊"
+    },
+    {
+      "text": "hop",
+      "graphemes": [
+        "h",
+        "o",
+        "p"
+      ],
+      "es": "saltar",
+      "reward": "🐸"
+    },
+    {
+      "text": "lot",
+      "graphemes": [
+        "l",
+        "o",
+        "t"
+      ],
+      "es": "mucho"
+    },
+    {
+      "text": "last",
+      "graphemes": [
+        "l",
+        "a",
+        "s",
+        "t"
+      ],
+      "es": "último"
+    }
+  ],
+  "heartWords": [
+    "go",
+    "was",
+    "said"
+  ],
+  "sentences": [
+    "The dog got on the log.",
+    "Mom said, \"Go, go, go!\"",
+    "The fox was in a box.",
+    "Last, Bob hops on the mop."
+  ],
+  "rhymes": [
+    [
+      "dog",
+      "log",
+      "hog",
+      "fog"
+    ],
+    [
+      "hot",
+      "pot",
+      "not",
+      "dot",
+      "lot",
+      "got"
+    ],
+    [
+      "top",
+      "mop",
+      "hop"
+    ]
+  ],
+  "contrasts": [
+    [
+      "hot",
+      "hat"
+    ],
+    [
+      "pot",
+      "pit"
+    ],
+    [
+      "mop",
+      "map"
+    ],
+    [
+      "dog",
+      "dig"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "not",
+      "graphemes": [
+        "n",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "on",
+      "graphemes": [
+        "o",
+        "n"
+      ]
+    },
+    {
+      "text": "got",
+      "graphemes": [
+        "g",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "pot",
+      "graphemes": [
+        "p",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "cot",
+      "graphemes": [
+        "c",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "dot",
+      "graphemes": [
+        "d",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "lid",
+      "graphemes": [
+        "l",
+        "i",
+        "d"
+      ]
+    },
+    {
+      "text": "lip",
+      "graphemes": [
+        "l",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "lap",
+      "graphemes": [
+        "l",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "Bob",
+      "graphemes": [
+        "b",
+        "o",
+        "b"
+      ]
+    },
+    {
+      "text": "ox",
+      "graphemes": [
+        "o",
+        "x"
+      ]
+    },
+    {
+      "text": "lots",
+      "graphemes": [
+        "l",
+        "o",
+        "t",
+        "s"
+      ]
+    },
+    {
+      "text": "Ron",
+      "graphemes": [
+        "r",
+        "o",
+        "n"
+      ]
+    },
+    {
+      "text": "hog",
+      "graphemes": [
+        "h",
+        "o",
+        "g"
+      ]
+    },
+    {
+      "text": "fog",
+      "graphemes": [
+        "f",
+        "o",
+        "g"
+      ]
+    },
+    {
+      "text": "Mom",
+      "graphemes": [
+        "m",
+        "o",
+        "m"
+      ]
+    },
+    {
+      "text": "mom",
+      "graphemes": [
+        "m",
+        "o",
+        "m"
+      ]
+    },
+    {
+      "text": "hops",
+      "graphemes": [
+        "h",
+        "o",
+        "p",
+        "s"
+      ]
+    },
+    {
+      "text": "dogs",
+      "graphemes": [
+        "d",
+        "o",
+        "g",
+        "s"
+      ]
+    },
+    {
+      "text": "fast",
+      "graphemes": [
+        "f",
+        "a",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "text": "lost",
+      "graphemes": [
+        "l",
+        "o",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "text": "sob",
+      "graphemes": [
+        "s",
+        "o",
+        "b"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.c",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

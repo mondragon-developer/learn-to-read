@@ -1,0 +1,320 @@
+{
+  "id": "u14",
+  "order": 14,
+  "title": "Endings: -s, -ed, -ing",
+  "focus": "Endings change a word: jump, jumps, jumped, jumping!",
+  "teaches": [
+    "ed",
+    "ing"
+  ],
+  "words": [
+    {
+      "text": "jumped",
+      "graphemes": [
+        "j",
+        "u",
+        "m",
+        "p",
+        "ed"
+      ],
+      "es": "saltó"
+    },
+    {
+      "text": "kicked",
+      "graphemes": [
+        "k",
+        "i",
+        "ck",
+        "ed"
+      ],
+      "es": "pateó",
+      "reward": "⚽"
+    },
+    {
+      "text": "rested",
+      "graphemes": [
+        "r",
+        "e",
+        "s",
+        "t",
+        "ed"
+      ],
+      "es": "descansó"
+    },
+    {
+      "text": "yelled",
+      "graphemes": [
+        "y",
+        "e",
+        "l",
+        "l",
+        "ed"
+      ],
+      "es": "gritó"
+    },
+    {
+      "text": "jumping",
+      "graphemes": [
+        "j",
+        "u",
+        "m",
+        "p",
+        "ing"
+      ],
+      "es": "saltando"
+    },
+    {
+      "text": "kicking",
+      "graphemes": [
+        "k",
+        "i",
+        "ck",
+        "ing"
+      ],
+      "es": "pateando"
+    },
+    {
+      "text": "singing",
+      "graphemes": [
+        "s",
+        "i",
+        "ng",
+        "ing"
+      ],
+      "es": "cantando",
+      "reward": "🎤"
+    },
+    {
+      "text": "fishing",
+      "graphemes": [
+        "f",
+        "i",
+        "sh",
+        "ing"
+      ],
+      "es": "pescando",
+      "reward": "🎣"
+    },
+    {
+      "text": "helped",
+      "graphemes": [
+        "h",
+        "e",
+        "l",
+        "p",
+        "ed"
+      ],
+      "es": "ayudó"
+    },
+    {
+      "text": "catching",
+      "graphemes": [
+        "c",
+        "a",
+        "tch",
+        "ing"
+      ],
+      "es": "atrapando",
+      "reward": "🧤"
+    }
+  ],
+  "heartWords": [
+    "once",
+    "every",
+    "together",
+    "laugh"
+  ],
+  "sentences": [
+    "Max jumped and kicked the ball.",
+    "We are fishing together.",
+    "Once, Dad helped Max fix his bike.",
+    "Every kid was singing!"
+  ],
+  "rhymes": [
+    [
+      "jumped",
+      "bumped",
+      "dumped"
+    ],
+    [
+      "kicking",
+      "picking",
+      "ticking"
+    ],
+    [
+      "singing",
+      "ringing",
+      "swinging"
+    ]
+  ],
+  "contrasts": [
+    [
+      "kick",
+      "kicked"
+    ],
+    [
+      "jump",
+      "jumping"
+    ],
+    [
+      "help",
+      "helped"
+    ],
+    [
+      "rest",
+      "rested"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "bumped",
+      "graphemes": [
+        "b",
+        "u",
+        "m",
+        "p",
+        "ed"
+      ]
+    },
+    {
+      "text": "dumped",
+      "graphemes": [
+        "d",
+        "u",
+        "m",
+        "p",
+        "ed"
+      ]
+    },
+    {
+      "text": "dumps",
+      "graphemes": [
+        "d",
+        "u",
+        "m",
+        "p",
+        "s"
+      ]
+    },
+    {
+      "text": "fixed",
+      "graphemes": [
+        "f",
+        "i",
+        "x",
+        "ed"
+      ]
+    },
+    {
+      "text": "ended",
+      "graphemes": [
+        "e",
+        "n",
+        "d",
+        "ed"
+      ]
+    },
+    {
+      "text": "picking",
+      "graphemes": [
+        "p",
+        "i",
+        "ck",
+        "ing"
+      ]
+    },
+    {
+      "text": "ticking",
+      "graphemes": [
+        "t",
+        "i",
+        "ck",
+        "ing"
+      ]
+    },
+    {
+      "text": "ringing",
+      "graphemes": [
+        "r",
+        "i",
+        "ng",
+        "ing"
+      ]
+    },
+    {
+      "text": "swinging",
+      "graphemes": [
+        "s",
+        "w",
+        "i",
+        "ng",
+        "ing"
+      ]
+    },
+    {
+      "text": "resting",
+      "graphemes": [
+        "r",
+        "e",
+        "s",
+        "t",
+        "ing"
+      ]
+    },
+    {
+      "text": "kick",
+      "graphemes": [
+        "k",
+        "i",
+        "ck"
+      ]
+    },
+    {
+      "text": "help",
+      "graphemes": [
+        "h",
+        "e",
+        "l",
+        "p"
+      ]
+    },
+    {
+      "text": "rest",
+      "graphemes": [
+        "r",
+        "e",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "text": "fix",
+      "graphemes": [
+        "f",
+        "i",
+        "x"
+      ]
+    },
+    {
+      "text": "Max",
+      "graphemes": [
+        "m",
+        "a",
+        "x"
+      ]
+    },
+    {
+      "text": "mix",
+      "graphemes": [
+        "m",
+        "i",
+        "x"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.d",
+    "ELA.1.V.1.2",
+    "ELA.1.F.1.4.a"
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "id": "u11",
+  "order": 11,
+  "title": "Blends at the end, ng, nk",
+  "focus": "Listen to the end: ju-mp, la-mp. n-g says /ng/ like in king!",
+  "teaches": [
+    "ng",
+    "nk"
+  ],
+  "words": [
+    {
+      "text": "lamp",
+      "graphemes": [
+        "l",
+        "a",
+        "m",
+        "p"
+      ],
+      "es": "lámpara",
+      "reward": "💡"
+    },
+    {
+      "text": "hand",
+      "graphemes": [
+        "h",
+        "a",
+        "n",
+        "d"
+      ],
+      "es": "mano",
+      "reward": "✋"
+    },
+    {
+      "text": "best",
+      "graphemes": [
+        "b",
+        "e",
+        "s",
+        "t"
+      ],
+      "es": "el mejor",
+      "reward": "🥇"
+    },
+    {
+      "text": "fast",
+      "graphemes": [
+        "f",
+        "a",
+        "s",
+        "t"
+      ],
+      "es": "rápido",
+      "reward": "💨"
+    },
+    {
+      "text": "king",
+      "graphemes": [
+        "k",
+        "i",
+        "ng"
+      ],
+      "es": "rey",
+      "reward": "🤴"
+    },
+    {
+      "text": "ring",
+      "graphemes": [
+        "r",
+        "i",
+        "ng"
+      ],
+      "es": "anillo / sonar",
+      "reward": "💍"
+    },
+    {
+      "text": "song",
+      "graphemes": [
+        "s",
+        "o",
+        "ng"
+      ],
+      "es": "canción",
+      "reward": "🎵"
+    },
+    {
+      "text": "long",
+      "graphemes": [
+        "l",
+        "o",
+        "ng"
+      ],
+      "es": "largo"
+    },
+    {
+      "text": "bank",
+      "graphemes": [
+        "b",
+        "a",
+        "nk"
+      ],
+      "es": "banco",
+      "reward": "🏦"
+    },
+    {
+      "text": "pink",
+      "graphemes": [
+        "p",
+        "i",
+        "nk"
+      ],
+      "es": "rosado",
+      "reward": "🩷"
+    },
+    {
+      "text": "think",
+      "graphemes": [
+        "th",
+        "i",
+        "nk"
+      ],
+      "es": "pensar",
+      "reward": "🤔"
+    },
+    {
+      "text": "thank",
+      "graphemes": [
+        "th",
+        "a",
+        "nk"
+      ],
+      "es": "agradecer",
+      "reward": "🙏"
+    }
+  ],
+  "heartWords": [
+    "some",
+    "would",
+    "could",
+    "many"
+  ],
+  "sentences": [
+    "The king sang a long song.",
+    "Thank you, Kim! The pink ring is the best!",
+    "I think the king is fast.",
+    "Many kids sang with the band."
+  ],
+  "rhymes": [
+    [
+      "king",
+      "ring",
+      "sing",
+      "wing"
+    ],
+    [
+      "bank",
+      "sank",
+      "tank",
+      "thank"
+    ],
+    [
+      "pink",
+      "sink",
+      "wink",
+      "think"
+    ]
+  ],
+  "contrasts": [
+    [
+      "king",
+      "kick"
+    ],
+    [
+      "thin",
+      "thing"
+    ],
+    [
+      "ran",
+      "rang"
+    ],
+    [
+      "sink",
+      "sing"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "sing",
+      "graphemes": [
+        "s",
+        "i",
+        "ng"
+      ]
+    },
+    {
+      "text": "sang",
+      "graphemes": [
+        "s",
+        "a",
+        "ng"
+      ]
+    },
+    {
+      "text": "wing",
+      "graphemes": [
+        "w",
+        "i",
+        "ng"
+      ]
+    },
+    {
+      "text": "sank",
+      "graphemes": [
+        "s",
+        "a",
+        "nk"
+      ]
+    },
+    {
+      "text": "tank",
+      "graphemes": [
+        "t",
+        "a",
+        "nk"
+      ]
+    },
+    {
+      "text": "sink",
+      "graphemes": [
+        "s",
+        "i",
+        "nk"
+      ]
+    },
+    {
+      "text": "wink",
+      "graphemes": [
+        "w",
+        "i",
+        "nk"
+      ]
+    },
+    {
+      "text": "thing",
+      "graphemes": [
+        "th",
+        "i",
+        "ng"
+      ]
+    },
+    {
+      "text": "rang",
+      "graphemes": [
+        "r",
+        "a",
+        "ng"
+      ]
+    },
+    {
+      "text": "kid",
+      "graphemes": [
+        "k",
+        "i",
+        "d"
+      ]
+    },
+    {
+      "text": "kids",
+      "graphemes": [
+        "k",
+        "i",
+        "d",
+        "s"
+      ]
+    },
+    {
+      "text": "band",
+      "graphemes": [
+        "b",
+        "a",
+        "n",
+        "d"
+      ]
+    },
+    {
+      "text": "sand",
+      "graphemes": [
+        "s",
+        "a",
+        "n",
+        "d"
+      ]
+    },
+    {
+      "text": "sent",
+      "graphemes": [
+        "s",
+        "e",
+        "n",
+        "t"
+      ]
+    },
+    {
+      "text": "went",
+      "graphemes": [
+        "w",
+        "e",
+        "n",
+        "t"
+      ]
+    },
+    {
+      "text": "nest",
+      "graphemes": [
+        "n",
+        "e",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "text": "tent",
+      "graphemes": [
+        "t",
+        "e",
+        "n",
+        "t"
+      ]
+    },
+    {
+      "text": "milk",
+      "graphemes": [
+        "m",
+        "i",
+        "l",
+        "k"
+      ]
+    },
+    {
+      "text": "gift",
+      "graphemes": [
+        "g",
+        "i",
+        "f",
+        "t"
+      ]
+    },
+    {
+      "text": "pond",
+      "graphemes": [
+        "p",
+        "o",
+        "n",
+        "d"
+      ]
+    },
+    {
+      "text": "mask",
+      "graphemes": [
+        "m",
+        "a",
+        "s",
+        "k"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.a",
+    "ELA.1.F.1.2.c",
+    "ELA.1.F.1.4.a"
+  ]
+}

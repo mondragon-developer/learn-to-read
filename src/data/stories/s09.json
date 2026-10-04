@@ -1,0 +1,69 @@
+{
+  "id": "s09",
+  "title": "The Big Game",
+  "tier": "readalong",
+  "unit": 9,
+  "skill": "time-words",
+  "reward": "🏆",
+  "sentences": [
+    "Today is the big soccer game.",
+    "Before the game, Sam ties his shoes.",
+    "His team runs onto the green grass.",
+    "The game starts with a loud whistle.",
+    "Soon, Sam kicks the ball to his sister.",
+    "She kicks it into the net!",
+    "After the game, the team eats orange slices.",
+    "Sam is tired but happy."
+  ],
+  "questions": [
+    {
+      "prompt": "What does Sam do before the game?",
+      "options": [
+        "He eats orange slices.",
+        "He ties his shoes.",
+        "He kicks the ball."
+      ],
+      "answer": 1,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "Who kicks the ball into the net?",
+      "options": [
+        "his sister",
+        "Sam",
+        "the coach"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What does the team do after the game?",
+      "options": [
+        "They tie their shoes.",
+        "They run onto the grass.",
+        "They eat orange slices."
+      ],
+      "answer": 2,
+      "skill": "sequence"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "Which word tells when?",
+    "options": [
+      "grass",
+      "soon",
+      "ball"
+    ],
+    "answer": 1
+  },
+  "order": [
+    1,
+    4,
+    6
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.V.1.3"
+  ]
+}

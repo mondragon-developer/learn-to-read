@@ -1,0 +1,69 @@
+{
+  "id": "s04",
+  "title": "The Block Tower",
+  "tier": "readalong",
+  "unit": 4,
+  "skill": "time-words",
+  "reward": "🧱",
+  "sentences": [
+    "Nora wants to build a tall tower.",
+    "First, she puts down four big blocks.",
+    "Next, she adds three red blocks on top.",
+    "Then, she adds a small blue block.",
+    "Soon, the tower is as tall as Nora!",
+    "Her cat jumps on the table.",
+    "Oh no! The tower falls down.",
+    "Finally, Nora and her cat build it again."
+  ],
+  "questions": [
+    {
+      "prompt": "What does Nora do first?",
+      "options": [
+        "She adds a blue block.",
+        "She puts down four big blocks.",
+        "She jumps on the table."
+      ],
+      "answer": 1,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What happens after the cat jumps on the table?",
+      "options": [
+        "The tower falls down.",
+        "Nora adds red blocks.",
+        "The tower gets tall."
+      ],
+      "answer": 0,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What do Nora and her cat do last?",
+      "options": [
+        "They eat a snack.",
+        "They go to sleep.",
+        "They build it again."
+      ],
+      "answer": 2,
+      "skill": "sequence"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "Which word means about the same as last?",
+    "options": [
+      "first",
+      "finally",
+      "next"
+    ],
+    "answer": 1
+  },
+  "order": [
+    1,
+    2,
+    7
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.V.1.3"
+  ]
+}

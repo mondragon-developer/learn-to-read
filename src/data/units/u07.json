@@ -1,0 +1,284 @@
+{
+  "id": "u07",
+  "order": 7,
+  "title": "sh",
+  "focus": "s and h together say /sh/, like in ship. Shhh!",
+  "teaches": [
+    "sh"
+  ],
+  "words": [
+    {
+      "text": "ship",
+      "graphemes": [
+        "sh",
+        "i",
+        "p"
+      ],
+      "es": "barco",
+      "reward": "🚢"
+    },
+    {
+      "text": "shop",
+      "graphemes": [
+        "sh",
+        "o",
+        "p"
+      ],
+      "es": "tienda",
+      "reward": "🏪"
+    },
+    {
+      "text": "fish",
+      "graphemes": [
+        "f",
+        "i",
+        "sh"
+      ],
+      "es": "pez",
+      "reward": "🐟"
+    },
+    {
+      "text": "dish",
+      "graphemes": [
+        "d",
+        "i",
+        "sh"
+      ],
+      "es": "plato",
+      "reward": "🍽️"
+    },
+    {
+      "text": "wish",
+      "graphemes": [
+        "w",
+        "i",
+        "sh"
+      ],
+      "es": "deseo",
+      "reward": "🌠"
+    },
+    {
+      "text": "shed",
+      "graphemes": [
+        "sh",
+        "e",
+        "d"
+      ],
+      "es": "cobertizo",
+      "reward": "🛖"
+    },
+    {
+      "text": "shut",
+      "graphemes": [
+        "sh",
+        "u",
+        "t"
+      ],
+      "es": "cerrar",
+      "reward": "🚪"
+    },
+    {
+      "text": "cash",
+      "graphemes": [
+        "c",
+        "a",
+        "sh"
+      ],
+      "es": "dinero",
+      "reward": "💵"
+    },
+    {
+      "text": "rush",
+      "graphemes": [
+        "r",
+        "u",
+        "sh"
+      ],
+      "es": "prisa"
+    },
+    {
+      "text": "shell",
+      "graphemes": [
+        "sh",
+        "e",
+        "l",
+        "l"
+      ],
+      "es": "concha",
+      "reward": "🐚"
+    }
+  ],
+  "heartWords": [
+    "what",
+    "they",
+    "before",
+    "look"
+  ],
+  "sentences": [
+    "Josh has a fish in a dish.",
+    "They shut the shed.",
+    "What is in the shop?",
+    "Look at the big ship!"
+  ],
+  "rhymes": [
+    [
+      "fish",
+      "dish",
+      "wish"
+    ],
+    [
+      "shut",
+      "hut",
+      "but",
+      "cut"
+    ],
+    [
+      "cash",
+      "mash",
+      "dash"
+    ]
+  ],
+  "contrasts": [
+    [
+      "ship",
+      "sip"
+    ],
+    [
+      "shell",
+      "sell"
+    ],
+    [
+      "shin",
+      "sin"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "mash",
+      "graphemes": [
+        "m",
+        "a",
+        "sh"
+      ]
+    },
+    {
+      "text": "dash",
+      "graphemes": [
+        "d",
+        "a",
+        "sh"
+      ]
+    },
+    {
+      "text": "hush",
+      "graphemes": [
+        "h",
+        "u",
+        "sh"
+      ]
+    },
+    {
+      "text": "mush",
+      "graphemes": [
+        "m",
+        "u",
+        "sh"
+      ]
+    },
+    {
+      "text": "shin",
+      "graphemes": [
+        "sh",
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "shot",
+      "graphemes": [
+        "sh",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "shells",
+      "graphemes": [
+        "sh",
+        "e",
+        "l",
+        "l",
+        "s"
+      ]
+    },
+    {
+      "text": "Josh",
+      "graphemes": [
+        "j",
+        "o",
+        "sh"
+      ]
+    },
+    {
+      "text": "sell",
+      "graphemes": [
+        "s",
+        "e",
+        "l",
+        "l"
+      ]
+    },
+    {
+      "text": "shuts",
+      "graphemes": [
+        "sh",
+        "u",
+        "t",
+        "s"
+      ]
+    },
+    {
+      "text": "fills",
+      "graphemes": [
+        "f",
+        "i",
+        "l",
+        "l",
+        "s"
+      ]
+    },
+    {
+      "text": "adds",
+      "graphemes": [
+        "a",
+        "d",
+        "d",
+        "s"
+      ]
+    },
+    {
+      "text": "glad",
+      "graphemes": [
+        "g",
+        "l",
+        "a",
+        "d"
+      ]
+    },
+    {
+      "text": "fishes",
+      "graphemes": [
+        "f",
+        "i",
+        "sh",
+        "e",
+        "s"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.a",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

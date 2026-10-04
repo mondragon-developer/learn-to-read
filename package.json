@@ -1,0 +1,33 @@
+{
+  "name": "goal-reader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Daily 5-15 minute reading practice for first graders - phonics, heart words, stories, pronunciation check.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "validate": "vite-node scripts/validate-content.ts",
+    "audio": "vite-node scripts/generate-audio.ts --",
+    "check": "npm test && npm run typecheck && npm run validate",
+    "e2e": "playwright test",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "fake-indexeddb": "^6.2.5",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.3",
+    "vite-plugin-pwa": "^0.21.2",
+    "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "@fontsource/andika": "^5.3.0",
+    "@supabase/supabase-js": "^2.117.2"
+  }
+}

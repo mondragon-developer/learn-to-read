@@ -1,0 +1,393 @@
+{
+  "id": "u02",
+  "order": 2,
+  "title": "Short i",
+  "focus": "The letter i says /i/, like in pig.",
+  "teaches": [
+    "i",
+    "g",
+    "b",
+    "h",
+    "r"
+  ],
+  "words": [
+    {
+      "text": "sit",
+      "graphemes": [
+        "s",
+        "i",
+        "t"
+      ],
+      "es": "sentarse",
+      "reward": "🪑"
+    },
+    {
+      "text": "pig",
+      "graphemes": [
+        "p",
+        "i",
+        "g"
+      ],
+      "es": "cerdo",
+      "reward": "🐷"
+    },
+    {
+      "text": "dig",
+      "graphemes": [
+        "d",
+        "i",
+        "g"
+      ],
+      "es": "cavar",
+      "reward": "⛏️"
+    },
+    {
+      "text": "big",
+      "graphemes": [
+        "b",
+        "i",
+        "g"
+      ],
+      "es": "grande",
+      "reward": "🐘"
+    },
+    {
+      "text": "him",
+      "graphemes": [
+        "h",
+        "i",
+        "m"
+      ],
+      "es": "él / a él"
+    },
+    {
+      "text": "hit",
+      "graphemes": [
+        "h",
+        "i",
+        "t"
+      ],
+      "es": "golpear",
+      "reward": "⚾"
+    },
+    {
+      "text": "rib",
+      "graphemes": [
+        "r",
+        "i",
+        "b"
+      ],
+      "es": "costilla",
+      "reward": "🍖"
+    },
+    {
+      "text": "tip",
+      "graphemes": [
+        "t",
+        "i",
+        "p"
+      ],
+      "es": "punta",
+      "reward": "✏️"
+    },
+    {
+      "text": "fin",
+      "graphemes": [
+        "f",
+        "i",
+        "n"
+      ],
+      "es": "aleta",
+      "reward": "🦈"
+    },
+    {
+      "text": "bib",
+      "graphemes": [
+        "b",
+        "i",
+        "b"
+      ],
+      "es": "babero",
+      "reward": "👶"
+    }
+  ],
+  "heartWords": [
+    "is",
+    "to",
+    "you",
+    "first"
+  ],
+  "sentences": [
+    "The pig is big.",
+    "Tim hid the hat in a bag.",
+    "Can you dig?",
+    "First, the pig ran to Tim."
+  ],
+  "rhymes": [
+    [
+      "pig",
+      "dig",
+      "big",
+      "fig"
+    ],
+    [
+      "sit",
+      "hit",
+      "pit",
+      "fit"
+    ],
+    [
+      "tip",
+      "dip",
+      "rip",
+      "hip"
+    ]
+  ],
+  "contrasts": [
+    [
+      "sit",
+      "sat"
+    ],
+    [
+      "big",
+      "bag"
+    ],
+    [
+      "hit",
+      "hat"
+    ],
+    [
+      "pin",
+      "pan"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "it",
+      "graphemes": [
+        "i",
+        "t"
+      ]
+    },
+    {
+      "text": "in",
+      "graphemes": [
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "if",
+      "graphemes": [
+        "i",
+        "f"
+      ]
+    },
+    {
+      "text": "did",
+      "graphemes": [
+        "d",
+        "i",
+        "d"
+      ]
+    },
+    {
+      "text": "his",
+      "graphemes": [
+        "h",
+        "i",
+        "s"
+      ]
+    },
+    {
+      "text": "hid",
+      "graphemes": [
+        "h",
+        "i",
+        "d"
+      ]
+    },
+    {
+      "text": "fig",
+      "graphemes": [
+        "f",
+        "i",
+        "g"
+      ]
+    },
+    {
+      "text": "pit",
+      "graphemes": [
+        "p",
+        "i",
+        "t"
+      ]
+    },
+    {
+      "text": "bag",
+      "graphemes": [
+        "b",
+        "a",
+        "g"
+      ]
+    },
+    {
+      "text": "rag",
+      "graphemes": [
+        "r",
+        "a",
+        "g"
+      ]
+    },
+    {
+      "text": "hat",
+      "graphemes": [
+        "h",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "ham",
+      "graphemes": [
+        "h",
+        "a",
+        "m"
+      ]
+    },
+    {
+      "text": "ran",
+      "graphemes": [
+        "r",
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "rat",
+      "graphemes": [
+        "r",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "bat",
+      "graphemes": [
+        "b",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "has",
+      "graphemes": [
+        "h",
+        "a",
+        "s"
+      ]
+    },
+    {
+      "text": "digs",
+      "graphemes": [
+        "d",
+        "i",
+        "g",
+        "s"
+      ]
+    },
+    {
+      "text": "Tim",
+      "graphemes": [
+        "t",
+        "i",
+        "m"
+      ]
+    },
+    {
+      "text": "fit",
+      "graphemes": [
+        "f",
+        "i",
+        "t"
+      ]
+    },
+    {
+      "text": "dip",
+      "graphemes": [
+        "d",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "rip",
+      "graphemes": [
+        "r",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "hip",
+      "graphemes": [
+        "h",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "pin",
+      "graphemes": [
+        "p",
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "tin",
+      "graphemes": [
+        "t",
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "bad",
+      "graphemes": [
+        "b",
+        "a",
+        "d"
+      ]
+    },
+    {
+      "text": "sip",
+      "graphemes": [
+        "s",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "sin",
+      "graphemes": [
+        "s",
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "had",
+      "graphemes": [
+        "h",
+        "a",
+        "d"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.c",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

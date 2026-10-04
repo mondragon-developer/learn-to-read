@@ -1,0 +1,412 @@
+{
+  "id": "u10",
+  "order": 10,
+  "title": "Blends at the start",
+  "focus": "Two consonants side by side: say both sounds. s-t: stop! f-l: flag!",
+  "teaches": [],
+  "words": [
+    {
+      "text": "stop",
+      "graphemes": [
+        "s",
+        "t",
+        "o",
+        "p"
+      ],
+      "es": "parar",
+      "reward": "🛑"
+    },
+    {
+      "text": "flag",
+      "graphemes": [
+        "f",
+        "l",
+        "a",
+        "g"
+      ],
+      "es": "bandera",
+      "reward": "🚩"
+    },
+    {
+      "text": "frog",
+      "graphemes": [
+        "f",
+        "r",
+        "o",
+        "g"
+      ],
+      "es": "rana",
+      "reward": "🐸"
+    },
+    {
+      "text": "trip",
+      "graphemes": [
+        "t",
+        "r",
+        "i",
+        "p"
+      ],
+      "es": "viaje"
+    },
+    {
+      "text": "drum",
+      "graphemes": [
+        "d",
+        "r",
+        "u",
+        "m"
+      ],
+      "es": "tambor",
+      "reward": "🥁"
+    },
+    {
+      "text": "club",
+      "graphemes": [
+        "c",
+        "l",
+        "u",
+        "b"
+      ],
+      "es": "club"
+    },
+    {
+      "text": "sled",
+      "graphemes": [
+        "s",
+        "l",
+        "e",
+        "d"
+      ],
+      "es": "trineo",
+      "reward": "🛷"
+    },
+    {
+      "text": "swim",
+      "graphemes": [
+        "s",
+        "w",
+        "i",
+        "m"
+      ],
+      "es": "nadar",
+      "reward": "🏊"
+    },
+    {
+      "text": "grab",
+      "graphemes": [
+        "g",
+        "r",
+        "a",
+        "b"
+      ],
+      "es": "agarrar"
+    },
+    {
+      "text": "plan",
+      "graphemes": [
+        "p",
+        "l",
+        "a",
+        "n"
+      ],
+      "es": "plan"
+    },
+    {
+      "text": "crab",
+      "graphemes": [
+        "c",
+        "r",
+        "a",
+        "b"
+      ],
+      "es": "cangrejo",
+      "reward": "🦀"
+    },
+    {
+      "text": "spin",
+      "graphemes": [
+        "s",
+        "p",
+        "i",
+        "n"
+      ],
+      "es": "girar",
+      "reward": "🌀"
+    }
+  ],
+  "heartWords": [
+    "do",
+    "does",
+    "your",
+    "again"
+  ],
+  "sentences": [
+    "The frog can swim and spin.",
+    "Stop at the red flag!",
+    "Grab your drum and hit it again.",
+    "Does the crab have a plan?"
+  ],
+  "rhymes": [
+    [
+      "stop",
+      "hop",
+      "top",
+      "mop"
+    ],
+    [
+      "flag",
+      "bag",
+      "tag",
+      "rag"
+    ],
+    [
+      "crab",
+      "grab",
+      "cab"
+    ]
+  ],
+  "contrasts": [
+    [
+      "stop",
+      "top"
+    ],
+    [
+      "flag",
+      "lag"
+    ],
+    [
+      "trip",
+      "tip"
+    ],
+    [
+      "sled",
+      "led"
+    ],
+    [
+      "spin",
+      "pin"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "tag",
+      "graphemes": [
+        "t",
+        "a",
+        "g"
+      ]
+    },
+    {
+      "text": "cab",
+      "graphemes": [
+        "c",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "lag",
+      "graphemes": [
+        "l",
+        "a",
+        "g"
+      ]
+    },
+    {
+      "text": "step",
+      "graphemes": [
+        "s",
+        "t",
+        "e",
+        "p"
+      ]
+    },
+    {
+      "text": "spot",
+      "graphemes": [
+        "s",
+        "p",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "slip",
+      "graphemes": [
+        "s",
+        "l",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "flat",
+      "graphemes": [
+        "f",
+        "l",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "trap",
+      "graphemes": [
+        "t",
+        "r",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "drip",
+      "graphemes": [
+        "d",
+        "r",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "glad",
+      "graphemes": [
+        "g",
+        "l",
+        "a",
+        "d"
+      ]
+    },
+    {
+      "text": "snap",
+      "graphemes": [
+        "s",
+        "n",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "clap",
+      "graphemes": [
+        "c",
+        "l",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "plum",
+      "graphemes": [
+        "p",
+        "l",
+        "u",
+        "m"
+      ]
+    },
+    {
+      "text": "grin",
+      "graphemes": [
+        "g",
+        "r",
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "brag",
+      "graphemes": [
+        "b",
+        "r",
+        "a",
+        "g"
+      ]
+    },
+    {
+      "text": "spit",
+      "graphemes": [
+        "s",
+        "p",
+        "i",
+        "t"
+      ]
+    },
+    {
+      "text": "skip",
+      "graphemes": [
+        "s",
+        "k",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "swam",
+      "graphemes": [
+        "s",
+        "w",
+        "a",
+        "m"
+      ]
+    },
+    {
+      "text": "frogs",
+      "graphemes": [
+        "f",
+        "r",
+        "o",
+        "g",
+        "s"
+      ]
+    },
+    {
+      "text": "flags",
+      "graphemes": [
+        "f",
+        "l",
+        "a",
+        "g",
+        "s"
+      ]
+    },
+    {
+      "text": "flip",
+      "graphemes": [
+        "f",
+        "l",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "Fred",
+      "graphemes": [
+        "f",
+        "r",
+        "e",
+        "d"
+      ]
+    },
+    {
+      "text": "Glen",
+      "graphemes": [
+        "g",
+        "l",
+        "e",
+        "n"
+      ]
+    },
+    {
+      "text": "munch",
+      "graphemes": [
+        "m",
+        "u",
+        "n",
+        "ch"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.a",
+    "ELA.1.F.1.2.c",
+    "ELA.1.F.1.4.a"
+  ]
+}

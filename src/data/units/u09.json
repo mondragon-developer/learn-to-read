@@ -1,0 +1,351 @@
+{
+  "id": "u09",
+  "order": 9,
+  "title": "ch, tch, wh, ck",
+  "focus": "c and h say /ch/, like in chip. c and k together say /k/, like in duck.",
+  "teaches": [
+    "ch",
+    "tch",
+    "wh",
+    "ck"
+  ],
+  "words": [
+    {
+      "text": "chip",
+      "graphemes": [
+        "ch",
+        "i",
+        "p"
+      ],
+      "es": "papita",
+      "reward": "🥔"
+    },
+    {
+      "text": "chin",
+      "graphemes": [
+        "ch",
+        "i",
+        "n"
+      ],
+      "es": "barbilla"
+    },
+    {
+      "text": "much",
+      "graphemes": [
+        "m",
+        "u",
+        "ch"
+      ],
+      "es": "mucho"
+    },
+    {
+      "text": "lunch",
+      "graphemes": [
+        "l",
+        "u",
+        "n",
+        "ch"
+      ],
+      "es": "almuerzo",
+      "reward": "🥪"
+    },
+    {
+      "text": "catch",
+      "graphemes": [
+        "c",
+        "a",
+        "tch"
+      ],
+      "es": "atrapar",
+      "reward": "🧤"
+    },
+    {
+      "text": "match",
+      "graphemes": [
+        "m",
+        "a",
+        "tch"
+      ],
+      "es": "partido / fósforo",
+      "reward": "⚽"
+    },
+    {
+      "text": "when",
+      "graphemes": [
+        "wh",
+        "e",
+        "n"
+      ],
+      "es": "cuándo"
+    },
+    {
+      "text": "which",
+      "graphemes": [
+        "wh",
+        "i",
+        "ch"
+      ],
+      "es": "cuál"
+    },
+    {
+      "text": "duck",
+      "graphemes": [
+        "d",
+        "u",
+        "ck"
+      ],
+      "es": "pato",
+      "reward": "🦆"
+    },
+    {
+      "text": "kick",
+      "graphemes": [
+        "k",
+        "i",
+        "ck"
+      ],
+      "es": "patear",
+      "reward": "🦵"
+    },
+    {
+      "text": "back",
+      "graphemes": [
+        "b",
+        "a",
+        "ck"
+      ],
+      "es": "espalda / atrás"
+    },
+    {
+      "text": "sock",
+      "graphemes": [
+        "s",
+        "o",
+        "ck"
+      ],
+      "es": "calcetín",
+      "reward": "🧦"
+    }
+  ],
+  "heartWords": [
+    "one",
+    "two",
+    "who",
+    "where",
+    "ball"
+  ],
+  "sentences": [
+    "The duck can kick the ball.",
+    "When is the match?",
+    "We had chips with lunch.",
+    "Catch it, Chad!"
+  ],
+  "rhymes": [
+    [
+      "chip",
+      "ship",
+      "dip",
+      "hip"
+    ],
+    [
+      "duck",
+      "luck",
+      "tuck",
+      "stuck"
+    ],
+    [
+      "catch",
+      "match",
+      "patch"
+    ]
+  ],
+  "contrasts": [
+    [
+      "chip",
+      "ship"
+    ],
+    [
+      "chin",
+      "shin"
+    ],
+    [
+      "much",
+      "mush"
+    ],
+    [
+      "catch",
+      "cash"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "Chad",
+      "graphemes": [
+        "ch",
+        "a",
+        "d"
+      ]
+    },
+    {
+      "text": "chop",
+      "graphemes": [
+        "ch",
+        "o",
+        "p"
+      ]
+    },
+    {
+      "text": "chat",
+      "graphemes": [
+        "ch",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "chips",
+      "graphemes": [
+        "ch",
+        "i",
+        "p",
+        "s"
+      ]
+    },
+    {
+      "text": "luck",
+      "graphemes": [
+        "l",
+        "u",
+        "ck"
+      ]
+    },
+    {
+      "text": "tuck",
+      "graphemes": [
+        "t",
+        "u",
+        "ck"
+      ]
+    },
+    {
+      "text": "stuck",
+      "graphemes": [
+        "s",
+        "t",
+        "u",
+        "ck"
+      ]
+    },
+    {
+      "text": "patch",
+      "graphemes": [
+        "p",
+        "a",
+        "tch"
+      ]
+    },
+    {
+      "text": "pick",
+      "graphemes": [
+        "p",
+        "i",
+        "ck"
+      ]
+    },
+    {
+      "text": "rock",
+      "graphemes": [
+        "r",
+        "o",
+        "ck"
+      ]
+    },
+    {
+      "text": "neck",
+      "graphemes": [
+        "n",
+        "e",
+        "ck"
+      ]
+    },
+    {
+      "text": "back",
+      "graphemes": [
+        "b",
+        "a",
+        "ck"
+      ]
+    },
+    {
+      "text": "check",
+      "graphemes": [
+        "ch",
+        "e",
+        "ck"
+      ]
+    },
+    {
+      "text": "rich",
+      "graphemes": [
+        "r",
+        "i",
+        "ch"
+      ]
+    },
+    {
+      "text": "such",
+      "graphemes": [
+        "s",
+        "u",
+        "ch"
+      ]
+    },
+    {
+      "text": "whip",
+      "graphemes": [
+        "wh",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "whiz",
+      "graphemes": [
+        "wh",
+        "i",
+        "z"
+      ]
+    },
+    {
+      "text": "fetch",
+      "graphemes": [
+        "f",
+        "e",
+        "tch"
+      ]
+    },
+    {
+      "text": "kicks",
+      "graphemes": [
+        "k",
+        "i",
+        "ck",
+        "s"
+      ]
+    },
+    {
+      "text": "ducks",
+      "graphemes": [
+        "d",
+        "u",
+        "ck",
+        "s"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.a",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

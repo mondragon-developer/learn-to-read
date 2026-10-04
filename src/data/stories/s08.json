@@ -1,0 +1,69 @@
+{
+  "id": "s08",
+  "title": "Kite Day",
+  "tier": "decodable",
+  "unit": 13,
+  "skill": "compare",
+  "reward": "🪁",
+  "sentences": [
+    "Jake and Rose both like kites.",
+    "Jake has a red kite.",
+    "Rose has a pink kite.",
+    "The kites are not the same.",
+    "But both kites can ride the wind.",
+    "Jake and Rose smile.",
+    "Kites are such fun!"
+  ],
+  "questions": [
+    {
+      "prompt": "How are Jake and Rose alike?",
+      "options": [
+        "They both like kites.",
+        "They both have red kites.",
+        "They both have a bike."
+      ],
+      "answer": 0,
+      "skill": "compare"
+    },
+    {
+      "prompt": "How are the kites different?",
+      "options": [
+        "One kite is big and one is little.",
+        "One kite is red and one is pink.",
+        "One kite can fly and one can not."
+      ],
+      "answer": 1,
+      "skill": "compare"
+    },
+    {
+      "prompt": "What can both kites do?",
+      "options": [
+        "sit on a bed",
+        "swim in a lake",
+        "ride the wind"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "rhyme",
+    "prompt": "Which word rhymes with kite?",
+    "options": [
+      "bite",
+      "rope",
+      "cake"
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    4,
+    5
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.3.3",
+    "ELA.1.F.1.3.f"
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "note": "Grade-level \"challenge\" words chosen from the topics of his school homework (single words, original selection). Taught whole, split into syllables (ELA.1.F.1.3.e). Pictures are rewards after reading.",
+  "words": [
+    {
+      "text": "soccer",
+      "syllables": [
+        "soc",
+        "cer"
+      ],
+      "es": "fútbol",
+      "reward": "⚽",
+      "topic": "me"
+    },
+    {
+      "text": "friend",
+      "syllables": [
+        "friend"
+      ],
+      "es": "amigo",
+      "reward": "🤝",
+      "topic": "me"
+    },
+    {
+      "text": "sister",
+      "syllables": [
+        "sis",
+        "ter"
+      ],
+      "es": "hermana",
+      "reward": "👧",
+      "topic": "me"
+    },
+    {
+      "text": "twins",
+      "syllables": [
+        "twins"
+      ],
+      "es": "gemelos",
+      "reward": "👯",
+      "topic": "me"
+    },
+    {
+      "text": "shoes",
+      "syllables": [
+        "shoes"
+      ],
+      "es": "zapatos",
+      "reward": "👟",
+      "topic": "me"
+    },
+    {
+      "text": "birthday",
+      "syllables": [
+        "birth",
+        "day"
+      ],
+      "es": "cumpleaños",
+      "reward": "🎂",
+      "topic": "me"
+    },
+    {
+      "text": "present",
+      "syllables": [
+        "pres",
+        "ent"
+      ],
+      "es": "regalo",
+      "reward": "🎁",
+      "topic": "me"
+    },
+    {
+      "text": "party",
+      "syllables": [
+        "par",
+        "ty"
+      ],
+      "es": "fiesta",
+      "reward": "🎉",
+      "topic": "me"
+    },
+    {
+      "text": "paper",
+      "syllables": [
+        "pa",
+        "per"
+      ],
+      "es": "papel",
+      "reward": "📄",
+      "topic": "things"
+    },
+    {
+      "text": "table",
+      "syllables": [
+        "ta",
+        "ble"
+      ],
+      "es": "mesa",
+      "reward": "🪑",
+      "topic": "things"
+    },
+    {
+      "text": "picture",
+      "syllables": [
+        "pic",
+        "ture"
+      ],
+      "es": "dibujo / foto",
+      "reward": "🖼️",
+      "topic": "things"
+    },
+    {
+      "text": "gold",
+      "syllables": [
+        "gold"
+      ],
+      "es": "oro",
+      "reward": "🪙",
+      "topic": "things"
+    },
+    {
+      "text": "robin",
+      "syllables": [
+        "rob",
+        "in"
+      ],
+      "es": "petirrojo",
+      "reward": "🐦",
+      "topic": "nature"
+    },
+    {
+      "text": "flower",
+      "syllables": [
+        "flow",
+        "er"
+      ],
+      "es": "flor",
+      "reward": "🌸",
+      "topic": "nature"
+    },
+    {
+      "text": "water",
+      "syllables": [
+        "wa",
+        "ter"
+      ],
+      "es": "agua",
+      "reward": "💧",
+      "topic": "nature"
+    },
+    {
+      "text": "grass",
+      "syllables": [
+        "grass"
+      ],
+      "es": "pasto",
+      "reward": "🌱",
+      "topic": "nature"
+    },
+    {
+      "text": "plant",
+      "syllables": [
+        "plant"
+      ],
+      "es": "planta",
+      "reward": "🪴",
+      "topic": "nature"
+    },
+    {
+      "text": "circle",
+      "syllables": [
+        "cir",
+        "cle"
+      ],
+      "es": "círculo",
+      "reward": "⭕",
+      "topic": "nature"
+    },
+    {
+      "text": "strong",
+      "syllables": [
+        "strong"
+      ],
+      "es": "fuerte",
+      "reward": "💪",
+      "topic": "describe"
+    },
+    {
+      "text": "soft",
+      "syllables": [
+        "soft"
+      ],
+      "es": "suave",
+      "reward": "🧸",
+      "topic": "describe"
+    },
+    {
+      "text": "brown",
+      "syllables": [
+        "brown"
+      ],
+      "es": "café / marrón",
+      "reward": "🟫",
+      "topic": "describe"
+    },
+    {
+      "text": "inside",
+      "syllables": [
+        "in",
+        "side"
+      ],
+      "es": "adentro",
+      "reward": "📦",
+      "topic": "where"
+    },
+    {
+      "text": "under",
+      "syllables": [
+        "un",
+        "der"
+      ],
+      "es": "debajo",
+      "reward": "⬇️",
+      "topic": "where"
+    },
+    {
+      "text": "across",
+      "syllables": [
+        "a",
+        "cross"
+      ],
+      "es": "a través / al otro lado",
+      "reward": "↔️",
+      "topic": "where"
+    },
+    {
+      "text": "happen",
+      "syllables": [
+        "hap",
+        "pen"
+      ],
+      "es": "pasar / suceder",
+      "topic": "story"
+    }
+  ]
+}

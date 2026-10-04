@@ -1,0 +1,68 @@
+{
+  "id": "s01",
+  "title": "Pam and the Pig",
+  "tier": "decodable",
+  "unit": 2,
+  "skill": "detail",
+  "reward": "🐷",
+  "sentences": [
+    "Pam has a pig.",
+    "The pig is big.",
+    "The pig can dig.",
+    "It digs in a pit.",
+    "Pam hid a fig.",
+    "The pig ran to the fig.",
+    "The pig had the fig!"
+  ],
+  "questions": [
+    {
+      "prompt": "Who has a pig?",
+      "options": [
+        "Dad",
+        "Pam",
+        "Tim"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can the pig do?",
+      "options": [
+        "dig",
+        "hop",
+        "nap"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What did Pam hide?",
+      "options": [
+        "a hat",
+        "a cap",
+        "a fig"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "rhyme",
+    "prompt": "Which word rhymes with pig?",
+    "options": [
+      "pat",
+      "dig",
+      "fan"
+    ],
+    "answer": 1
+  },
+  "order": [
+    0,
+    2,
+    6
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ]
+}

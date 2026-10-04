@@ -1,0 +1,70 @@
+{
+  "id": "s10",
+  "title": "Two Kinds of Birds",
+  "tier": "readalong",
+  "unit": 12,
+  "skill": "compare",
+  "reward": "🐦",
+  "sentences": [
+    "Ducks and robins are both birds.",
+    "They both have feathers and wings.",
+    "They both lay eggs in a nest.",
+    "But they live in different places.",
+    "A duck lives near a pond.",
+    "It can swim and float on the water.",
+    "A robin lives in a tree.",
+    "It hops on the grass to find worms."
+  ],
+  "questions": [
+    {
+      "prompt": "How are ducks and robins alike?",
+      "options": [
+        "They both swim.",
+        "They both have wings.",
+        "They both live in a tree."
+      ],
+      "answer": 1,
+      "skill": "compare"
+    },
+    {
+      "prompt": "How are ducks and robins different?",
+      "options": [
+        "A duck lives near a pond, but a robin lives in a tree.",
+        "A duck has wings, but a robin does not.",
+        "A duck lays eggs, but a robin does not."
+      ],
+      "answer": 0,
+      "skill": "compare"
+    },
+    {
+      "prompt": "What does a robin eat?",
+      "options": [
+        "fish",
+        "seeds",
+        "worms"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "Which word means not the same?",
+    "options": [
+      "different",
+      "both",
+      "alike"
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    4,
+    6
+  ],
+  "benchmarks": [
+    "ELA.1.R.2.2",
+    "ELA.1.R.3.3",
+    "ELA.1.V.1.1"
+  ]
+}

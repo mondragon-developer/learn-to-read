@@ -1,0 +1,70 @@
+{
+  "id": "s03",
+  "title": "Two Dogs",
+  "tier": "readalong",
+  "unit": 2,
+  "skill": "compare",
+  "reward": "🐕",
+  "sentences": [
+    "Max and Rex are dogs.",
+    "They live on the same street.",
+    "They both have long tails.",
+    "But they are not the same.",
+    "Max is big and brown.",
+    "He likes to run fast.",
+    "Rex is small and white.",
+    "He likes to sleep in the sun."
+  ],
+  "questions": [
+    {
+      "prompt": "How are Max and Rex alike?",
+      "options": [
+        "They are both big.",
+        "They both have long tails.",
+        "They both like to sleep."
+      ],
+      "answer": 1,
+      "skill": "compare"
+    },
+    {
+      "prompt": "How are Max and Rex different?",
+      "options": [
+        "Max is big, but Rex is small.",
+        "Max is a cat, but Rex is a dog.",
+        "Max has a tail, but Rex does not."
+      ],
+      "answer": 0,
+      "skill": "compare"
+    },
+    {
+      "prompt": "What does Rex like to do?",
+      "options": [
+        "run fast",
+        "dig a hole",
+        "sleep in the sun"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "rhyme",
+    "prompt": "Which word rhymes with sun?",
+    "options": [
+      "dog",
+      "sleep",
+      "run"
+    ],
+    "answer": 2
+  },
+  "order": [
+    0,
+    4,
+    6
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.3.3",
+    "ELA.1.V.1.1"
+  ]
+}

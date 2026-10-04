@@ -1,0 +1,357 @@
+{
+  "id": "u13",
+  "order": 13,
+  "title": "Magic e: i_e, o_e, u_e",
+  "focus": "Silent e makes i, o and u say their names: kit, kite! hop, hope!",
+  "teaches": [
+    "i_e",
+    "o_e",
+    "u_e"
+  ],
+  "words": [
+    {
+      "text": "bike",
+      "graphemes": [
+        "b",
+        "i_e",
+        "k"
+      ],
+      "es": "bicicleta",
+      "reward": "🚲"
+    },
+    {
+      "text": "kite",
+      "graphemes": [
+        "k",
+        "i_e",
+        "t"
+      ],
+      "es": "cometa",
+      "reward": "🪁"
+    },
+    {
+      "text": "time",
+      "graphemes": [
+        "t",
+        "i_e",
+        "m"
+      ],
+      "es": "tiempo",
+      "reward": "⏰"
+    },
+    {
+      "text": "smile",
+      "graphemes": [
+        "s",
+        "m",
+        "i_e",
+        "l"
+      ],
+      "es": "sonrisa",
+      "reward": "😊"
+    },
+    {
+      "text": "home",
+      "graphemes": [
+        "h",
+        "o_e",
+        "m"
+      ],
+      "es": "casa",
+      "reward": "🏠"
+    },
+    {
+      "text": "bone",
+      "graphemes": [
+        "b",
+        "o_e",
+        "n"
+      ],
+      "es": "hueso",
+      "reward": "🦴"
+    },
+    {
+      "text": "nose",
+      "graphemes": [
+        "n",
+        "o_e",
+        "s"
+      ],
+      "es": "nariz",
+      "reward": "👃"
+    },
+    {
+      "text": "rope",
+      "graphemes": [
+        "r",
+        "o_e",
+        "p"
+      ],
+      "es": "cuerda",
+      "reward": "🪢"
+    },
+    {
+      "text": "cute",
+      "graphemes": [
+        "c",
+        "u_e",
+        "t"
+      ],
+      "es": "lindo",
+      "reward": "🥰"
+    },
+    {
+      "text": "tube",
+      "graphemes": [
+        "t",
+        "u_e",
+        "b"
+      ],
+      "es": "tubo"
+    }
+  ],
+  "heartWords": [
+    "live",
+    "love",
+    "other",
+    "people"
+  ],
+  "sentences": [
+    "I ride my bike home.",
+    "The dog has a big bone.",
+    "People like to make a kite.",
+    "It is time to smile!"
+  ],
+  "rhymes": [
+    [
+      "bike",
+      "like",
+      "hike",
+      "Mike"
+    ],
+    [
+      "bone",
+      "cone",
+      "zone"
+    ],
+    [
+      "nose",
+      "rose",
+      "hose"
+    ]
+  ],
+  "contrasts": [
+    [
+      "kit",
+      "kite"
+    ],
+    [
+      "hop",
+      "hope"
+    ],
+    [
+      "cut",
+      "cute"
+    ],
+    [
+      "not",
+      "note"
+    ],
+    [
+      "pin",
+      "pine"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "ride",
+      "graphemes": [
+        "r",
+        "i_e",
+        "d"
+      ]
+    },
+    {
+      "text": "like",
+      "graphemes": [
+        "l",
+        "i_e",
+        "k"
+      ]
+    },
+    {
+      "text": "hike",
+      "graphemes": [
+        "h",
+        "i_e",
+        "k"
+      ]
+    },
+    {
+      "text": "Mike",
+      "graphemes": [
+        "m",
+        "i_e",
+        "k"
+      ]
+    },
+    {
+      "text": "cone",
+      "graphemes": [
+        "c",
+        "o_e",
+        "n"
+      ]
+    },
+    {
+      "text": "zone",
+      "graphemes": [
+        "z",
+        "o_e",
+        "n"
+      ]
+    },
+    {
+      "text": "rose",
+      "graphemes": [
+        "r",
+        "o_e",
+        "s"
+      ]
+    },
+    {
+      "text": "hose",
+      "graphemes": [
+        "h",
+        "o_e",
+        "s"
+      ]
+    },
+    {
+      "text": "hope",
+      "graphemes": [
+        "h",
+        "o_e",
+        "p"
+      ]
+    },
+    {
+      "text": "note",
+      "graphemes": [
+        "n",
+        "o_e",
+        "t"
+      ]
+    },
+    {
+      "text": "pine",
+      "graphemes": [
+        "p",
+        "i_e",
+        "n"
+      ]
+    },
+    {
+      "text": "fine",
+      "graphemes": [
+        "f",
+        "i_e",
+        "n"
+      ]
+    },
+    {
+      "text": "five",
+      "graphemes": [
+        "f",
+        "i_e",
+        "v"
+      ]
+    },
+    {
+      "text": "line",
+      "graphemes": [
+        "l",
+        "i_e",
+        "n"
+      ]
+    },
+    {
+      "text": "joke",
+      "graphemes": [
+        "j",
+        "o_e",
+        "k"
+      ]
+    },
+    {
+      "text": "rule",
+      "graphemes": [
+        "r",
+        "u_e",
+        "l"
+      ]
+    },
+    {
+      "text": "bikes",
+      "graphemes": [
+        "b",
+        "i_e",
+        "k",
+        "s"
+      ]
+    },
+    {
+      "text": "kites",
+      "graphemes": [
+        "k",
+        "i_e",
+        "t",
+        "s"
+      ]
+    },
+    {
+      "text": "kit",
+      "graphemes": [
+        "k",
+        "i",
+        "t"
+      ]
+    },
+    {
+      "text": "hop",
+      "graphemes": [
+        "h",
+        "o",
+        "p"
+      ]
+    },
+    {
+      "text": "cut",
+      "graphemes": [
+        "c",
+        "u",
+        "t"
+      ]
+    },
+    {
+      "text": "not",
+      "graphemes": [
+        "n",
+        "o",
+        "t"
+      ]
+    },
+    {
+      "text": "pin",
+      "graphemes": [
+        "p",
+        "i",
+        "n"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.f",
+    "ELA.1.F.1.4.a"
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "id": "u12",
+  "order": 12,
+  "title": "Magic e: a_e",
+  "focus": "A silent e at the end makes the a say its name: cap, cape!",
+  "teaches": [
+    "a_e"
+  ],
+  "words": [
+    {
+      "text": "cake",
+      "graphemes": [
+        "c",
+        "a_e",
+        "k"
+      ],
+      "es": "pastel",
+      "reward": "🎂"
+    },
+    {
+      "text": "game",
+      "graphemes": [
+        "g",
+        "a_e",
+        "m"
+      ],
+      "es": "juego",
+      "reward": "🎮"
+    },
+    {
+      "text": "make",
+      "graphemes": [
+        "m",
+        "a_e",
+        "k"
+      ],
+      "es": "hacer"
+    },
+    {
+      "text": "lake",
+      "graphemes": [
+        "l",
+        "a_e",
+        "k"
+      ],
+      "es": "lago",
+      "reward": "🏞️"
+    },
+    {
+      "text": "gate",
+      "graphemes": [
+        "g",
+        "a_e",
+        "t"
+      ],
+      "es": "portón",
+      "reward": "🚪"
+    },
+    {
+      "text": "name",
+      "graphemes": [
+        "n",
+        "a_e",
+        "m"
+      ],
+      "es": "nombre"
+    },
+    {
+      "text": "tape",
+      "graphemes": [
+        "t",
+        "a_e",
+        "p"
+      ],
+      "es": "cinta",
+      "reward": "📼"
+    },
+    {
+      "text": "plate",
+      "graphemes": [
+        "p",
+        "l",
+        "a_e",
+        "t"
+      ],
+      "es": "plato",
+      "reward": "🍽️"
+    },
+    {
+      "text": "shake",
+      "graphemes": [
+        "sh",
+        "a_e",
+        "k"
+      ],
+      "es": "sacudir / batido",
+      "reward": "🥤"
+    },
+    {
+      "text": "skate",
+      "graphemes": [
+        "s",
+        "k",
+        "a_e",
+        "t"
+      ],
+      "es": "patinar",
+      "reward": "⛸️"
+    }
+  ],
+  "heartWords": [
+    "were",
+    "very",
+    "because",
+    "give"
+  ],
+  "sentences": [
+    "We ate cake at the lake.",
+    "What is your name?",
+    "The game was very fun because we came back!",
+    "Give the tape to Jake."
+  ],
+  "rhymes": [
+    [
+      "cake",
+      "lake",
+      "make",
+      "bake"
+    ],
+    [
+      "game",
+      "name",
+      "came"
+    ],
+    [
+      "gate",
+      "plate",
+      "skate",
+      "late"
+    ]
+  ],
+  "contrasts": [
+    [
+      "cap",
+      "cape"
+    ],
+    [
+      "tap",
+      "tape"
+    ],
+    [
+      "mad",
+      "made"
+    ],
+    [
+      "plan",
+      "plane"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "bake",
+      "graphemes": [
+        "b",
+        "a_e",
+        "k"
+      ]
+    },
+    {
+      "text": "came",
+      "graphemes": [
+        "c",
+        "a_e",
+        "m"
+      ]
+    },
+    {
+      "text": "late",
+      "graphemes": [
+        "l",
+        "a_e",
+        "t"
+      ]
+    },
+    {
+      "text": "made",
+      "graphemes": [
+        "m",
+        "a_e",
+        "d"
+      ]
+    },
+    {
+      "text": "cape",
+      "graphemes": [
+        "c",
+        "a_e",
+        "p"
+      ]
+    },
+    {
+      "text": "plane",
+      "graphemes": [
+        "p",
+        "l",
+        "a_e",
+        "n"
+      ]
+    },
+    {
+      "text": "Jake",
+      "graphemes": [
+        "j",
+        "a_e",
+        "k"
+      ]
+    },
+    {
+      "text": "wave",
+      "graphemes": [
+        "w",
+        "a_e",
+        "v"
+      ]
+    },
+    {
+      "text": "gave",
+      "graphemes": [
+        "g",
+        "a_e",
+        "v"
+      ]
+    },
+    {
+      "text": "save",
+      "graphemes": [
+        "s",
+        "a_e",
+        "v"
+      ]
+    },
+    {
+      "text": "ate",
+      "graphemes": [
+        "a_e",
+        "t"
+      ]
+    },
+    {
+      "text": "safe",
+      "graphemes": [
+        "s",
+        "a_e",
+        "f"
+      ]
+    },
+    {
+      "text": "cakes",
+      "graphemes": [
+        "c",
+        "a_e",
+        "k",
+        "s"
+      ]
+    },
+    {
+      "text": "games",
+      "graphemes": [
+        "g",
+        "a_e",
+        "m",
+        "s"
+      ]
+    },
+    {
+      "text": "cap",
+      "graphemes": [
+        "c",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "tap",
+      "graphemes": [
+        "t",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "mad",
+      "graphemes": [
+        "m",
+        "a",
+        "d"
+      ]
+    },
+    {
+      "text": "plan",
+      "graphemes": [
+        "p",
+        "l",
+        "a",
+        "n"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.f",
+    "ELA.1.F.1.4.a"
+  ]
+}

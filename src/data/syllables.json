@@ -1,0 +1,13 @@
+{
+  "note": "Spoken-only words for Clap the Syllables (ELA.1.F.1.2.e). The child never sees these written.",
+  "words": [
+    { "text": "ball", "syllables": 1 }, { "text": "goal", "syllables": 1 }, { "text": "dog", "syllables": 1 },
+    { "text": "soccer", "syllables": 2 }, { "text": "rabbit", "syllables": 2 }, { "text": "sunset", "syllables": 2 },
+    { "text": "pumpkin", "syllables": 2 }, { "text": "picnic", "syllables": 2 }, { "text": "kitten", "syllables": 2 },
+    { "text": "robot", "syllables": 2 }, { "text": "popcorn", "syllables": 2 }, { "text": "cupcake", "syllables": 2 },
+    { "text": "water", "syllables": 2 }, { "text": "tiger", "syllables": 2 }, { "text": "dinosaur", "syllables": 3 },
+    { "text": "banana", "syllables": 3 }, { "text": "tomato", "syllables": 3 }, { "text": "elephant", "syllables": 3 },
+    { "text": "butterfly", "syllables": 3 }, { "text": "kangaroo", "syllables": 3 }, { "text": "helicopter", "syllables": 4 },
+    { "text": "watermelon", "syllables": 4 }
+  ]
+}

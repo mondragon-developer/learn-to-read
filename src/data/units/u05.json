@@ -1,0 +1,371 @@
+{
+  "id": "u05",
+  "order": 5,
+  "title": "Short e",
+  "focus": "The letter e says /e/, like in bed.",
+  "teaches": [
+    "e",
+    "v",
+    "y",
+    "z"
+  ],
+  "words": [
+    {
+      "text": "bed",
+      "graphemes": [
+        "b",
+        "e",
+        "d"
+      ],
+      "es": "cama",
+      "reward": "🛏️"
+    },
+    {
+      "text": "red",
+      "graphemes": [
+        "r",
+        "e",
+        "d"
+      ],
+      "es": "rojo",
+      "reward": "🟥"
+    },
+    {
+      "text": "hen",
+      "graphemes": [
+        "h",
+        "e",
+        "n"
+      ],
+      "es": "gallina",
+      "reward": "🐔"
+    },
+    {
+      "text": "pen",
+      "graphemes": [
+        "p",
+        "e",
+        "n"
+      ],
+      "es": "pluma",
+      "reward": "🖊️"
+    },
+    {
+      "text": "ten",
+      "graphemes": [
+        "t",
+        "e",
+        "n"
+      ],
+      "es": "diez",
+      "reward": "🔟"
+    },
+    {
+      "text": "net",
+      "graphemes": [
+        "n",
+        "e",
+        "t"
+      ],
+      "es": "red (de pescar)",
+      "reward": "🥅"
+    },
+    {
+      "text": "wet",
+      "graphemes": [
+        "w",
+        "e",
+        "t"
+      ],
+      "es": "mojado",
+      "reward": "💧"
+    },
+    {
+      "text": "leg",
+      "graphemes": [
+        "l",
+        "e",
+        "g"
+      ],
+      "es": "pierna",
+      "reward": "🦵"
+    },
+    {
+      "text": "jet",
+      "graphemes": [
+        "j",
+        "e",
+        "t"
+      ],
+      "es": "avión",
+      "reward": "✈️"
+    },
+    {
+      "text": "next",
+      "graphemes": [
+        "n",
+        "e",
+        "x",
+        "t"
+      ],
+      "es": "siguiente"
+    }
+  ],
+  "heartWords": [
+    "he",
+    "she",
+    "we",
+    "after"
+  ],
+  "sentences": [
+    "Ted has a red hen.",
+    "She fed the hen ten bugs.",
+    "We get wet.",
+    "Next, he sat on the bed."
+  ],
+  "rhymes": [
+    [
+      "bed",
+      "red",
+      "fed",
+      "led"
+    ],
+    [
+      "hen",
+      "pen",
+      "ten",
+      "men"
+    ],
+    [
+      "net",
+      "wet",
+      "jet",
+      "pet",
+      "vet"
+    ]
+  ],
+  "contrasts": [
+    [
+      "bed",
+      "bad"
+    ],
+    [
+      "pen",
+      "pan"
+    ],
+    [
+      "pen",
+      "pin"
+    ],
+    [
+      "ten",
+      "tin"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "yes",
+      "graphemes": [
+        "y",
+        "e",
+        "s"
+      ]
+    },
+    {
+      "text": "yet",
+      "graphemes": [
+        "y",
+        "e",
+        "t"
+      ]
+    },
+    {
+      "text": "vet",
+      "graphemes": [
+        "v",
+        "e",
+        "t"
+      ]
+    },
+    {
+      "text": "Ted",
+      "graphemes": [
+        "t",
+        "e",
+        "d"
+      ]
+    },
+    {
+      "text": "Ben",
+      "graphemes": [
+        "b",
+        "e",
+        "n"
+      ]
+    },
+    {
+      "text": "get",
+      "graphemes": [
+        "g",
+        "e",
+        "t"
+      ]
+    },
+    {
+      "text": "gets",
+      "graphemes": [
+        "g",
+        "e",
+        "t",
+        "s"
+      ]
+    },
+    {
+      "text": "let",
+      "graphemes": [
+        "l",
+        "e",
+        "t"
+      ]
+    },
+    {
+      "text": "men",
+      "graphemes": [
+        "m",
+        "e",
+        "n"
+      ]
+    },
+    {
+      "text": "pet",
+      "graphemes": [
+        "p",
+        "e",
+        "t"
+      ]
+    },
+    {
+      "text": "set",
+      "graphemes": [
+        "s",
+        "e",
+        "t"
+      ]
+    },
+    {
+      "text": "web",
+      "graphemes": [
+        "w",
+        "e",
+        "b"
+      ]
+    },
+    {
+      "text": "beg",
+      "graphemes": [
+        "b",
+        "e",
+        "g"
+      ]
+    },
+    {
+      "text": "zip",
+      "graphemes": [
+        "z",
+        "i",
+        "p"
+      ]
+    },
+    {
+      "text": "zap",
+      "graphemes": [
+        "z",
+        "a",
+        "p"
+      ]
+    },
+    {
+      "text": "egg",
+      "graphemes": [
+        "e",
+        "g",
+        "g"
+      ]
+    },
+    {
+      "text": "eggs",
+      "graphemes": [
+        "e",
+        "g",
+        "g",
+        "s"
+      ]
+    },
+    {
+      "text": "fed",
+      "graphemes": [
+        "f",
+        "e",
+        "d"
+      ]
+    },
+    {
+      "text": "led",
+      "graphemes": [
+        "l",
+        "e",
+        "d"
+      ]
+    },
+    {
+      "text": "hens",
+      "graphemes": [
+        "h",
+        "e",
+        "n",
+        "s"
+      ]
+    },
+    {
+      "text": "best",
+      "graphemes": [
+        "b",
+        "e",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "text": "sits",
+      "graphemes": [
+        "s",
+        "i",
+        "t",
+        "s"
+      ]
+    },
+    {
+      "text": "naps",
+      "graphemes": [
+        "n",
+        "a",
+        "p",
+        "s"
+      ]
+    },
+    {
+      "text": "lets",
+      "graphemes": [
+        "l",
+        "e",
+        "t",
+        "s"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.c",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

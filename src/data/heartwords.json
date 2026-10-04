@@ -1,0 +1,388 @@
+{
+  "words": [
+    {
+      "text": "the",
+      "list": "dolch-preprimer",
+      "unit": 1,
+      "heartPart": "e",
+      "es": "el / la"
+    },
+    {
+      "text": "a",
+      "list": "dolch-preprimer",
+      "unit": 1,
+      "es": "un / una"
+    },
+    {
+      "text": "I",
+      "list": "dolch-preprimer",
+      "unit": 1,
+      "heartPart": "I",
+      "es": "yo"
+    },
+    {
+      "text": "is",
+      "list": "dolch-preprimer",
+      "unit": 2,
+      "heartPart": "s",
+      "es": "es / está"
+    },
+    {
+      "text": "to",
+      "list": "dolch-preprimer",
+      "unit": 2,
+      "heartPart": "o",
+      "es": "a / hacia"
+    },
+    {
+      "text": "you",
+      "list": "dolch-preprimer",
+      "unit": 2,
+      "heartPart": "ou",
+      "es": "tú / usted"
+    },
+    {
+      "text": "first",
+      "list": "story",
+      "unit": 2,
+      "heartPart": "ir",
+      "es": "primero"
+    },
+    {
+      "text": "go",
+      "list": "dolch-preprimer",
+      "unit": 3,
+      "heartPart": "o",
+      "es": "ir"
+    },
+    {
+      "text": "was",
+      "list": "dolch-primer",
+      "unit": 3,
+      "heartPart": "a",
+      "es": "era / estaba"
+    },
+    {
+      "text": "said",
+      "list": "dolch-primer",
+      "unit": 3,
+      "heartPart": "ai",
+      "es": "dijo"
+    },
+    {
+      "text": "of",
+      "list": "dolch-first",
+      "unit": 4,
+      "heartPart": "of",
+      "es": "de"
+    },
+    {
+      "text": "my",
+      "list": "dolch-preprimer",
+      "unit": 4,
+      "heartPart": "y",
+      "es": "mi"
+    },
+    {
+      "text": "soon",
+      "list": "story",
+      "unit": 4,
+      "heartPart": "oo",
+      "es": "pronto"
+    },
+    {
+      "text": "put",
+      "list": "dolch-first",
+      "unit": 4,
+      "heartPart": "u",
+      "es": "poner"
+    },
+    {
+      "text": "he",
+      "list": "dolch-primer",
+      "unit": 5,
+      "heartPart": "e",
+      "es": "él"
+    },
+    {
+      "text": "she",
+      "list": "dolch-primer",
+      "unit": 5,
+      "heartPart": "e",
+      "es": "ella"
+    },
+    {
+      "text": "we",
+      "list": "dolch-preprimer",
+      "unit": 5,
+      "heartPart": "e",
+      "es": "nosotros"
+    },
+    {
+      "text": "after",
+      "list": "story",
+      "unit": 5,
+      "heartPart": "er",
+      "es": "después"
+    },
+    {
+      "text": "are",
+      "list": "dolch-primer",
+      "unit": 6,
+      "heartPart": "are",
+      "es": "son / están"
+    },
+    {
+      "text": "have",
+      "list": "dolch-primer",
+      "unit": 6,
+      "heartPart": "e",
+      "es": "tener"
+    },
+    {
+      "text": "same",
+      "list": "story",
+      "unit": 6,
+      "heartPart": "ame",
+      "es": "igual / mismo"
+    },
+    {
+      "text": "different",
+      "list": "story",
+      "unit": 6,
+      "heartPart": "er",
+      "es": "diferente"
+    },
+    {
+      "text": "what",
+      "list": "dolch-primer",
+      "unit": 7,
+      "heartPart": "a",
+      "es": "qué"
+    },
+    {
+      "text": "they",
+      "list": "dolch-primer",
+      "unit": 7,
+      "heartPart": "ey",
+      "es": "ellos"
+    },
+    {
+      "text": "before",
+      "list": "story",
+      "unit": 7,
+      "heartPart": "ore",
+      "es": "antes"
+    },
+    {
+      "text": "look",
+      "list": "dolch-preprimer",
+      "unit": 7,
+      "heartPart": "oo",
+      "es": "mirar"
+    },
+    {
+      "text": "there",
+      "list": "dolch-primer",
+      "unit": 8,
+      "heartPart": "ere",
+      "es": "allí / ahí"
+    },
+    {
+      "text": "come",
+      "list": "dolch-preprimer",
+      "unit": 8,
+      "heartPart": "o",
+      "es": "venir"
+    },
+    {
+      "text": "both",
+      "list": "story",
+      "unit": 8,
+      "heartPart": "o",
+      "es": "ambos"
+    },
+    {
+      "text": "finally",
+      "list": "story",
+      "unit": 8,
+      "heartPart": "y",
+      "es": "finalmente"
+    },
+    {
+      "text": "one",
+      "list": "dolch-first",
+      "unit": 9,
+      "heartPart": "o",
+      "es": "uno"
+    },
+    {
+      "text": "two",
+      "list": "dolch-preprimer",
+      "unit": 9,
+      "heartPart": "wo",
+      "es": "dos"
+    },
+    {
+      "text": "who",
+      "list": "dolch-primer",
+      "unit": 9,
+      "heartPart": "o",
+      "es": "quién"
+    },
+    {
+      "text": "where",
+      "list": "dolch-preprimer",
+      "unit": 9,
+      "heartPart": "ere",
+      "es": "dónde"
+    },
+    {
+      "text": "ball",
+      "list": "dolch-noun",
+      "unit": 9,
+      "heartPart": "all",
+      "es": "pelota"
+    },
+    {
+      "text": "do",
+      "list": "dolch-primer",
+      "unit": 10,
+      "heartPart": "o",
+      "es": "hacer"
+    },
+    {
+      "text": "does",
+      "list": "dolch-first",
+      "unit": 10,
+      "heartPart": "oes",
+      "es": "hace"
+    },
+    {
+      "text": "your",
+      "list": "dolch-first",
+      "unit": 10,
+      "heartPart": "our",
+      "es": "tu / su"
+    },
+    {
+      "text": "again",
+      "list": "dolch-first",
+      "unit": 10,
+      "heartPart": "ai",
+      "es": "otra vez"
+    },
+    {
+      "text": "some",
+      "list": "dolch-first",
+      "unit": 11,
+      "heartPart": "ome",
+      "es": "algunos"
+    },
+    {
+      "text": "would",
+      "list": "dolch-first",
+      "unit": 11,
+      "heartPart": "oul",
+      "es": "haría"
+    },
+    {
+      "text": "could",
+      "list": "dolch-first",
+      "unit": 11,
+      "heartPart": "oul",
+      "es": "podría"
+    },
+    {
+      "text": "many",
+      "list": "dolch-first",
+      "unit": 11,
+      "heartPart": "a",
+      "es": "muchos"
+    },
+    {
+      "text": "were",
+      "list": "dolch-first",
+      "unit": 12,
+      "heartPart": "ere",
+      "es": "eran / estaban"
+    },
+    {
+      "text": "very",
+      "list": "dolch-first",
+      "unit": 12,
+      "heartPart": "y",
+      "es": "muy"
+    },
+    {
+      "text": "because",
+      "list": "dolch-first",
+      "unit": 12,
+      "heartPart": "au",
+      "es": "porque"
+    },
+    {
+      "text": "give",
+      "list": "dolch-first",
+      "unit": 12,
+      "heartPart": "e",
+      "es": "dar"
+    },
+    {
+      "text": "live",
+      "list": "dolch-first",
+      "unit": 13,
+      "heartPart": "e",
+      "es": "vivir"
+    },
+    {
+      "text": "love",
+      "list": "dolch-first",
+      "unit": 13,
+      "heartPart": "o",
+      "es": "amar / encantar"
+    },
+    {
+      "text": "other",
+      "list": "dolch-first",
+      "unit": 13,
+      "heartPart": "o",
+      "es": "otro"
+    },
+    {
+      "text": "people",
+      "list": "dolch-first",
+      "unit": 13,
+      "heartPart": "eo",
+      "es": "gente"
+    },
+    {
+      "text": "once",
+      "list": "dolch-first",
+      "unit": 14,
+      "heartPart": "o",
+      "es": "una vez"
+    },
+    {
+      "text": "every",
+      "list": "dolch-first",
+      "unit": 14,
+      "heartPart": "e",
+      "es": "cada"
+    },
+    {
+      "text": "together",
+      "list": "dolch-first",
+      "unit": 14,
+      "heartPart": "o",
+      "es": "juntos"
+    },
+    {
+      "text": "laugh",
+      "list": "dolch-first",
+      "unit": 14,
+      "heartPart": "augh",
+      "es": "reír"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": "u06",
+  "order": 6,
+  "title": "Vowel detectives",
+  "focus": "Listen to the middle sound: cat, cut, kit!",
+  "teaches": [],
+  "words": [
+    {
+      "text": "bat",
+      "graphemes": [
+        "b",
+        "a",
+        "t"
+      ],
+      "es": "murciélago / bate",
+      "reward": "🦇"
+    },
+    {
+      "text": "bet",
+      "graphemes": [
+        "b",
+        "e",
+        "t"
+      ],
+      "es": "apostar"
+    },
+    {
+      "text": "bit",
+      "graphemes": [
+        "b",
+        "i",
+        "t"
+      ],
+      "es": "pedacito"
+    },
+    {
+      "text": "but",
+      "graphemes": [
+        "b",
+        "u",
+        "t"
+      ],
+      "es": "pero"
+    },
+    {
+      "text": "pin",
+      "graphemes": [
+        "p",
+        "i",
+        "n"
+      ],
+      "es": "alfiler",
+      "reward": "📌"
+    },
+    {
+      "text": "pan",
+      "graphemes": [
+        "p",
+        "a",
+        "n"
+      ],
+      "es": "sartén",
+      "reward": "🍳"
+    },
+    {
+      "text": "rag",
+      "graphemes": [
+        "r",
+        "a",
+        "g"
+      ],
+      "es": "trapo"
+    },
+    {
+      "text": "rug",
+      "graphemes": [
+        "r",
+        "u",
+        "g"
+      ],
+      "es": "alfombra"
+    },
+    {
+      "text": "mat",
+      "graphemes": [
+        "m",
+        "a",
+        "t"
+      ],
+      "es": "tapete"
+    },
+    {
+      "text": "met",
+      "graphemes": [
+        "m",
+        "e",
+        "t"
+      ],
+      "es": "conoció"
+    }
+  ],
+  "heartWords": [
+    "are",
+    "have",
+    "same",
+    "different"
+  ],
+  "sentences": [
+    "The bat and the bug are not the same.",
+    "A pin and a pan are different.",
+    "I have a red rug."
+  ],
+  "rhymes": [
+    [
+      "bat",
+      "mat",
+      "hat",
+      "rat"
+    ],
+    [
+      "bet",
+      "met",
+      "pet",
+      "net"
+    ],
+    [
+      "bit",
+      "hit",
+      "fit",
+      "sit"
+    ]
+  ],
+  "contrasts": [
+    [
+      "bat",
+      "bet"
+    ],
+    [
+      "bit",
+      "bet"
+    ],
+    [
+      "but",
+      "bat"
+    ],
+    [
+      "pin",
+      "pen"
+    ],
+    [
+      "rag",
+      "rug"
+    ]
+  ],
+  "extras": [],
+  "benchmarks": [
+    "ELA.1.F.1.3.c",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a",
+    "ELA.1.F.1.2.a"
+  ]
+}

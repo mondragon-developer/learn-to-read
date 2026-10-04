@@ -1,0 +1,386 @@
+{
+  "id": "u04",
+  "order": 4,
+  "title": "Short u",
+  "focus": "The letter u says /u/, like in sun.",
+  "teaches": [
+    "u",
+    "w",
+    "j",
+    "k"
+  ],
+  "words": [
+    {
+      "text": "sun",
+      "graphemes": [
+        "s",
+        "u",
+        "n"
+      ],
+      "es": "sol",
+      "reward": "☀️"
+    },
+    {
+      "text": "run",
+      "graphemes": [
+        "r",
+        "u",
+        "n"
+      ],
+      "es": "correr",
+      "reward": "🏃"
+    },
+    {
+      "text": "bug",
+      "graphemes": [
+        "b",
+        "u",
+        "g"
+      ],
+      "es": "bicho",
+      "reward": "🐛"
+    },
+    {
+      "text": "cup",
+      "graphemes": [
+        "c",
+        "u",
+        "p"
+      ],
+      "es": "taza",
+      "reward": "🥤"
+    },
+    {
+      "text": "mud",
+      "graphemes": [
+        "m",
+        "u",
+        "d"
+      ],
+      "es": "lodo",
+      "reward": "🟤"
+    },
+    {
+      "text": "hug",
+      "graphemes": [
+        "h",
+        "u",
+        "g"
+      ],
+      "es": "abrazo",
+      "reward": "🤗"
+    },
+    {
+      "text": "bus",
+      "graphemes": [
+        "b",
+        "u",
+        "s"
+      ],
+      "es": "autobús",
+      "reward": "🚌"
+    },
+    {
+      "text": "fun",
+      "graphemes": [
+        "f",
+        "u",
+        "n"
+      ],
+      "es": "divertido",
+      "reward": "🎉"
+    },
+    {
+      "text": "nut",
+      "graphemes": [
+        "n",
+        "u",
+        "t"
+      ],
+      "es": "nuez",
+      "reward": "🥜"
+    },
+    {
+      "text": "jump",
+      "graphemes": [
+        "j",
+        "u",
+        "m",
+        "p"
+      ],
+      "es": "saltar",
+      "reward": "🦘"
+    }
+  ],
+  "heartWords": [
+    "of",
+    "my",
+    "soon",
+    "put"
+  ],
+  "sentences": [
+    "Gus can run in the sun.",
+    "A bug is in my cup!",
+    "Put the jug on the rug.",
+    "Soon, the pup will hug Kim."
+  ],
+  "rhymes": [
+    [
+      "sun",
+      "run",
+      "fun",
+      "bun"
+    ],
+    [
+      "bug",
+      "hug",
+      "rug",
+      "mug",
+      "jug"
+    ],
+    [
+      "cup",
+      "pup",
+      "up"
+    ]
+  ],
+  "contrasts": [
+    [
+      "cup",
+      "cap"
+    ],
+    [
+      "bug",
+      "bag"
+    ],
+    [
+      "nut",
+      "not"
+    ],
+    [
+      "hut",
+      "hot"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "up",
+      "graphemes": [
+        "u",
+        "p"
+      ]
+    },
+    {
+      "text": "us",
+      "graphemes": [
+        "u",
+        "s"
+      ]
+    },
+    {
+      "text": "but",
+      "graphemes": [
+        "b",
+        "u",
+        "t"
+      ]
+    },
+    {
+      "text": "cut",
+      "graphemes": [
+        "c",
+        "u",
+        "t"
+      ]
+    },
+    {
+      "text": "hut",
+      "graphemes": [
+        "h",
+        "u",
+        "t"
+      ]
+    },
+    {
+      "text": "rug",
+      "graphemes": [
+        "r",
+        "u",
+        "g"
+      ]
+    },
+    {
+      "text": "tub",
+      "graphemes": [
+        "t",
+        "u",
+        "b"
+      ]
+    },
+    {
+      "text": "dug",
+      "graphemes": [
+        "d",
+        "u",
+        "g"
+      ]
+    },
+    {
+      "text": "gum",
+      "graphemes": [
+        "g",
+        "u",
+        "m"
+      ]
+    },
+    {
+      "text": "jug",
+      "graphemes": [
+        "j",
+        "u",
+        "g"
+      ]
+    },
+    {
+      "text": "Gus",
+      "graphemes": [
+        "g",
+        "u",
+        "s"
+      ]
+    },
+    {
+      "text": "Kim",
+      "graphemes": [
+        "k",
+        "i",
+        "m"
+      ]
+    },
+    {
+      "text": "kid",
+      "graphemes": [
+        "k",
+        "i",
+        "d"
+      ]
+    },
+    {
+      "text": "kit",
+      "graphemes": [
+        "k",
+        "i",
+        "t"
+      ]
+    },
+    {
+      "text": "win",
+      "graphemes": [
+        "w",
+        "i",
+        "n"
+      ]
+    },
+    {
+      "text": "wig",
+      "graphemes": [
+        "w",
+        "i",
+        "g"
+      ]
+    },
+    {
+      "text": "bugs",
+      "graphemes": [
+        "b",
+        "u",
+        "g",
+        "s"
+      ]
+    },
+    {
+      "text": "runs",
+      "graphemes": [
+        "r",
+        "u",
+        "n",
+        "s"
+      ]
+    },
+    {
+      "text": "pup",
+      "graphemes": [
+        "p",
+        "u",
+        "p"
+      ]
+    },
+    {
+      "text": "bun",
+      "graphemes": [
+        "b",
+        "u",
+        "n"
+      ]
+    },
+    {
+      "text": "mug",
+      "graphemes": [
+        "m",
+        "u",
+        "g"
+      ]
+    },
+    {
+      "text": "will",
+      "graphemes": [
+        "w",
+        "i",
+        "l",
+        "l"
+      ]
+    },
+    {
+      "text": "fill",
+      "graphemes": [
+        "f",
+        "i",
+        "l",
+        "l"
+      ]
+    },
+    {
+      "text": "dumps",
+      "graphemes": [
+        "d",
+        "u",
+        "m",
+        "p",
+        "s"
+      ]
+    },
+    {
+      "text": "must",
+      "graphemes": [
+        "m",
+        "u",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "text": "wind",
+      "graphemes": [
+        "w",
+        "i",
+        "n",
+        "d"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.c",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

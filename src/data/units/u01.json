@@ -1,0 +1,280 @@
+{
+  "id": "u01",
+  "order": 1,
+  "title": "Short a",
+  "focus": "The letter a says /a/, like in cat.",
+  "teaches": [
+    "a",
+    "m",
+    "s",
+    "t",
+    "p",
+    "n",
+    "c",
+    "f",
+    "d"
+  ],
+  "words": [
+    {
+      "text": "cat",
+      "graphemes": [
+        "c",
+        "a",
+        "t"
+      ],
+      "es": "gato",
+      "reward": "🐱"
+    },
+    {
+      "text": "map",
+      "graphemes": [
+        "m",
+        "a",
+        "p"
+      ],
+      "es": "mapa",
+      "reward": "🗺️"
+    },
+    {
+      "text": "sat",
+      "graphemes": [
+        "s",
+        "a",
+        "t"
+      ],
+      "es": "se sentó"
+    },
+    {
+      "text": "man",
+      "graphemes": [
+        "m",
+        "a",
+        "n"
+      ],
+      "es": "hombre",
+      "reward": "👨"
+    },
+    {
+      "text": "fan",
+      "graphemes": [
+        "f",
+        "a",
+        "n"
+      ],
+      "es": "ventilador",
+      "reward": "🪭"
+    },
+    {
+      "text": "nap",
+      "graphemes": [
+        "n",
+        "a",
+        "p"
+      ],
+      "es": "siesta",
+      "reward": "😴"
+    },
+    {
+      "text": "dad",
+      "graphemes": [
+        "d",
+        "a",
+        "d"
+      ],
+      "es": "papá",
+      "reward": "👨‍👦"
+    },
+    {
+      "text": "sad",
+      "graphemes": [
+        "s",
+        "a",
+        "d"
+      ],
+      "es": "triste",
+      "reward": "😢"
+    },
+    {
+      "text": "cap",
+      "graphemes": [
+        "c",
+        "a",
+        "p"
+      ],
+      "es": "gorra",
+      "reward": "🧢"
+    },
+    {
+      "text": "tap",
+      "graphemes": [
+        "t",
+        "a",
+        "p"
+      ],
+      "es": "tocar suave",
+      "reward": "👆"
+    }
+  ],
+  "heartWords": [
+    "the",
+    "a",
+    "I"
+  ],
+  "sentences": [
+    "The cat sat.",
+    "I can tap the cap.",
+    "Dad and Pam nap.",
+    "A fat cat can nap."
+  ],
+  "rhymes": [
+    [
+      "cat",
+      "sat",
+      "mat",
+      "pat",
+      "fat"
+    ],
+    [
+      "map",
+      "nap",
+      "cap",
+      "tap"
+    ],
+    [
+      "man",
+      "fan",
+      "pan",
+      "can"
+    ]
+  ],
+  "contrasts": [
+    [
+      "cap",
+      "cat"
+    ],
+    [
+      "mad",
+      "map"
+    ],
+    [
+      "fan",
+      "fat"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "can",
+      "graphemes": [
+        "c",
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "pat",
+      "graphemes": [
+        "p",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "mat",
+      "graphemes": [
+        "m",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "Pam",
+      "graphemes": [
+        "p",
+        "a",
+        "m"
+      ]
+    },
+    {
+      "text": "Sam",
+      "graphemes": [
+        "s",
+        "a",
+        "m"
+      ]
+    },
+    {
+      "text": "pan",
+      "graphemes": [
+        "p",
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "tan",
+      "graphemes": [
+        "t",
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "mad",
+      "graphemes": [
+        "m",
+        "a",
+        "d"
+      ]
+    },
+    {
+      "text": "at",
+      "graphemes": [
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "an",
+      "graphemes": [
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "am",
+      "graphemes": [
+        "a",
+        "m"
+      ]
+    },
+    {
+      "text": "Dan",
+      "graphemes": [
+        "d",
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "fat",
+      "graphemes": [
+        "f",
+        "a",
+        "t"
+      ]
+    },
+    {
+      "text": "and",
+      "graphemes": [
+        "a",
+        "n",
+        "d"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.c",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}

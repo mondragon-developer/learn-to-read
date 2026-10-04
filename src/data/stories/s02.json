@@ -1,0 +1,69 @@
+{
+  "id": "s02",
+  "title": "Goal!",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "sequence",
+  "reward": "⚽",
+  "sentences": [
+    "Leo has a new soccer ball.",
+    "First, he puts on his shoes.",
+    "Next, he runs to the park.",
+    "Then, he kicks the ball to his friend Mia.",
+    "Mia kicks it back.",
+    "Last, Leo kicks the ball into the goal.",
+    "\"Goal!\" yells Mia.",
+    "They both cheer."
+  ],
+  "questions": [
+    {
+      "prompt": "What does Leo do first?",
+      "options": [
+        "He puts on his shoes.",
+        "He runs to the park.",
+        "He kicks the ball."
+      ],
+      "answer": 0,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What does Leo do after he runs to the park?",
+      "options": [
+        "He puts on his shoes.",
+        "He goes home.",
+        "He kicks the ball to Mia."
+      ],
+      "answer": 2,
+      "skill": "sequence"
+    },
+    {
+      "prompt": "What does Leo do last?",
+      "options": [
+        "He runs to the park.",
+        "He kicks the ball into the goal.",
+        "He puts on his shoes."
+      ],
+      "answer": 1,
+      "skill": "sequence"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "Which word tells when?",
+    "options": [
+      "ball",
+      "then",
+      "park"
+    ],
+    "answer": 1
+  },
+  "order": [
+    1,
+    2,
+    5
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.3.2.a"
+  ]
+}

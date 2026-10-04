@@ -1,0 +1,137 @@
+{
+  "source": "Florida B.E.S.T. ELA Standards, Grade 1 (FLDOE). Wording verified 2026-10-04 - see docs/research/01_FLORIDA_BEST_GRADE1.md.",
+  "benchmarks": [
+    {
+      "code": "ELA.1.C.1.1",
+      "short": "Handwriting",
+      "es": "Escritura a mano",
+      "text": "Print all upper- and lowercase letters."
+    },
+    {
+      "code": "ELA.1.C.3.1",
+      "short": "Conventions and spelling",
+      "es": "Convenciones y ortografía",
+      "text": "Follow the rules of standard English grammar, punctuation, capitalization, and spelling appropriate to grade level."
+    },
+    {
+      "code": "ELA.1.F.1.2",
+      "short": "Phonological awareness",
+      "es": "Conciencia fonológica",
+      "text": "Demonstrate phonological awareness."
+    },
+    {
+      "code": "ELA.1.F.1.2.a",
+      "short": "Segment sounds",
+      "es": "Separar sonidos",
+      "text": "Segment spoken words into initial, medial, and final phonemes, including words with digraphs, blends, and trigraphs."
+    },
+    {
+      "code": "ELA.1.F.1.2.b",
+      "short": "Blend sounds",
+      "es": "Unir sonidos",
+      "text": "Orally blend initial, medial, and final phonemes together to produce a single-syllable word that includes digraphs, blends, or trigraphs."
+    },
+    {
+      "code": "ELA.1.F.1.2.c",
+      "short": "Blend 5 sounds",
+      "es": "Unir 5 sonidos",
+      "text": "Blend single-syllable spoken words with at least five phonemes."
+    },
+    {
+      "code": "ELA.1.F.1.2.e",
+      "short": "Syllables",
+      "es": "Sílabas",
+      "text": "Segment and blend phonemes in multi-syllable spoken words."
+    },
+    {
+      "code": "ELA.1.F.1.3",
+      "short": "Phonics",
+      "es": "Fonética",
+      "text": "Use knowledge of grade-appropriate phonics and word-analysis skills to decode words accurately."
+    },
+    {
+      "code": "ELA.1.F.1.3.a",
+      "short": "Digraphs and blends",
+      "es": "Dígrafos y mezclas",
+      "text": "Decode words using knowledge of spelling-sound correspondences for common consonant digraphs, trigraphs, and blends."
+    },
+    {
+      "code": "ELA.1.F.1.3.c",
+      "short": "Read and spell words",
+      "es": "Leer y deletrear palabras",
+      "text": "Decode and encode regularly spelled one-syllable words."
+    },
+    {
+      "code": "ELA.1.F.1.3.d",
+      "short": "Word endings",
+      "es": "Terminaciones",
+      "text": "Decode words with inflectional endings."
+    },
+    {
+      "code": "ELA.1.F.1.3.e",
+      "short": "Two-syllable words",
+      "es": "Palabras de dos sílabas",
+      "text": "Decode two-syllable words with regular patterns by breaking the words into syllables."
+    },
+    {
+      "code": "ELA.1.F.1.3.f",
+      "short": "Silent e and vowel teams",
+      "es": "E muda y pares de vocales",
+      "text": "Decode words that use final –e and vowel teams to make long-vowel sound."
+    },
+    {
+      "code": "ELA.1.F.1.4",
+      "short": "Fluency",
+      "es": "Fluidez",
+      "text": "Read grade-level texts with accuracy, automaticity, and appropriate prosody or expression."
+    },
+    {
+      "code": "ELA.1.F.1.4.a",
+      "short": "Sight words",
+      "es": "Palabras de uso frecuente",
+      "text": "Recognize and read with automaticity the grade-level sight words."
+    },
+    {
+      "code": "ELA.1.R.1.1",
+      "short": "Story elements",
+      "es": "Elementos del cuento",
+      "text": "Identify and describe the main story elements in a story."
+    },
+    {
+      "code": "ELA.1.R.2.2",
+      "short": "Topic and details",
+      "es": "Tema y detalles",
+      "text": "Identify the topic of and relevant details in a text."
+    },
+    {
+      "code": "ELA.1.R.3.2.a",
+      "short": "Retell",
+      "es": "Recontar",
+      "text": "Use main story elements at the beginning, middle, and end for a literary text."
+    },
+    {
+      "code": "ELA.1.R.3.3",
+      "short": "Compare and contrast",
+      "es": "Comparar y contrastar",
+      "text": "Compare and contrast two texts on the same topic."
+    },
+    {
+      "code": "ELA.1.V.1.1",
+      "short": "Academic vocabulary",
+      "es": "Vocabulario académico",
+      "text": "Use grade-level academic vocabulary appropriately in speaking and writing."
+    },
+    {
+      "code": "ELA.1.V.1.2",
+      "short": "Base words and endings",
+      "es": "Raíz y terminaciones",
+      "text": "Identify and use frequently occurring base words and their common inflections in grade-level content."
+    },
+    {
+      "code": "ELA.1.V.1.3",
+      "short": "Word meaning",
+      "es": "Significado de palabras",
+      "text": "Identify and use picture clues, context clues, word relationships, reference materials, and/or background knowledge to determine the meaning of unknown words."
+    }
+  ]
+}

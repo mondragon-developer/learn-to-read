@@ -1,0 +1,217 @@
+{
+  "id": "u08",
+  "order": 8,
+  "title": "th",
+  "focus": "t and h together say /th/. Put your tongue between your teeth!",
+  "teaches": [
+    "th"
+  ],
+  "words": [
+    {
+      "text": "this",
+      "graphemes": [
+        "th",
+        "i",
+        "s"
+      ],
+      "es": "este / esto"
+    },
+    {
+      "text": "that",
+      "graphemes": [
+        "th",
+        "a",
+        "t"
+      ],
+      "es": "ese / eso"
+    },
+    {
+      "text": "them",
+      "graphemes": [
+        "th",
+        "e",
+        "m"
+      ],
+      "es": "ellos / a ellos"
+    },
+    {
+      "text": "then",
+      "graphemes": [
+        "th",
+        "e",
+        "n"
+      ],
+      "es": "luego"
+    },
+    {
+      "text": "with",
+      "graphemes": [
+        "w",
+        "i",
+        "th"
+      ],
+      "es": "con"
+    },
+    {
+      "text": "bath",
+      "graphemes": [
+        "b",
+        "a",
+        "th"
+      ],
+      "es": "baño (de tina)",
+      "reward": "🛁"
+    },
+    {
+      "text": "math",
+      "graphemes": [
+        "m",
+        "a",
+        "th"
+      ],
+      "es": "matemáticas",
+      "reward": "➗"
+    },
+    {
+      "text": "thin",
+      "graphemes": [
+        "th",
+        "i",
+        "n"
+      ],
+      "es": "delgado"
+    },
+    {
+      "text": "path",
+      "graphemes": [
+        "p",
+        "a",
+        "th"
+      ],
+      "es": "camino",
+      "reward": "🛤️"
+    },
+    {
+      "text": "moth",
+      "graphemes": [
+        "m",
+        "o",
+        "th"
+      ],
+      "es": "polilla",
+      "reward": "🦋"
+    }
+  ],
+  "heartWords": [
+    "there",
+    "come",
+    "both",
+    "finally"
+  ],
+  "sentences": [
+    "Then Beth got in the bath.",
+    "Come with them to the path.",
+    "This moth is thin.",
+    "Both of them did math."
+  ],
+  "rhymes": [
+    [
+      "bath",
+      "math",
+      "path"
+    ],
+    [
+      "thin",
+      "fin",
+      "pin",
+      "win"
+    ],
+    [
+      "moth",
+      "cloth"
+    ]
+  ],
+  "contrasts": [
+    [
+      "thin",
+      "tin"
+    ],
+    [
+      "then",
+      "den"
+    ],
+    [
+      "bath",
+      "bat"
+    ],
+    [
+      "math",
+      "mat"
+    ]
+  ],
+  "extras": [
+    {
+      "text": "Beth",
+      "graphemes": [
+        "b",
+        "e",
+        "th"
+      ]
+    },
+    {
+      "text": "Seth",
+      "graphemes": [
+        "s",
+        "e",
+        "th"
+      ]
+    },
+    {
+      "text": "thud",
+      "graphemes": [
+        "th",
+        "u",
+        "d"
+      ]
+    },
+    {
+      "text": "than",
+      "graphemes": [
+        "th",
+        "a",
+        "n"
+      ]
+    },
+    {
+      "text": "den",
+      "graphemes": [
+        "d",
+        "e",
+        "n"
+      ]
+    },
+    {
+      "text": "cloth",
+      "graphemes": [
+        "c",
+        "l",
+        "o",
+        "th"
+      ]
+    },
+    {
+      "text": "pets",
+      "graphemes": [
+        "p",
+        "e",
+        "t",
+        "s"
+      ]
+    }
+  ],
+  "benchmarks": [
+    "ELA.1.F.1.3.a",
+    "ELA.1.F.1.2.b",
+    "ELA.1.F.1.4.a"
+  ]
+}
