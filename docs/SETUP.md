@@ -1,41 +1,45 @@
 # Setup — the steps only the owner can do
 
-Everything below is free except Fish Audio (pennies: the full clip set is ≈ $0.08).
+Everything below is free except Fish Audio (pennies: the full clip set is ≈ $0.17).
 
 ## 1. GitHub + Vercel (hosting)
-1. Create a **private** repo `goal-reader` on GitHub (account `mondragon-developer`).
-2. In this folder:
-   ```bash
-   git add -A && git commit -m "Goal Reader v0: domain, content units 1-8, app, device check"
-   git remote add origin git@github.com:mondragon-developer/goal-reader.git
-   git push -u origin main
-   ```
+1. Repo: https://github.com/mondragon-developer/learn-to-read (this folder's `origin`; `git push` publishes).
    Local-only files (`CLAUDE.md`, `docs/private/`, `.env.local`) are excluded in `.git/info/exclude` and never leave this Mac.
-3. vercel.com → **Add New → Project** → import the repo. Vercel reads `vercel.json` (Vite, `npm run build`, `dist`). Deploy.
-4. You get `https://goal-reader-xxxx.vercel.app`. Every push to `main` redeploys.
+2. vercel.com → **Add New → Project** → import the repo. Vercel reads `vercel.json` (Vite, `npm run build`, `dist`). Deploy.
+3. You get `https://learn-to-read-xxxx.vercel.app`. Every push to `main` redeploys.
 
 ## 2. Device check (milestone M1) — do this first
 On the **iPad, iPhone and Mac**, open `https://<your-app>.vercel.app/spike.html`:
-1. In a normal Safari tab, run cards 1–5 with your son (3b is the important one: the voice says a word, then the mic listens).
+1. In a normal Safari tab, run cards 1–5 with your son (3b: the voice says a word, then the mic listens; 3c: record and hear yourself).
 2. Add it to the Home Screen (Share → Add to Home Screen), open it from the icon, and run cards 3 and 3b again.
 3. Tap **Copy report** and paste it into the chat. It decides whether the free mic check is reliable on each device or whether those devices go straight to Grown-up ✓ mode.
 
 ## 3. Supabase (sync between iPad, iPhone and Mac)
-1. supabase.com → New project (free tier). Region: East US.
-2. **SQL Editor** → paste and run `supabase/migrations/0001_init.sql`.
-3. **Authentication → Providers → Email**: enabled. Leave "Confirm email" on.
-4. **Authentication → Email Templates → Magic Link**: replace the body so it sends a **code** instead of a link (the app asks for a 6-digit code, because a link would open in Safari outside the installed app):
-   ```html
-   <h2>Goal Reader</h2>
-   <p>Your code / Su código: <strong>{{ .Token }}</strong></p>
-   ```
-   Do the same in **Confirm signup**.
-5. **Project Settings → API**: copy the Project URL and the anon/publishable key.
-6. Vercel → Project → Settings → Environment Variables:
-   - `VITE_SUPABASE_URL` = project URL
-   - `VITE_SUPABASE_ANON_KEY` = anon key (safe to ship: Row Level Security limits every family to its own rows)
-   Redeploy. Locally, put the same two lines in `.env.local`.
-7. In the app: 🔒 → Cuenta y respaldo → your email → code. Do this once on each device.
+
+### Recommended: connect the integrations (no copy-paste of SQL or keys)
+1. supabase.com → **New project** (Free plan). Region: East US.
+2. **Tables from GitHub:** Project → **Settings → Integrations → GitHub** → connect `mondragon-developer/learn-to-read`.
+   - Working directory: `.` (the repo root, which contains `supabase/`)
+   - Production branch: `main`, turn on **Deploy to production**
+   - The next push to `main` applies `supabase/migrations/20261004000000_init.sql` (tables, Row Level Security, `upsert_profile`). Check **Database → Tables**: `profiles` and `events` appear.
+3. **Keys into Vercel:** Vercel project → **Integrations → Supabase** (Marketplace) → connect the existing Supabase project. It sets `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which the app reads (see `supabasePublicEnv` in `vite.config.ts`; the integration's `SUPABASE_SECRET_KEY` is never exposed). Then **Redeploy**.
+
+### Always manual: the sign-in email must send a code
+The GitHub integration ignores Auth settings. In **Authentication → Emails (Templates)**, replace the body of **Magic Link** and **Confirm signup** with:
+```html
+<h2>Goal Reader</h2>
+<p>Your code / Su código: <strong>{{ .Token }}</strong></p>
+```
+and in **Authentication → Providers → Email** check Email is enabled and **Email OTP Length = 6**. (A link would open Safari outside the installed app and the sign-in would be lost.)
+
+### Alternative: by hand
+- **SQL Editor** → paste and run `supabase/migrations/20261004000000_init.sql` (safe to run more than once).
+- **Project Settings → API**: copy the Project URL and the anon/publishable key (never the secret/service_role key) into Vercel → Settings → Environment Variables as `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then Redeploy. Locally, the same two lines go in `.env.local`.
+
+### Then, on each device
+🔒 → **Cuenta y respaldo** → your email → the 6-digit code. Once per device (iPad, iPhone, Mac).
+
+Free plan notes: a project with no activity for a week is paused (daily practice keeps it awake; after a long break, click **Restore** in the dashboard). The built-in email sender allows only a few emails per hour; if a code doesn't arrive, wait a few minutes.
 
 ## 4. Fish Audio (natural voice for all clips)
 1. fish.audio → API keys → create a key.

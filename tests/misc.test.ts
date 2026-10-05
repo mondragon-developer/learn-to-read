@@ -133,3 +133,13 @@ describe('checkTake', () => {
     expect(checkTake({ seconds: 0, peak: -1, bytes: 100, via: 'none' })).toBe('empty');
   });
 });
+
+import { supabasePublicEnv } from '../vite.config';
+
+describe('supabasePublicEnv', () => {
+  it('reads our names first, then the Vercel integration names, and never the secret key', () => {
+    expect(supabasePublicEnv({ NEXT_PUBLIC_SUPABASE_URL: 'u', NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'pk', SUPABASE_SECRET_KEY: 'secret' })).toEqual({ url: 'u', key: 'pk' });
+    expect(supabasePublicEnv({ VITE_SUPABASE_URL: 'mine', NEXT_PUBLIC_SUPABASE_URL: 'u', VITE_SUPABASE_ANON_KEY: 'k' })).toEqual({ url: 'mine', key: 'k' });
+    expect(supabasePublicEnv({ SUPABASE_SECRET_KEY: 'secret', SUPABASE_URL: 'u' })).toEqual({ url: '', key: '' });
+  });
+});

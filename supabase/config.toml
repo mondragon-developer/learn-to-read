@@ -1,0 +1,5 @@
+# Supabase CLI / GitHub integration config for Goal Reader.
+# The GitHub integration applies supabase/migrations on every push to main ("Deploy to production").
+# Auth settings (email OTP template) are NOT synced from here: set them in the dashboard (docs/SETUP.md §3).
+project_id = "learn-to-read"
+

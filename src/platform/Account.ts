@@ -44,7 +44,7 @@ export class Account {
   remote(): RemoteStore { return new SupabaseRemote(this.client); }
 }
 
-/** RemoteStore over Supabase tables (see supabase/migrations/0001_init.sql). */
+/** RemoteStore over Supabase tables (see supabase/migrations/20261004000000_init.sql). */
 export class SupabaseRemote implements RemoteStore {
   constructor(private readonly db: SupabaseClient) {}
 
