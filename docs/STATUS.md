@@ -70,6 +70,7 @@ Update at the end of every working session. Newest log entry on top.
 - 2026-10-04 · Validator runs through vite-node (`scripts/validate-content.ts`) so it reuses the domain's Decodability code.
 
 ## Session log
+- **2026-10-04 · S7** — Repo pushed to GitHub (`mondragon-developer/learn-to-read`). Owner connected Supabase ↔ GitHub (Deploy to production on `main`) and Supabase ↔ Vercel. This push triggers the first migration and a Vercel build with the integration keys. Still manual: the email-code template (`{{ .Token }}`).
 - **2026-10-04 · S6** — Practice a skill (3 phases): topic catalog + planner.planTopic + recommendation; standards mapping + dashboard; Sound boxes; one-minute read; retell; moral; homework week. Tests 111/111; e2e 12/12 (new: practice menu → sound boxes → one-minute read → summary).
 - **2026-10-04 · S5** — Final-checker pass: 11 fixes with regression tests (outbox interleavings, sequence plays all clips, malformed backup, transport pause/commands/leak, gate rejects wrong answer). Tests 93/93; e2e 9/9.
 - **2026-10-04 · S4** — Reading coach (4-step sentence flow, transport with pause/replay/next, assessment events + dashboard). Recording fix (shared AudioEngine, audio session, take checks, error messages, level meter), spike card 3c. Tests 85/85; e2e 6/6 (adds blocked-mic test; fake recorder now emits a real WAV).
