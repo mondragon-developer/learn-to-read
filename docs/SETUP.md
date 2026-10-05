@@ -16,13 +16,20 @@ On the **iPad, iPhone and Mac**, open `https://<your-app>.vercel.app/spike.html`
 
 ## 3. Supabase (sync between iPad, iPhone and Mac)
 
-### Recommended: connect the integrations (no copy-paste of SQL or keys)
-1. supabase.com → **New project** (Free plan). Region: East US.
-2. **Tables from GitHub:** Project → **Settings → Integrations → GitHub** → connect `mondragon-developer/learn-to-read`.
-   - Working directory: `.` (the repo root, which contains `supabase/`)
-   - Production branch: `main`, turn on **Deploy to production**
-   - The next push to `main` applies `supabase/migrations/20261004000000_init.sql` (tables, Row Level Security, `upsert_profile`). Check **Database → Tables**: `profiles` and `events` appear.
-3. **Keys into Vercel:** Vercel project → **Integrations → Supabase** (Marketplace) → connect the existing Supabase project. It sets `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which the app reads (see `supabasePublicEnv` in `vite.config.ts`; the integration's `SUPABASE_SECRET_KEY` is never exposed). Then **Redeploy**.
+### Tables: Supabase ↔ GitHub integration (free, connected 2026-10-04)
+- Project → **Settings → Integrations → GitHub** → `mondragon-developer/learn-to-read`, working directory `.`, production branch `main`, **Deploy to production** on.
+- Every push to `main` applies new files in `supabase/migrations/` (the check "Supabase Preview" appears on the commit in GitHub). Confirm in **Database → Tables**: `profiles` and `events`.
+- If the tables are ever missing: **SQL Editor** → paste and run `supabase/migrations/20261004000000_init.sql` (safe to run more than once).
+
+### Keys: add them to Vercel by hand (the Supabase ↔ Vercel integration is a paid feature)
+1. Supabase → **Project Settings → API** (or **API Keys**): copy the **Project URL** and the **anon / publishable** key. Never the `service_role` / secret key.
+2. Vercel project → **Settings → Environment Variables** (All Environments):
+   - `VITE_SUPABASE_URL` = Project URL
+   - `VITE_SUPABASE_ANON_KEY` = anon / publishable key
+3. **Deployments → ⋯ → Redeploy** (keys are baked in at build time).
+4. Locally (optional): the same two lines in `.env.local`.
+
+The app would also read `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` if a paid integration ever sets them (`supabasePublicEnv` in `vite.config.ts`); either way the secret key is never exposed.
 
 ### Always manual: the sign-in email must send a code
 The GitHub integration ignores Auth settings. In **Authentication → Emails (Templates)**, replace the body of **Magic Link** and **Confirm signup** with:
@@ -31,10 +38,6 @@ The GitHub integration ignores Auth settings. In **Authentication → Emails (Te
 <p>Your code / Su código: <strong>{{ .Token }}</strong></p>
 ```
 and in **Authentication → Providers → Email** check Email is enabled and **Email OTP Length = 6**. (A link would open Safari outside the installed app and the sign-in would be lost.)
-
-### Alternative: by hand
-- **SQL Editor** → paste and run `supabase/migrations/20261004000000_init.sql` (safe to run more than once).
-- **Project Settings → API**: copy the Project URL and the anon/publishable key (never the secret/service_role key) into Vercel → Settings → Environment Variables as `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then Redeploy. Locally, the same two lines go in `.env.local`.
 
 ### Then, on each device
 🔒 → **Cuenta y respaldo** → your email → the 6-digit code. Once per device (iPad, iPhone, Mac).
