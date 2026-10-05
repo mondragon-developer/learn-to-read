@@ -42,3 +42,22 @@ export function parentGate(i18n: I18n): Promise<boolean> {
     hold.addEventListener('pointercancel', stop);
   });
 }
+
+const QUICK_HOLD_MS = 1500;
+
+/**
+ * Short gate for grown-up shortcuts on the child's screens: press and hold 1.5 s. It only
+ * keeps him from wandering in by accident; the parent area keeps the full gate.
+ */
+export function quickGate(i18n: I18n): Promise<boolean> {
+  return new Promise((resolve) => {
+    const close = (ok: boolean): void => { overlay.remove(); resolve(ok); };
+    const hold = h('button', { class: 'btn big hold quick' }, h('span', { class: 'hold-fill' }), h('span', {}, i18n.t('gate.quick')));
+    const overlay = h('div', { class: 'overlay', role: 'dialog', 'aria-modal': 'true', 'aria-label': i18n.t('gate.quick') },
+      h('div', { class: 'gate' }, hold, h('button', { class: 'btn link', onClick: () => close(false) }, i18n.t('gate.cancel'))));
+    document.body.appendChild(overlay);
+    let timer: number | undefined;
+    hold.addEventListener('pointerdown', () => { hold.classList.add('holding'); timer = window.setTimeout(() => close(true), QUICK_HOLD_MS); });
+    for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) hold.addEventListener(ev, () => { hold.classList.remove('holding'); window.clearTimeout(timer); });
+  });
+}

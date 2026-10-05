@@ -1,4 +1,6 @@
-import { dashboard, type DayMinutes } from '@domain/analysis/Dashboard';
+import { dashboard, type DayMinutes, type FluencyRecord } from '@domain/analysis/Dashboard';
+import { normFor, seasonOf } from '@domain/reading/Fluency';
+import { homeworkSkill } from '@domain/session/SessionPlanner';
 import { FAST_GRADE1_LEVEL3, type Profile } from '@domain/profiles/Profile';
 import { rebuildDeck } from '@domain/srs/Leitner';
 import benchmarks from '@data/benchmarks.json';
@@ -23,6 +25,7 @@ export async function summary(ctx: AppContext, p: Profile): Promise<HTMLElement>
       tile(t.t('sum.firstTry'), d.firstTryRate === null ? '—' : `${Math.round(d.firstTryRate * 100)}%`, ''),
       tile(t.t('sum.unit'), unitNow ? `${unitNow.order}` : '—', unitNow?.title ?? '')),
     minutesChart(d.minutes, today, t),
+    homeworkLine(ctx, p),
     fastCard(ctx, p),
     h('h3', {}, t.t('sum.sentences')),
     d.sentences.length
@@ -44,8 +47,18 @@ export async function summary(ctx: AppContext, p: Profile): Promise<HTMLElement>
     d.storySkills.length
       ? h('div', { class: 'meters' }, d.storySkills.map((s) => meter(t.t(`skill.${s.skill}`), s.right, s.total)))
       : h('p', { class: 'muted' }, t.t('sum.skillsNone')),
-    h('h3', {}, t.t('sum.benchmarks')),
-    h('div', { class: 'meters' }, d.benchmarks.map((b) => meter(`${short(b.code)} · ${b.code}`, b.mastered, b.total))));
+    h('h3', {}, t.t('sum.fluency')),
+    fluencyCard(ctx, d.fluency),
+    h('h3', {}, t.t('sum.standards')),
+    d.standards.length
+      ? h('div', { class: 'meters' }, d.standards.map((x) => {
+        const meta = benchMeta.get(x.code);
+        const k = meta && 'grade' in meta && meta.grade === 'K' ? ` (${t.t('sum.kReview')})` : '';
+        const when = x.lastDay === today ? t.t('sum.today2') : t.t('sum.daysAgo', { n: today - x.lastDay });
+        return h('div', { class: 'std-row' }, meter(`${short(x.code)}${k} · ${x.code}`, x.correct, x.attempts),
+          h('span', { class: 'small muted std-when' }, t.t('sum.stdRow', { pct: Math.round((x.correct / x.attempts) * 100), n: x.attempts, when })));
+      }))
+      : h('p', { class: 'muted' }, t.t('sum.standardsNone')));
 }
 
 function tile(label: string, value: string, sub: string): HTMLElement {
@@ -85,6 +98,27 @@ function minutesChart(data: DayMinutes[], today: number, t: I18n): HTMLElement {
     h('details', {}, h('summary', {}, t.t('sum.chartTable')),
       h('table', {}, h('thead', {}, h('tr', {}, h('th', {}, t.t('sum.day')), h('th', {}, 'min'))),
         h('tbody', {}, data.map((d) => h('tr', {}, h('td', {}, dayLabel(d.day, t.locale)), h('td', {}, String(d.minutes))))))));
+}
+
+function homeworkLine(ctx: AppContext, p: Profile): HTMLElement | null {
+  const t = ctx.i18n;
+  const skill = homeworkSkill(p.settings, ctx.clock.today());
+  if (!skill || !p.settings.homework) return null;
+  const until = new Date(p.settings.homework.until * 86_400_000 + 12 * 3_600_000).toLocaleDateString(t.locale, { day: 'numeric', month: 'short', timeZone: 'UTC' });
+  return h('p', { class: 'homework-row' }, t.t('sum.homework', { skill: t.t(`skill.${skill}`), date: until }));
+}
+
+/** Latest one-minute read against the season's 50th-percentile target, plus the history. */
+function fluencyCard(ctx: AppContext, reads: FluencyRecord[]): HTMLElement {
+  const t = ctx.i18n;
+  const latest = reads[0];
+  if (!latest) return h('p', { class: 'muted' }, t.t('sum.fluencyNone'));
+  const norm = normFor(seasonOf(new Date(ctx.clock.now())));
+  const season = t.t(`season.${norm.season}`);
+  return h('div', { class: 'fast-card' },
+    h('p', {}, h('b', { class: 'big-num' }, String(latest.wcpm)), h('span', { class: 'muted' }, ` · ${t.t('fl.target', { season, target: norm.target })}`)),
+    h('div', { class: 'meters' }, meter(`${latest.wcpm} / ${norm.target}`, Math.min(latest.wcpm, norm.target), norm.target)),
+    reads.length > 1 ? h('p', { class: 'muted small' }, reads.slice(0, 8).reverse().map((r) => `${r.wcpm}`).join(' → ')) : null);
 }
 
 function fastCard(ctx: AppContext, p: Profile): HTMLElement {

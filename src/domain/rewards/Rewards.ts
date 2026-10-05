@@ -25,7 +25,7 @@ export const STADIUM_PARTS: readonly StadiumPart[] = [
 ];
 
 /** Activities where a correct answer is a goal. */
-const SCORING = new Set(['new-word', 'review', 'sentence', 'story-question', 'story-bonus', 'story-order', 'warmup', 'tricky', 'write']);
+const SCORING = new Set(['new-word', 'review', 'sentence', 'story-question', 'story-bonus', 'story-order', 'retell', 'fluency', 'warmup', 'tricky', 'write']);
 
 export function isGoal(e: PracticeEvent): boolean {
   return SCORING.has(e.activity) && e.outcome !== 'missed';

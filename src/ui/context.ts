@@ -14,9 +14,13 @@ import type { I18n } from '@domain/i18n/i18n';
 import type { Profile } from '@domain/profiles/Profile';
 import type { Account } from '@platform/Account';
 
-export type ScreenId = 'players' | 'home' | 'session' | 'stadium' | 'words' | 'parent' | 'audio-review';
+export type ScreenId = 'players' | 'home' | 'session' | 'stadium' | 'words' | 'practice' | 'parent' | 'audio-review';
 
-export interface NavParams { extra?: boolean }
+export interface NavParams {
+  extra?: boolean;
+  /** A chosen topic for this session, as encodeChoice() writes it ('phonics:5', 'story:compare'). */
+  topic?: string;
+}
 
 /** Everything a screen may depend on - built once in main.ts (composition root). */
 export interface AppContext {

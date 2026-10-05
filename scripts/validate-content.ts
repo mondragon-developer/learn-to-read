@@ -108,6 +108,11 @@ for (const s of stories) {
   });
   if (new Set(s.questions.map((q) => q.answer)).size === 1) warn(at, 'every answer is in the same position');
   if (s.bonus.answer < 0 || s.bonus.answer >= s.bonus.options.length) err(at, 'bonus answer out of range');
+  if (s.moral) {
+    if (s.moral.skill !== 'moral') err(at, 'moral question must have skill "moral"');
+    if (s.moral.options.length !== 3 || s.moral.answer < 0 || s.moral.answer > 2) err(at, 'moral needs 3 options and an answer 0-2');
+    if (!s.benchmarks.includes('ELA.1.R.1.2')) err(at, 'a story with a moral must list ELA.1.R.1.2');
+  }
   const [a, b, c] = s.order;
   if (!(a < b && b < c) || c >= s.sentences.length) err(at, 'order must be 3 ascending sentence indexes');
   for (const code of s.benchmarks) if (!benchmarkCodes.has(code)) err(at, `unknown benchmark ${code}`);

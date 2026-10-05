@@ -87,6 +87,10 @@ export function buildCatalog(library: ContentLibrary, prompts: Record<string, st
       part(`q${i}`, q.prompt);
       q.options.forEach((o, j) => part(`q${i}o${j}`, o));
     });
+    if (s.moral) {
+      part('moral', s.moral.prompt);
+      s.moral.options.forEach((o, j) => part(`moral-o${j}`, o));
+    }
     part('bonus', s.bonus.prompt);
     s.bonus.options.forEach((o, j) => part(`bonus-o${j}`, o));
   }

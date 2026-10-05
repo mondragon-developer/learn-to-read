@@ -299,3 +299,49 @@ main { flex: 1; padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bot
 /* Author display rules beat the [hidden] attribute; make hiding win everywhere it's used. */
 [hidden] { display: none !important; }
 .gate-input { width: 110px; min-height: 56px; font-size: 28px; text-align: center; border-radius: 14px; border: 2px solid var(--line); }
+
+/* ---------- sound boxes ---------- */
+.sboxes { display: flex; gap: 8px; min-height: 64px; }
+.sbox { width: 56px; height: 56px; border-radius: 12px; border: 3px dashed var(--line); background: #fff; transition: all 0.15s; }
+.sbox.filled { background: #8FD19E; border-style: solid; border-color: #2E8B57; }
+.sbox.lit { background: var(--goal); border-style: solid; border-color: #D99A22; }
+.sbox.hidden-box { visibility: hidden; }
+.tapbox { font-size: 72px; }
+
+/* ---------- one-minute read ---------- */
+.fl-text { gap: 4px 8px; }
+.fl-clock { font-size: 34px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--sky); }
+.fl-score { font-size: 30px; font-weight: 700; margin: 0; }
+.w.dim { opacity: 0.35; }
+
+/* ---------- retell ---------- */
+.retell-steps { display: flex; gap: 8px; }
+.rstep { padding: 6px 12px; border-radius: 999px; background: var(--pitch-light); color: var(--muted); font-weight: 700; }
+.rstep.on { background: var(--sky); color: #fff; }
+.rstep.done { background: #DDF3E4; color: var(--pitch); }
+.hold.quick.holding .hold-fill { transition-duration: 1.5s; }
+
+/* ---------- practice a skill ---------- */
+.practice-btn { display: flex; align-items: center; gap: 10px; width: min(100%, 420px); padding: 14px 20px; border-radius: var(--radius); border: 3px solid var(--sky); background: #F4F8FF; font-weight: 700; font-size: 20px; margin-bottom: 12px; text-align: left; }
+.practice-btn .small { margin-left: auto; }
+.topic-group h3 { margin-top: 20px; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.topic-card { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; text-align: left; padding: 14px; border-radius: 16px; border: 2px solid var(--line); background: var(--surface); box-shadow: var(--shadow); min-height: 140px; }
+.topic-card.rec { border-color: var(--goal); box-shadow: 0 0 0 3px rgba(242, 179, 61, 0.35), var(--shadow); }
+.tc-head { display: flex; gap: 8px; align-items: center; font-size: 20px; }
+.tc-icon { font-size: 26px; }
+.tc-badge { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #FFF1D6; color: #6B4500; }
+.tc-badge.k { background: #EEF3FF; color: #1E3F96; }
+.tc-desc { font-size: 15px; color: var(--ink-2); }
+.tc-codes { font-size: 12px; color: var(--muted); font-family: ui-monospace, monospace; }
+.tc-stat { font-size: 14px; font-weight: 700; color: var(--pitch); margin-top: auto; }
+.tc-stat.weak { color: #8A5A00; }
+.homework-row { background: #FFF6DD; border: 2px solid #F0D58C; border-radius: 14px; padding: 10px 14px; margin: 8px 0; }
+.homework-row label { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.homework-row select { min-height: 44px; border-radius: 10px; border: 2px solid var(--line); padding: 0 10px; background: #fff; }
+.sheet { max-height: 86dvh; overflow: auto; width: min(100%, 520px); }
+.unit-list { display: flex; flex-direction: column; gap: 8px; }
+.unit-btn { display: flex; justify-content: space-between; align-items: center; gap: 10px; min-height: 52px; padding: 8px 14px; border-radius: 12px; border: 2px solid var(--line); background: #fff; text-align: left; }
+.unit-btn.ahead { border-style: dashed; }
+.practice .choice-row { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.practice input[type=checkbox] { width: 24px; height: 24px; accent-color: var(--pitch); flex: none; }

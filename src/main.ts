@@ -35,6 +35,7 @@ import { HomeScreen } from '@ui/screens/HomeScreen';
 import { SessionScreen } from '@ui/screens/SessionScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
 import { WordBankScreen } from '@ui/screens/WordBankScreen';
+import { PracticeScreen } from '@ui/screens/PracticeScreen';
 import { ParentScreen } from '@ui/parent/ParentScreen';
 import { AudioReviewScreen } from '@ui/parent/AudioReviewScreen';
 import type { AppContext } from '@ui/context';
@@ -89,6 +90,7 @@ async function boot(): Promise<void> {
     session: new SessionScreen(ctx),
     stadium: new StadiumScreen(ctx),
     words: new WordBankScreen(ctx),
+    practice: new PracticeScreen(ctx),
     parent: new ParentScreen(ctx),
     'audio-review': new AudioReviewScreen(ctx, catalog),
   });

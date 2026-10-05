@@ -48,3 +48,17 @@ describe('dashboard', () => {
     expect(dashboard([], lib, 2).firstTryRate).toBeNull();
   });
 });
+
+describe('dashboard: standards and fluency', () => {
+  it('lists practiced standards from all events and one-minute reads newest first', () => {
+    const lib = new ContentLibrary(SOURCE);
+    const events = [
+      ev('review', 'w:cat', 1),
+      ev('fluency', 's01', 2, 'after-retry', { meta: { wcpm: 22, words: 24, errors: 2, prosody: 2, season: 'winter' } }),
+      ev('fluency', 's01', 5, 'first-try', { meta: { wcpm: 31, words: 33, errors: 2, prosody: 3, season: 'winter' } }),
+    ];
+    const d = dashboard(events, lib, 5);
+    expect(d.standards.map((s) => s.code)).toEqual(['ELA.1.F.1.3.c', 'ELA.1.F.1.4']);
+    expect(d.fluency.map((f) => f.wcpm)).toEqual([31, 22]);
+  });
+});

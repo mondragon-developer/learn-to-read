@@ -51,7 +51,7 @@ export interface Unit {
   benchmarks: string[];
 }
 
-export type StorySkill = 'sequence' | 'compare' | 'detail' | 'time-words' | 'main-topic';
+export type StorySkill = 'sequence' | 'compare' | 'detail' | 'time-words' | 'main-topic' | 'moral';
 
 export interface StoryQuestion {
   prompt: string;
@@ -71,6 +71,8 @@ export interface Story {
   sentences: string[];
   questions: [StoryQuestion, StoryQuestion, StoryQuestion];
   bonus: { kind: 'meaning' | 'rhyme'; prompt: string; options: string[]; answer: number };
+  /** Optional "what lesson…?" question for stories that have a moral (ELA.1.R.1.2). Many stories don't. */
+  moral?: StoryQuestion;
   /** Three sentence indexes, in story order, for the Put It In Order step. */
   order: [number, number, number];
   reward?: string;

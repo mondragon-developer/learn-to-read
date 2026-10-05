@@ -2,11 +2,14 @@ import type { ContentLibrary } from '../content/ContentLibrary';
 import type { StorySkill } from '../content/types';
 import { isMastered, rebuildDeck } from '../srs/Leitner';
 import type { PracticeEvent } from '../storage/events';
+import { standardStats, type StandardStat } from '../standards/Standards';
 
 export interface DayMinutes { day: number; minutes: number }
 export interface TroubleWord { id: string; text: string; misses: number; heard: string[] }
 export interface SkillScore { skill: StorySkill; right: number; total: number }
-export interface BenchmarkProgress { code: string; mastered: number; total: number }
+
+/** One one-minute read (ELA.1.F.1.4). */
+export interface FluencyRecord { day: number; wcpm: number; words: number; errors: number; prosody: number; season: string }
 
 /** One assessed sentence from the reading coach (newest first on the dashboard). */
 export interface SentenceRecord { day: number; text: string; words: number; wordsRead: number; whole: boolean; helped: string }
@@ -19,7 +22,10 @@ export interface DashboardData {
   wordsLearning: number;
   troubleWords: TroubleWord[];
   storySkills: SkillScore[];
-  benchmarks: BenchmarkProgress[];
+  /** Every Florida benchmark practiced, from all events (see standards/Standards). */
+  standards: StandardStat[];
+  /** One-minute reads, newest first. */
+  fluency: FluencyRecord[];
   /** Share of review reads right on the first try (accuracy, ELA.1.F.1.4); null before any review. */
   firstTryRate: number | null;
   /** Reading coach: recent sentences and totals (words read alone / words; whole sentences right). */
@@ -69,18 +75,10 @@ export function dashboard(events: PracticeEvent[], library: ContentLibrary, toda
     skillMap.set(skill, s);
   }
 
-  const bench = new Map<string, BenchmarkProgress>();
-  for (const u of library.units) {
-    for (const code of u.benchmarks) {
-      const b = bench.get(code) ?? { code, mastered: 0, total: 0 };
-      for (const c of library.unitCards(u.order)) {
-        b.total++;
-        const s = deck.get(c.id);
-        if (s && s.box >= 3) b.mastered++;
-      }
-      bench.set(code, b);
-    }
-  }
+  const fluency: FluencyRecord[] = events.filter((e) => e.activity === 'fluency').sort((a, b) => b.at - a.at).map((e) => ({
+    day: e.day, wcpm: Number(e.meta?.wcpm ?? 0), words: Number(e.meta?.words ?? 0), errors: Number(e.meta?.errors ?? 0),
+    prosody: Number(e.meta?.prosody ?? 0), season: String(e.meta?.season ?? ''),
+  }));
 
   const reads = events.filter((e) => e.activity === 'review');
   const firstTryRate = reads.length ? reads.filter((e) => e.outcome === 'first-try').length / reads.length : null;
@@ -105,7 +103,8 @@ export function dashboard(events: PracticeEvent[], library: ContentLibrary, toda
     wordsLearning: states.length - wordsMastered,
     troubleWords,
     storySkills: [...skillMap.values()],
-    benchmarks: [...bench.values()],
+    standards: standardStats(events, library),
+    fluency,
     firstTryRate,
   };
 }

@@ -63,10 +63,16 @@ export async function story(kit: Kit, host: HTMLElement, s: Story): Promise<void
     const ok = await choose(kit, host, `Question ${i + 1} of ${s.questions.length}`, clipKey.story(s.id, `q${i}`), q.prompt, q.options, q.answer, (j) => clipKey.story(s.id, `q${i}o${j}`));
     await kit.record('story-question', `${s.id}:q${i}`, ok ? 'first-try' : 'missed', 'tap', { skill: q.skill });
   }
+  if (s.moral) {
+    const m = s.moral;
+    const ok = await choose(kit, host, 'The lesson 💡', clipKey.story(s.id, 'moral'), m.prompt, m.options, m.answer, (j) => clipKey.story(s.id, `moral-o${j}`));
+    await kit.record('story-question', `${s.id}:moral`, ok ? 'first-try' : 'missed', 'tap', { skill: 'moral' });
+  }
   const bonusOk = await choose(kit, host, 'Bonus ⭐', clipKey.story(s.id, 'bonus'), s.bonus.prompt, s.bonus.options, s.bonus.answer, (j) => clipKey.story(s.id, `bonus-o${j}`));
   await kit.record('story-bonus', `${s.id}:bonus`, bonusOk ? 'first-try' : 'missed', 'tap', { kind: s.bonus.kind });
   const orderOk = await putInOrder(kit, host, s);
   await kit.record('story-order', `${s.id}:order`, orderOk ? 'first-try' : 'missed', 'tap');
+  await retell(kit, host, s);
   if (s.reward) replace(host, h('div', { class: 'stage' }, h('div', { class: 'big-reward' }, s.reward), h('p', { class: 'coach' }, 'Great story!')));
   await sleep(1200);
 }
@@ -93,6 +99,38 @@ async function choose(kit: Kit, host: HTMLElement, label: string, promptKey: str
   else await kit.say(optionKey(answer));
   await sleep(600);
   return pick === answer;
+}
+
+const RETELL_PARTS = [
+  { prompt: 'retell-beginning', label: 'Beginning' },
+  { prompt: 'retell-middle', label: 'Middle' },
+  { prompt: 'retell-end', label: 'End' },
+] as const;
+
+/**
+ * Retell (ELA.1.R.3.2.a): he tells the beginning, middle and end in his own words; the grown-up
+ * taps ✓ per part, or 🔊 Hint plays that part of the story (the three "put in order" sentences).
+ */
+async function retell(kit: Kit, host: HTMLElement, s: Story): Promise<void> {
+  await kit.intro(host, 'retell');
+  let told = 0;
+  for (const [i, part] of RETELL_PARTS.entries()) {
+    const hintKey = clipKey.story(s.id, String(s.order[i]));
+    let hinted = false;
+    const yes = await new Promise<boolean>((resolve) => {
+      replace(host, h('div', { class: 'stage center' }, kit.header('retell', `Tell the story: ${part.label}`, false),
+        h('div', { class: 'retell-steps' }, RETELL_PARTS.map((p, j) => h('span', { class: `rstep ${j < i ? 'done' : j === i ? 'on' : ''}` }, p.label))),
+        h('p', { class: 'coach' }, `What happened at the ${part.label.toLowerCase()}?`),
+        h('div', { class: 'row center' },
+          h('button', { class: 'btn big ok', onClick: () => resolve(!hinted) }, '✓ He told it'),
+          h('button', { class: 'btn big soft', onClick: async () => { hinted = true; await kit.say(hintKey); } }, '🔊 Hint')),
+        h('button', { class: 'btn link', onClick: () => resolve(false) }, 'Skip this part'),
+        h('p', { class: 'small muted grownup-q' }, 'Grown-up: tap ✓ when he tells this part in his own words.')));
+      void kit.prompt(part.prompt);
+    });
+    if (yes) told++;
+  }
+  await kit.record('retell', `${s.id}:retell`, told === 3 ? 'first-try' : told >= 2 ? 'after-retry' : 'missed', 'grownup', { parts: told });
 }
 
 /** Tap the three sentences in story order: first, next, last. Each strip is read aloud when tapped. */

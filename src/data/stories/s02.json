@@ -64,6 +64,17 @@
   ],
   "benchmarks": [
     "ELA.1.R.1.1",
-    "ELA.1.R.3.2.a"
-  ]
+    "ELA.1.R.3.2.a",
+    "ELA.1.R.1.2"
+  ],
+  "moral": {
+    "prompt": "What lesson does this story teach?",
+    "options": [
+      "Shoes are fast.",
+      "The park is big.",
+      "Playing with a friend is more fun."
+    ],
+    "answer": 2,
+    "skill": "moral"
+  }
 }

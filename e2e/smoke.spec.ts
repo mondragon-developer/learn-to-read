@@ -76,6 +76,7 @@ async function playMatch(page: Page, project: string, stopWhen?: () => Promise<b
     page.locator('.mic.rec'),
     page.getByRole('button', { name: /Read it right/ }),
     page.getByRole('button', { name: '✓ Read it', exact: true }),
+    page.getByRole('button', { name: /He told it/ }),
     page.getByRole('button', { name: /✓ Yes/ }),
     page.locator('.ear:enabled'),
     page.locator('.options .choice'),
@@ -124,6 +125,62 @@ test('the parent gate rejects a wrong answer', async ({ page }) => {
   await page.getByRole('button', { name: 'OK', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Área de padres' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Goal Reader' })).toBeVisible();
+});
+
+test('practice a skill: menu by Florida standard, sound boxes, one-minute read', async ({ page }) => {
+  await stubDevices(page);
+  await setUpPlayer(page);
+  const hold = async (name: RegExp): Promise<void> => {
+    const box = await page.getByRole('button', { name }).boundingBox();
+    if (!box) throw new Error('no hold button');
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.waitForTimeout(1700);
+    await page.mouse.up();
+  };
+  await page.getByRole('button', { name: /Practice a skill/ }).click();
+  await hold(/mantenga presionado|press and hold/i);
+  await expect(page.getByRole('heading', { name: /Practicar una habilidad/ })).toBeVisible();
+  await expect(page.getByText('ELA.1.F.1.2.a · ELA.1.F.1.2.d')).toBeVisible();
+  await expect(page.locator('.topic-card.rec')).toHaveCount(1);
+  await expect(page.getByText('Repaso de kínder')).toBeVisible();
+
+  // Sound boxes: 3 rounds, tap boxes, done.
+  await page.getByRole('button', { name: /Sound boxes/ }).click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await expect(page.locator('.tag').first()).toContainText(/Sound boxes 1 of \d/);
+  const fullTime = page.getByRole('heading', { name: 'Full time!' });
+  for (let round = 1; round <= 12 && !(await fullTime.isVisible()); round++) {
+    for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'One sound' }).click();
+    await page.getByRole('button', { name: '✓ Done' }).click();
+    // Wait out the answer reveal: the next round's counter, or Full time.
+    await expect(page.locator('.tag').filter({ hasText: `Sound boxes ${round + 1} of` }).or(fullTime)).toBeVisible({ timeout: 10_000 });
+  }
+  await expect(page.getByRole('heading', { name: 'Full time!' })).toBeVisible({ timeout: 20_000 });
+
+  // One-minute read.
+  await page.getByRole('button', { name: 'Done for today' }).click();
+  await page.getByRole('button', { name: /Practice a skill/ }).click();
+  await hold(/mantenga presionado|press and hold/i);
+  await page.getByRole('button', { name: /1-minute read/ }).click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await page.getByRole('button', { name: /Empezar \(1 minuto\)/ }).click();
+  await page.locator('.fl-text .w').nth(1).click(); // misread word
+  await page.getByRole('button', { name: /Terminó antes/ }).click();
+  await page.locator('.fl-text .w').nth(9).click(); // last word read
+  await page.getByRole('button', { name: /Fluido y con expresión/ }).click();
+  await expect(page.locator('.fl-score')).toContainText('palabras correctas por minuto');
+  await page.getByRole('button', { name: '⚽ Next' }).click();
+  await expect(page.getByRole('heading', { name: 'Full time!' })).toBeVisible({ timeout: 20_000 });
+
+  // Parent summary shows the standards and the one-minute read.
+  await page.locator('.lock').click();
+  await passGate(page);
+  await expect(page.getByRole('heading', { name: 'Estándares B.E.S.T. de Florida practicados' })).toBeVisible();
+  await expect(page.locator('.std-row').first()).toContainText('ELA.1.F.1.2.a');
+  await expect(page.getByRole('heading', { name: /Lectura de 1 minuto/ })).toBeVisible();
 });
 
 test('a blocked microphone shows the grown-up why, and the check still works', async ({ page }) => {

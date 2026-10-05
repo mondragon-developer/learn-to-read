@@ -1,6 +1,7 @@
 import { trophies } from '@domain/rewards/Rewards';
 import type { AppContext, Screen } from '../context';
 import { h, replace } from '../dom';
+import { quickGate } from '../parent/gate';
 
 /** The child's home: one huge Kick Off button, streak and stadium progress. */
 export class HomeScreen implements Screen {
@@ -23,6 +24,8 @@ export class HomeScreen implements Screen {
         h('div', { class: 'stat' }, h('b', {}, `🔥 ${t.streak}`), h('span', {}, t.streak === 1 ? 'day' : 'days')),
         h('div', { class: 'stat' }, h('b', {}, `⚽ ${t.goals}`), h('span', {}, 'goals')),
         h('div', { class: 'stat' }, h('b', {}, `🧱 ${t.blocks}`), h('span', {}, 'blocks'))),
+      h('button', { class: 'practice-btn', onClick: async () => { if (await quickGate(this.ctx.i18n)) this.ctx.navigate('practice'); } },
+        h('span', { 'aria-hidden': 'true' }, '🎯'), h('span', {}, 'Practice a skill'), h('span', { class: 'small muted' }, 'Grown-up picks')),
       h('button', { class: 'stadium-card words-card', onClick: () => this.ctx.navigate('words') },
         h('span', {}, '📚 My words'), h('span', { class: 'small' }, 'Hear them, say them, write them')),
       h('button', { class: 'stadium-card', onClick: () => this.ctx.navigate('stadium') },

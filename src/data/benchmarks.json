@@ -1,5 +1,5 @@
 {
-  "source": "Florida B.E.S.T. ELA Standards, Grade 1 (FLDOE). Wording verified 2026-10-04 - see docs/research/01_FLORIDA_BEST_GRADE1.md.",
+  "source": "Florida B.E.S.T. ELA Standards, Grade 1 (FLDOE), plus ELA.K.F.1.2.b as Kindergarten review. Wording verified 2026-10-04 - see docs/research/01_FLORIDA_BEST_GRADE1.md.",
   "benchmarks": [
     {
       "code": "ELA.1.C.1.1",
@@ -36,6 +36,12 @@
       "short": "Blend 5 sounds",
       "es": "Unir 5 sonidos",
       "text": "Blend single-syllable spoken words with at least five phonemes."
+    },
+    {
+      "code": "ELA.1.F.1.2.d",
+      "short": "Segment 5 sounds",
+      "es": "Separar 5 sonidos",
+      "text": "Segment single-syllable spoken words with at least five phonemes."
     },
     {
       "code": "ELA.1.F.1.2.e",
@@ -98,10 +104,22 @@
       "text": "Identify and describe the main story elements in a story."
     },
     {
+      "code": "ELA.1.R.1.2",
+      "short": "Moral of a story",
+      "es": "Moraleja del cuento",
+      "text": "Identify and explain the moral of a story."
+    },
+    {
       "code": "ELA.1.R.2.2",
       "short": "Topic and details",
       "es": "Tema y detalles",
       "text": "Identify the topic of and relevant details in a text."
+    },
+    {
+      "code": "ELA.1.R.3.2",
+      "short": "Retell",
+      "es": "Recontar",
+      "text": "Retell a text in oral or written form to enhance comprehension."
     },
     {
       "code": "ELA.1.R.3.2.a",
@@ -132,6 +150,13 @@
       "short": "Word meaning",
       "es": "Significado de palabras",
       "text": "Identify and use picture clues, context clues, word relationships, reference materials, and/or background knowledge to determine the meaning of unknown words."
+    },
+    {
+      "code": "ELA.K.F.1.2.b",
+      "short": "Rhyming (K review)",
+      "es": "Rimas (repaso de kínder)",
+      "text": "Identify and produce alliterative and rhyming words.",
+      "grade": "K"
     }
   ]
 }

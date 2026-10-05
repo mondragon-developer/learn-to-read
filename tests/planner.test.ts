@@ -111,3 +111,55 @@ describe('SessionPlanner', () => {
     expect(p.steps.map((s) => s.kind)).toEqual(['review', 'review', 'game']);
   });
 });
+
+import { decodeChoice, encodeChoice } from '../src/domain/practice/Topics';
+
+describe('SessionPlanner.planTopic', () => {
+  const topicPlan = (events: PracticeEvent[], today: number, choice: string, over: Partial<SessionSettings> = {}) =>
+    planner.planTopic({ library: lib, deck: rebuildDeck(events), events, today, settings: settings(over) }, decodeChoice(choice)!);
+
+  it('starts with due reviews, then the chosen topic', () => {
+    const events = [ev('new-word', 'w:cat', 0), ev('new-word', 'w:map', 0)];
+    const p = topicPlan(events, 1, 'segment');
+    expect(p.steps.map((s) => s.kind)).toEqual(['review', 'review', 'warmup']);
+    expect(p.steps[2]).toEqual({ kind: 'warmup', game: 'segment', unit: 1, rounds: 8 }); // one longer game, not 3 warm-ups
+  });
+
+  it('review first can be turned off', () => {
+    const events = [ev('new-word', 'w:cat', 0)];
+    expect(topicPlan(events, 1, 'segment', { topicReview: false }).steps.every((s) => s.kind === 'warmup')).toBe(true);
+  });
+
+  it('a phonics unit ahead of his level is allowed: sound it out, its new words, a sentence', () => {
+    const p = topicPlan([], 0, 'phonics:2');
+    expect(p.steps[0]).toEqual({ kind: 'warmup', game: 'sound-it-out', unit: 2 });
+    expect(p.steps.filter((s) => s.kind === 'new-word').map((s) => (s as { cardId: string }).cardId)).toEqual(['w:sit', 'w:dig', 'w:pig']);
+    expect(p.steps).toContainEqual({ kind: 'sentence', unit: 2, index: 0 });
+  });
+
+  it('story topic picks a story with that skill', () => {
+    const p = topicPlan([], 0, 'story:compare');
+    expect(p.steps).toEqual([{ kind: 'story', storyId: 's02' }]);
+  });
+
+  it('heart words: new heart words up to his unit, never decodable ones', () => {
+    const ids = topicPlan([], 0, 'heart').steps.map((s) => (s as { cardId: string }).cardId);
+    expect(ids).toEqual(['w:the', 'w:a']);
+  });
+
+  it('choices round-trip and bad ones are rejected', () => {
+    expect(encodeChoice({ topic: 'phonics', unit: 5 })).toBe('phonics:5');
+    expect(decodeChoice('story:moral')).toEqual({ topic: 'story', skill: 'moral' });
+    expect(decodeChoice('story:dance')).toBeNull();
+    expect(decodeChoice('phonics:x')).toBeNull();
+    expect(decodeChoice('nope')).toBeNull();
+  });
+});
+
+describe('homework week', () => {
+  it('automatic sessions prefer stories with the homework skill until the week ends', () => {
+    const homework = { skill: 'compare' as const, until: 6 };
+    expect(plan([], 0, { minutes: 10, homework }).steps).toContainEqual({ kind: 'story', storyId: 's02' });
+    expect(plan([], 7, { minutes: 10, homework }).steps).toContainEqual({ kind: 'story', storyId: 's01' }); // week over
+  });
+});

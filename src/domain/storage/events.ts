@@ -15,6 +15,8 @@ export type Activity =
   | 'story-question'
   | 'story-bonus'
   | 'story-order'
+  | 'retell'          // beginning / middle / end retell (meta: parts)
+  | 'fluency'         // 1-minute read (meta: wcpm, words, errors, seconds, prosody)
   | 'session';        // one finished session (meta: plannedMin, durationMs, goals)
 
 export type Outcome = 'first-try' | 'after-retry' | 'missed';
@@ -36,7 +38,7 @@ export interface PracticeEvent {
   meta?: Record<string, string | number | boolean>;
 }
 
-const ACTIVITIES: ReadonlySet<string> = new Set<Activity>(['new-word', 'review', 'sentence', 'warmup', 'tricky', 'write', 'story-read', 'story-question', 'story-bonus', 'story-order', 'session']);
+const ACTIVITIES: ReadonlySet<string> = new Set<Activity>(['new-word', 'review', 'sentence', 'warmup', 'tricky', 'write', 'story-read', 'story-question', 'story-bonus', 'story-order', 'retell', 'fluency', 'session']);
 const OUTCOMES: ReadonlySet<string> = new Set<Outcome>(['first-try', 'after-retry', 'missed']);
 
 /** Shape check for events from outside this device (server pull, backup file). */

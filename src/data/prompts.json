@@ -40,5 +40,12 @@
   "howto-trace": "Trace the word! Use your finger to go over the gray letters. Then tap Done.",
   "howto-free": "Write it! Look at the word. It will hide. Write it from memory, then tap Done.",
   "howto-tiles": "Build the word! Listen to the word. Tap the letters in the right order. Then tap Check.",
-  "howto-tricky": "Tricky sounds! Two words sound almost the same. Listen carefully and tap the word you heard."
+  "howto-tricky": "Tricky sounds! Two words sound almost the same. Listen carefully and tap the word you heard.",
+  "howto-segment": "Sound boxes! Listen to the word. Say each sound and tap one box for each sound. Cat has three sounds: c, a, t.",
+  "howto-fluency": "One-minute read! When your grown-up taps Start, read the story out loud. Read your best, not your fastest.",
+  "howto-retell": "Tell me the story! Tell what happened at the beginning, in the middle, and at the end.",
+  "retell-beginning": "What happened at the beginning?",
+  "retell-middle": "What happened in the middle?",
+  "retell-end": "What happened at the end?",
+  "segment-say": "Say each sound and tap a box for each one."
 }

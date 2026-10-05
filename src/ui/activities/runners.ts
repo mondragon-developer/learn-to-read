@@ -6,6 +6,7 @@ import { warmup } from './warmup';
 import { story } from './story';
 import { write } from './write';
 import { spelling, tricky } from './games';
+import { fluency } from './fluency';
 
 type Runner<K extends Step['kind']> = (kit: Kit, stage: HTMLElement, step: Extract<Step, { kind: K }>) => Promise<void>;
 
@@ -16,7 +17,7 @@ type Runner<K extends Step['kind']> = (kit: Kit, stage: HTMLElement, step: Extra
 export const RUNNERS: { [K in Step['kind']]: Runner<K> } = {
   warmup: async (kit, stage, step) => {
     const unit = kit.ctx.library.unit(step.unit);
-    if (unit) await warmup(kit, stage, step.game, unit, kit.ctx.library.units);
+    if (unit) await warmup(kit, stage, step.game, unit, kit.ctx.library.units, step.rounds);
   },
   review: (kit, stage, step) =>
     review(kit, stage, kit.ctx.library.card(step.cardId) ?? kit.ctx.library.storyCard(step.cardId.slice(2))),
@@ -38,6 +39,13 @@ export const RUNNERS: { [K in Step['kind']]: Runner<K> } = {
   story: async (kit, stage, step) => {
     const s = kit.ctx.library.story(step.storyId);
     if (s) await story(kit, stage, s);
+  },
+  fluency: async (kit, stage, step) => {
+    const lib = kit.ctx.library;
+    const s = step.storyId ? lib.story(step.storyId) : undefined;
+    // No decodable story at his level yet: the sentences of his units make the passage.
+    const passage = s ?? { id: `u${step.unit}:sentences`, title: 'Read my sentences', sentences: lib.units.filter((u) => u.order <= step.unit).flatMap((u) => u.sentences).slice(-8) };
+    await fluency(kit, stage, { id: passage.id, title: passage.title, sentences: passage.sentences });
   },
   game: async (kit, stage, step) => {
     const unit = kit.ctx.library.unit(step.unit);

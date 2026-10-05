@@ -3,6 +3,7 @@ import { newEventId } from '@domain/storage/events';
 import { GOALS_PER_BLOCK, trophies } from '@domain/rewards/Rewards';
 import { clipKey } from '@domain/audio/AudioCatalog';
 import type { Step } from '@domain/session/SessionPlanner';
+import { decodeChoice } from '@domain/practice/Topics';
 import type { AppContext, NavParams, Screen } from '../context';
 import { h, replace, sleep } from '../dom';
 import { Kit } from '../activities/kit';
@@ -23,7 +24,8 @@ export class SessionScreen implements Screen {
     const events = await this.ctx.log.events(profile.id);
     const deck = rebuildDeck(events);
     const input = { library, deck, events, today: clock.today(), settings: profile.settings };
-    const plan = params?.extra ? planner.planExtra(input) : planner.plan(input);
+    const choice = params?.topic ? decodeChoice(params.topic) : null;
+    const plan = choice ? planner.planTopic(input, choice) : params?.extra ? planner.planExtra(input) : planner.plan(input);
 
     const score = h('b', {}, '0');
     const fill = h('div', { class: 'pitch-fill' });
@@ -72,6 +74,7 @@ export class SessionScreen implements Screen {
     progress(1);
     await kit.record('session', kit.sessionId, 'first-try', 'tap', {
       plannedMin: profile.settings.minutes, durationMs: clock.now() - t0, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
+      ...(params?.topic ? { topic: params.topic } : {}),
       micFallback: kit.grownUpMode,
     });
     void this.ctx.sync.sync();
@@ -98,7 +101,7 @@ export class SessionScreen implements Screen {
   private async kickoff(stage: HTMLElement, steps: Step[]): Promise<void> {
     const count = (g: string): number => steps.filter((st) => this.group(st) === g).length;
     const parts: [string, string][] = [
-      ['🎵', count('warmup') ? 'A sound game' : ''],
+      ['🎵', count('warmup') ? (count('warmup') > 1 ? `${count('warmup')} sound games` : 'A sound game') : ''],
       ['🔁', count('review') ? `${count('review')} words to review` : ''],
       ['⭐', count('new-word') ? `${count('new-word')} new words` : ''],
       ['🏆', count('challenge') ? '1 challenge word' : ''],
@@ -106,6 +109,7 @@ export class SessionScreen implements Screen {
       ['📖', count('sentence') ? 'Read a sentence' : ''],
       ['📘', count('story') ? 'A story with 3 questions' : ''],
       ['🎮', count('game') ? `${count('game')} games` : ''],
+      ['⏱️', count('fluency') ? 'A one-minute read' : ''],
     ];
     const t = this.ctx.i18n;
     await new Promise<void>((resolve) => replace(stage, h('div', { class: 'stage center' },
