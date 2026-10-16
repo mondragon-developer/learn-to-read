@@ -24,9 +24,19 @@ export function settingsSection(ctx: AppContext, p: Profile, refresh: () => void
     toast(t.t('set.saved'));
     refresh();
   };
+  const voice = h('select', { 'aria-label': t.t('set.voice'), onChange: () => { draft.settings.voice = voice.value; } });
+  const updateVoices = (): void => {
+    const options = ctx.audio.voices?.() ?? [{ id: 'teacher', label: 'Teacher — Fish Audio' }];
+    const selected = draft.settings.voice ?? 'teacher';
+    replace(voice, options.map((v) => h('option', { value: v.id, selected: v.id === selected }, v.label)));
+    if (!options.some((v) => v.id === selected)) voice.appendChild(h('option', { value: selected, selected: true }, t.t('set.voiceUnavailable')));
+  };
+  updateVoices();
+  // Safari may populate installed voices only after the first audio gesture. Refresh on focus.
+  voice.addEventListener('focus', updateVoices);
   return h('div', { class: 'parent-section form' },
     h('button', { class: 'btn big ok', onClick: async () => {
-      draft.settings = { ...draft.settings, checkMode: 'independent', minutes: 5, writing: 'trace', challenge: false };
+      draft.settings = { ...draft.settings, checkMode: 'independent', storyReading: 'sentences', minutes: 5, writing: 'trace', challenge: false };
       await save();
     } }, t.t('set.independentPreset')),
     h('p', { class: 'muted small' }, t.t('set.independentHelp')),
@@ -37,6 +47,27 @@ export function settingsSection(ctx: AppContext, p: Profile, refresh: () => void
     h('fieldset', {}, h('legend', {}, t.t('set.check')),
       (['independent', 'record', 'mic'] as const).map((m) => radio('check', m, t.t(`set.check.${m}`), draft.settings.checkMode ?? 'record', (v) => { draft.settings.checkMode = v; })),
       h('p', { class: 'muted small' }, t.t('set.checkHelp'))),
+    h('fieldset', {}, h('legend', {}, t.t('set.storyReading')),
+      (['sentences', 'coach'] as const).map((m) => radio('storyReading', m, t.t(`set.storyReading.${m}`), draft.settings.storyReading ?? 'sentences', (v) => { draft.settings.storyReading = v; })),
+      h('p', { class: 'muted small' }, t.t('set.storyReadingHelp'))),
+    h('fieldset', {}, h('legend', {}, t.t('set.voice')), voice,
+      h('p', { class: 'muted small' }, t.t('set.voiceHelp')),
+      h('button', { class: 'btn soft', onClick: async (event: Event) => {
+        const button = event.currentTarget as HTMLButtonElement;
+        button.disabled = true;
+        const saved = ctx.player()?.settings.voice ?? 'teacher';
+        ctx.audio.selectVoice?.(draft.settings.voice ?? 'teacher');
+        try {
+          await ctx.audio.unlock();
+          if (button.isConnected) await ctx.audio.play('sentence:u01:0');
+        } finally {
+          if (button.isConnected) {
+            ctx.audio.selectVoice?.(ctx.player()?.settings.voice ?? saved);
+            button.disabled = false;
+            updateVoices();
+          }
+        }
+      } }, t.t('set.voicePreview'))),
     h('fieldset', {}, h('legend', {}, t.t('set.pace')),
       (['follow', 'word'] as const).map((m) => radio('pace', m, t.t(`set.pace.${m}`), draft.settings.readingPace ?? 'follow', (v) => { draft.settings.readingPace = v; }))),
     h('fieldset', {}, h('legend', {}, '🏆'),

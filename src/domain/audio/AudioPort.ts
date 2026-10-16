@@ -12,4 +12,6 @@ export interface AudioPort {
   follow(key: string, words: string[], onWord: (i: number) => void): Promise<void>;
   stop(): void;
   has(key: string): boolean;
+  voices?(): { id: string; label: string }[];
+  selectVoice?(id: string): void;
 }

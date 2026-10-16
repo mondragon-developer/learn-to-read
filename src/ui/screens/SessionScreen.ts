@@ -27,6 +27,7 @@ export class SessionScreen implements Screen {
     const choice = params?.topic ? decodeChoice(params.topic) : null;
     const plan = choice ? planner.planTopic(input, choice) : params?.extra ? planner.planExtra(input) : planner.plan(input);
 
+    let skipGroup = false;
     const score = h('b', {}, '0');
     const fill = h('div', { class: 'pitch-fill' });
     const ball = h('span', { class: 'pitch-ball', 'aria-hidden': 'true' }, '⚽');
@@ -38,6 +39,9 @@ export class SessionScreen implements Screen {
     const flash = h('div', { class: 'goal-flash', 'aria-live': 'polite' });
     replace(host, h('div', { class: 'session' },
       h('div', { class: 'session-top' }, leave, h('div', { class: 'pitch-bar', role: 'progressbar', 'aria-label': 'Match progress' }, fill, ball), h('div', { class: 'scoreboard' }, '⚽ ', score)),
+      h('nav', { class: 'session-skip', 'aria-label': 'Practice controls' },
+        h('button', { class: 'btn soft skip-part', onClick: () => this.kit?.skipPart() }, 'Skip this part →'),
+        h('button', { class: 'btn soft skip-section', onClick: () => { skipGroup = true; this.kit?.skipSection(); } }, 'Skip section ⇥')),
       stage, flash));
 
     const progress = (x: number): void => {
@@ -55,10 +59,11 @@ export class SessionScreen implements Screen {
     kit.known = new Set(deck.keys());
     this.kit = kit;
 
-    if (!params?.extra && !(kit.independent && params?.ready)) await this.kickoff(stage, plan.steps);
+    if (!params?.extra && !(kit.independent && params?.ready)) await kit.part(stage, async (part, target) => this.kickoff(part, target, plan.steps));
     else if (params?.extra) await this.ctx.audio.play(clipKey.prompt('extra-time'));
     if (kit.closed) return;
 
+    skipGroup = false;
     const t0 = clock.now();
     const groups = plan.steps.map((st) => this.group(st));
     for (let i = 0; i < plan.steps.length; i++) {
@@ -67,10 +72,12 @@ export class SessionScreen implements Screen {
       const step = plan.steps[i] as Step;
       const g = groups[i];
       kit.step = { n: groups.slice(0, i + 1).filter((x) => x === g).length, of: groups.filter((x) => x === g).length };
-      try { await runStep(kit, stage, step); }
+      try { await kit.part(stage, (part, target) => runStep(part, target, step)); }
       catch (err) { if (kit.closed) return; console.error('step failed', step, err); }
+      if (skipGroup) { while (groups[i + 1] === g) i++; skipGroup = false; }
     }
     if (kit.closed) return;
+    host.querySelector('.session-skip')?.remove();
     progress(1);
     await kit.record('session', kit.sessionId, 'first-try', 'tap', {
       plannedMin: profile.settings.minutes, durationMs: clock.now() - t0, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
@@ -83,7 +90,7 @@ export class SessionScreen implements Screen {
   }
 
   dispose(): void {
-    if (this.kit) { this.kit.closed = true; this.kit.abort.abort(); }
+    this.kit?.cancel();
     this.kit = null;
     this.ctx.audio.stop();
     this.ctx.checker.cancel(); // the recognizer is shared; stop any listen in flight
@@ -99,7 +106,7 @@ export class SessionScreen implements Screen {
    * "Today's match": what is coming and the grown-up's job, then Kick off. The tap also unlocks
    * audio on iOS, so the session must start with a button.
    */
-  private async kickoff(stage: HTMLElement, steps: Step[]): Promise<void> {
+  private async kickoff(kit: Kit, stage: HTMLElement, steps: Step[]): Promise<void> {
     const count = (g: string): number => steps.filter((st) => this.group(st) === g).length;
     const parts: [string, string][] = [
       ['🎵', count('warmup') ? (count('warmup') > 1 ? `${count('warmup')} sound games` : 'A sound game') : ''],
@@ -116,10 +123,10 @@ export class SessionScreen implements Screen {
     await new Promise<void>((resolve) => replace(stage, h('div', { class: 'stage center' },
       h('h2', {}, 'Today’s match'),
       h('ol', { class: 'plan-list' }, parts.filter(([, text]) => text).map(([icon, text]) => h('li', {}, h('span', { 'aria-hidden': 'true' }, icon), ` ${text}`))),
-      h('button', { class: 'kickoff compact', onClick: async () => { await this.ctx.audio.unlock(); resolve(); } },
+      h('button', { class: 'kickoff compact', onClick: async () => { await kit.ctx.audio.unlock(); resolve(); } },
         h('span', { class: 'kickoff-ball', 'aria-hidden': 'true' }, '⚽'), h('span', {}, 'Kick off!')),
       this.kit?.independent ? null : h('div', { class: 'grownup-note', lang: t.locale }, h('b', {}, `👪 ${t.t('howto.grownup')}: `), t.t('plan.grownup')))));
-    await this.ctx.audio.play(clipKey.prompt('start'));
+    await kit.prompt('start');
   }
 
   private async fullTime(stage: HTMLElement, goals: number): Promise<void> {

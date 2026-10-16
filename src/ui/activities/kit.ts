@@ -1,10 +1,11 @@
 import { clipKey } from '@domain/audio/AudioCatalog';
 import type { Activity, Outcome, Source } from '@domain/storage/events';
 import type { Profile } from '@domain/profiles/Profile';
+import { MicHealth } from '@domain/speech/PronunciationChecker';
 import prompts from '@data/prompts.json';
 import type { AppContext } from '../context';
 import { h, replace } from '../dom';
-import { ReadAloud, type Voice } from './readAloud';
+import { ReadAloud, type ReadState, type Voice } from './readAloud';
 import { HOWTO, type HowToId } from './howto';
 
 /** Activities that score a goal when not missed (a session summary or a story word is not a goal). */
@@ -19,25 +20,102 @@ export class Kit implements Voice {
   readonly reader: ReadAloud;
   readonly abort = new AbortController();
   get independent(): boolean { return this.profile.settings.checkMode === 'independent'; }
-  goals = 0;
-  /** Card ids already introduced to this child (set by the session from the deck). */
-  known = new Set<string>();
+  private readonly shared: { goals: number; known: Set<string>; introduced: Set<HowToId>; parts: Kit[]; reading: ReadState };
+  get goals(): number { return this.shared.goals; }
+  /** Card ids already introduced to this child. */
+  get known(): Set<string> { return this.shared.known; }
+  set known(value: Set<string>) { this.shared.known = value; }
+  readonly ctx: AppContext;
+  private stopRecording: (() => void) | undefined;
   /** Set when the child leaves mid-session: nothing more gets recorded. */
   closed = false;
   /** Position of the current step among steps of its kind ("2 of 3"), set by the session. */
   step: { n: number; of: number } | null = null;
   /** How the whole story is read the first time: natural pace (pointed) or word by word. */
   pace: 'word' | 'follow';
-  private readonly introduced = new Set<HowToId>();
+
 
   constructor(
-    readonly ctx: AppContext,
+    private readonly raw: AppContext,
     readonly profile: Profile,
     readonly sessionId: string,
     private readonly onGoal: (goals: number) => void,
+    parent?: Kit,
   ) {
-    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => ctx.audio.stop());
+    this.shared = parent?.shared ?? { goals: 0, known: new Set(), introduced: new Set(), parts: [], reading: { health: new MicHealth(), recorderBroken: false, independent: { unavailable: false } } };
+    // A skipped part owns its DOM and these guarded ports. Late results cannot speak,
+    // start another recording or write an assessment into the next part.
+    const audio = raw.audio;
+    this.ctx = { ...raw,
+      audio: {
+        unlock: () => this.closed ? Promise.resolve() : audio.unlock(),
+        play: (...args) => this.closed ? Promise.resolve() : audio.play(...args),
+        follow: (...args) => this.closed ? Promise.resolve() : audio.follow(...args),
+        sequence: (...args) => this.closed ? Promise.resolve() : audio.sequence(...args),
+        stop: () => { if (!this.closed) audio.stop(); },
+        has: (key) => audio.has(key),
+      },
+      checker: {
+        get available() { return raw.checker.available; },
+        listen: async (opts) => { this.abort.signal.throwIfAborted(); const result = await raw.checker.listen(opts); this.abort.signal.throwIfAborted(); return result; },
+        cancel: () => { if (!this.closed) raw.checker.cancel(); },
+      },
+      recorder: {
+        get available() { return raw.recorder.available; },
+        record: async (ms) => {
+          this.abort.signal.throwIfAborted();
+          const result = await raw.recorder.record(ms);
+          if (result.ok) {
+            if (this.closed) result.recording.stop();
+            else this.stopRecording = () => result.recording.stop();
+          }
+          this.abort.signal.throwIfAborted();
+          return result;
+        },
+        play: async (take) => { this.abort.signal.throwIfAborted(); return raw.recorder.play(take); },
+      },
+    };
+    const ctx = this.ctx;
+    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => ctx.audio.stop(), this.shared.reading);
     this.pace = profile.settings.readingPace ?? 'follow';
+  }
+
+  /** Run a skippable part in an isolated host; null means skipped, never incorrect. */
+  async part<T>(host: HTMLElement, run: (kit: Kit, host: HTMLElement) => Promise<T>): Promise<T | null> {
+    if (this.closed) return null;
+    const child = new Kit(this.raw, this.profile, this.sessionId, this.onGoal, this);
+    child.step = this.step;
+    child.pace = this.pace;
+    const target = h('div', { class: 'activity-part' });
+    replace(host, target);
+    const cancel = (): void => child.cancel();
+    this.abort.signal.addEventListener('abort', cancel, { once: true });
+    this.shared.parts.push(child);
+    const skipped = new Promise<null>((resolve) => child.abort.signal.addEventListener('abort', () => resolve(null), { once: true }));
+    try {
+      return await Promise.race([run(child, target).catch((error: unknown) => {
+        if (child.closed) return null;
+        throw error;
+      }), skipped]);
+    } finally {
+      child.cancel();
+      this.abort.signal.removeEventListener('abort', cancel);
+      const index = this.shared.parts.indexOf(child);
+      if (index >= 0) this.shared.parts.splice(index, 1);
+    }
+  }
+
+  skipPart(): void { this.shared.parts.at(-1)?.cancel(); }
+  skipSection(): void { this.shared.parts[0]?.cancel(); }
+
+  cancel(): void {
+    if (this.closed) return;
+    this.closed = true;
+    this.abort.abort();
+    this.stopRecording?.();
+    this.raw.recorder.stop?.();
+    this.raw.audio.stop();
+    this.raw.checker.cancel();
   }
 
   get grownUpMode(): boolean { return this.reader.grownUpMode; }
@@ -54,7 +132,7 @@ export class Kit implements Voice {
   }
 
   goal(): void {
-    this.goals++;
+    this.shared.goals++;
     this.onGoal(this.goals);
   }
 
@@ -63,8 +141,13 @@ export class Kit implements Voice {
    * to do, the grown-up reads their part (in the parent's language), then taps Let's go.
    */
   async intro(host: HTMLElement, id: HowToId): Promise<void> {
-    if (this.introduced.has(id) || this.closed) return;
-    this.introduced.add(id);
+    if (this.shared.introduced.has(id) || this.closed) return;
+    await this.part(host, (kit, target) => kit.showIntro(target, id));
+  }
+
+  private async showIntro(host: HTMLElement, id: HowToId): Promise<void> {
+    if (this.shared.introduced.has(id) || this.closed) return;
+    this.shared.introduced.add(id);
     const { icon, title } = HOWTO[id];
     const prompt = this.instruction(id);
     const go = h('button', { class: 'btn big ok' }, '▶ Let’s go!'); // child-facing: always English
@@ -72,7 +155,7 @@ export class Kit implements Voice {
       h('div', { class: 'howto-icon', 'aria-hidden': 'true' }, icon),
       h('h2', {}, title),
       h('p', { class: 'howto-child' }, PROMPTS[prompt] ?? ''),
-      this.independent ? null : this.grownUpNote(id),
+      this.independent || (id === 'story' && this.profile.settings.storyReading !== 'coach') ? null : this.grownUpNote(id),
       h('div', { class: 'row center' }, h('button', { class: 'btn soft', onClick: () => void this.prompt(prompt) }, '🔊 Again'), go)));
     const tapped = new Promise<void>((resolve) => go.addEventListener('click', () => resolve(), { once: true }));
     void this.prompt(prompt).then(() => { if (!this.closed && go.isConnected) return this.prompt('lets-go'); });
@@ -91,14 +174,16 @@ export class Kit implements Voice {
       const prompt = this.instruction(id);
       void this.prompt(prompt);
       const pop = h('div', { class: 'howto-pop', role: 'dialog' },
-        h('p', { class: 'howto-child' }, PROMPTS[prompt] ?? ''), this.independent ? null : this.grownUpNote(id),
+        h('p', { class: 'howto-child' }, PROMPTS[prompt] ?? ''), this.independent || (id === 'story' && this.profile.settings.storyReading !== 'coach') ? null : this.grownUpNote(id),
         h('button', { class: 'btn small', onClick: () => { pop.remove(); this.ctx.audio.stop(); } }, '✓ OK'));
       document.body.appendChild(pop);
+      this.abort.signal.addEventListener('abort', () => pop.remove(), { once: true });
     } }, '?');
     return h('div', { class: 'stage-head' }, h('div', { class: 'tag' }, `${icon} ${label ?? title}${counter}`), help);
   }
 
   private instruction(id: HowToId): string {
+    if (id === 'story' && this.profile.settings.storyReading !== 'coach') return 'howto-story-simple';
     return `howto-${id}${this.independent && (id === 'sentence' || id === 'story') ? '-independent' : ''}`;
   }
 

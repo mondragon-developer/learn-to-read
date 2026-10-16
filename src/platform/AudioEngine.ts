@@ -34,10 +34,11 @@ export class AudioEngine {
    * mic use, a call, backgrounding) never fires onended, so a watchdog ends the wait instead of
    * freezing the session.
    */
-  async play(buffer: AudioBuffer, rate = 1, onStart?: (src: AudioBufferSourceNode) => void): Promise<void> {
+  async play(buffer: AudioBuffer, rate = 1, onStart?: (src: AudioBufferSourceNode) => void, canPlay: () => boolean = () => true): Promise<void> {
     const ctx = this.ctx;
     if (!ctx) return;
     if (ctx.state !== 'running') await ctx.resume().catch(() => undefined);
+    if (!canPlay()) return;
     await new Promise<void>((resolve) => {
       const src = ctx.createBufferSource();
       const guard = setTimeout(resolve, (buffer.duration / rate) * 1000 + PLAY_GRACE_MS);

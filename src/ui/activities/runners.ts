@@ -25,7 +25,7 @@ export const RUNNERS: { [K in Step['kind']]: Runner<K> } = {
     const card = kit.ctx.library.card(step.cardId);
     if (!card) return;
     await newWord(kit, stage, card);
-    kit.known.add(card.id);
+
   },
   write: async (kit, stage, step) => {
     const card = kit.ctx.library.card(step.cardId);

@@ -84,6 +84,7 @@ async function shot(page: Page, name: string, project: string): Promise<void> {
 async function playMatch(page: Page, project: string, stopWhen?: () => Promise<boolean>): Promise<void> {
   const order = [
     page.getByRole('button', { name: /Let’s go/ }),
+    page.locator('.read-continue'),
     page.locator('.mic.rec'),
     page.getByRole('button', { name: /Read it right/ }),
     page.getByRole('button', { name: '✓ Read it', exact: true }),
@@ -191,6 +192,7 @@ test('practice a skill: menu by Florida standard, sound boxes, one-minute read',
   // Parent summary shows the standards and the one-minute read.
   await page.locator('.lock').click();
   await passGate(page);
+  await page.getByRole('tab', { name: 'Resumen' }).click();
   await expect(page.getByRole('heading', { name: 'Estándares B.E.S.T. de Florida practicados' })).toBeVisible();
   await expect(page.locator('.std-row').first()).toContainText('ELA.1.F.1.2.a');
   await expect(page.getByRole('heading', { name: /Lectura de 1 minuto/ })).toBeVisible();
@@ -259,6 +261,7 @@ test('set up a player, play a full match, see the Spanish dashboard', async ({ p
   await page.locator('.lock').click();
   await passGate(page);
   await expect(page.getByRole('heading', { name: 'Área de padres' })).toBeVisible();
+  await page.getByRole('tab', { name: 'Resumen' }).click();
   await expect(page.getByText('Minutos de práctica por día (últimos 14 días)')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Lectura oración por oración' })).toBeVisible();
   await expect(page.locator('.sentence-log li').first()).toBeVisible(); // the coach recorded at least one sentence
@@ -280,6 +283,7 @@ test('set up a player, play a full match, see the Spanish dashboard', async ({ p
 async function playIndependently(page: Page, project = '', stopWhen?: () => Promise<boolean>): Promise<void> {
   const controls = [
     page.getByRole('button', { name: /Let’s go/ }),
+    page.locator('.read-continue'),
     page.locator('.practice-next'),
     page.locator('.mic:not(:disabled)'),
     page.locator('.ear:enabled'),
@@ -339,6 +343,7 @@ for (const mode of ['unavailable', 'denied'] as const) {
     await shot(page, `independent-${mode}-finished`, info.project.name);
     await page.locator('.lock').click();
     await passGate(page);
+  await page.getByRole('tab', { name: 'Resumen' }).click();
     await expect(page.getByRole('heading', { name: 'Practicado · sin verificar' })).toBeVisible();
     await expect(page.locator('.unverified-review li')).not.toHaveCount(0);
     await expect(page.locator('.sentence-log')).toHaveCount(0);
@@ -403,5 +408,137 @@ test('a child can leave a stuck microphone through listen and repeat', async ({ 
   await expect(page.getByRole('heading', { name: 'Hi, Sam!' })).toBeVisible();
   await page.waitForTimeout(500);
   await expect(page.locator('.mic')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+async function practiceTopic(page: Page, title: string): Promise<void> {
+  await page.getByRole('button', { name: /Practice a skill/ }).click();
+  const button = page.getByRole('button', { name: /mantenga presionado|press and hold/i });
+  const box = await button.boundingBox();
+  if (!box) throw new Error('no practice gate');
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down(); await page.waitForTimeout(1700); await page.mouse.up();
+  await page.locator('.practice input[type=checkbox]').first().uncheck();
+  await page.locator('.topic-card').filter({ hasText: title }).click();
+}
+
+async function practiceEvents(page: Page): Promise<Array<{ activity: string; itemId: string; outcome: string }>> {
+  return page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve) => {
+      const request = indexedDB.open('goal-reader'); request.onsuccess = () => resolve(request.result);
+    });
+    const events = await new Promise<Array<{ activity: string; itemId: string; outcome: string }>>((resolve) => {
+      const request = db.transaction('events').objectStore('events').getAll(); request.onsuccess = () => resolve(request.result);
+    });
+    db.close(); return events;
+  });
+}
+
+test('Story Time reads sentence by sentence, skips parts without grading, and opens settings', async ({ page }, info) => {
+  await stubDevices(page);
+  await setUpPlayer(page);
+  await practiceTopic(page, 'Story time');
+  await page.locator('.sheet .unit-btn').first().click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await expect(page.locator('.tag')).toContainText('Sentence 1 of');
+  await expect(page.locator('.mic, .grownup-q')).toHaveCount(0);
+  await page.locator('.read-continue').click();
+  await expect(page.locator('.tag')).toContainText('Sentence 2 of');
+  await page.locator('.skip-part').click();
+  await expect(page.locator('.tag')).toContainText('Sentence 3 of');
+  await page.getByRole('button', { name: 'Skip to questions', exact: true }).click();
+  await expect(page.locator('.tag')).toContainText('Question 1 of');
+  await page.locator('.skip-part').click();
+  await expect(page.locator('.tag')).toContainText('Question 2 of');
+  const events = await practiceEvents(page);
+  expect(events.filter((e) => e.activity === 'sentence')).toHaveLength(1);
+  expect(events[0]?.outcome).toBe('unverified');
+  expect(events.filter((e) => e.activity === 'story-question')).toHaveLength(0);
+  await shot(page, 'story-skip', info.project.name);
+  await page.getByRole('button', { name: 'Settings / Ajustes' }).click();
+  await passGate(page);
+  await expect(page.getByRole('tab', { name: 'Ajustes' })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('combobox', { name: 'Voz de lectura' })).toHaveValue('teacher');
+  await expect(page.locator('input[name=storyReading][value=sentences]')).toBeChecked();
+});
+
+test('a correct new word is saved once and does not require three readings', async ({ page }) => {
+  await stubDevices(page);
+  await setUpPlayer(page, '?mic=denied');
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.locator('.howto').waitFor();
+  await page.locator('.skip-section').click(); // whole warmup group
+  await expect(page.locator('.howto h2')).toHaveText('New word');
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await page.locator('.mic.rec').click();
+  await page.getByRole('button', { name: /Read it right/ }).click();
+  await expect(page.locator('.read-continue')).toBeVisible();
+  const before = await practiceEvents(page);
+  expect(before.filter((e) => e.activity === 'new-word')).toHaveLength(1);
+  expect(before.find((e) => e.activity === 'new-word')?.outcome).toBe('first-try');
+  await page.locator('.skip-section').click(); // no repeat and skip remaining new words
+  await expect(page.locator('.howto h2')).not.toHaveText('New word');
+  const after = await practiceEvents(page);
+  expect(after.filter((e) => e.activity === 'new-word')).toEqual(before.filter((e) => e.activity === 'new-word'));
+});
+
+test('skipping an active microphone round ignores its late answer', async ({ page }) => {
+  await stubDevices(page);
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.addInitScript(() => {
+    class LateMic {
+      onresult: ((e: unknown) => void) | null = null;
+      start(): void { setTimeout(() => this.onresult?.({ resultIndex: 0, results: [
+        { 0: { transcript: 'cat', confidence: 1 }, length: 1, isFinal: true },
+      ] }), 1200); }
+      abort(): void { /* Deliberately delivers after abort to test the race. */ }
+    }
+    (window as unknown as Record<string, unknown>).webkitSpeechRecognition = LateMic;
+  });
+  await setUpPlayer(page, '', true);
+  await practiceTopic(page, 'Robot talk');
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await page.locator('.mic').click();
+  await page.waitForTimeout(400);
+  await page.locator('.skip-part').click();
+  await expect(page.locator('.tag')).toContainText('Robot talk 2 of');
+  await page.waitForTimeout(1400);
+  expect((await practiceEvents(page)).filter((e) => e.activity === 'warmup')).toHaveLength(0);
+  await page.locator('.skip-section').click();
+  await expect(page.getByRole('heading', { name: 'Full time!' })).toBeVisible();
+  expect((await practiceEvents(page)).filter((e) => e.activity === 'warmup')).toHaveLength(0);
+  expect(errors).toEqual([]);
+});
+
+test('skipping a recording releases the microphone without grading the word', async ({ page }) => {
+  await stubDevices(page);
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.addInitScript(() => {
+    Object.assign(window, { stoppedRecordings: 0 });
+    const original = MediaRecorder.prototype.stop;
+    MediaRecorder.prototype.stop = function () {
+      const probe = window as unknown as { stoppedRecordings: number };
+      probe.stoppedRecordings++;
+      original.call(this);
+    };
+  });
+  await setUpPlayer(page);
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.locator('.howto').waitFor();
+  await page.locator('.skip-section').click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await page.locator('.mic.rec').click();
+  await expect(page.getByRole('button', { name: 'Stop recording' })).toBeVisible();
+  await page.locator('.skip-part').click();
+  await expect(page.locator('.kick-label')).toContainText('2 of 3');
+  await expect(page.locator('.mic.rec')).toBeVisible();
+  expect(await page.evaluate(() => (window as unknown as { stoppedRecordings: number }).stoppedRecordings)).toBe(1);
+  expect((await practiceEvents(page)).filter((e) => e.activity === 'new-word')).toHaveLength(0);
   expect(errors).toEqual([]);
 });

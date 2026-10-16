@@ -24,6 +24,7 @@ import type { Profile } from '@domain/profiles/Profile';
 import prompts from '@data/prompts.json';
 import syllables from '@data/syllables.json';
 import manifest from '@data/audio-manifest.json';
+import joshManifest from '@data/audio-josh-manifest.json';
 import { WebAudioPlayer } from '@platform/WebAudioPlayer';
 import { WebSpeechChecker } from '@platform/WebSpeechChecker';
 import { WebVoiceRecorder } from '@platform/WebVoiceRecorder';
@@ -68,10 +69,15 @@ async function boot(): Promise<void> {
   // Recorded files have content-versioned names so an iPad never reuses an older voice.
   const recordings: Record<string, { file: string; hash: string }> = manifest;
   const playbackCatalog = catalog.map((clip) => ({ ...clip, file: recordings[clip.key]?.file ?? clip.file }));
-  const audio = new WebAudioPlayer(engine, playbackCatalog, new Set(Object.keys(recordings)));
+  const joshRecordings: Record<string, { file: string }> = joshManifest;
+  const audio = new WebAudioPlayer(engine, playbackCatalog, new Set(Object.keys(recordings)), import.meta.env.BASE_URL, {
+    josh: { label: 'Josh — Fish Audio', catalog: catalog.map((clip) => ({ ...clip, file: joshRecordings[clip.key]?.file ?? clip.file })), available: new Set(Object.keys(joshRecordings)) },
+  });
 
   const profiles = await profileRepo.list();
   let player: Profile | null = profiles.find((p) => p.id === readPlayer()) ?? (profiles.length === 1 ? profiles[0] ?? null : null);
+
+  audio.selectVoice(player?.settings.voice ?? 'teacher');
 
   // Parent area is Spanish by default (for mom); a parent who switches to English is remembered.
   const i18n = new I18n(readLocale());
@@ -84,7 +90,7 @@ async function boot(): Promise<void> {
     i18n,
     account,
     player: () => player,
-    setPlayer: (p) => { player = p; writePlayer(p?.id ?? null); shell?.paintChip(); },
+    setPlayer: (p) => { player = p; audio.selectVoice(p?.settings.voice ?? 'teacher'); writePlayer(p?.id ?? null); shell?.paintChip(); },
     navigate: (id, params) => void shell.navigate(id, params),
   };
   shell = new AppShell(ctx, {

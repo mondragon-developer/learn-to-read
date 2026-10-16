@@ -2,11 +2,11 @@ import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { preview } from 'vite';
 
-const manifest: Record<string, { file: string }> = JSON.parse(
-  readFileSync(new URL('../src/data/audio-manifest.json', import.meta.url), 'utf8'),
-);
+const manifests: Record<string, Record<string, { file: string }>> = Object.fromEntries(['teacher', 'josh'].map((voice) => [voice, JSON.parse(
+  readFileSync(new URL(`../src/data/audio-${voice === 'teacher' ? '' : 'josh-'}manifest.json`, import.meta.url), 'utf8'),
+)]));
 
-test('Fish recordings decode and play after the origin server goes offline', async ({ page }) => {
+for (const voice of ['teacher', 'josh']) test(`${voice} Fish recordings decode and play after the origin server goes offline`, async ({ page }) => {
   // Playwright 1.63 WebKit kills even cached SW responses with setOffline(true):
   // https://github.com/microsoft/playwright/issues/42775
   // Each test owns an origin that is physically stopped after the cache installs.
@@ -25,7 +25,9 @@ test('Fish recordings decode and play after the origin server goes offline', asy
   };
   try {
     await page.addInitScript(() => {
-      const probe = { recordingsPlayed: 0, deviceVoiceCalls: 0 };
+      const probe = { recordingsPlayed: 0, deviceVoiceCalls: 0, files: [] as string[] };
+      const originalFetch = window.fetch.bind(window);
+      window.fetch = (...args) => { probe.files.push(String(args[0])); return originalFetch(...args); };
       Object.assign(window, { audioProbe: probe });
       const original = AudioBufferSourceNode.prototype.start;
       AudioBufferSourceNode.prototype.start = function (...args: Parameters<typeof original>) {
@@ -40,7 +42,7 @@ test('Fish recordings decode and play after the origin server goes offline', asy
         },
       } });
     });
-    const recordings: Record<string, { file: string }> = manifest;
+    const recordings: Record<string, { file: string }> = manifests[voice]!;
     const keys = ['prompt:kickoff', 'word:cat'];
     const all = Object.keys(recordings);
     const selected = ['prompt', 'word', 'sound', 'sentence', 'story', 'slow'].map((kind) => {
@@ -67,7 +69,15 @@ test('Fish recordings decode and play after the origin server goes offline', asy
     await page.getByRole('button', { name: 'OK', exact: true }).click();
     await page.getByPlaceholder('Leo').fill('Audio test');
     await page.getByRole('button', { name: /Crear jugador|Create player/ }).click();
+    await page.getByRole('combobox', { name: /Voz de lectura|Reading voice/ }).selectOption(voice);
+    await page.getByRole('button', { name: /^Guardar$|^Save$/ }).click();
     await page.getByRole('button', { name: /Volver al juego|Back to the game/ }).click();
+    await page.reload(); // persisted voice must also be used after reopening the app
+    const missing = await page.evaluate(async (files) => {
+      const available = await Promise.all(files.map(async (file) => await caches.match(`/${file}`, { ignoreSearch: true }) ? null : file));
+      return available.filter(Boolean);
+    }, Object.values(recordings).map((r) => r.file));
+    expect(missing).toEqual([]);
     await stop();
     await expect(fetch(origin, { signal: AbortSignal.timeout(3000) })).rejects.toThrow();
     const decoded = await page.evaluate(async (files) => {
@@ -95,11 +105,13 @@ test('Fish recordings decode and play after the origin server goes offline', asy
     }
     await page.getByRole('button', { name: /My words/ }).click();
     await page.getByLabel('Unit', { exact: true }).selectOption('1');
+    await page.evaluate(() => { (window as unknown as { audioProbe: { files: string[] } }).audioProbe.files = []; });
     await page.getByRole('button', { name: 'cat', exact: true }).click();
     const probe = () => page.evaluate(() => (window as unknown as {
-      audioProbe: { recordingsPlayed: number; deviceVoiceCalls: number };
+      audioProbe: { recordingsPlayed: number; deviceVoiceCalls: number; files: string[] };
     }).audioProbe);
     await expect.poll(async () => (await probe()).recordingsPlayed).toBeGreaterThan(0);
     expect((await probe()).deviceVoiceCalls).toBe(0);
+    expect((await probe()).files).toContain(`/${recordings['word:cat']!.file}`);
   } finally { await stop(); }
 });

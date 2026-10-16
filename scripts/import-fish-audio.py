@@ -20,6 +20,7 @@ def main():
     parser.add_argument('plan', type=Path)
     parser.add_argument('receipts', type=Path)
     parser.add_argument('--ffmpeg', required=True)
+    parser.add_argument('--manifest', default='src/data/audio-manifest.json', help='Separate output manifest for an additional voice')
     args = parser.parse_args()
     root = Path(__file__).resolve().parent.parent
     plan = json.loads(args.plan.read_text())
@@ -42,8 +43,8 @@ def main():
             raise ValueError('Expected a Fish Audio recording URL')
         if not 0.5 <= c['speed'] <= 2:
             raise ValueError('Unsupported speaking speed')
-    manifest_path = root / 'src/data/audio-manifest.json'
-    manifest = json.loads(manifest_path.read_text())
+    manifest_path = root / args.manifest
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
 
     def install(r):
         c = catalog[r['key']]

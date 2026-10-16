@@ -31,9 +31,12 @@ export interface ProfileSettings extends SessionSettings {
   checkMode?: 'record' | 'mic' | 'independent';
   /** First listen to the whole story: 'follow' = natural pace, pointed (default); 'word' = one word at a time. */
   readingPace?: 'word' | 'follow';
+  storyReading?: 'sentences' | 'coach';
+  /** 'teacher' uses Fish recordings; 'device:<URI>' selects an installed English voice. */
+  voice?: string;
 }
 
-export const DEFAULT_SETTINGS: ProfileSettings = { minutes: 5, writing: 'trace', startUnit: 1, challenge: false, checkMode: 'independent', readingPace: 'follow' };
+export const DEFAULT_SETTINGS: ProfileSettings = { minutes: 5, writing: 'trace', startUnit: 1, challenge: false, checkMode: 'independent', readingPace: 'follow', storyReading: 'sentences', voice: 'teacher' };
 
 export const JERSEY_COLORS = ['#1F7A4D', '#2D5BD0', '#D2462E', '#E8A317', '#7A3FB8', '#0F8A8A'] as const;
 

@@ -19,60 +19,80 @@ const MAX_NEW_CARDS = 3;
  */
 export async function story(kit: Kit, host: HTMLElement, s: Story): Promise<void> {
   await kit.intro(host, 'story');
-  const lines = s.sentences.map((text) => lineView(kit, text));
-  const transport = new Transport(kit.ctx.audio);
-  let skipAll = false;
-  const bar = coachBar(transport, () => { skipAll = true; transport.send('next'); });
-  const book = h('div', { class: 'book' }, h('h2', { class: 'story-title' }, s.title), lines.map((l) => l.el));
-  const panel = h('div', { class: 'panel' });
-  replace(host, h('div', { class: 'stage story' }, kit.header('story', s.tier === 'decodable' ? 'You read it!' : 'Story time'), book, h('div', { class: 'coach-dock' }, panel, bar.el)));
-
-  // 1. The whole story first, pointed in yellow (pausable, skippable).
-  bar.step(0, '👂 Listen to the whole story');
-  bar.replays(false, true);
-  replace(panel, h('p', { class: 'coach small' }, '👆 Follow the yellow word with your finger.'));
-  await kit.prompt('story-listen');
-  for (let i = 0; i < lines.length && !transport.take(); i++) {
-    const line = lines[i] as Line;
-    line.el.classList.add('reading');
-    line.el.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    await transport.run((stopped) => pointAndRead(kit, line.words, clipKey.story(s.id, String(i)), kit.pace, stopped));
-    line.el.classList.remove('reading');
-  }
-
-  // 2. Sentence by sentence: listen word by word, listen whole, his turn word by word, his turn whole.
-  await kit.prompt('story-read');
+  const guided = kit.profile.settings.storyReading === 'coach';
+  let skipReading = false;
   const helpedWords = new Set<string>();
-  for (let i = 0; i < lines.length && !skipAll; i++) {
-    const line = lines[i] as Line;
-    const text = s.sentences[i] as string;
-    lines.forEach((l, j) => l.el.classList.toggle('reading', j === i));
-    line.el.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    const r = await coachSentence(kit, transport, bar, line.words, panel, text, clipKey.story(s.id, String(i)));
-    line.el.classList.remove('reading');
-    if (!r) continue;
-    if (!r.check.unverified) r.check.helped.forEach((w) => helpedWords.add((r.check.words[w] ?? '').toLowerCase()));
-    await kit.record('sentence', `${s.id}:s${i}`, sentenceOutcome(r.check), r.source, sentenceMeta(r.check));
+  // Guided reading retains the full-story model. Simple mode starts with the child's sentence.
+  if (guided) await kit.part(host, async (part, target) => {
+    const lines = s.sentences.map((text) => lineView(part, text));
+    const transport = new Transport(part.ctx.audio);
+    const bar = coachBar(transport, () => { skipReading = true; part.cancel(); });
+    bar.step(0, '👂 Listen to the whole story');
+    bar.replays(false, true);
+    replace(target, h('div', { class: 'stage story' }, part.header('story'),
+      h('div', { class: 'book' }, h('h2', { class: 'story-title' }, s.title), lines.map((l) => l.el)), bar.el));
+    await part.prompt('story-listen');
+    for (let i = 0; i < lines.length && !part.closed && !transport.take(); i++) {
+      const line = lines[i] as Line;
+      line.el.classList.add('reading');
+      await transport.run((stopped) => pointAndRead(part, line.words, clipKey.story(s.id, String(i)), part.pace, () => part.closed || stopped()));
+      line.el.classList.remove('reading');
+    }
+  });
+
+  for (let i = 0; i < s.sentences.length && !skipReading && !kit.closed; i++) {
+    await kit.part(host, async (part, target) => {
+      const text = s.sentences[i] as string;
+      const key = clipKey.story(s.id, String(i));
+      const line = lineView(part, text);
+      const panel = h('div', { class: 'panel' });
+      const transport = new Transport(part.ctx.audio);
+      const bar = coachBar(transport, () => { skipReading = true; part.cancel(); });
+      replace(target, h('div', { class: 'stage story' }, part.header('story', `Sentence ${i + 1} of ${s.sentences.length}`),
+        h('div', { class: 'book' }, h('h2', { class: 'story-title' }, s.title), line.el),
+        h('div', { class: 'coach-dock' }, panel, guided ? bar.el : null)));
+      if (!guided) {
+        await new Promise<void>((resolve) => replace(panel,
+          h('p', { class: 'coach' }, 'Read this sentence out loud. Then tap Continue.'),
+          h('button', { class: 'btn big ok read-continue', onClick: () => { part.ctx.audio.stop(); resolve(); } }, 'Continue →'),
+          h('button', { class: 'btn soft', onClick: () => void pointAndRead(part, line.words, key, 'follow', () => part.closed) }, '🔊 Hear the sentence'),
+          h('button', { class: 'btn link', onClick: () => { skipReading = true; part.cancel(); } }, 'Skip to questions')));
+        await part.record('sentence', `${s.id}:s${i}`, 'unverified', 'self', { text, words: text.split(/\s+/).length, wordsRead: 0, whole: false });
+      } else {
+        const r = await coachSentence(part, transport, bar, line.words, panel, text, key);
+        if (!r || part.closed) return;
+        if (!r.check.unverified) r.check.helped.forEach((w) => helpedWords.add((r.check.words[w] ?? '').toLowerCase()));
+        await part.record('sentence', `${s.id}:s${i}`, sentenceOutcome(r.check), r.source, sentenceMeta(r.check));
+      }
+    });
   }
-  // Words he needed help with come back as practice cards (the deck ignores words already strong).
   for (const w of [...helpedWords].filter(Boolean).slice(0, MAX_NEW_CARDS)) await kit.record('story-read', cardId(w), 'missed', kit.independent ? 'mic' : 'grownup', { story: s.id });
 
   for (let i = 0; i < s.questions.length; i++) {
     const q = s.questions[i];
     if (!q) continue;
-    const ok = await choose(kit, host, `Question ${i + 1} of ${s.questions.length}`, clipKey.story(s.id, `q${i}`), q.prompt, q.options, q.answer, (j) => clipKey.story(s.id, `q${i}o${j}`));
-    await kit.record('story-question', `${s.id}:q${i}`, ok ? 'first-try' : 'missed', 'tap', { skill: q.skill });
+    await kit.part(host, async (part, target) => {
+      const ok = await choose(part, target, `Question ${i + 1} of ${s.questions.length}`, clipKey.story(s.id, `q${i}`), q.prompt, q.options, q.answer, (j) => clipKey.story(s.id, `q${i}o${j}`));
+      await part.record('story-question', `${s.id}:q${i}`, ok ? 'first-try' : 'missed', 'tap', { skill: q.skill });
+    });
   }
   if (s.moral) {
     const m = s.moral;
-    const ok = await choose(kit, host, 'The lesson 💡', clipKey.story(s.id, 'moral'), m.prompt, m.options, m.answer, (j) => clipKey.story(s.id, `moral-o${j}`));
-    await kit.record('story-question', `${s.id}:moral`, ok ? 'first-try' : 'missed', 'tap', { skill: 'moral' });
+    await kit.part(host, async (part, target) => {
+      const ok = await choose(part, target, 'The lesson 💡', clipKey.story(s.id, 'moral'), m.prompt, m.options, m.answer, (j) => clipKey.story(s.id, `moral-o${j}`));
+      await part.record('story-question', `${s.id}:moral`, ok ? 'first-try' : 'missed', 'tap', { skill: 'moral' });
+    });
   }
-  const bonusOk = await choose(kit, host, 'Bonus ⭐', clipKey.story(s.id, 'bonus'), s.bonus.prompt, s.bonus.options, s.bonus.answer, (j) => clipKey.story(s.id, `bonus-o${j}`));
-  await kit.record('story-bonus', `${s.id}:bonus`, bonusOk ? 'first-try' : 'missed', 'tap', { kind: s.bonus.kind });
-  const orderOk = await putInOrder(kit, host, s);
-  await kit.record('story-order', `${s.id}:order`, orderOk ? 'first-try' : 'missed', 'tap');
+  await kit.part(host, async (part, target) => {
+    const ok = await choose(part, target, 'Bonus ⭐', clipKey.story(s.id, 'bonus'), s.bonus.prompt, s.bonus.options, s.bonus.answer, (j) => clipKey.story(s.id, `bonus-o${j}`));
+    await part.record('story-bonus', `${s.id}:bonus`, ok ? 'first-try' : 'missed', 'tap', { kind: s.bonus.kind });
+  });
+  await kit.part(host, async (part, target) => {
+    const ok = await putInOrder(part, target, s);
+    await part.record('story-order', `${s.id}:order`, ok ? 'first-try' : 'missed', 'tap');
+  });
   await retell(kit, host, s);
+  if (kit.closed) return;
   if (s.reward) replace(host, h('div', { class: 'stage' }, h('div', { class: 'big-reward' }, s.reward), h('p', { class: 'coach' }, 'Great story!')));
   await sleep(1200);
 }
@@ -124,34 +144,30 @@ const RETELL_PARTS = [
  */
 async function retell(kit: Kit, host: HTMLElement, s: Story): Promise<void> {
   await kit.intro(host, 'retell');
-  if (kit.independent) {
-    for (const part of RETELL_PARTS) {
-      const panel = h('div', { class: 'panel' });
-      replace(host, h('div', { class: 'stage center' }, kit.header('retell', part.label), panel));
-      await kit.reader.independentReader?.repeat(panel, () => kit.prompt(part.prompt), 'retell-done');
-      kit.abort.signal.throwIfAborted();
-    }
-    await kit.record('retell', `${s.id}:retell`, 'unverified', 'self', { text: `${s.title}: retelling` });
-    return;
-  }
   let told = 0;
-  for (const [i, part] of RETELL_PARTS.entries()) {
-    const hintKey = clipKey.story(s.id, String(s.order[i]));
-    let hinted = false;
-    const yes = await new Promise<boolean>((resolve) => {
-      replace(host, h('div', { class: 'stage center' }, kit.header('retell', `Tell the story: ${part.label}`, false),
-        h('div', { class: 'retell-steps' }, RETELL_PARTS.map((p, j) => h('span', { class: `rstep ${j < i ? 'done' : j === i ? 'on' : ''}` }, p.label))),
-        h('p', { class: 'coach' }, `What happened at the ${part.label.toLowerCase()}?`),
-        h('div', { class: 'row center' },
-          h('button', { class: 'btn big ok', onClick: () => resolve(!hinted) }, '✓ He told it'),
-          h('button', { class: 'btn big soft', onClick: async () => { hinted = true; await kit.say(hintKey); } }, '🔊 Hint')),
-        h('button', { class: 'btn link', onClick: () => resolve(false) }, 'Skip this part'),
-        h('p', { class: 'small muted grownup-q' }, 'Grown-up: tap ✓ when he tells this part in his own words.')));
-      void kit.prompt(part.prompt);
+  let completed = 0;
+  for (const [i, item] of RETELL_PARTS.entries()) {
+    const result = await kit.part(host, async (part, target) => {
+      if (part.independent) {
+        const panel = h('div', { class: 'panel' });
+        replace(target, h('div', { class: 'stage center' }, part.header('retell', item.label), panel));
+        await part.reader.independentReader?.repeat(panel, () => part.prompt(item.prompt), 'retell-done');
+        return true;
+      }
+      let hinted = false;
+      return new Promise<boolean>((resolve) => {
+        replace(target, h('div', { class: 'stage center' }, part.header('retell', `Tell the story: ${item.label}`, false),
+          h('p', { class: 'coach' }, `What happened at the ${item.label.toLowerCase()}?`),
+          h('div', { class: 'row center' },
+            h('button', { class: 'btn big ok', onClick: () => resolve(!hinted) }, '✓ He told it'),
+            h('button', { class: 'btn big soft', onClick: () => { hinted = true; void part.say(clipKey.story(s.id, String(s.order[i]))); } }, '🔊 Hint'))));
+        void part.prompt(item.prompt);
+      });
     });
-    if (yes) told++;
+    if (result !== null) { completed++; if (result) told++; }
   }
-  await kit.record('retell', `${s.id}:retell`, told === 3 ? 'first-try' : told >= 2 ? 'after-retry' : 'missed', 'grownup', { parts: told });
+  // Partial retellings are practice only; skipped parts must not become failures.
+  if (completed) await kit.record('retell', `${s.id}:retell`, kit.independent || completed < 3 ? 'unverified' : told === 3 ? 'first-try' : told >= 2 ? 'after-retry' : 'missed', kit.independent ? 'self' : 'grownup', { parts: told, completed, text: `${s.title}: retelling` });
 }
 
 /** Tap the three sentences in story order: first, next, last. Each strip is read aloud when tapped. */

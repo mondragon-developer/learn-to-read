@@ -18,6 +18,12 @@ const ERRORS: Readonly<Record<string, RecordError>> = {
  * it, and every take is measured (length, loudness, size) so the UI can show what was captured.
  */
 export class WebVoiceRecorder implements VoiceRecorder {
+  private playback: AudioBufferSourceNode | null = null;
+  private generation = 0;
+  private stopCapture: (() => void) | undefined;
+  private stopElement: (() => void) | undefined;
+  stop(): void { this.generation++; this.stopCapture?.(); this.stopElement?.(); try { this.playback?.stop(); } catch { /* already stopped */ } this.playback = null; }
+
   constructor(private readonly engine: AudioEngine) {}
 
   get available(): boolean {
@@ -25,6 +31,7 @@ export class WebVoiceRecorder implements VoiceRecorder {
   }
 
   async record(maxMs: number): Promise<RecordStart> {
+    const generation = this.generation;
     if (!this.available) return { ok: false, error: 'unsupported' };
     setAudioSession('play-and-record');
     let stream: MediaStream;
@@ -35,6 +42,7 @@ export class WebVoiceRecorder implements VoiceRecorder {
       const name = e instanceof Error ? e.name : '';
       return { ok: false, error: ERRORS[name] ?? 'unknown', detail: e instanceof Error ? `${e.name}: ${e.message}` : String(e) };
     }
+    if (generation !== this.generation) { stream.getTracks().forEach((track) => track.stop()); setAudioSession('playback'); return { ok: false, error: 'busy' }; }
     const mimeType = TYPES.find((t) => MediaRecorder.isTypeSupported?.(t));
     let rec: MediaRecorder;
     try {
@@ -50,6 +58,7 @@ export class WebVoiceRecorder implements VoiceRecorder {
     rec.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
     const done = new Promise<Take>((resolve) => {
       rec.onstop = () => {
+        if (this.stopCapture === stop) this.stopCapture = undefined;
         stream.getTracks().forEach((t) => t.stop());
         meter.close();
         setAudioSession('playback'); // back to the loudspeaker for playback
@@ -62,23 +71,27 @@ export class WebVoiceRecorder implements VoiceRecorder {
       window.clearTimeout(timer);
       if (rec.state !== 'inactive') rec.stop();
     };
+    this.stopCapture = stop;
     rec.start(TIMESLICE_MS);
     return { ok: true, recording: { stop, done, level: meter.level } };
   }
 
   async play(take: Take): Promise<TakeReport> {
+    const generation = this.generation;
     const bytes = take.blob.size;
     if (!bytes) return { seconds: 0, peak: -1, bytes, via: 'none', error: 'empty recording' };
     const ctx = this.engine.context;
     if (ctx) {
       try {
         const buffer = await ctx.decodeAudioData(await take.blob.arrayBuffer());
-        await this.engine.play(buffer);
+        if (generation !== this.generation) return { seconds: 0, peak: -1, bytes, via: 'none' };
+        await this.engine.play(buffer, 1, (source) => { this.playback = source; }, () => generation === this.generation);
         return { seconds: buffer.duration, peak: peakOf(buffer), bytes, via: 'engine' };
       } catch {
         // fall through to the <audio> element
       }
     }
+    if (generation !== this.generation) return { seconds: 0, peak: -1, bytes, via: 'none' };
     return this.playElement(take.blob, bytes);
   }
 
@@ -87,7 +100,8 @@ export class WebVoiceRecorder implements VoiceRecorder {
     return new Promise((resolve) => {
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
-      const finish = (r: TakeReport): void => { URL.revokeObjectURL(url); resolve(r); };
+      const finish = (r: TakeReport): void => { this.stopElement = undefined; audio.pause(); URL.revokeObjectURL(url); resolve(r); };
+      this.stopElement = () => finish({ seconds: 0, peak: -1, bytes, via: 'none' });
       audio.onended = () => finish({ seconds: Number.isFinite(audio.duration) ? audio.duration : 0, peak: -1, bytes, via: 'element' });
       audio.onerror = () => finish({ seconds: 0, peak: -1, bytes, via: 'none', error: `can't play ${blob.type || 'this format'}` });
       audio.play().catch((e: unknown) => finish({ seconds: 0, peak: -1, bytes, via: 'none', error: e instanceof Error ? `${e.name}: ${e.message}` : String(e) }));

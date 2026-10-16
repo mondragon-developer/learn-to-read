@@ -38,6 +38,8 @@ export interface TakeReport {
 
 export interface VoiceRecorder {
   readonly available: boolean;
+  /** Stop playback when leaving or skipping an activity. */
+  stop?(): void;
   /** Starts recording now; stops by itself after maxMs. */
   record(maxMs: number): Promise<RecordStart>;
   /** Plays the take and reports what it contained. */

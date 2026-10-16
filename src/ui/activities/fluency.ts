@@ -35,6 +35,7 @@ export async function fluency(kit: Kit, host: HTMLElement, passage: Passage): Pr
   const t0 = performance.now();
   const elapsed = (): number => Math.min(SECONDS, (performance.now() - t0) / 1000);
   let timer = 0;
+  kit.abort.signal.addEventListener('abort', () => window.clearTimeout(timer), { once: true });
   await new Promise<void>((resolve) => {
     replace(panel, h('button', { class: 'btn soft', onClick: () => resolve() }, t.t('fl.early')));
     const tick = (): void => {

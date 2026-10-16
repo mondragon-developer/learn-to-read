@@ -353,3 +353,16 @@ main { flex: 1; padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bot
 .unverified-review { background: #FFF6DD; border: 2px solid #F0D58C; border-radius: 14px; padding: 14px; }
 .unverified-review li { margin: 6px 0; }
 .kick.practiced { opacity: 1; filter: none; }
+
+/* Keep settings and skip actions reachable on an iPad and small phones. */
+.top { position: sticky; top: 0; z-index: 30; }
+.lock { white-space: nowrap; flex-shrink: 0; }
+.session-skip { display: flex; gap: 8px; justify-content: center; position: sticky; top: 66px; z-index: 20; padding: 8px; background: var(--paper, #f7f8f2); border-radius: 12px; }
+.session-skip .btn { min-height: 48px; }
+.activity-part { width: 100%; }
+@media (max-width: 480px) {
+  .top { padding-left: 8px; padding-right: 8px; }
+  .top .brand span:last-child { display: none; }
+  .session-skip { top: 62px; }
+  .session-skip .btn { font-size: 16px; padding: 10px; }
+}

@@ -96,8 +96,8 @@
   "speed": 1
  },
  "prompt:howto-challenge": {
-  "file": "audio/prompts/howto-challenge.c9b5f54f493d.mp3",
-  "hash": "c9b5f54f493d",
+  "file": "audio/prompts/howto-challenge.600c47428261.mp3",
+  "hash": "600c47428261",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -120,8 +120,8 @@
   "speed": 1
  },
  "prompt:howto-new-word": {
-  "file": "audio/prompts/howto-new-word.fcf8855b4205.mp3",
-  "hash": "fcf8855b4205",
+  "file": "audio/prompts/howto-new-word.f740ca4af925.mp3",
+  "hash": "f740ca4af925",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -194,6 +194,14 @@
  "prompt:howto-story-independent": {
   "file": "audio/prompts/howto-story-independent.16c6896e6338.mp3",
   "hash": "16c6896e6338",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 1
+ },
+ "prompt:howto-story-simple": {
+  "file": "audio/prompts/howto-story-simple.e6dbc4b42f05.mp3",
+  "hash": "e6dbc4b42f05",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",

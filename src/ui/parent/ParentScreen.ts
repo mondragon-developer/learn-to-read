@@ -1,5 +1,5 @@
 import type { Profile } from '@domain/profiles/Profile';
-import type { AppContext, Screen } from '../context';
+import type { AppContext, NavParams, Screen } from '../context';
 import { h, replace } from '../dom';
 import { summary } from './summary';
 import { settingsSection } from './settingsSection';
@@ -18,9 +18,10 @@ export class ParentScreen implements Screen {
   constructor(private readonly ctx: AppContext) {}
 
   /** Coming back through the gate always opens on the summary. */
-  dispose(): void { this.tab = 'summary'; }
+  dispose(): void { this.tab = 'summary'; this.ctx.audio.stop(); this.ctx.audio.selectVoice?.(this.ctx.player()?.settings.voice ?? 'teacher'); }
 
-  async render(host: HTMLElement): Promise<void> {
+  async render(host: HTMLElement, params?: NavParams): Promise<void> {
+    if (params?.settings) { this.tab = 'settings'; this.selected = this.ctx.player()?.id ?? null; }
     const { i18n: t } = this.ctx;
     const players = await this.ctx.profiles.list();
     if (!players.length) this.tab = 'players';

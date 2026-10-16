@@ -33,8 +33,8 @@
   "howto-syllables": "Drum time! Listen to the word. Tap the drum one time for each part. Ba, na, na is three taps.",
   "howto-sound-it-out": "Sound it out! Tap each letter to hear its sound. Then read the whole word.",
   "howto-review": "Word review! Read each word out loud. If you need help, tap Help to hear the sounds.",
-  "howto-new-word": "New words! First, listen to the word. Then say it three times. Every time you say it, you kick a ball!",
-  "howto-challenge": "Challenge word! This is a big word from stories. Look at its parts, listen, and then say it three times.",
+  "howto-new-word": "New words! First, listen to the word. Then say it. When you read it correctly, tap Continue!",
+  "howto-challenge": "Challenge word! Look at its parts and listen. Then say the word. When you read it correctly, tap Continue!",
   "howto-sentence": "Read a sentence! First listen word by word, then all at once. Then you read each yellow word, and then the whole sentence.",
   "howto-story": "Story time! First, listen to the whole story and follow the yellow word. Then we go sentence by sentence: listen, then you read each yellow word, then the whole sentence. Then three questions.",
   "howto-trace": "Trace the word! Use your finger to go over the gray letters. Then tap Done.",
@@ -58,5 +58,6 @@
   "lets-go": "Tap the green arrow to start.",
   "finished-independent": "Great practice! You are done for today. Tap the green button to go home.",
   "howto-sentence-independent": "Listen to the sentence and follow the yellow word. Then it is your turn to read. You can always listen and repeat.",
-  "howto-story-independent": "Listen to the story and follow the yellow words. Then read with me, answer questions, and tell the story."
+  "howto-story-independent": "Listen to the story and follow the yellow words. Then read with me, answer questions, and tell the story.",
+  "howto-story-simple": "Story time! Read one sentence out loud, then tap Continue. Tap the speaker if you want to hear it. You can skip a part whenever you want."
 }

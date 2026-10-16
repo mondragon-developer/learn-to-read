@@ -1,6 +1,6 @@
 import type { Card } from '@domain/content/ContentLibrary';
 import { clipKey } from '@domain/audio/AudioCatalog';
-import type { Outcome, Source } from '@domain/storage/events';
+import type { Outcome } from '@domain/storage/events';
 import type { Kit } from './kit';
 import { h, replace, sleep } from '../dom';
 import { rewardBurst, soundTiles, syllableTiles, wordView } from './wordView';
@@ -11,38 +11,43 @@ import { sentenceMeta, sentenceOutcome } from '@domain/reading/SentenceCheck';
 const SAY_TIMES = 3;
 
 /**
- * New word (or challenge word): hear it, see its sounds (or syllables), then say it three times,
- * each one a kick. ELA.1.F.1.3, F.1.3.e, F.1.4.a
+ * New word (or challenge word): hear it, see its sounds (or syllables), then read it. Correct readings can continue immediately;
+ * additional attempts are optional through the skip control. ELA.1.F.1.3, F.1.3.e, F.1.4.a
  */
 export async function newWord(kit: Kit, host: HTMLElement, card: Card): Promise<void> {
   const id = card.kind === 'challenge' ? 'challenge' : 'new-word';
   await kit.intro(host, id);
   const panel = h('div', { class: 'panel' });
   const kicks = Array.from({ length: SAY_TIMES }, () => h('span', { class: 'kick' }, '⚽'));
-  const kickLabel = h('p', { class: 'small muted kick-label' }, `Say it ${SAY_TIMES} times`);
+  const kickLabel = h('p', { class: 'small muted kick-label' }, `Try up to ${SAY_TIMES} times`);
   const parts = card.kind === 'challenge' ? syllableTiles(card, kit.ctx.audio) : card.kind === 'decodable' ? soundTiles(card, kit.ctx.audio) : null;
   const stage = h('div', { class: 'stage' },
     kit.header(id, card.kind === 'heart' ? 'Heart word ❤️' : undefined, true),
     wordView(card),
     parts?.el,
-    h('div', { class: 'kicks', 'aria-label': `Say it ${SAY_TIMES} times` }, kicks),
+    h('div', { class: 'kicks', 'aria-label': `Try up to ${SAY_TIMES} times` }, kicks),
     kickLabel,
     panel);
   replace(host, stage);
 
-  if (card.kind === 'heart') await kit.prompt('heart-word');
-  if (parts) {
-    await kit.prompt(card.kind === 'challenge' ? 'listen' : 'sound-it-out');
-    await parts.play();
-  } else {
-    await kit.word(card.text);
-  }
+  await kit.part(panel, async (part) => {
+    if (card.kind === 'heart') await part.prompt('heart-word');
+    if (parts) {
+      await part.prompt(card.kind === 'challenge' ? 'listen' : 'sound-it-out');
+      await parts.play(part.ctx.audio);
+    } else await part.word(card.text);
+  });
 
-  let first: { outcome: Outcome; source: Source } | null = null;
+  let recorded = false;
   for (let i = 0; i < SAY_TIMES; i++) {
-    kickLabel.textContent = `Say it ${SAY_TIMES} times: ${i + 1} of ${SAY_TIMES}`;
-    const r = await kit.reader.readWord(panel, card.text, i === 0 ? 'Say it!' : 'Again!');
-    first ??= r;
+    kickLabel.textContent = `Try up to ${SAY_TIMES} times: ${i + 1} of ${SAY_TIMES}`;
+    const r = await kit.part(panel, (part, target) => part.reader.readWord(target, card.text, i === 0 ? 'Say it!' : 'Again!'));
+    if (!r) continue;
+    if (!recorded) {
+      await kit.record('new-word', card.id, r.outcome, r.source);
+      if (!kit.closed) kit.known.add(card.id);
+      recorded = true;
+    }
     if (r.outcome === 'unverified') {
       const kick = kicks[i];
       if (kick) { kick.textContent = '⭐'; kick.classList.add('practiced'); }
@@ -50,9 +55,13 @@ export async function newWord(kit: Kit, host: HTMLElement, card: Card): Promise<
     if (r.outcome === 'first-try' || r.outcome === 'after-retry') {
       kicks[i]?.classList.add('scored');
       if (i === 0) rewardBurst(stage, card.reward);
+      kickLabel.textContent = 'You read it!';
+      await kit.part(panel, async (_, target) => new Promise<void>((resolve) => replace(target,
+        h('button', { class: 'btn big ok read-continue', onClick: () => resolve() }, 'Continue →'))));
+      return;
     }
   }
-  if (first) await kit.record('new-word', card.id, first.outcome, first.source);
+
 }
 
 /** Review: read a due card cold. "Help" plays the separate sounds (never the whole word). */
@@ -71,8 +80,8 @@ export async function review(kit: Kit, host: HTMLElement, card: Card): Promise<v
   replace(host, stage);
   const r = await kit.reader.readWord(panel, card.text);
   const outcome: Outcome = helped && r.outcome === 'first-try' ? 'after-retry' : r.outcome;
-  if (outcome === 'first-try' || outcome === 'after-retry') { rewardBurst(stage, card.reward); await kit.prompt('goal'); }
   await kit.record('review', card.id, outcome, r.source, r.heard ? { heard: r.heard } : undefined);
+  if (outcome === 'first-try' || outcome === 'after-retry') { rewardBurst(stage, card.reward); await kit.prompt('goal'); }
 }
 
 /**

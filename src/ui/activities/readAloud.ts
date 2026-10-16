@@ -34,9 +34,10 @@ const SENTENCE_TAKE_MS = 14000;
  *  - buttons: no recorder on this device; the grown-up listens live and taps ✓.
  * Never says "wrong": a miss ends with the model and "now you".
  */
+export interface ReadState { health: MicHealth; recorderBroken: boolean; independent: { unavailable: boolean } }
+
 export class ReadAloud {
-  readonly health = new MicHealth();
-  private recorderBroken = false;
+  get health(): MicHealth { return this.state.health; }
   readonly independentReader: IndependentReader | null;
 
   constructor(
@@ -50,14 +51,15 @@ export class ReadAloud {
     independent = false,
     signal: AbortSignal = new AbortController().signal,
     stopVoice: () => void = () => undefined,
+    private readonly state: ReadState = { health: new MicHealth(), recorderBroken: false, independent: { unavailable: false } },
   ) {
-    this.independentReader = independent ? new IndependentReader(voice, checker, words, sentences, signal, stopVoice) : null;
+    this.independentReader = independent ? new IndependentReader(voice, checker, words, sentences, signal, stopVoice, state.independent) : null;
     if (!preferMic || !checker.available) this.health.record('unavailable');
   }
 
   get mode(): CheckMode {
     if (!this.health.useGrownUpCheck) return 'mic';
-    return this.recorder.available && !this.recorderBroken ? 'record' : 'buttons';
+    return this.recorder.available && !this.state.recorderBroken ? 'record' : 'buttons';
   }
 
   /** True when a grown-up is judging (record or buttons). */
@@ -145,7 +147,7 @@ export class ReadAloud {
       if ('error' in r) {
         replace(note, h('p', { class: 'rec-badge warn', role: 'alert' }, `⚠️ ${r.message}`));
         // Blocked, missing or unsupported mic won't fix itself this session: stop asking to record.
-        if (r.error !== 'busy' && r.error !== 'unknown') this.recorderBroken = true;
+        if (r.error !== 'busy' && r.error !== 'unknown') this.state.recorderBroken = true;
       } else {
         take = r.take;
         replace(panel, h('p', { class: 'coach' }, '👂 You said…'), note);

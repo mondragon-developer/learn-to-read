@@ -1,5 +1,4 @@
 import type { Card } from '@domain/content/ContentLibrary';
-import { clipKey } from '@domain/audio/AudioCatalog';
 import { rebuildDeck, isMastered, type DeckState } from '@domain/srs/Leitner';
 import type { AppContext, Screen } from '../context';
 import { h, replace, sleep } from '../dom';
@@ -21,7 +20,7 @@ export class WordBankScreen implements Screen {
   constructor(private readonly ctx: AppContext) {}
 
   dispose(): void {
-    if (this.kit) this.kit.closed = true;
+    this.kit?.cancel();
     this.ctx.audio.stop();
   }
 
@@ -66,9 +65,10 @@ export class WordBankScreen implements Screen {
 
   private async paintWord(host: HTMLElement, deck: DeckState, card: Card): Promise<void> {
     const kit = this.kit;
-    if (!kit) return;
+    if (!kit || kit.closed) return;
     await this.ctx.audio.unlock();
-    const audio = this.ctx.audio;
+    if (kit.closed) return;
+    const audio = kit.ctx.audio;
     const parts = card.kind === 'challenge' ? syllableTiles(card, audio) : card.kind === 'decodable' ? soundTiles(card, audio) : null;
     const panel = h('div', { class: 'panel' });
     const es = h('p', { class: 'es-gloss', hidden: true, lang: 'es' }, card.es ? `🇪🇸 ${card.es}` : '🇪🇸 —');
@@ -90,16 +90,20 @@ export class WordBankScreen implements Screen {
 
   /** Record him, play his take, then the model - so he can hear the difference himself. */
   private async compare(panel: HTMLElement, card: Card): Promise<void> {
+    const kit = this.kit;
+    if (!kit || kit.closed) return;
     const t = this.ctx.i18n;
     const r = await recordTake(this.ctx.recorder, t, panel, `Say “${card.text}”`, 4000);
+    if (kit.closed) return;
     if ('error' in r) { replace(panel, h('p', { class: 'rec-badge warn', role: 'alert' }, `⚠️ ${r.message}`)); return; }
     const note = h('div', { class: 'rec-note' });
     const hearBoth = async (): Promise<void> => {
+      if (kit.closed) return;
       replace(panel, h('p', { class: 'coach' }, '👂 You said…'), note);
       const ok = (await playTake(this.ctx.recorder, t, r.take, (b) => replace(note, b))).ok;
       replace(panel, h('p', { class: 'coach' }, '🔊 It sounds like…'), note);
       await sleep(200);
-      await this.ctx.audio.play(clipKey.word(card.text));
+      await kit.word(card.text);
       replace(panel, ok ? h('button', { class: 'btn soft', onClick: () => void hearBoth() }, '▶ Hear both again') : null, note);
     };
     await hearBoth();

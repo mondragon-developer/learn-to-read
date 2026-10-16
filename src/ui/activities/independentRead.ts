@@ -7,7 +7,7 @@ import { h, replace } from '../dom';
 
 /** Child-led practice. An unavailable mic never turns into an adult-only check. */
 export class IndependentReader {
-  private unavailable = false;
+
 
   constructor(
     private readonly voice: Voice,
@@ -16,9 +16,10 @@ export class IndependentReader {
     private readonly sentences: SentenceMatcher,
     private readonly signal: AbortSignal,
     private readonly stopVoice: () => void,
+    private readonly state = { unavailable: false },
   ) {}
 
-  get fallback(): boolean { return this.unavailable || !this.checker.available; }
+  get fallback(): boolean { return this.state.unavailable || !this.checker.available; }
 
   private active(): void { this.signal.throwIfAborted(); }
 
@@ -119,10 +120,10 @@ export class IndependentReader {
         try {
           const res = await this.checker.listen({ expected, mode, timeoutMs: mode === 'word' ? 6000 : 12000 });
           if (settled) return;
-          if (res.status !== 'heard') this.unavailable = true;
+          if (res.status !== 'heard') this.state.unavailable = true;
           finish(res.status === 'heard' ? res : null);
         } catch {
-          if (!settled) { this.unavailable = true; finish(null); }
+          if (!settled) { this.state.unavailable = true; finish(null); }
         }
       } }, h('span', { class: 'mic-icon', 'aria-hidden': 'true' }, '🎤'), h('span', {}, label));
       replace(panel, mic, fallback);

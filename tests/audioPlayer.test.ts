@@ -39,3 +39,46 @@ describe('WebAudioPlayer.sequence', () => {
     expect(spoken).toEqual(['Which one rhymes with']);
   });
 });
+
+describe('Fish voice selection', () => {
+  it('switches recordings without reusing the other voice’s decoded buffer', async () => {
+    const { vi } = await import('vitest');
+    const fetched: string[] = [];
+    const played: number[] = [];
+    vi.stubGlobal('fetch', async (url: string) => {
+      fetched.push(url);
+      return { ok: true, arrayBuffer: async () => new Uint8Array([url.includes('josh') ? 2 : 1]).buffer };
+    });
+    const engine = {
+      context: { decodeAudioData: async (data: ArrayBuffer) => ({ duration: new Uint8Array(data)[0] }) },
+      play: async (buffer: AudioBuffer) => { played.push(buffer.duration); },
+    } as unknown as AudioEngine;
+    const teacher = clip('word:cat', 'cat');
+    const josh = { ...teacher, file: 'audio/cat-josh.mp3' };
+    try {
+      const p = new WebAudioPlayer(engine, [teacher], new Set(['word:cat']), '/', {
+        josh: { label: 'Josh — Fish Audio', catalog: [josh], available: new Set(['word:cat']) },
+      });
+      await p.play('word:cat');
+      p.selectVoice('josh'); await p.play('word:cat');
+      p.selectVoice('teacher'); await p.play('word:cat');
+      expect(played).toEqual([1, 2, 1]);
+      expect(fetched).toEqual(['/audio/cat.mp3', '/audio/cat-josh.mp3']);
+      expect(spoken).toEqual([]);
+    } finally { vi.unstubAllGlobals(); }
+  });
+
+  it('falls back to Teacher when a saved device voice is not installed here', async () => {
+    const { vi } = await import('vitest');
+    const played: number[] = [];
+    vi.stubGlobal('fetch', async () => ({ ok: true, arrayBuffer: async () => new ArrayBuffer(1) }));
+    const engine = { context: { decodeAudioData: async () => ({ duration: 1 }) }, play: async (buffer: AudioBuffer) => { played.push(buffer.duration); } } as unknown as AudioEngine;
+    try {
+      const p = new WebAudioPlayer(engine, [clip('word:cat', 'cat')], new Set(['word:cat']), '/');
+      p.selectVoice('device:missing-on-this-ipad');
+      await p.play('word:cat');
+      expect(played).toEqual([1]);
+      expect(spoken).toEqual([]);
+    } finally { vi.unstubAllGlobals(); }
+  });
+});

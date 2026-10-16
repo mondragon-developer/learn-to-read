@@ -101,7 +101,7 @@
   "howto.syllables": "Él toca el tambor una vez por cada sílaba (ba-na-na = 3). Puede aplaudir con él.",
   "howto.sound-it-out": "Él toca cada letra para oír su sonido y luego lee la palabra. Toque ✓ si la leyó bien.",
   "howto.review": "Palabras que ya vio. Él lee la palabra y graba su voz; la app le pone su voz y luego cómo suena bien. Toque ✓ si sonó igual o «Intentar otra vez».",
-  "howto.new-word": "Palabras nuevas: él escucha, ve los sonidos y la dice 3 veces (cada vez es un gol). Usted solo confirma con ✓.",
+  "howto.new-word": "Él escucha, ve los sonidos y lee la palabra. Confirme con ✓. Después de leerla correctamente, puede tocar Continue. Cada palabra da como máximo un gol.",
   "howto.challenge": "Palabra reto de la tarea de la escuela, separada en sílabas. Es normal que le cueste: ayúdele a leer parte por parte.",
   "howto.sentence": "Oración por oración: escucha palabra por palabra 🐢, luego completa 🐇. Después él lee cada palabra amarilla (toque ✓ o 🔊 Ayuda) y al final la oración completa.",
   "howto.story": "1) La app lee todo el cuento señalando en amarillo (puede pausar ⏸). 2) Luego, oración por oración: escucha palabra por palabra 🐢, escucha completa 🐇, él lee palabra por palabra (usted toca ✓ o 🔊 Ayuda) y él lee la oración completa. Use ⏸, 🐢, 🐇 o ⏭ cuando quiera. 3) Contesta 3 preguntas.",
@@ -210,5 +210,13 @@
   "set.independentPreset": "Preparar práctica independiente en iPad",
   "set.independentHelp": "Cinco minutos, instrucciones habladas, trazado y sin aprobaciones de un adulto. Si falla el micrófono, continúa escuchando y repitiendo sin verificar.",
   "audio.coverage": "{ready} de {total} audios de voz instalados. Los que faltan usan la voz del dispositivo.",
-  "audio.soundReview": "Revise cada sonido aislado antes de practicar fonética. Las voces generadas y del dispositivo pueden decir nombres de letras o añadir vocales; hay que escuchar estos audios."
+  "audio.soundReview": "Revise cada sonido aislado antes de practicar fonética. Las voces generadas y del dispositivo pueden decir nombres de letras o añadir vocales; hay que escuchar estos audios.",
+  "set.storyReading": "Lectura de cuentos",
+  "set.storyReading.sentences": "Leer una oración → Continuar (sin micrófono)",
+  "set.storyReading.coach": "Lectura guiada con escucha y comprobación",
+  "set.storyReadingHelp": "Continuar cuenta como práctica. Las partes omitidas no cuentan como aciertos ni errores.",
+  "set.voice": "Voz de lectura",
+  "set.voiceHelp": "Teacher y Josh usan grabaciones de Fish Audio. Las voces del dispositivo son de este iPad y pueden sonar menos naturales. Si la voz elegida no está disponible, se usa Teacher. Guarda para usar tu selección.",
+  "set.voicePreview": "🔊 Escuchar la voz",
+  "set.voiceUnavailable": "Voz guardada no disponible aquí — se usa Teacher"
 }

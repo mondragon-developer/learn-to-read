@@ -12,13 +12,13 @@ export class AppShell {
   constructor(private readonly ctx: Omit<AppContext, 'navigate'>, private readonly screens: Record<ScreenId, Screen>) {}
 
   mount(root: HTMLElement): void {
-    const lock = h('button', { class: 'iconbtn lock', 'aria-label': this.ctx.i18n.t('gate.title'), onClick: async () => {
-      if (await parentGate(this.ctx.i18n)) void this.navigate('parent');
-    } }, '🔒');
+    const lock = h('button', { class: 'btn small lock', 'aria-label': 'Settings / Ajustes', onClick: async () => {
+      if (await parentGate(this.ctx.i18n)) void this.navigate('parent', { settings: true });
+    } }, '⚙️ Settings');
     this.chip.addEventListener('click', () => void this.navigate('players'));
     replace(root, h('div', { class: 'app' },
       h('header', { class: 'top' },
-        h('button', { class: 'brand', onClick: () => void this.navigate(this.ctx.player() ? 'home' : 'players') }, h('span', { 'aria-hidden': 'true' }, '⚽'), h('span', {}, 'Goal Reader')),
+        h('button', { class: 'brand', 'aria-label': 'Goal Reader', onClick: () => void this.navigate(this.ctx.player() ? 'home' : 'players') }, h('span', { 'aria-hidden': 'true' }, '⚽'), h('span', {}, 'Goal Reader')),
         h('div', { class: 'spacer' }), this.chip, lock),
       this.main));
     this.paintChip();

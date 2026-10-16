@@ -101,7 +101,7 @@
   "howto.syllables": "He taps the drum once per syllable (ba-na-na = 3). Clap along with him.",
   "howto.sound-it-out": "He taps each letter to hear its sound, then reads the word. Tap ✓ if he read it right.",
   "howto.review": "Words he has seen. He reads and records; the app plays his voice, then the correct one. Tap ✓ if it sounded the same, or Try again.",
-  "howto.new-word": "New words: he listens, sees the sounds, and says it 3 times (each one is a goal). You just confirm with ✓.",
+  "howto.new-word": "He listens, sees the sounds, and reads the word. Confirm with ✓. After a correct reading, he can tap Continue. Each word earns at most one goal.",
   "howto.challenge": "A challenge word from school homework, split into syllables. It's normal for it to be hard: help him read part by part.",
   "howto.sentence": "Sentence by sentence: listen word by word 🐢, then whole 🐇. Then he reads each yellow word (tap ✓ or 🔊 Help) and finally the whole sentence.",
   "howto.story": "1) The app reads the whole story, pointing in yellow (you can pause ⏸). 2) Then sentence by sentence: listen word by word 🐢, listen whole 🐇, he reads word by word (you tap ✓ or 🔊 Help), and he reads the whole sentence. Use ⏸, 🐢, 🐇 or ⏭ anytime. 3) He answers 3 questions.",
@@ -210,5 +210,13 @@
   "set.independentPreset": "Set up independent iPad practice",
   "set.independentHelp": "Five minutes, spoken instructions, tracing, and no adult approval steps. Microphone failures become unverified listen-and-repeat practice.",
   "audio.coverage": "{ready} of {total} voice clips installed. Missing clips use the device voice.",
-  "audio.soundReview": "Review each isolated sound before phonics practice. Generated voices and device voices can say letter names or add extra vowel sounds; these clips need listening checks."
+  "audio.soundReview": "Review each isolated sound before phonics practice. Generated voices and device voices can say letter names or add extra vowel sounds; these clips need listening checks.",
+  "set.storyReading": "Story Time reading",
+  "set.storyReading.sentences": "Read a sentence → Continue (no microphone needed)",
+  "set.storyReading.coach": "Guided reading with listening and reading checks",
+  "set.storyReadingHelp": "Continue records practice only. Skipped parts do not count as right or wrong.",
+  "set.voice": "Reading voice",
+  "set.voiceHelp": "Teacher and Josh use Fish Audio recordings. Device voices come from this iPad and may sound less natural. If a selected device voice is unavailable, Teacher is used. Save to use your choice in lessons.",
+  "set.voicePreview": "🔊 Preview voice",
+  "set.voiceUnavailable": "Saved voice unavailable here — using Teacher"
 }

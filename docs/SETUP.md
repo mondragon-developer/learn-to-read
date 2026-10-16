@@ -47,7 +47,7 @@ Free plan notes: a project with no activity for a week is paused (daily practice
 
 ## 4. Fish Audio (natural voice for all clips)
 
-The app's recordings use the **Teacher** voice (`73b5c16a6e504d6a97868581ada2b8d3`) and Fish `s2.1-pro`. Fish's OAuth MCP connection uses the website plan credits; the separate developer API generator below requires an API balance. No Fish credentials are shipped to the app.
+The app includes **Teacher** (`73b5c16a6e504d6a97868581ada2b8d3`) and **Josh** (`c646b42922ff446691f685aa4297755b`) recordings from Fish `s2.1-pro`. Fish's OAuth MCP connection uses the website plan credits; the separate developer API generator below requires an API balance. No Fish credentials are shipped to the app.
 
 For website credits, export the catalog with `npm run audio -- --export=/tmp/goal-reader-voice-plan.json`. Generate matching blocks through Fish MCP, using the same voice and exact `ttsText`. Obtain a `studio_generate(dry_run=true)` quote before generation. Save a receipt JSON with `voice`, `model`, and `clips: [{key, text, audio_url}]` from the completed blocks. Then run:
 
@@ -71,12 +71,17 @@ The importer validates the text-to-key mapping, downloads recordings, uses FFmpe
    FISH_VOICE_ID=...
    ```
 4. Preview: `npm run audio -- --dry --only=prompt --limit=5`, then `npm run audio -- --only=prompt --limit=5`. Listen before generating the rest with `npm run audio`. The same voice ID is required for every batch. `--redo=sound:a,sound:t` regenerates only those keys; `--only=sound` selects the phonics batch.
-5. Open the app → 🔒 → Ayuda → **Revisar los audios**. Listen to the *sound* tab first (isolated sounds are the hard ones). Mark bad clips; for each, adjust its hint in `SOUND_HINTS` (`src/domain/audio/AudioCatalog.ts`) and run `npm run audio -- --redo=sound:a,sound:t`.
+5. Open the app → ⚙️ Settings → Ayuda → **Revisar los audios**. Listen to the *sound* tab first (isolated sounds are the hard ones). Mark bad clips; for each, adjust its hint in `SOUND_HINTS` (`src/domain/audio/AudioCatalog.ts`) and run `npm run audio -- --redo=sound:a,sound:t`.
 6. Commit the MP3s in `public/audio/` and `src/data/audio-manifest.json` so Vercel serves them (the key never ships).
 
 Any missing or unavailable clip falls back to the device voice.
 
-**Where the voice is chosen:** only here, on the Mac. The generator bakes the chosen Fish voice into MP3 files that deploy with the app; the iPad/iPhone just play them, so there is no voice setting on the devices. To change the voice: put a new `FISH_VOICE_ID` in `.env.local`, run `npm run audio` (every clip regenerates because the voice is part of each clip's hash, ≈ $0.16), commit and push. Speeds: words 0.85, sentences/stories 0.8, challenge "slow" clips 0.6 (set in `src/domain/audio/AudioCatalog.ts`).
+**Where the voice is chosen:** open **⚙️ Settings** from any screen, complete the parent gate, and choose **Reading voice / Voz de lectura**. Preview Teacher or Josh, then Save. Both Fish libraries are bundled and cached for offline replay; switching voices costs no credits. English voices installed on the device are also listed. An unavailable device voice falls back to Teacher. Each player keeps their own choice.
+
+To add or update Josh recordings, pass `--manifest=src/data/audio-josh-manifest.json` to the importer with Josh receipts. Keep Teacher and Josh in separate Fish projects and manifests. Poll `studio_project` / `studio_read_blocks` while generation runs; avoid submitting another generation request for pending blocks. Speaking speeds: words 0.85, sentences/stories 0.8, challenge slow clips 0.6 (catalog settings, applied with pitch-preserving `atempo`).
+
+**Flexible practice:** Story Time defaults to one sentence with **Continue**, optional sentence audio, and **Skip to questions**. Continue is unverified practice, never a pronunciation pass. Guided reading remains available in Settings. **Skip this part** advances past the current intro, round, attempt, sentence, question or retell part; **Skip section** skips the current group of activities. Skips create no incorrect answers. Completed word checks are saved immediately, and a correct new word can continue without three repetitions. Settings stay visible during practice; opening them ends the current session but retains already saved answers.
+
 
 ## 5. On the iPad for daily use
 - Add to Home Screen, open from the icon.
