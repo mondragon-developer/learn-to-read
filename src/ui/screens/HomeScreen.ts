@@ -17,7 +17,12 @@ export class HomeScreen implements Screen {
     const pct = t.next ? Math.round(((t.next.blocks - t.blocksToNext) / t.next.blocks) * 100) : 100;
     replace(host, h('div', { class: 'screen center home' },
       h('h1', {}, `Hi, ${p.firstName}!`),
-      h('button', { class: 'kickoff', onClick: () => this.ctx.navigate('session') },
+      h('button', { class: 'kickoff', onClick: async () => {
+        if (p.settings.checkMode === 'independent') {
+          await this.ctx.audio.unlock();
+          this.ctx.navigate('session', { ready: true });
+        } else this.ctx.navigate('session');
+      } },
         h('span', { class: 'kickoff-ball', 'aria-hidden': 'true' }, '⚽'),
         h('span', {}, playedToday ? 'Play again' : 'Kick off!')),
       h('div', { class: 'stats' },

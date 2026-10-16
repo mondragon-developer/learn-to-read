@@ -47,5 +47,16 @@
   "retell-beginning": "What happened at the beginning?",
   "retell-middle": "What happened in the middle?",
   "retell-end": "What happened at the end?",
-  "segment-say": "Say each sound and tap a box for each one."
+  "segment-say": "Say each sound and tap a box for each one.",
+  "tap-mic": "Your turn! Tap the microphone, then read out loud. Or tap the ear to listen and repeat.",
+  "repeat-word": "Listen, then say it yourself. When you finish, tap the green arrow.",
+  "repeat-sentence": "Listen, then read it yourself. When you finish, tap the green arrow.",
+  "practice-done": "Thanks for practicing!",
+  "read-sentence-now": "Your turn! Tap the microphone and read the sentence.",
+  "choose-answer": "Listen to each answer. Then tap your choice.",
+  "retell-done": "Tell it in your own words. When you finish, tap the green arrow.",
+  "lets-go": "Tap the green arrow to start.",
+  "finished-independent": "Great practice! You are done for today. Tap the green button to go home.",
+  "howto-sentence-independent": "Listen to the sentence and follow the yellow word. Then it is your turn to read. You can always listen and repeat.",
+  "howto-story-independent": "Listen to the story and follow the yellow words. Then read with me, answer questions, and tell the story."
 }

@@ -1,3 +1,4 @@
+import { IndependentReader } from './independentRead';
 import { outcomeFor } from '@domain/speech/Grading';
 import type { AnswerMatcher, MatchLevel } from '@domain/speech/AnswerMatcher';
 import type { SentenceMatch, SentenceMatcher } from '@domain/speech/SentenceMatcher';
@@ -11,7 +12,7 @@ import { playTake, recordTake } from './takeUi';
 export interface ReadResult { outcome: Outcome; source: Source; heard: string; hint?: string }
 
 /** One sentence attempt. `match` is null when a grown-up judged it (no word-level detail). */
-export interface SentenceRead { pass: boolean; match: SentenceMatch | null; source: Source }
+export interface SentenceRead { pass: boolean; match: SentenceMatch | null; source: Source; unverified?: boolean }
 
 /** The audio cues the read-aloud loop needs. */
 export interface Voice {
@@ -36,6 +37,7 @@ const SENTENCE_TAKE_MS = 14000;
 export class ReadAloud {
   readonly health = new MicHealth();
   private recorderBroken = false;
+  readonly independentReader: IndependentReader | null;
 
   constructor(
     private readonly voice: Voice,
@@ -45,7 +47,11 @@ export class ReadAloud {
     private readonly sentences: SentenceMatcher,
     private readonly i18n: I18n,
     preferMic: boolean,
+    independent = false,
+    signal: AbortSignal = new AbortController().signal,
+    stopVoice: () => void = () => undefined,
   ) {
+    this.independentReader = independent ? new IndependentReader(voice, checker, words, sentences, signal, stopVoice) : null;
     if (!preferMic || !checker.available) this.health.record('unavailable');
   }
 
@@ -55,10 +61,11 @@ export class ReadAloud {
   }
 
   /** True when a grown-up is judging (record or buttons). */
-  get grownUpMode(): boolean { return this.mode !== 'mic'; }
+  get grownUpMode(): boolean { return !this.independentReader && this.mode !== 'mic'; }
 
   /** Two tries for one word inside `panel`. */
   async readWord(panel: HTMLElement, target: string, label = 'Read it!'): Promise<ReadResult> {
+    if (this.independentReader) return this.independentReader.readWord(panel, target, label);
     const levels: MatchLevel[] = [];
     let heard = '';
     let hint: string | undefined;
@@ -93,6 +100,7 @@ export class ReadAloud {
    * Mic failures retry silently; the caller decides about a second attempt.
    */
   async readSentence(panel: HTMLElement, text: string, model: () => Promise<void>, label = 'Read it!'): Promise<SentenceRead> {
+    if (this.independentReader) return this.independentReader.readSentence(panel, text, model, label);
     let silences = 0;
     for (;;) {
       if (this.mode !== 'mic' || silences >= MAX_SILENCES) {

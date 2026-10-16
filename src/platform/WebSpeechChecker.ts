@@ -31,6 +31,7 @@ const SENTENCE_QUIET_MS = 1800;
 export class WebSpeechChecker implements PronunciationChecker {
   private readonly Ctor: RecognizerCtor | undefined;
   private active: Recognizer | null = null;
+  private generation = 0;
 
   constructor() {
     const w = window as unknown as { SpeechRecognition?: RecognizerCtor; webkitSpeechRecognition?: RecognizerCtor };
@@ -40,6 +41,7 @@ export class WebSpeechChecker implements PronunciationChecker {
   get available(): boolean { return !!this.Ctor; }
 
   cancel(): void {
+    this.generation++;
     try { this.active?.abort(); } catch { /* not started */ }
     this.active = null;
   }
@@ -48,7 +50,9 @@ export class WebSpeechChecker implements PronunciationChecker {
     const t0 = performance.now();
     if (!this.Ctor) return { status: 'unavailable', alternatives: [], ms: 0 };
     this.cancel();
+    const generation = this.generation;
     await new Promise((r) => setTimeout(r, AFTER_AUDIO_MS));
+    if (generation !== this.generation) return { status: 'silence', alternatives: [], ms: performance.now() - t0 };
     const limit = timeoutMs ?? (mode === 'word' ? 7000 : 15000);
     const target = words(expected);
 

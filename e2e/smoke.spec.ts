@@ -1,9 +1,20 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const SHOTS = process.env.SHOTS_DIR;
+test.use({ serviceWorkers: 'block' });
 
 /** No real audio or mic in CI: device voice finishes instantly, no recognizer => Grown-up check mode. */
 async function stubDevices(page: Page): Promise<void> {
+  // Flow tests use short valid recordings; real Fish playback is checked separately.
+  await page.route('**/audio/**', async (route) => {
+    const samples = 160; const wav = Buffer.alloc(44 + samples * 2);
+    wav.write('RIFF', 0); wav.writeUInt32LE(wav.length - 8, 4); wav.write('WAVEfmt ', 8);
+    wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
+    wav.writeUInt32LE(8000, 24); wav.writeUInt32LE(16000, 28);
+    wav.writeUInt16LE(2, 32); wav.writeUInt16LE(16, 34); wav.write('data', 36);
+    wav.writeUInt32LE(samples * 2, 40);
+    await route.fulfill({ contentType: 'audio/wav', body: wav });
+  });
   await page.addInitScript(() => {
     const w = window as unknown as Record<string, unknown>;
     delete w.webkitSpeechRecognition;
@@ -102,12 +113,14 @@ async function playMatch(page: Page, project: string, stopWhen?: () => Promise<b
   throw new Error('match did not finish');
 }
 
-async function setUpPlayer(page: Page, query = ''): Promise<void> {
+async function setUpPlayer(page: Page, query = '', independent = false): Promise<void> {
   await page.goto(`/${query}`);
   await page.getByRole('button', { name: /set up a player/ }).click();
   await passGate(page);
   await page.getByPlaceholder('Leo').fill('Sam');
   await page.getByRole('button', { name: /Crear jugador|Create player/ }).click();
+  await page.locator(`input[name=check][value=${independent ? 'independent' : 'record'}]`).check();
+  await page.getByRole('button', { name: /^Guardar$|^Save$/ }).click();
   await page.getByRole('button', { name: /Volver al juego|Back to the game/ }).click();
 }
 
@@ -207,6 +220,7 @@ test('set up a player, play a full match, see the Spanish dashboard', async ({ p
   await page.getByRole('button', { name: /Crear jugador|Create player/ }).click();
   await expect(page.getByText(/Duración de la sesión|Session length/)).toBeVisible();
   await page.getByLabel(/10 min/).check();
+  await page.locator('input[name=check][value=record]').check();
   await page.getByRole('button', { name: /^Guardar$|^Save$/ }).click();
   await page.getByRole('button', { name: /Volver al juego|Back to the game/ }).click();
 
@@ -259,5 +273,135 @@ test('set up a player, play a full match, see the Spanish dashboard', async ({ p
   await expect(page.getByRole('button', { name: 'Descargar respaldo' })).toBeVisible();
   await page.getByRole('tab', { name: 'Ayuda' }).click();
   await expect(page.getByRole('button', { name: /Revisar los audios/ })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+/** Complete a child-only session: adult approval controls must never appear. */
+async function playIndependently(page: Page, project = '', stopWhen?: () => Promise<boolean>): Promise<void> {
+  const controls = [
+    page.getByRole('button', { name: /Let’s go/ }),
+    page.locator('.practice-next'),
+    page.locator('.mic:not(:disabled)'),
+    page.locator('.ear:enabled'),
+    page.locator('.options .choice:enabled'),
+    page.locator('.word-choice:enabled'),
+    page.locator('.strip:enabled'),
+    page.locator('.drum'),
+    page.getByRole('button', { name: /✓ Check|✓ Done/ }),
+  ];
+  let captured = false;
+  for (let i = 0; i < 700; i++) {
+    if (stopWhen && await stopWhen()) return;
+    if (!captured && project && await page.locator('.practice-next').isVisible()) {
+      captured = true; await shot(page, 'independent-repeat', project);
+    }
+    if (await page.getByRole('heading', { name: 'Full time!' }).isVisible()) return;
+    await expect(page.locator('.grownup-q, .grownup-note')).toHaveCount(0);
+    for (const loc of controls) {
+      if (await loc.first().isVisible().catch(() => false)) {
+        await loc.first().click({ timeout: 800 }).catch(() => undefined);
+        break;
+      }
+    }
+    await page.waitForTimeout(100);
+  }
+  throw new Error('Independent session did not finish');
+}
+
+for (const mode of ['unavailable', 'denied'] as const) {
+  test(`independent practice completes with ${mode} microphone and records unverified reads`, async ({ page }, info) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await stubDevices(page);
+    if (mode === 'denied') await page.addInitScript(() => {
+      class DeniedMic {
+        onerror: ((e: { error: string }) => void) | null = null;
+        start(): void { setTimeout(() => this.onerror?.({ error: 'not-allowed' }), 5); }
+        abort(): void {}
+      }
+      (window as unknown as Record<string, unknown>).webkitSpeechRecognition = DeniedMic;
+    });
+    await setUpPlayer(page);
+    await page.locator('.lock').click();
+    await passGate(page);
+    await page.getByRole('tab', { name: 'Ajustes' }).click();
+    await page.getByRole('button', { name: 'Preparar práctica independiente en iPad' }).click();
+    await expect(page.locator('input[name=check][value=independent]')).toBeChecked();
+    if (mode === 'unavailable') {
+      // Includes the story, questions, ordering and retelling branches.
+      await page.getByLabel(/10 min/).check();
+      await page.getByRole('button', { name: /^Guardar$/ }).click();
+    }
+    await page.getByRole('button', { name: /Volver al juego/ }).click();
+    await page.getByRole('button', { name: /Kick off!/ }).click();
+    await expect(page.getByRole('heading', { name: 'Today’s match' })).toHaveCount(0);
+    await playIndependently(page, info.project.name);
+    await shot(page, `independent-${mode}-finished`, info.project.name);
+    await page.locator('.lock').click();
+    await passGate(page);
+    await expect(page.getByRole('heading', { name: 'Practicado · sin verificar' })).toBeVisible();
+    await expect(page.locator('.unverified-review li')).not.toHaveCount(0);
+    await expect(page.locator('.sentence-log')).toHaveCount(0);
+    await shot(page, `independent-${mode}-summary`, info.project.name);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('independent healthy microphone verifies words and sentences', async ({ page }) => {
+  await stubDevices(page);
+  await page.addInitScript(() => {
+    class ReadingMic {
+      onresult: ((e: unknown) => void) | null = null;
+      timer = 0;
+      start(): void {
+        const text = document.querySelector('.word')?.textContent
+          ?? Array.from(document.querySelectorAll('.sentence .chip')).map((b) => b.textContent).join(' ');
+        this.timer = window.setTimeout(() => this.onresult?.({ resultIndex: 0, results: [
+          { 0: { transcript: text || 'cat', confidence: 1 }, length: 1, isFinal: true },
+        ] }), 10);
+      }
+      abort(): void { clearTimeout(this.timer); }
+    }
+    (window as unknown as Record<string, unknown>).webkitSpeechRecognition = ReadingMic;
+  });
+  await setUpPlayer(page, '', true);
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await playIndependently(page);
+  const reads = await page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve) => {
+      const req = indexedDB.open('goal-reader'); req.onsuccess = () => resolve(req.result);
+    });
+    const events = await new Promise<Array<{ activity: string; outcome: string; source: string }>>((resolve) => {
+      const req = db.transaction('events').objectStore('events').getAll(); req.onsuccess = () => resolve(req.result);
+    });
+    db.close();
+    return events.filter((e) => e.activity === 'new-word' || e.activity === 'sentence');
+  });
+  expect(reads.filter((e) => e.activity === 'new-word')).toHaveLength(3);
+  expect(reads.filter((e) => e.activity === 'sentence')).toHaveLength(1);
+  expect(reads.every((e) => e.source === 'mic' && e.outcome === 'first-try')).toBe(true);
+});
+
+test('a child can leave a stuck microphone through listen and repeat', async ({ page }, info) => {
+  await stubDevices(page);
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.addInitScript(() => {
+    class HungMic { start(): void {} abort(): void {} }
+    (window as unknown as Record<string, unknown>).webkitSpeechRecognition = HungMic;
+  });
+  await setUpPlayer(page, '', true);
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await playIndependently(page, '', () => page.locator('.mic:not(:disabled)').isVisible());
+  await page.locator('.mic').click();
+  await page.waitForTimeout(400); // actual recognition start follows the audio teardown delay
+  await expect(page.locator('.mic.listening')).toBeVisible();
+  await page.getByRole('button', { name: '👂 Listen & repeat', exact: true }).click();
+  await expect(page.locator('.practice-next')).toBeVisible();
+  await shot(page, 'independent-repeat', info.project.name);
+  await page.getByRole('button', { name: 'Goal Reader', exact: false }).click();
+  await expect(page.getByRole('heading', { name: 'Hi, Sam!' })).toBeVisible();
+  await page.waitForTimeout(500);
+  await expect(page.locator('.mic')).toHaveCount(0);
   expect(errors).toEqual([]);
 });

@@ -15,6 +15,7 @@ export interface FluencyRecord { day: number; wcpm: number; words: number; error
 export interface SentenceRecord { day: number; text: string; words: number; wordsRead: number; whole: boolean; helped: string }
 
 export interface DashboardData {
+  unverified: { day: number; text: string }[];
   minutes: DayMinutes[];
   minutesThisWeek: number;
   sessionsThisWeek: number;
@@ -66,7 +67,7 @@ export function dashboard(events: PracticeEvent[], library: ContentLibrary, toda
 
   const skillMap = new Map<StorySkill, SkillScore>();
   for (const e of events) {
-    if (e.activity !== 'story-question') continue;
+    if (e.outcome === 'unverified' || e.activity !== 'story-question') continue;
     const skill = e.meta?.skill as StorySkill | undefined;
     if (!skill) continue;
     const s = skillMap.get(skill) ?? { skill, right: 0, total: 0 };
@@ -80,10 +81,10 @@ export function dashboard(events: PracticeEvent[], library: ContentLibrary, toda
     prosody: Number(e.meta?.prosody ?? 0), season: String(e.meta?.season ?? ''),
   }));
 
-  const reads = events.filter((e) => e.activity === 'review');
+  const reads = events.filter((e) => e.activity === 'review' && e.outcome !== 'unverified');
   const firstTryRate = reads.length ? reads.filter((e) => e.outcome === 'first-try').length / reads.length : null;
 
-  const checked = events.filter((e) => e.activity === 'sentence' && typeof e.meta?.words === 'number');
+  const checked = events.filter((e) => e.outcome !== 'unverified' && e.activity === 'sentence' && typeof e.meta?.words === 'number');
   const sentences: SentenceRecord[] = checked.slice().sort((a, b) => b.at - a.at).slice(0, SENTENCES_SHOWN).map((e) => ({
     day: e.day, text: String(e.meta?.text ?? e.itemId), words: Number(e.meta?.words), wordsRead: Number(e.meta?.wordsRead ?? 0),
     whole: e.meta?.whole === true, helped: String(e.meta?.helped ?? ''),
@@ -94,6 +95,9 @@ export function dashboard(events: PracticeEvent[], library: ContentLibrary, toda
   }), { words: 0, wordsRead: 0, sentences: 0, whole: 0 });
 
   return {
+    unverified: events.filter((e) => e.outcome === 'unverified').sort((a, b) => b.at - a.at).slice(0, 20).map((e) => ({
+      day: e.day, text: String(e.meta?.text ?? library.card(e.itemId)?.text ?? e.itemId.replace(/^(blend|sound-it-out):/, '')),
+    })),
     sentences,
     sentenceTotals,
     minutes,

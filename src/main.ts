@@ -65,7 +65,10 @@ async function boot(): Promise<void> {
   const catalog = buildCatalog(library, prompts, syllables.words.map((w) => w.text));
   // One audio engine for clips and his recordings (see AudioEngine for why).
   const engine = new AudioEngine();
-  const audio = new WebAudioPlayer(engine, catalog, new Set(Object.keys(manifest)));
+  // Recorded files have content-versioned names so an iPad never reuses an older voice.
+  const recordings: Record<string, { file: string; hash: string }> = manifest;
+  const playbackCatalog = catalog.map((clip) => ({ ...clip, file: recordings[clip.key]?.file ?? clip.file }));
+  const audio = new WebAudioPlayer(engine, playbackCatalog, new Set(Object.keys(recordings)));
 
   const profiles = await profileRepo.list();
   let player: Profile | null = profiles.find((p) => p.id === readPlayer()) ?? (profiles.length === 1 ? profiles[0] ?? null : null);

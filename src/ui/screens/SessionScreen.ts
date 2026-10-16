@@ -55,8 +55,8 @@ export class SessionScreen implements Screen {
     kit.known = new Set(deck.keys());
     this.kit = kit;
 
-    if (!params?.extra) await this.kickoff(stage, plan.steps);
-    else await this.ctx.audio.play(clipKey.prompt('extra-time'));
+    if (!params?.extra && !(kit.independent && params?.ready)) await this.kickoff(stage, plan.steps);
+    else if (params?.extra) await this.ctx.audio.play(clipKey.prompt('extra-time'));
     if (kit.closed) return;
 
     const t0 = clock.now();
@@ -68,21 +68,22 @@ export class SessionScreen implements Screen {
       const g = groups[i];
       kit.step = { n: groups.slice(0, i + 1).filter((x) => x === g).length, of: groups.filter((x) => x === g).length };
       try { await runStep(kit, stage, step); }
-      catch (err) { console.error('step failed', step, err); }
+      catch (err) { if (kit.closed) return; console.error('step failed', step, err); }
     }
     if (kit.closed) return;
     progress(1);
     await kit.record('session', kit.sessionId, 'first-try', 'tap', {
       plannedMin: profile.settings.minutes, durationMs: clock.now() - t0, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
       ...(params?.topic ? { topic: params.topic } : {}),
-      micFallback: kit.grownUpMode,
+      micFallback: kit.reader.independentReader?.fallback ?? kit.grownUpMode,
+      independent: kit.independent,
     });
     void this.ctx.sync.sync();
     await this.fullTime(stage, kit.goals);
   }
 
   dispose(): void {
-    if (this.kit) this.kit.closed = true;
+    if (this.kit) { this.kit.closed = true; this.kit.abort.abort(); }
     this.kit = null;
     this.ctx.audio.stop();
     this.ctx.checker.cancel(); // the recognizer is shared; stop any listen in flight
@@ -117,7 +118,7 @@ export class SessionScreen implements Screen {
       h('ol', { class: 'plan-list' }, parts.filter(([, text]) => text).map(([icon, text]) => h('li', {}, h('span', { 'aria-hidden': 'true' }, icon), ` ${text}`))),
       h('button', { class: 'kickoff compact', onClick: async () => { await this.ctx.audio.unlock(); resolve(); } },
         h('span', { class: 'kickoff-ball', 'aria-hidden': 'true' }, '⚽'), h('span', {}, 'Kick off!')),
-      h('div', { class: 'grownup-note', lang: t.locale }, h('b', {}, `👪 ${t.t('howto.grownup')}: `), t.t('plan.grownup')))));
+      this.kit?.independent ? null : h('div', { class: 'grownup-note', lang: t.locale }, h('b', {}, `👪 ${t.t('howto.grownup')}: `), t.t('plan.grownup')))));
     await this.ctx.audio.play(clipKey.prompt('start'));
   }
 
@@ -125,18 +126,19 @@ export class SessionScreen implements Screen {
     const p = this.ctx.player();
     if (!p) return;
     const t = trophies(await this.ctx.log.events(p.id), this.ctx.clock.today());
+    const independent = p.settings.checkMode === 'independent';
     const blocksNow = Math.floor(goals / GOALS_PER_BLOCK);
     replace(stage, h('div', { class: 'stage center fulltime' },
       h('div', { class: 'whistle', 'aria-hidden': 'true' }, '🏆'),
       h('h1', {}, 'Full time!'),
-      h('p', { class: 'lead' }, `You scored ${goals} goal${goals === 1 ? '' : 's'}!`),
+      h('p', { class: 'lead' }, independent ? 'You practiced today! ⭐' : `You scored ${goals} goal${goals === 1 ? '' : 's'}!`),
       blocksNow ? h('p', { class: 'lead' }, `+${blocksNow} 🧱 for your stadium`) : null,
       t.next ? h('p', { class: 'small' }, `${t.blocksToNext} more blocks for the ${t.next.name.toLowerCase()} ${t.next.emoji}`) : null,
       h('div', { class: 'row center' },
-        h('button', { class: 'btn big', onClick: () => this.ctx.navigate('session', { extra: true }) }, '⏱ Extra time'),
-        h('button', { class: 'btn big ok', onClick: () => this.ctx.navigate('stadium') }, '🏟️ My stadium')),
-      h('button', { class: 'btn link', onClick: () => this.ctx.navigate('home') }, 'Done for today')));
-    await this.ctx.audio.play(clipKey.prompt('full-time'));
+        h('button', { class: independent ? 'btn soft' : 'btn big', onClick: () => this.ctx.navigate('session', { extra: true }) }, '⏱ Extra time'),
+        h('button', { class: independent ? 'btn soft' : 'btn big ok', onClick: () => this.ctx.navigate('stadium') }, '🏟️ My stadium')),
+      h('button', { class: independent ? 'btn big ok' : 'btn link', onClick: () => this.ctx.navigate('home') }, 'Done for today')));
+    await this.ctx.audio.play(clipKey.prompt(independent ? 'finished-independent' : 'full-time'));
     await sleep(200);
   }
 }

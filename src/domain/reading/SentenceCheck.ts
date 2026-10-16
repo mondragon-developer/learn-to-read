@@ -12,15 +12,18 @@ export interface SentenceCheck {
   helped: number[];
   /** Whole-sentence turn judged right. */
   whole: boolean;
+  /** Practiced without a verified reading; excluded from accuracy and mastery. */
+  unverified?: boolean;
 }
 
-export function wordsRead(c: SentenceCheck): number { return c.words.length - c.helped.length; }
+export function wordsRead(c: SentenceCheck): number { return c.unverified ? 0 : c.words.length - c.helped.length; }
 
 /**
  * Event outcome for a checked sentence:
  * every word alone + the whole sentence -> first-try; the whole sentence or 80% of the words -> after-retry.
  */
 export function sentenceOutcome(c: SentenceCheck): Outcome {
+  if (c.unverified) return 'unverified';
   const share = c.words.length ? wordsRead(c) / c.words.length : 0;
   if (c.whole && c.helped.length === 0) return 'first-try';
   if (c.whole || share >= 0.8) return 'after-retry';

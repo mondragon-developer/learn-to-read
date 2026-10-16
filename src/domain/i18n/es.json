@@ -113,7 +113,7 @@
   "set.check": "Cómo revisar la lectura",
   "set.check.record": "Grabar su voz y escucharla (un adulto toca ✓) — recomendado",
   "set.check.mic": "Micrófono automático (gratis, a veces falla en iPhone/iPad)",
-  "set.checkHelp": "Las grabaciones solo se guardan en memoria mientras practica: nunca se guardan ni se envían. El micrófono automático envía el audio a Apple o Google para convertirlo en texto.",
+  "set.checkHelp": "Practicar solo continúa sin la aprobación de un adulto. El micrófono automático envía audio al servicio de voz del navegador (Apple o Google); escuchar y repetir no necesita grabación. El modo de grabación conserva el audio solo en memoria.",
   "set.pace": "Primera lectura del cuento completo",
   "set.pace.word": "Palabra por palabra (más lento)",
   "set.pace.follow": "A ritmo natural, señalando cada palabra en amarillo — recomendado",
@@ -203,5 +203,12 @@
   "topic.challenge": "Palabras de la tarea (robin, flower…) separadas en sílabas.",
   "topic.spelling": "Escucha la palabra y la arma con letras.",
   "topic.handwriting": "Calca y escribe palabras que ya conoce.",
-  "skill.moral": "La moraleja (la lección)"
+  "skill.moral": "La moraleja (la lección)",
+  "set.check.independent": "Practicar solo — micrófono automático, o escuchar y repetir si no funciona",
+  "sum.unverified": "Practicado · sin verificar",
+  "sum.unverifiedHelp": "Estos intentos recientes se practicaron sin una verificación fiable del micrófono. No cuentan para la precisión ni el dominio. Escuche a su hijo leerlos cuando tenga un momento.",
+  "set.independentPreset": "Preparar práctica independiente en iPad",
+  "set.independentHelp": "Cinco minutos, instrucciones habladas, trazado y sin aprobaciones de un adulto. Si falla el micrófono, continúa escuchando y repitiendo sin verificar.",
+  "audio.coverage": "{ready} de {total} audios de voz instalados. Los que faltan usan la voz del dispositivo.",
+  "audio.soundReview": "Revise cada sonido aislado antes de practicar fonética. Las voces generadas y del dispositivo pueden decir nombres de letras o añadir vocales; hay que escuchar estos audios."
 }

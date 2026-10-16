@@ -18,6 +18,8 @@ export type ScreenId = 'players' | 'home' | 'session' | 'stadium' | 'words' | 'p
 
 export interface NavParams {
   extra?: boolean;
+  /** Audio was unlocked by the home button in the same tap. */
+  ready?: boolean;
   /** A chosen topic for this session, as encodeChoice() writes it ('phonics:5', 'story:compare'). */
   topic?: string;
 }

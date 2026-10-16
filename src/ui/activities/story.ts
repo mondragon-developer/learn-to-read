@@ -51,11 +51,11 @@ export async function story(kit: Kit, host: HTMLElement, s: Story): Promise<void
     const r = await coachSentence(kit, transport, bar, line.words, panel, text, clipKey.story(s.id, String(i)));
     line.el.classList.remove('reading');
     if (!r) continue;
-    r.check.helped.forEach((w) => helpedWords.add((r.check.words[w] ?? '').toLowerCase()));
+    if (!r.check.unverified) r.check.helped.forEach((w) => helpedWords.add((r.check.words[w] ?? '').toLowerCase()));
     await kit.record('sentence', `${s.id}:s${i}`, sentenceOutcome(r.check), r.source, sentenceMeta(r.check));
   }
   // Words he needed help with come back as practice cards (the deck ignores words already strong).
-  for (const w of [...helpedWords].filter(Boolean).slice(0, MAX_NEW_CARDS)) await kit.record('story-read', cardId(w), 'missed', 'grownup', { story: s.id });
+  for (const w of [...helpedWords].filter(Boolean).slice(0, MAX_NEW_CARDS)) await kit.record('story-read', cardId(w), 'missed', kit.independent ? 'mic' : 'grownup', { story: s.id });
 
   for (let i = 0; i < s.questions.length; i++) {
     const q = s.questions[i];
@@ -92,7 +92,18 @@ async function choose(kit: Kit, host: HTMLElement, label: string, promptKey: str
     h('div', { class: 'question' }, h('button', { class: 'speaker', 'aria-label': 'Hear the question', onClick: () => void kit.say(promptKey) }, '🔊'), h('span', {}, prompt)),
     h('p', { class: 'small muted' }, 'Tap 🔊 to hear an answer. Tap the answer to choose it.'),
     h('div', { class: 'options' }, rows)));
+  buttons.forEach((b) => { b.disabled = true; });
   await kit.say(promptKey);
+  if (kit.independent) {
+    for (let j = 0; j < options.length && !kit.closed; j++) {
+      buttons[j]?.classList.add('speaking');
+      await kit.say(optionKey(j));
+      buttons[j]?.classList.remove('speaking');
+    }
+    if (kit.closed) return false;
+    await kit.prompt('choose-answer');
+  }
+  buttons.forEach((b) => { b.disabled = false; });
   const pick = await new Promise<number>((resolve) => buttons.forEach((b, j) => b.addEventListener('click', () => resolve(j), { once: true })));
   buttons.forEach((b, j) => b.classList.add(j === answer ? 'hit' : j === pick ? 'miss' : 'dim'));
   if (pick === answer) await kit.prompt('goal');
@@ -113,6 +124,16 @@ const RETELL_PARTS = [
  */
 async function retell(kit: Kit, host: HTMLElement, s: Story): Promise<void> {
   await kit.intro(host, 'retell');
+  if (kit.independent) {
+    for (const part of RETELL_PARTS) {
+      const panel = h('div', { class: 'panel' });
+      replace(host, h('div', { class: 'stage center' }, kit.header('retell', part.label), panel));
+      await kit.reader.independentReader?.repeat(panel, () => kit.prompt(part.prompt), 'retell-done');
+      kit.abort.signal.throwIfAborted();
+    }
+    await kit.record('retell', `${s.id}:retell`, 'unverified', 'self', { text: `${s.title}: retelling` });
+    return;
+  }
   let told = 0;
   for (const [i, part] of RETELL_PARTS.entries()) {
     const hintKey = clipKey.story(s.id, String(s.order[i]));
@@ -141,8 +162,13 @@ async function putInOrder(kit: Kit, host: HTMLElement, s: Story): Promise<boolea
   const labels = ['First', 'Next', 'Last'];
   const placed = h('ol', { class: 'placed' });
   replace(host, h('div', { class: 'stage' }, kit.header('story', 'Put it in order'),
-    h('p', { class: 'small muted' }, 'Tap what happened first, then next, then last.'), placed, h('div', { class: 'strips' }, strips)));
+    h('p', { class: 'small muted' }, 'Tap what happened first, then next, then last.'), placed, h('div', { class: 'strips' }, strips.map((b) => h('div', { class: 'option' }, h('button', { class: 'speaker', 'aria-label': 'Hear this part', onClick: () => void kit.say(keyOf.get(b.textContent ?? '') ?? '') }, '🔊'), b)))));
   await kit.prompt('story-order');
+  if (kit.independent) {
+    strips.forEach((b) => { b.disabled = true; });
+    for (const b of strips) { if (kit.closed) return false; await kit.say(keyOf.get(b.textContent ?? '') ?? ''); }
+    strips.forEach((b) => { b.disabled = false; });
+  }
   const chosen: string[] = [];
   await new Promise<void>((resolve) => strips.forEach((b) => b.addEventListener('click', () => {
     chosen.push(b.textContent ?? '');

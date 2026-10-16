@@ -19,7 +19,7 @@ export type Activity =
   | 'fluency'         // 1-minute read (meta: wcpm, words, errors, seconds, prosody)
   | 'session';        // one finished session (meta: plannedMin, durationMs, goals)
 
-export type Outcome = 'first-try' | 'after-retry' | 'missed';
+export type Outcome = 'first-try' | 'after-retry' | 'missed' | 'unverified';
 export type Source = 'mic' | 'grownup' | 'tap' | 'trace' | 'tiles' | 'self';
 
 export interface PracticeEvent {
@@ -39,7 +39,7 @@ export interface PracticeEvent {
 }
 
 const ACTIVITIES: ReadonlySet<string> = new Set<Activity>(['new-word', 'review', 'sentence', 'warmup', 'tricky', 'write', 'story-read', 'story-question', 'story-bonus', 'story-order', 'retell', 'fluency', 'session']);
-const OUTCOMES: ReadonlySet<string> = new Set<Outcome>(['first-try', 'after-retry', 'missed']);
+const OUTCOMES: ReadonlySet<string> = new Set<Outcome>(['first-try', 'after-retry', 'missed', 'unverified']);
 
 /** Shape check for events from outside this device (server pull, backup file). */
 export function isPracticeEvent(x: unknown): x is PracticeEvent {

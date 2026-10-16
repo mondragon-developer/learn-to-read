@@ -4,7 +4,9 @@
  *   npm run audio -- --dry            list what is missing, characters and estimated cost
  *   npm run audio                     generate missing/changed clips
  *   npm run audio -- --only=sound     one kind: word | sound | sentence | story | prompt
- *   npm run audio -- --redo=sound:a   regenerate specific keys (comma separated)
+ *   npm run audio -- --redo=sound:a   regenerate ONLY these keys (comma separated)
+ *   npm run audio -- --only=prompt --limit=5   generate a small voice preview
+ *   npm run audio -- --export=/tmp/voice-plan.json   export a plan without API calls
  *
  * Needs FISH_API_KEY and FISH_VOICE_ID in .env.local. A clip is regenerated only when its text,
  * voice, model or speed changed (hash in src/data/audio-manifest.json).
@@ -47,27 +49,41 @@ const hashOf = (c: Clip): string => createHash('sha1').update(JSON.stringify([c.
 
 const only = args.get('only');
 const redo = new Set((args.get('redo') ?? '').split(',').filter(Boolean));
+const limit = Number(args.get('limit') ?? catalog.length);
+if (!Number.isInteger(limit) || limit < 1) throw new Error('--limit must be a positive integer.');
+if (only && !catalog.some((c) => c.kind === only)) throw new Error(`Unknown clip kind: ${only}`);
+for (const k of redo) if (!catalog.some((c) => c.key === k)) throw new Error(`Unknown clip key: ${k}`);
 const todo = catalog.filter((c) => {
   if (only && c.kind !== only) return false;
-  if (redo.has(c.key)) return true;
+  if (redo.size) return redo.has(c.key);
   const m = manifest[c.key];
   return !m || m.hash !== hashOf(c) || !existsSync(join('public', c.file));
-});
+}).slice(0, limit);
 
 const bytes = todo.reduce((n, c) => n + Buffer.byteLength(c.ttsText, 'utf8'), 0);
 console.log(`${catalog.length} clips in catalog · ${todo.length} to generate · ${bytes} bytes of text ≈ $${((bytes / 1e6) * USD_PER_MILLION_BYTES).toFixed(2)}`);
 const byKind = todo.reduce<Record<string, number>>((m, c) => ({ ...m, [c.kind]: (m[c.kind] ?? 0) + 1 }), {});
 console.log('by kind:', byKind);
+console.log('Billing: developer API balance; website plan credits are separate. Replays of saved MP3s cost nothing.');
+if (args.has('export')) {
+  const out = args.get('export') as string;
+  if (out === 'true') throw new Error('Use --export=/path/to/voice-plan.json');
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, `${JSON.stringify({ model: MODEL, voice: voice || null, bytes, clips: todo.map((c) => ({ ...c, hash: hashOf(c) })) }, null, 2)}\n`);
+  console.log(`Exported ${todo.length} clips to ${out}. No audio requested or credits spent.`);
+  process.exit(0);
+}
 
 if (dry) {
   if (!key) console.log('\nNo FISH_API_KEY in .env.local - dry run only. The app falls back to the device voice for missing clips.');
   process.exit(0);
 }
-if (!voice) console.warn('! FISH_VOICE_ID not set - Fish will use its default voice.');
+if (!voice) throw new Error('Set FISH_VOICE_ID in .env.local so every clip uses the chosen voice.');
 
 async function tts(c: Clip, attempt = 1): Promise<Buffer> {
   const res = await fetch('https://api.fish.audio/v1/tts', {
     method: 'POST',
+    signal: AbortSignal.timeout(60_000),
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', model: MODEL },
     body: JSON.stringify({
       text: c.ttsText,
@@ -80,8 +96,14 @@ async function tts(c: Clip, attempt = 1): Promise<Buffer> {
     await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
     return tts(c, attempt + 1);
   }
-  if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
-  return Buffer.from(await res.arrayBuffer());
+  if (!res.ok) {
+    // A bad key or empty API balance cannot be fixed by trying hundreds more clips.
+    if ([401, 402, 403].includes(res.status)) queue.length = 0;
+    throw new Error(`Fish Audio returned HTTP ${res.status}. Check API access, balance, and voice ID.`);
+  }
+  const audio = Buffer.from(await res.arrayBuffer());
+  if (!audio.length) throw new Error('Fish Audio returned an empty clip.');
+  return audio;
 }
 
 let done = 0;

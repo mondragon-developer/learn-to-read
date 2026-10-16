@@ -69,8 +69,8 @@ async function blend(kit: Kit, host: HTMLElement, unit: Unit, units: Unit[], see
       await sleep(250);
     }
     const r = await kit.reader.readWord(panel, w.text, 'Say the word!');
-    if (r.outcome !== 'missed') await kit.prompt('goal');
-    await kit.record('warmup', `blend:${w.text}`, r.outcome, r.source);
+    if ((r.outcome === 'first-try' || r.outcome === 'after-retry')) await kit.prompt('goal');
+    await kit.record('warmup', `blend:${w.text}`, r.outcome, r.source, { text: w.text });
   }
 }
 
@@ -150,7 +150,7 @@ async function soundItOut(kit: Kit, host: HTMLElement, unit: Unit, seed: number,
     replace(host, h('div', { class: 'stage' }, kit.header('sound-it-out', `Sound it out ${round + 1} of ${picked.length}`), tiles.el, h('p', { class: 'coach small' }, 'Tap each letter, then read the word!'), panel));
     await kit.prompt('sound-it-out');
     const r = await kit.reader.readWord(panel, w.text);
-    if (r.outcome !== 'missed') await kit.prompt('goal');
-    await kit.record('warmup', `sound-it-out:${w.text}`, r.outcome, r.source);
+    if ((r.outcome === 'first-try' || r.outcome === 'after-retry')) await kit.prompt('goal');
+    await kit.record('warmup', `sound-it-out:${w.text}`, r.outcome, r.source, { text: w.text });
   }
 }

@@ -345,3 +345,11 @@ main { flex: 1; padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bot
 .unit-btn.ahead { border-style: dashed; }
 .practice .choice-row { display: flex; align-items: center; gap: 10px; min-height: 44px; }
 .practice input[type=checkbox] { width: 24px; height: 24px; accent-color: var(--pitch); flex: none; }
+
+/* Child-led practice: a clear next action and visible spoken answer. */
+.practice-next { min-width: 200px; min-height: 64px; }
+.choice.speaking { background: #FFE27A; border-color: #A97000; opacity: 1; }
+.strips .strip { flex: 1; }
+.unverified-review { background: #FFF6DD; border: 2px solid #F0D58C; border-radius: 14px; padding: 14px; }
+.unverified-review li { margin: 6px 0; }
+.kick.practiced { opacity: 1; filter: none; }

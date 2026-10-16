@@ -35,7 +35,7 @@ function apply(deck: DeckState, e: PracticeEvent): void {
 
   if (e.activity === 'new-word') {
     if (s) return; // introduced once; later new-word events (another device) change nothing
-    deck.set(e.itemId, { id: e.itemId, box: 1, due: e.day + 1, introducedDay: e.day, lastDay: e.day, reads: 1, misses: e.outcome === 'missed' ? 1 : 0 });
+    deck.set(e.itemId, { id: e.itemId, box: 1, due: e.day + 1, introducedDay: e.day, lastDay: e.day, reads: e.outcome === 'unverified' ? 0 : 1, misses: e.outcome === 'missed' ? 1 : 0 });
     return;
   }
 
@@ -47,6 +47,8 @@ function apply(deck: DeckState, e: PracticeEvent): void {
     return;
   }
 
+  // Practice without a usable microphone is neither a pass nor a miss. Keep it due.
+  if (e.outcome === 'unverified') return;
   if (e.activity !== 'review' || !s) return;
   s.reads++;
   s.lastDay = e.day;

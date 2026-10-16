@@ -2,11 +2,13 @@
 
 Five minutes a day of reading practice for first graders — on iPad, iPhone and Mac.
 
+Open the app: **https://learn-to-read-eight.vercel.app**. On iPad, use Safari → Share → Add to Home Screen.
+
 - **Sound games** (rhyme, robot-talk blending, clapping syllables) — audio only.
 - **Words:** review with spaced repetition, then 3 new words a day: hear it, sound it out, say it 3 times.
 - **Read a sentence** made only of words the child can decode.
 - **Story time** (10-minute sessions): listen, read with me, 3 questions, a word-meaning or rhyme bonus, put it in order.
-- **Pronunciation check** with the device's speech recognition, or a grown-up ✓ when the mic isn't available.
+- **Independent iPad practice:** automatic speech checks with a listen-and-repeat fallback. Unchecked practice stays separate from accuracy and mastery; assisted grown-up modes remain available.
 - **Write it** (optional): trace, write from memory with finger or Apple Pencil, or build with letter tiles.
 - **Rewards:** every word read is a goal; goals earn blocks that build a stadium.
 - **Parent area** (Spanish, with English toggle): minutes per day, tricky words, story skills, Florida B.E.S.T. benchmarks, school FAST scores.

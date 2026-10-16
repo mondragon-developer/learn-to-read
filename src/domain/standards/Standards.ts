@@ -61,6 +61,7 @@ export interface StandardStat { code: string; attempts: number; correct: number;
 export function standardStats(events: PracticeEvent[], library: ContentLibrary): StandardStat[] {
   const map = new Map<string, StandardStat>();
   for (const e of events) {
+    if (e.outcome === 'unverified') continue;
     for (const code of benchmarksOf(e, library)) {
       const s = map.get(code) ?? { code, attempts: 0, correct: 0, lastDay: -Infinity };
       s.attempts++;

@@ -9,7 +9,7 @@ export function settingsSection(ctx: AppContext, p: Profile, refresh: () => void
   const { i18n: t, library } = ctx;
   const draft: Profile = structuredClone(p);
   const radio = <T extends string | number>(name: string, value: T, label: string, current: T, set: (v: T) => void): HTMLElement =>
-    h('label', { class: 'choice-row' }, h('input', { type: 'radio', name, checked: value === current, onChange: () => set(value) }), h('span', {}, label));
+    h('label', { class: 'choice-row' }, h('input', { type: 'radio', name, value: String(value), checked: value === current, onChange: () => set(value) }), h('span', {}, label));
   const name = h('input', { type: 'text', value: draft.firstName, maxlength: '20', autocomplete: 'off' });
   const number = h('input', { type: 'number', value: String(draft.number), min: '0', max: '99' });
   const fastDate = h('input', { type: 'date' });
@@ -25,12 +25,17 @@ export function settingsSection(ctx: AppContext, p: Profile, refresh: () => void
     refresh();
   };
   return h('div', { class: 'parent-section form' },
+    h('button', { class: 'btn big ok', onClick: async () => {
+      draft.settings = { ...draft.settings, checkMode: 'independent', minutes: 5, writing: 'trace', challenge: false };
+      await save();
+    } }, t.t('set.independentPreset')),
+    h('p', { class: 'muted small' }, t.t('set.independentHelp')),
     h('fieldset', {}, h('legend', {}, t.t('set.minutes')),
       ([5, 10, 15] as SessionMinutes[]).map((m) => radio('minutes', m, t.t(`set.minutes${m}`), draft.settings.minutes, (v) => { draft.settings.minutes = v; }))),
     h('fieldset', {}, h('legend', {}, t.t('set.writing')),
       (['off', 'trace', 'free', 'tiles'] as WritingMode[]).map((m) => radio('writing', m, t.t(`set.writing.${m}`), draft.settings.writing, (v) => { draft.settings.writing = v; }))),
     h('fieldset', {}, h('legend', {}, t.t('set.check')),
-      (['record', 'mic'] as const).map((m) => radio('check', m, t.t(`set.check.${m}`), draft.settings.checkMode ?? 'record', (v) => { draft.settings.checkMode = v; })),
+      (['independent', 'record', 'mic'] as const).map((m) => radio('check', m, t.t(`set.check.${m}`), draft.settings.checkMode ?? 'record', (v) => { draft.settings.checkMode = v; })),
       h('p', { class: 'muted small' }, t.t('set.checkHelp'))),
     h('fieldset', {}, h('legend', {}, t.t('set.pace')),
       (['follow', 'word'] as const).map((m) => radio('pace', m, t.t(`set.pace.${m}`), draft.settings.readingPace ?? 'follow', (v) => { draft.settings.readingPace = v; }))),

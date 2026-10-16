@@ -59,6 +59,22 @@ export interface CoachResult { check: SentenceCheck; source: Source }
 export async function coachSentence(
   kit: Kit, t: Transport, bar: CoachBar, buttons: HTMLElement[], panel: HTMLElement, text: string, sentenceKey: string,
 ): Promise<CoachResult | null> {
+  if (kit.independent) {
+    // One modeled sentence followed by one child turn. No adult per-word check.
+    bar.el.hidden = true;
+    replace(panel, h('p', { class: 'coach' }, '👂 Listen and follow the yellow word.'));
+    await pointAndRead(kit, buttons, sentenceKey, kit.pace, () => kit.closed);
+    kit.abort.signal.throwIfAborted();
+    const model = (): Promise<void> => pointAndRead(kit, buttons, sentenceKey, kit.pace, () => kit.closed);
+    const read = await kit.reader.readSentence(panel, text, model, 'Read the sentence!');
+    kit.abort.signal.throwIfAborted();
+    if (read.match) paintHits(buttons, read.match);
+    const words = buttons.map((b) => (b.textContent ?? '').replace(/[^A-Za-z']/g, '')).filter(Boolean);
+    return { source: read.source, check: {
+      text, words, whole: read.pass, unverified: read.unverified,
+      helped: read.match ? words.flatMap((_, i) => read.match?.hits[i] ? [] : [i]) : [],
+    } };
+  }
   const wordIdx = buttons.map((b, i) => (/[A-Za-z]/.test(b.textContent ?? '') ? i : -1)).filter((i) => i >= 0);
   const words = wordIdx.map((i) => (buttons[i]?.textContent ?? '').replace(/[^A-Za-z']/g, ''));
   let helped: number[] = [];

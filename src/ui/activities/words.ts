@@ -43,7 +43,11 @@ export async function newWord(kit: Kit, host: HTMLElement, card: Card): Promise<
     kickLabel.textContent = `Say it ${SAY_TIMES} times: ${i + 1} of ${SAY_TIMES}`;
     const r = await kit.reader.readWord(panel, card.text, i === 0 ? 'Say it!' : 'Again!');
     first ??= r;
-    if (r.outcome !== 'missed') {
+    if (r.outcome === 'unverified') {
+      const kick = kicks[i];
+      if (kick) { kick.textContent = '⭐'; kick.classList.add('practiced'); }
+    }
+    if (r.outcome === 'first-try' || r.outcome === 'after-retry') {
       kicks[i]?.classList.add('scored');
       if (i === 0) rewardBurst(stage, card.reward);
     }
@@ -67,7 +71,7 @@ export async function review(kit: Kit, host: HTMLElement, card: Card): Promise<v
   replace(host, stage);
   const r = await kit.reader.readWord(panel, card.text);
   const outcome: Outcome = helped && r.outcome === 'first-try' ? 'after-retry' : r.outcome;
-  if (outcome !== 'missed') { rewardBurst(stage, card.reward); await kit.prompt('goal'); }
+  if (outcome === 'first-try' || outcome === 'after-retry') { rewardBurst(stage, card.reward); await kit.prompt('goal'); }
   await kit.record('review', card.id, outcome, r.source, r.heard ? { heard: r.heard } : undefined);
 }
 
@@ -84,6 +88,6 @@ export async function sentence(kit: Kit, host: HTMLElement, text: string, itemId
   replace(host, h('div', { class: 'stage' }, kit.header('sentence'), h('div', { class: 'sentence' }, chips), h('div', { class: 'coach-dock' }, panel, bar.el)));
   const r = await coachSentence(kit, transport, bar, chips, panel, text, modelKey);
   if (!r) return;
-  if (sentenceOutcome(r.check) !== 'missed') await kit.prompt('great-read');
+  if (sentenceOutcome(r.check) === 'first-try' || sentenceOutcome(r.check) === 'after-retry') await kit.prompt('great-read');
   await kit.record('sentence', itemId, sentenceOutcome(r.check), r.source, sentenceMeta(r.check));
 }

@@ -33,6 +33,8 @@ export class AudioReviewScreen implements Screen {
     replace(host, h('div', { class: 'screen parent' },
       h('div', { class: 'row between' }, h('h1', {}, t.t('audio.title')), h('button', { class: 'btn small', onClick: () => this.ctx.navigate('parent') }, t.t('parent.back'))),
       h('p', { class: 'muted' }, t.t('audio.help')),
+      h('p', { class: 'audio-coverage' }, t.t('audio.coverage', { ready: this.catalog.filter((c) => audio.has(c.key)).length, total: this.catalog.length })),
+      h('p', { class: 'muted' }, t.t('audio.soundReview')),
       h('nav', { class: 'ptabs' }, KINDS.map((k) => h('button', { class: k === this.kind ? 'on' : '', onClick: () => { this.kind = k; this.render(host); } }, k))),
       h('p', {}, `${t.t('audio.badList')}: `, redo),
       h('ul', { class: 'clips' }, rows)));

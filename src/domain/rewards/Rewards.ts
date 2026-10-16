@@ -28,7 +28,7 @@ export const STADIUM_PARTS: readonly StadiumPart[] = [
 const SCORING = new Set(['new-word', 'review', 'sentence', 'story-question', 'story-bonus', 'story-order', 'retell', 'fluency', 'warmup', 'tricky', 'write']);
 
 export function isGoal(e: PracticeEvent): boolean {
-  return SCORING.has(e.activity) && e.outcome !== 'missed';
+  return SCORING.has(e.activity) && (e.outcome === 'first-try' || e.outcome === 'after-retry');
 }
 
 export interface Trophies {

@@ -27,6 +27,10 @@ export async function summary(ctx: AppContext, p: Profile): Promise<HTMLElement>
     minutesChart(d.minutes, today, t),
     homeworkLine(ctx, p),
     fastCard(ctx, p),
+    d.unverified.length ? h('section', { class: 'unverified-review' },
+      h('h3', {}, t.t('sum.unverified')),
+      h('p', { class: 'muted' }, t.t('sum.unverifiedHelp')),
+      h('ul', {}, d.unverified.map((x) => h('li', {}, h('span', { lang: 'en' }, x.text), ` · ${dayLabel(x.day, t.locale)}`)))) : null,
     h('h3', {}, t.t('sum.sentences')),
     d.sentences.length
       ? h('div', {},

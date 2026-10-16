@@ -17,6 +17,8 @@ const PROMPTS = prompts as Record<string, string>;
  */
 export class Kit implements Voice {
   readonly reader: ReadAloud;
+  readonly abort = new AbortController();
+  get independent(): boolean { return this.profile.settings.checkMode === 'independent'; }
   goals = 0;
   /** Card ids already introduced to this child (set by the session from the deck). */
   known = new Set<string>();
@@ -34,7 +36,7 @@ export class Kit implements Voice {
     readonly sessionId: string,
     private readonly onGoal: (goals: number) => void,
   ) {
-    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic');
+    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => ctx.audio.stop());
     this.pace = profile.settings.readingPace ?? 'follow';
   }
 
@@ -48,7 +50,7 @@ export class Kit implements Voice {
   async record(activity: Activity, itemId: string, outcome: Outcome, source: Source, meta?: Record<string, string | number | boolean>): Promise<void> {
     if (this.closed) return;
     await this.ctx.log.record({ profileId: this.profile.id, activity, itemId, outcome, source, meta: { session: this.sessionId, ...meta } });
-    if (outcome !== 'missed' && !NOT_GOALS.has(activity)) this.goal();
+    if ((outcome === 'first-try' || outcome === 'after-retry') && !NOT_GOALS.has(activity)) this.goal();
   }
 
   goal(): void {
@@ -64,15 +66,16 @@ export class Kit implements Voice {
     if (this.introduced.has(id) || this.closed) return;
     this.introduced.add(id);
     const { icon, title } = HOWTO[id];
+    const prompt = this.instruction(id);
     const go = h('button', { class: 'btn big ok' }, '▶ Let’s go!'); // child-facing: always English
     replace(host, h('div', { class: 'stage center howto' },
       h('div', { class: 'howto-icon', 'aria-hidden': 'true' }, icon),
       h('h2', {}, title),
-      h('p', { class: 'howto-child' }, PROMPTS[`howto-${id}`] ?? ''),
-      this.grownUpNote(id),
-      h('div', { class: 'row center' }, h('button', { class: 'btn soft', onClick: () => void this.prompt(`howto-${id}`) }, '🔊 Again'), go)));
+      h('p', { class: 'howto-child' }, PROMPTS[prompt] ?? ''),
+      this.independent ? null : this.grownUpNote(id),
+      h('div', { class: 'row center' }, h('button', { class: 'btn soft', onClick: () => void this.prompt(prompt) }, '🔊 Again'), go)));
     const tapped = new Promise<void>((resolve) => go.addEventListener('click', () => resolve(), { once: true }));
-    void this.prompt(`howto-${id}`);
+    void this.prompt(prompt).then(() => { if (!this.closed && go.isConnected) return this.prompt('lets-go'); });
     await tapped;
     this.ctx.audio.stop();
   }
@@ -85,13 +88,18 @@ export class Kit implements Voice {
     const { icon, title } = HOWTO[id];
     const counter = withStep && this.step && this.step.of > 1 ? ` ${this.step.n} of ${this.step.of}` : '';
     const help = h('button', { class: 'help-btn', 'aria-label': 'How to play', onClick: () => {
-      void this.prompt(`howto-${id}`);
+      const prompt = this.instruction(id);
+      void this.prompt(prompt);
       const pop = h('div', { class: 'howto-pop', role: 'dialog' },
-        h('p', { class: 'howto-child' }, PROMPTS[`howto-${id}`] ?? ''), this.grownUpNote(id),
+        h('p', { class: 'howto-child' }, PROMPTS[prompt] ?? ''), this.independent ? null : this.grownUpNote(id),
         h('button', { class: 'btn small', onClick: () => { pop.remove(); this.ctx.audio.stop(); } }, '✓ OK'));
       document.body.appendChild(pop);
     } }, '?');
     return h('div', { class: 'stage-head' }, h('div', { class: 'tag' }, `${icon} ${label ?? title}${counter}`), help);
+  }
+
+  private instruction(id: HowToId): string {
+    return `howto-${id}${this.independent && (id === 'sentence' || id === 'story') ? '-independent' : ''}`;
   }
 
   private grownUpNote(id: HowToId): HTMLElement {
