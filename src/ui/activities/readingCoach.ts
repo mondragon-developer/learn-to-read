@@ -62,10 +62,9 @@ export async function coachSentence(
   if (kit.independent) {
     // One modeled sentence followed by one child turn. No adult per-word check.
     bar.el.hidden = true;
-    replace(panel, h('p', { class: 'coach' }, '👂 Listen and follow the yellow word.'));
-    await pointAndRead(kit, buttons, sentenceKey, kit.pace, () => kit.closed);
+    await kit.model(panel, (voice) => pointAndRead(voice, buttons, sentenceKey, kit.pace, () => voice.closed), 'I’m ready to read!');
     kit.abort.signal.throwIfAborted();
-    const model = (): Promise<void> => pointAndRead(kit, buttons, sentenceKey, kit.pace, () => kit.closed);
+    const model = (stopped = () => false): Promise<void> => pointAndRead(kit, buttons, sentenceKey, kit.pace, () => kit.closed || stopped());
     const read = await kit.reader.readSentence(panel, text, model, 'Read the sentence!');
     kit.abort.signal.throwIfAborted();
     if (read.match) paintHits(buttons, read.match);
@@ -89,7 +88,8 @@ export async function coachSentence(
     // Step 4 waits on the record/judge taps, which don't listen to the bar: hide it so no button looks dead.
     bar.el.hidden = step === 4;
     if (step === 1 || step === 2) {
-      replace(panel, h('p', { class: 'coach small' }, step === 1 ? '👂 Listen to each word. Follow the yellow hand.' : '👂 Now the whole sentence.'));
+      replace(panel, h('p', { class: 'coach small' }, step === 1 ? '👂 Listen to each word. Follow the yellow hand.' : '👂 Now the whole sentence.'),
+        h('button', { class: 'btn big ok my-turn', onClick: () => t.send('turn') }, '▶ My turn!'));
       await t.run((stopped) => pointAndRead(kit, buttons, sentenceKey, step === 1 ? 'word' : 'follow', stopped));
     } else if (step === 3) {
       buttons.forEach((b) => b.classList.remove('hit', 'miss'));
@@ -106,6 +106,7 @@ export async function coachSentence(
     const cmd: Command | null = t.take();
     if (cmd === 'word') step = 1;
     else if (cmd === 'whole') step = 2;
+    else if (cmd === 'turn') step = 3;
     else if (cmd === 'next') return assessed ? result() : null;
     else step++;
   }

@@ -1,4 +1,7 @@
 {
+  "set.soccer": "⚽ Soccer breaks",
+  "set.soccerEnabled": "Start with soccer and play between practice activities",
+  "set.soccerHelp": "Choose a kit and play first, then one optional break in short sessions or up to two in longer sessions. Each game offers one replay. Play time is separate from reading minutes and reading rewards.",
   "gate.title": "Grown-ups only",
   "gate.intro": "Press and hold the button for 3 seconds.",
   "gate.hold": "Press and hold",

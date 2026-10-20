@@ -1,4 +1,7 @@
 {
+  "set.soccer": "⚽ Pausas de fútbol",
+  "set.soccerEnabled": "Empezar con fútbol y jugar entre actividades",
+  "set.soccerHelp": "Elige tu uniforme y juega primero; después, una pausa opcional en sesiones cortas o hasta dos en sesiones largas. Cada juego permite una repetición. El tiempo de juego no cuenta como lectura ni cambia sus recompensas.",
   "gate.title": "Solo para adultos",
   "gate.intro": "Mantén presionado el botón 3 segundos.",
   "gate.hold": "Mantener presionado",

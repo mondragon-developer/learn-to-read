@@ -22,9 +22,8 @@ export async function tricky(kit: Kit, host: HTMLElement, unit: Unit, units: Uni
         h('p', { class: 'coach small' }, 'Which word did you hear?'),
         h('button', { class: 'btn link', onClick: () => void kit.word(said) }, '🔊 Hear it again'),
         h('div', { class: 'row center' }, buttons)));
-      await kit.prompt('tricky');
-      await kit.word(said);
-      const pick = await new Promise<number>((resolve) => buttons.forEach((btn, i) => btn.addEventListener('click', () => resolve(i), { once: true })));
+      const pick = await kit.respond(async (voice) => { await voice.prompt('tricky'); await voice.word(said); },
+        new Promise<number>((resolve) => buttons.forEach((btn, i) => btn.addEventListener('click', () => resolve(i), { once: true }))));
       const right = options[pick] === said;
       buttons.forEach((btn, i) => btn.classList.add(options[i] === said ? 'hit' : 'dim'));
       if (right) await kit.prompt('goal');

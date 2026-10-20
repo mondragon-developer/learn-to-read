@@ -83,6 +83,8 @@ async function shot(page: Page, name: string, project: string): Promise<void> {
 /** Plays the match like a cooperative child + grown-up until Full time (or until `stopWhen` is visible). */
 async function playMatch(page: Page, project: string, stopWhen?: () => Promise<boolean>): Promise<void> {
   const order = [
+    page.locator('.my-turn'),
+    page.locator('.soccer-back'),
     page.getByRole('button', { name: /Let’s go/ }),
     page.locator('.read-continue'),
     page.locator('.mic.rec'),
@@ -94,6 +96,8 @@ async function playMatch(page: Page, project: string, stopWhen?: () => Promise<b
     page.locator('.options .choice'),
     page.locator('.word-choice'),
     page.locator('.strip:enabled'),
+    // Sound boxes shares .drum with syllable taps; finish the round instead of tapping forever.
+    page.getByRole('button', { name: /✓ Done/ }),
     page.locator('.drum'),
     page.getByRole('button', { name: /✓ Check/ }),
     page.getByRole('button', { name: /✓ Done/ }),
@@ -114,13 +118,14 @@ async function playMatch(page: Page, project: string, stopWhen?: () => Promise<b
   throw new Error('match did not finish');
 }
 
-async function setUpPlayer(page: Page, query = '', independent = false): Promise<void> {
+async function setUpPlayer(page: Page, query = '', independent = false, soccer = false): Promise<void> {
   await page.goto(`/${query}`);
   await page.getByRole('button', { name: /set up a player/ }).click();
   await passGate(page);
   await page.getByPlaceholder('Leo').fill('Sam');
   await page.getByRole('button', { name: /Crear jugador|Create player/ }).click();
   await page.locator(`input[name=check][value=${independent ? 'independent' : 'record'}]`).check();
+  await page.locator('input[name=soccerBreaks]').setChecked(soccer);
   await page.getByRole('button', { name: /^Guardar$|^Save$/ }).click();
   await page.getByRole('button', { name: /Volver al juego|Back to the game/ }).click();
 }
@@ -139,6 +144,240 @@ test('the parent gate rejects a wrong answer', async ({ page }) => {
   await page.getByRole('button', { name: 'OK', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Área de padres' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Goal Reader' })).toBeVisible();
+});
+
+test('soccer break plays three swipe shots offline without changing reading rewards', async ({ page }, info) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await stubDevices(page);
+  await setUpPlayer(page, '', true, true);
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await expect(page.getByRole('heading', { name: 'Pick your match kit!' })).toBeVisible();
+  await page.getByRole('spinbutton', { name: 'Jersey number' }).fill('77');
+  await page.getByRole('button', { name: 'Jersey: Blue', exact: true }).click();
+  await page.getByRole('button', { name: 'Shorts: Red', exact: true }).click();
+  await page.getByRole('button', { name: 'Cleats: Orange', exact: true }).click();
+  await page.screenshot({ path: `test-results/kit-${info.project.name}.png`, fullPage: true });
+  await page.locator('.kit-start').click();
+  await playIndependently(page, '', () => page.locator('.soccer-play').isVisible());
+  const scoreBefore = await page.locator('.scoreboard').textContent();
+  const events = (): Promise<unknown[]> => page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve) => {
+      const req = indexedDB.open('goal-reader'); req.onsuccess = () => resolve(req.result);
+    });
+    const rows = await new Promise<unknown[]>((resolve) => {
+      const req = db.transaction('events').objectStore('events').getAll(); req.onsuccess = () => resolve(req.result);
+    });
+    db.close();
+    return rows;
+  });
+  const before = await events();
+  expect(before).toHaveLength(0); // Soccer comes before any reading.
+  await expect(page.locator('.soccer-kicker .soccer-name')).toHaveText('Sam');
+  await expect(page.locator('.soccer-kicker .soccer-number')).toHaveText('77');
+  await expect(page.locator('.soccer-kicker .soccer-shorts')).toHaveAttribute('fill', '#D2462E');
+  await expect(page.locator('.soccer-kicker .soccer-cleats')).toHaveAttribute('stroke', '#f68b36');
+  await expect(page.locator('.session-skip')).toBeHidden();
+  await page.locator('.soccer-play').click();
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.context().setOffline(true);
+  await page.getByRole('button', { name: 'Mute game sounds', exact: true }).click();
+  // A tap or interrupted gesture must not spend a shot.
+  const field = page.locator('.soccer-field');
+  await field.scrollIntoViewIfNeeded();
+  let rect = (await field.boundingBox())!;
+  await page.mouse.click(rect.x + rect.width / 2, rect.y + rect.height * 390 / 440);
+  await expect(page.getByRole('heading', { name: 'Shot 1 of 3' })).toBeVisible();
+  await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height * 390 / 440);
+  await page.mouse.down();
+  await page.locator('.soccer-control').dispatchEvent('pointercancel');
+  await page.mouse.up();
+  await expect(page.getByRole('heading', { name: 'Shot 1 of 3' })).toBeVisible();
+  for (let i = 0; i < 3; i++) {
+    await expect(page.getByRole('heading', { name: `Shot ${i + 1} of 3` })).toBeVisible();
+    if (i === 1) {
+      await shot(page, 'soccer-wall', info.project.name);
+      await page.screenshot({ path: `test-results/soccer-${info.project.name}.png`, fullPage: true });
+    }
+    rect = (await field.boundingBox())!;
+    await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height * 390 / 440);
+    await page.mouse.down();
+    await page.mouse.move(rect.x + rect.width * (i === 1 ? .28 : .72), rect.y + rect.height * .32, { steps: 10 });
+    await page.mouse.up();
+  }
+  await expect(page.getByRole('heading', { name: 'Great shooting!' })).toBeVisible();
+  expect(await events()).toEqual(before);
+  await expect(page.locator('.scoreboard')).toHaveText(scoreBefore!);
+  await expect(page.locator('.soccer-play')).toBeHidden();
+  await page.locator('.soccer-replay').click();
+  const keyboard = page.locator('.soccer-control');
+  await expect(page.getByRole('heading', { name: 'Shot 1 of 3' })).toBeVisible();
+  for (let i = 0; i < 4; i++) await keyboard.press('ArrowDown');
+  await keyboard.press('Enter');
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'short');
+  await expect(page.getByRole('heading', { name: 'Shot 2 of 3' })).toBeVisible();
+  await keyboard.press('ArrowLeft');
+  await keyboard.press('ArrowDown');
+  await keyboard.press('ArrowDown');
+  await keyboard.press('Enter');
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'wall');
+  await expect(page.getByRole('heading', { name: 'Shot 3 of 3' })).toBeVisible();
+  for (let i = 0; i < 3; i++) await keyboard.press('ArrowUp');
+  await keyboard.press('Enter');
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'bar');
+  await expect(page.getByRole('heading', { name: 'Great shooting!' })).toBeVisible();
+  await expect(page.locator('.soccer-replay')).toBeHidden();
+  expect(await events()).toEqual(before);
+  await page.context().setOffline(false);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('.soccer-back').click();
+  await expect(page.locator('.soccer-stage')).toHaveCount(0);
+  await playIndependently(page, '', () => page.locator('.soccer-play').isVisible());
+  expect((await events()).length).toBeGreaterThan(0);
+  await expect(page.locator('.kit-start')).toHaveCount(0);
+  await page.locator('.soccer-back').click();
+  await playIndependently(page);
+  const rows = await events() as Array<{ activity: string; meta?: { soccerMs: number; durationMs: number } }>;
+  const session = rows.find((e) => e.activity === 'session')!;
+  expect(session.meta!.soccerMs).toBeGreaterThan(5000);
+  expect(session.meta!.durationMs).toBeGreaterThan(0);
+  await page.reload();
+  await page.locator('.kickoff').click();
+  await expect(page.getByRole('spinbutton', { name: 'Jersey number' })).toHaveValue('77');
+  await expect(page.getByRole('button', { name: 'Jersey: Blue', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Shorts: Red', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Cleats: Orange', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  expect(errors).toEqual([]);
+});
+
+test('soccer can be left during flight and disabled in saved parent settings', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await stubDevices(page);
+  await setUpPlayer(page, '', true, true);
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.locator('.kit-start').click();
+  await playIndependently(page, '', () => page.locator('.soccer-play').isVisible());
+  await page.locator('.soccer-play').click();
+  const field = page.locator('.soccer-control');
+  await field.press('ArrowLeft');
+  await field.press('Enter');
+  await page.locator('.brand').click();
+  await expect(page.getByRole('heading', { name: 'Hi, Sam!' })).toBeVisible();
+  await page.waitForTimeout(3000);
+  await expect(page.locator('.soccer-stage')).toHaveCount(0);
+  await page.locator('.lock').click();
+  await passGate(page);
+  await page.locator('input[name=soccerBreaks]').uncheck();
+  await page.getByRole('button', { name: /^Guardar$|^Save$/ }).click();
+  await expect(page.locator('.toast.show')).toHaveText(/Guardado|Saved/);
+  await page.reload();
+  await page.locator('.lock').click();
+  await passGate(page);
+  await expect(page.locator('input[name=soccerBreaks]')).not.toBeChecked();
+  await page.getByRole('button', { name: /Volver al juego|Back to the game/ }).click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await expect(page.locator('.soccer-progress')).toBeHidden();
+  await playIndependently(page, '', () => page.locator('.soccer-play').isVisible());
+  await expect(page.getByRole('heading', { name: 'Full time!' })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('soccer keeper raises arms and saves, while posts and wide shots are real misses', async ({ page }) => {
+  await stubDevices(page);
+  await setUpPlayer(page, '', true, true);
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.locator('.kit-start').click();
+  await page.evaluate(() => { Math.random = () => .1; });
+  await page.locator('.soccer-play').click();
+  const control = page.locator('.soccer-control');
+  await control.press('Enter');
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'saved');
+  const handY = Number(await page.locator('.soccer-keeper .soccer-glove-left').getAttribute('cy'));
+  expect(handY).toBeLessThan(-50);
+  await expect(page.getByRole('heading', { name: 'Shot 2 of 3' })).toBeVisible();
+  for (let i = 0; i < 4; i++) await control.press('ArrowLeft');
+  await control.press('ArrowUp');
+  await control.press('Enter');
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'post');
+  await expect(page.getByRole('heading', { name: 'Shot 3 of 3' })).toBeVisible();
+  for (let i = 0; i < 5; i++) await control.press('ArrowRight');
+  await control.press('Enter');
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'wide');
+  await expect(page.getByRole('heading', { name: 'Great shooting!' })).toBeVisible();
+  await expect(page.locator('.soccer-status')).toContainText('0 goals');
+});
+
+test('children can take their turn during long teacher audio without creating checked passes', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await stubDevices(page);
+  await setUpPlayer(page, '', true);
+  // Eight-second prompts expose controls that accidentally wait for narration to finish.
+  await page.route('**/audio/prompts/**', async (route) => {
+    const samples = 8000 * 8; const wav = Buffer.alloc(44 + samples * 2);
+    wav.write('RIFF', 0); wav.writeUInt32LE(wav.length - 8, 4); wav.write('WAVEfmt ', 8);
+    wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
+    wav.writeUInt32LE(8000, 24); wav.writeUInt32LE(16000, 28);
+    wav.writeUInt16LE(2, 32); wav.writeUInt16LE(16, 34); wav.write('data', 36);
+    wav.writeUInt32LE(samples * 2, 40);
+    await route.fulfill({ contentType: 'audio/wav', body: wav });
+  });
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.locator('.skip-section').click(); // warm-up
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  const firstWord = await page.locator('.word').textContent();
+  await expect(page.locator('.my-turn')).toBeVisible({ timeout: 1500 });
+  await page.locator('.my-turn').click();
+  await expect(page.locator('.practice-next')).toBeVisible({ timeout: 1500 });
+  await page.getByRole('button', { name: '🔊 Listen again', exact: true }).click();
+  await page.locator('.practice-next').click();
+  await expect(page.locator('.word')).not.toHaveText(firstWord!, { timeout: 1500 });
+  // A second word should already be ready, with no mandatory repeat loop or teacher wait.
+  await expect(page.locator('.my-turn')).toBeVisible({ timeout: 1500 });
+  const reads = await page.evaluate(async () => {
+    const db = await new Promise<IDBDatabase>((resolve) => {
+      const req = indexedDB.open('goal-reader'); req.onsuccess = () => resolve(req.result);
+    });
+    const rows = await new Promise<Array<{ activity: string; outcome: string }>>((resolve) => {
+      const req = db.transaction('events').objectStore('events').getAll(); req.onsuccess = () => resolve(req.result);
+    });
+    db.close(); return rows.filter((r) => r.activity === 'new-word');
+  });
+  expect(reads).toHaveLength(1);
+  expect(reads[0]!.outcome).toBe('unverified');
+  await expect(page.locator('.scoreboard')).toContainText('0');
+  expect(errors).toEqual([]);
+});
+
+test('recorded-word review can interrupt the teacher but still requires the grown-up assessment', async ({ page }) => {
+  await stubDevices(page);
+  await setUpPlayer(page);
+  await page.route('**/audio/words/**', async (route) => {
+    const samples = 8000 * 8; const wav = Buffer.alloc(44 + samples * 2);
+    wav.write('RIFF', 0); wav.writeUInt32LE(wav.length - 8, 4); wav.write('WAVEfmt ', 8);
+    wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
+    wav.writeUInt32LE(8000, 24); wav.writeUInt32LE(16000, 28);
+    wav.writeUInt16LE(2, 32); wav.writeUInt16LE(16, 34); wav.write('data', 36);
+    wav.writeUInt32LE(samples * 2, 40);
+    await route.fulfill({ contentType: 'audio/wav', body: wav });
+  });
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await expect(page.locator('.howto')).toBeVisible({ timeout: 10000 });
+  await page.locator('.skip-section').click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await expect(page.locator('.my-turn')).toBeVisible({ timeout: 5000 });
+  await page.locator('.my-turn').click();
+  await page.locator('.mic.rec').click();
+  await page.getByRole('button', { name: 'Stop recording', exact: true }).click();
+  await expect(page.locator('.my-turn')).toBeVisible({ timeout: 2000 });
+  await page.locator('.my-turn').click();
+  await expect(page.getByRole('button', { name: '✓ Read it right', exact: true })).toBeVisible({ timeout: 1500 });
+  await expect(page.locator('.scoreboard')).toContainText('0');
+  await page.getByRole('button', { name: '✓ Read it right', exact: true }).click();
+  await expect(page.locator('.read-continue')).toBeVisible();
+  await expect(page.locator('.scoreboard')).toContainText('1');
 });
 
 test('practice a skill: menu by Florida standard, sound boxes, one-minute read', async ({ page }) => {
@@ -223,6 +462,7 @@ test('set up a player, play a full match, see the Spanish dashboard', async ({ p
   await expect(page.getByText(/Duración de la sesión|Session length/)).toBeVisible();
   await page.getByLabel(/10 min/).check();
   await page.locator('input[name=check][value=record]').check();
+  await page.locator('input[name=soccerBreaks]').uncheck();
   await page.getByRole('button', { name: /^Guardar$|^Save$/ }).click();
   await page.getByRole('button', { name: /Volver al juego|Back to the game/ }).click();
 
@@ -282,6 +522,8 @@ test('set up a player, play a full match, see the Spanish dashboard', async ({ p
 /** Complete a child-only session: adult approval controls must never appear. */
 async function playIndependently(page: Page, project = '', stopWhen?: () => Promise<boolean>): Promise<void> {
   const controls = [
+    page.locator('.my-turn'),
+    page.locator('.soccer-back'),
     page.getByRole('button', { name: /Let’s go/ }),
     page.locator('.read-continue'),
     page.locator('.practice-next'),
@@ -290,6 +532,7 @@ async function playIndependently(page: Page, project = '', stopWhen?: () => Prom
     page.locator('.options .choice:enabled'),
     page.locator('.word-choice:enabled'),
     page.locator('.strip:enabled'),
+    page.getByRole('button', { name: /✓ Done/ }),
     page.locator('.drum'),
     page.getByRole('button', { name: /✓ Check|✓ Done/ }),
   ];
@@ -461,6 +704,63 @@ test('Story Time reads sentence by sentence, skips parts without grading, and op
   await expect(page.getByRole('tab', { name: 'Ajustes' })).toHaveAttribute('aria-selected', 'true');
   await expect(page.getByRole('combobox', { name: 'Voz de lectura' })).toHaveValue('teacher');
   await expect(page.locator('input[name=storyReading][value=sentences]')).toBeChecked();
+});
+
+test('story ordering lets a child interrupt the intro to hear a chosen part', async ({ page }) => {
+  await stubDevices(page);
+  await page.addInitScript(() => {
+    const w = window as unknown as { audioStarts: number; audioDurations: number[] };
+    w.audioStarts = 0;
+    w.audioDurations = [];
+    const start = AudioBufferSourceNode.prototype.start;
+    AudioBufferSourceNode.prototype.start = function (...args) {
+      w.audioStarts++;
+      w.audioDurations.push(this.buffer?.duration ?? 0);
+      return start.apply(this, args);
+    };
+  });
+  await setUpPlayer(page, '', true);
+  const clipDurations = new Map<string, number>();
+  await page.route(/\/audio\/(stories\/|prompts\/story-order\.)/, async (route) => {
+    // Unique durations identify the selected clip even if a competing clip cancels its load.
+    const duration = 8 + clipDurations.size * .25;
+    clipDurations.set(route.request().url(), duration);
+    const samples = 8000 * duration; const wav = Buffer.alloc(44 + samples * 2);
+    wav.write('RIFF', 0); wav.writeUInt32LE(wav.length - 8, 4); wav.write('WAVEfmt ', 8);
+    wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
+    wav.writeUInt32LE(8000, 24); wav.writeUInt32LE(16000, 28);
+    wav.writeUInt16LE(2, 32); wav.writeUInt16LE(16, 34); wav.write('data', 36);
+    wav.writeUInt32LE(samples * 2, 40);
+    await route.fulfill({ contentType: 'audio/wav', body: wav });
+  });
+  await practiceTopic(page, 'Story time');
+  await page.locator('.sheet .unit-btn').first().click();
+  await page.getByRole('button', { name: /Kick off!/ }).click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await page.getByRole('button', { name: 'Skip to questions', exact: true }).click();
+  for (let i = 0; i < 8 && !(await page.locator('.strips').isVisible()); i++) {
+    const previous = await page.locator('.tag').textContent();
+    await page.locator('.skip-part').click();
+    await expect(page.locator('.tag')).not.toHaveText(previous!);
+  }
+  await expect(page.locator('.strips')).toBeVisible();
+  // Allow the long ordering prompt to start before interrupting it.
+  await page.waitForTimeout(300);
+  const starts = (): Promise<number> => page.evaluate(() => (window as unknown as { audioStarts: number }).audioStarts);
+  const before = await starts();
+  const chosenRequest = page.waitForRequest('**/audio/stories/**');
+  await page.getByRole('button', { name: 'Hear this part', exact: true }).nth(2).click();
+  const chosenUrl = (await chosenRequest).url();
+  await expect.poll(starts).toBe(before + 1);
+  await expect.poll(() => page.evaluate(() => (window as unknown as { audioDurations: number[] }).audioDurations.at(-1)))
+    .toBe(clipDurations.get(chosenUrl));
+  await page.waitForTimeout(500);
+  expect(await starts()).toBe(before + 1); // No automatic next strip cuts off the chosen clip.
+  await page.locator('.strip').first().click();
+  await expect.poll(starts).toBe(before + 2);
+  await page.waitForTimeout(500);
+  expect(await starts()).toBe(before + 2);
+  await expect(page.locator('.placed li')).toHaveCount(1);
 });
 
 test('a correct new word is saved once and does not require three readings', async ({ page }) => {

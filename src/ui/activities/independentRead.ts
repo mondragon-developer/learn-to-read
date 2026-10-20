@@ -36,20 +36,14 @@ export class IndependentReader {
       heard = match.heard;
       levels.push(match.level);
       if (match.level === 'match') break;
-      await this.voice.prompt(match.level === 'close' ? 'so-close' : 'listen');
-      this.active();
-      await this.voice.word(target);
-      this.active();
+      await this.repeat(panel, () => this.voice.word(target), 'repeat-word');
       if (match.level === 'close') break;
     }
-    if (outcomeFor(levels) === 'missed') {
-      // Finish with a supported repetition, while retaining the actual checked miss.
-      await this.repeat(panel, () => this.voice.word(target), 'repeat-word');
-    }
+    // Each failed check already offered a supported repetition; retain its actual result.
     return { outcome: outcomeFor(levels), source: 'mic', heard };
   }
 
-  async readSentence(panel: HTMLElement, text: string, model: () => Promise<void>, label: string): Promise<SentenceRead> {
+  async readSentence(panel: HTMLElement, text: string, model: (stopped?: () => boolean) => Promise<void>, label: string): Promise<SentenceRead> {
     const res = await this.listen(panel, text, 'sentence', label);
     if (!res) {
       await this.repeat(panel, model, 'repeat-sentence');
@@ -61,38 +55,37 @@ export class IndependentReader {
   }
 
   /** No recording or automatic grading: model, child repeats, child moves on. */
-  async repeat(panel: HTMLElement, model: () => Promise<void>, prompt = 'repeat-sentence'): Promise<void> {
-    this.active();
-    replace(panel, h('p', { class: 'coach' }, '👂 Listen…'));
-    await model();
-    this.active();
-    await this.voice.prompt(prompt);
+  async repeat(panel: HTMLElement, model: (stopped?: () => boolean) => Promise<void>, prompt = 'repeat-sentence'): Promise<void> {
     this.active();
     await new Promise<void>((resolve, reject) => {
+      let settled = false;
+      let playback = 0;
       const cleanup = (): void => this.signal.removeEventListener('abort', abort);
-      const abort = (): void => { cleanup(); reject(this.signal.reason); };
+      const abort = (): void => { settled = true; playback++; cleanup(); this.stopVoice(); reject(this.signal.reason); };
       this.signal.addEventListener('abort', abort, { once: true });
       const next = h('button', { class: 'btn big ok practice-next', onClick: () => {
-        cleanup(); this.stopVoice(); resolve();
+        if (settled) return;
+        settled = true; playback++; cleanup(); this.stopVoice(); resolve();
       } }, '➜ I said it!');
-      const again = h('button', { class: 'btn soft', onClick: async () => {
-        again.disabled = next.disabled = true;
-        await model();
-        if (!this.signal.aborted && again.isConnected) again.disabled = next.disabled = false;
-      } }, '🔊 Listen again');
+      const play = async (withPrompt: boolean): Promise<void> => {
+        const token = ++playback;
+        this.stopVoice();
+        const stopped = (): boolean => settled || this.signal.aborted || token !== playback;
+        try {
+          await model(stopped);
+          if (withPrompt && !stopped()) await this.voice.prompt(prompt);
+        } catch { /* A missing clip must not hide the child's Continue control. */ }
+      };
+      const again = h('button', { class: 'btn soft', onClick: () => void play(false) }, '🔊 Listen again');
       replace(panel, h('p', { class: 'coach' }, 'Now you! Say it out loud.'), next, again);
+      void play(true);
     });
-    this.active();
-    await this.voice.prompt('practice-done');
     this.active();
   }
 
   private async listen(panel: HTMLElement, expected: string, mode: 'word' | 'sentence', label: string): Promise<ListenResult | null> {
     this.active();
     if (this.fallback) return null;
-    replace(panel, h('p', { class: 'coach' }, 'Your turn!'));
-    await this.voice.prompt(mode === 'sentence' ? 'read-sentence-now' : 'tap-mic');
-    this.active();
     return new Promise<ListenResult | null>((resolve, reject) => {
       let settled = false;
       const cleanup = (): void => this.signal.removeEventListener('abort', abort);
@@ -100,6 +93,7 @@ export class IndependentReader {
         if (settled) return;
         settled = true;
         cleanup();
+        this.stopVoice();
         this.checker.cancel();
         resolve(result);
       };
@@ -113,6 +107,7 @@ export class IndependentReader {
       this.signal.addEventListener('abort', abort, { once: true });
       const fallback = h('button', { class: 'btn soft', onClick: () => finish(null) }, '👂 Listen & repeat');
       const mic = h('button', { class: 'mic pulse', 'aria-label': label, onClick: async () => {
+        this.stopVoice();
         mic.disabled = true;
         mic.classList.remove('pulse');
         mic.classList.add('listening');
@@ -127,6 +122,7 @@ export class IndependentReader {
         }
       } }, h('span', { class: 'mic-icon', 'aria-hidden': 'true' }, '🎤'), h('span', {}, label));
       replace(panel, mic, fallback);
+      void this.voice.prompt(mode === 'sentence' ? 'read-sentence-now' : 'tap-mic').catch(() => undefined);
     });
   }
 }

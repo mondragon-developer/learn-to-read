@@ -3,7 +3,7 @@ import type { WarmupGame } from '@domain/session/SessionPlanner';
 import { clipKey } from '@domain/audio/AudioCatalog';
 import syllableData from '@data/syllables.json';
 import type { Kit } from './kit';
-import { h, replace, shuffle, sleep } from '../dom';
+import { h, replace, shuffle } from '../dom';
 import { soundTiles } from './wordView';
 
 const ROUNDS = 3;
@@ -36,21 +36,20 @@ async function rhyme(kit: Kit, host: HTMLElement, unit: Unit, units: Unit[], see
       const balls = options.map((_, i) => h('button', { class: 'ear', 'aria-label': `Choice ${i + 1}` }, h('span', {}, '🔊'), h('b', {}, String(i + 1))));
       const say = h('p', { class: 'coach small' }, `Which one rhymes with “${target}”? Listen to 1, 2, 3…`);
       replace(host, h('div', { class: 'stage' }, kit.header('rhyme', `Rhyme time ${round + 1} of ${picked.length}`), say, h('div', { class: 'row center ears' }, balls),
-        h('button', { class: 'btn link', onClick: async () => { await kit.ctx.audio.sequence([clipKey.prompt('rhyme-with'), clipKey.word(target)]); for (const o of options) await kit.word(o); } }, '🔊 Hear them again')));
-      balls.forEach((b) => { b.disabled = true; });
-      await kit.ctx.audio.sequence([clipKey.prompt('rhyme-with'), clipKey.word(target)]);
-      for (let i = 0; i < options.length; i++) {
-        balls[i]?.classList.add('lit');
-        await kit.word(options[i] as string);
-        balls[i]?.classList.remove('lit');
-        await sleep(200);
-      }
-      balls.forEach((b) => { b.disabled = false; });
-      say.textContent = 'Now tap the one that rhymes!';
-      const pick = await new Promise<number>((resolve) => balls.forEach((b, i) => b.addEventListener('click', () => resolve(i), { once: true })));
+        h('button', { class: 'btn link', onClick: () => { kit.narrate(async (voice) => {
+          await voice.ctx.audio.sequence([clipKey.prompt('rhyme-with'), clipKey.word(target)]);
+          for (const o of options) { if (voice.closed) break; await voice.word(o); }
+        }); } }, '🔊 Hear them again')));
+      const pick = await kit.respond(async (voice) => {
+        await voice.ctx.audio.sequence([clipKey.prompt('rhyme-with'), clipKey.word(target)]);
+        for (let i = 0; i < options.length && !voice.closed; i++) {
+          balls[i]?.classList.add('lit');
+          await voice.word(options[i] as string);
+          balls[i]?.classList.remove('lit');
+        }
+      }, new Promise<number>((resolve) => balls.forEach((b, i) => b.addEventListener('click', () => resolve(i), { once: true }))));
       const right = options[pick] === answer;
-      if (right) await kit.prompt('goal');
-      else await kit.ctx.audio.sequence([clipKey.word(target), clipKey.word(answer)], 400);
+      await kit.feedback(host, (voice) => right ? voice.prompt('goal') : voice.ctx.audio.sequence([clipKey.word(target), clipKey.word(answer)], 250));
       await kit.record('warmup', `rhyme:${target}`, right ? 'first-try' : 'missed', 'tap');
     });
   }
@@ -65,12 +64,13 @@ async function blend(kit: Kit, host: HTMLElement, unit: Unit, units: Unit[], see
       const panel = h('div', { class: 'panel' });
       replace(host, h('div', { class: 'stage' }, kit.header('blend', `Robot talk ${round + 1} of ${picked.length}`), h('div', { class: 'robot' }, '🤖'), h('div', { class: 'dots' }, dots),
         h('p', { class: 'coach small' }, 'Listen to the sounds, then say the whole word.'), panel));
-      await kit.prompt('blend-it');
-      for (let i = 0; i < w.graphemes.length; i++) {
-        dots[i]?.classList.add('lit');
-        await kit.say(clipKey.sound(w.graphemes[i] as string));
-        await sleep(250);
-      }
+      await kit.model(panel, async (voice) => {
+        await voice.prompt('blend-it');
+        for (let i = 0; i < w.graphemes.length && !voice.closed; i++) {
+          dots[i]?.classList.add('lit');
+          await voice.say(clipKey.sound(w.graphemes[i] as string));
+        }
+      });
       const r = await kit.reader.readWord(panel, w.text, 'Say the word!');
       if ((r.outcome === 'first-try' || r.outcome === 'after-retry')) await kit.prompt('goal');
       await kit.record('warmup', `blend:${w.text}`, r.outcome, r.source, { text: w.text });
@@ -101,24 +101,24 @@ async function segment(kit: Kit, host: HTMLElement, unit: Unit, units: Unit[], s
         taps++;
       } }, '🟩');
       const undo = h('button', { class: 'btn soft', onClick: () => { if (taps > 0) { taps--; boxes[taps]?.classList.remove('filled'); } } }, '⌫ Undo');
-      const again = h('button', { class: 'btn link', onClick: () => void kit.word(w.text) }, '🔊 Hear it again');
+      const again = h('button', { class: 'btn link', onClick: () => { kit.narrate((voice) => voice.word(w.text)); } }, '🔊 Hear it again');
       const done = h('button', { class: 'btn big ok' }, '✓ Done');
       replace(host, h('div', { class: 'stage' }, kit.header('segment', `Sound boxes ${round + 1} of ${words.length}`),
         h('p', { class: 'coach small' }, 'Say each sound and tap the green box for each one.'),
         h('div', { class: 'sboxes', 'aria-live': 'polite' }, boxes), tap, h('div', { class: 'row center' }, undo, again, done)));
-      await kit.prompt('segment-say');
-      await kit.word(w.text);
-      await new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true }));
+      await kit.respond(async (voice) => { await voice.prompt('segment-say'); await voice.word(w.text); },
+        new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true })));
       const right = taps === sounds.length;
       // Show the answer: one lit box per sound, each sound played.
       boxes.forEach((b, i) => { b.classList.remove('filled'); b.classList.toggle('hidden-box', i >= sounds.length); });
-      for (let i = 0; i < sounds.length; i++) {
-        boxes[i]?.classList.add('lit');
-        await kit.say(clipKey.sound(sounds[i] as string));
-        await sleep(200);
-      }
-      if (right) await kit.prompt('goal');
-      else await kit.word(w.text);
+      await kit.feedback(host, async (voice) => {
+        for (let i = 0; i < sounds.length && !voice.closed; i++) {
+          boxes[i]?.classList.add('lit');
+          await voice.say(clipKey.sound(sounds[i] as string));
+        }
+        if (right) await voice.prompt('goal');
+        else await voice.word(w.text);
+      });
       await kit.record('warmup', `segment:${w.text}`, right ? 'first-try' : 'missed', 'tap', { phonemes: sounds.length, taps });
     });
   }
@@ -131,12 +131,11 @@ async function syllables(kit: Kit, host: HTMLElement, seed: number, n: number): 
       let taps = 0;
       const count = h('div', { class: 'claps', 'aria-live': 'polite' });
       const drum = h('button', { class: 'drum', 'aria-label': 'Drum', onClick: () => { taps++; count.textContent = '👏'.repeat(taps); drum.classList.remove('bump'); void drum.offsetWidth; drum.classList.add('bump'); } }, '🥁');
-      const again = h('button', { class: 'btn link', onClick: () => void kit.word(item.text) }, '🔊 Hear it again');
+      const again = h('button', { class: 'btn link', onClick: () => { kit.narrate((voice) => voice.word(item.text)); } }, '🔊 Hear it again');
       const done = h('button', { class: 'btn big ok' }, '✓ Done');
       replace(host, h('div', { class: 'stage' }, kit.header('syllables', `Drum the parts ${round + 1} of ${picked.length}`), drum, count, h('div', { class: 'row center' }, again, done)));
-      await kit.prompt('clap-it');
-      await kit.word(item.text);
-      await new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true }));
+      await kit.respond(async (voice) => { await voice.prompt('clap-it'); await voice.word(item.text); },
+        new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true })));
       const right = taps === item.syllables;
       count.textContent = '👏'.repeat(item.syllables);
       if (right) await kit.prompt('goal');
@@ -157,7 +156,7 @@ async function soundItOut(kit: Kit, host: HTMLElement, unit: Unit, seed: number,
       const tiles = soundTiles(card, kit.ctx.audio);
       const panel = h('div', { class: 'panel' });
       replace(host, h('div', { class: 'stage' }, kit.header('sound-it-out', `Sound it out ${round + 1} of ${picked.length}`), tiles.el, h('p', { class: 'coach small' }, 'Tap each letter, then read the word!'), panel));
-      await kit.prompt('sound-it-out');
+      await kit.model(panel, (voice) => voice.prompt('sound-it-out'));
       const r = await kit.reader.readWord(panel, w.text);
       if ((r.outcome === 'first-try' || r.outcome === 'after-retry')) await kit.prompt('goal');
       await kit.record('warmup', `sound-it-out:${w.text}`, r.outcome, r.source, { text: w.text });

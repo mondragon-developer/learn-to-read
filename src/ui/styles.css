@@ -77,6 +77,48 @@ main { flex: 1; padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bot
 .meter { display: block; height: 12px; border-radius: 999px; background: var(--pitch-light); overflow: hidden; }
 .meter > span { display: block; height: 100%; background: var(--pitch-2); border-radius: 999px; }
 
+/* Soccer lives inside the current activity frame. All game styles stay scoped. */
+.soccer-progress { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 15px; color: var(--ink-2); }
+.soccer-progress > span:first-child { display: flex; align-items: center; gap: 5px; }
+.soccer-progress i { width: 10px; height: 10px; border: 2px solid #54825e; border-radius: 50%; }
+.soccer-progress i.filled { background: #54825e; }
+.activity-part:has(.soccer-stage) { width: 100%; }
+.soccer-stage { gap: 8px; padding: 16px; width: 100%; background: #fffef7; }
+.soccer-heading { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 8px; }
+.soccer-heading .tag { font-size: 12px; letter-spacing: .1em; }
+.soccer-heading button { font-size: 14px; min-height: 44px; }
+.soccer-stage h2 { margin: 2px 0; }
+.soccer-status { text-align: center; margin: 0; min-height: 28px; font-size: clamp(16px, 3.5vw, 20px); }
+.soccer-shots { display: flex; justify-content: center; gap: 10px; }
+.soccer-shot-dot { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #e7efdd; font-size: 20px; }
+.soccer-shot-dot.used { color: #28724c; }
+.soccer-control { width: min(100%, 640px); border-radius: 20px; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; box-shadow: 0 4px 0 #2b704d; }
+.soccer-control:active { cursor: grabbing; }
+.soccer-field { display: block; width: 100%; height: auto; }
+.soccer-actions { margin-top: 8px; width: 100%; flex-wrap: wrap; }
+.soccer-actions .btn { min-height: 56px; }
+.soccer-power { --power: 0%; width: min(100%, 640px); border-radius: 12px; padding: 8px; font-size: 14px; text-align: center; background: linear-gradient(90deg, #ffe3a1 var(--power), #edf2e8 var(--power)); }
+.soccer-kit-preview { width: 150px; height: 130px; border-radius: 20px; background: #e8f3dc; }
+.soccer-kit { gap: 10px; }
+.soccer-kit-number { display: flex; align-items: center; gap: 16px; font-weight: 700; }
+.soccer-kit-number input { width: 90px; padding: 8px; border: 2px solid var(--line); border-radius: 12px; text-align: center; font-size: 28px; }
+.soccer-kit-colors { border: 0; margin: 0; padding: 0; }
+.soccer-kit-colors legend { font-size: 17px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+.soccer-kit-colors .row { gap: 8px; flex-wrap: wrap; }
+.soccer-kit-colors .swatch { width: 44px; height: 44px; min-width: 44px; min-height: 44px; border: 3px solid #b6c6b8; }
+.soccer-kit-colors .swatch.on { outline: 3px solid var(--ink); outline-offset: 2px; }
+.activity-part:has(.soccer-kit) { width: 100%; }
+.my-turn { animation: ready-in .18s ease-out; }
+@keyframes ready-in { from { transform: translateY(6px); opacity: .7; } to { transform: translateY(0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .my-turn { animation: none; } }
+.soccer-scored .soccer-net { animation: soccer-net .35s ease-in-out 2; transform-origin: center; }
+@keyframes soccer-net { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { .soccer-scored .soccer-net { animation: none; } }
+@media (max-width: 420px) {
+  .soccer-stage { padding: 12px 8px; }
+  .soccer-heading .tag { font-size: 10px; padding: 6px 8px; }
+}
+
 /* ---------- stadium ---------- */
 .stadium { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; width: 100%; margin: 8px 0 24px; }
 .part { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 8px; border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); }

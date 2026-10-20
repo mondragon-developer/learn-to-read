@@ -107,28 +107,24 @@ function lineView(kit: Kit, text: string): Line {
 /** A question with three answers; every answer has its own speaker so a non-reader can still answer. */
 async function choose(kit: Kit, host: HTMLElement, label: string, promptKey: string, prompt: string, options: string[], answer: number, optionKey: (j: number) => string): Promise<boolean> {
   const buttons = options.map((o) => h('button', { class: 'choice' }, o));
-  const rows = options.map((_, j) => h('div', { class: 'option' }, h('button', { class: 'speaker', 'aria-label': 'Hear this answer', onClick: () => void kit.say(optionKey(j)) }, '🔊'), buttons[j] as HTMLElement));
+  const rows = options.map((_, j) => h('div', { class: 'option' }, h('button', { class: 'speaker', 'aria-label': 'Hear this answer', onClick: () => { kit.narrate((voice) => voice.say(optionKey(j))); } }, '🔊'), buttons[j] as HTMLElement));
   replace(host, h('div', { class: 'stage' }, kit.header('story', label),
-    h('div', { class: 'question' }, h('button', { class: 'speaker', 'aria-label': 'Hear the question', onClick: () => void kit.say(promptKey) }, '🔊'), h('span', {}, prompt)),
+    h('div', { class: 'question' }, h('button', { class: 'speaker', 'aria-label': 'Hear the question', onClick: () => { kit.narrate((voice) => voice.say(promptKey)); } }, '🔊'), h('span', {}, prompt)),
     h('p', { class: 'small muted' }, 'Tap 🔊 to hear an answer. Tap the answer to choose it.'),
     h('div', { class: 'options' }, rows)));
-  buttons.forEach((b) => { b.disabled = true; });
-  await kit.say(promptKey);
-  if (kit.independent) {
-    for (let j = 0; j < options.length && !kit.closed; j++) {
-      buttons[j]?.classList.add('speaking');
-      await kit.say(optionKey(j));
-      buttons[j]?.classList.remove('speaking');
+  const pick = await kit.respond(async (voice) => {
+    await voice.say(promptKey);
+    if (kit.independent) {
+      for (let j = 0; j < options.length && !voice.closed; j++) {
+        buttons[j]?.classList.add('speaking');
+        await voice.say(optionKey(j));
+        buttons[j]?.classList.remove('speaking');
+      }
+      await voice.prompt('choose-answer');
     }
-    if (kit.closed) return false;
-    await kit.prompt('choose-answer');
-  }
-  buttons.forEach((b) => { b.disabled = false; });
-  const pick = await new Promise<number>((resolve) => buttons.forEach((b, j) => b.addEventListener('click', () => resolve(j), { once: true })));
+  }, new Promise<number>((resolve) => buttons.forEach((b, j) => b.addEventListener('click', () => resolve(j), { once: true }))));
   buttons.forEach((b, j) => b.classList.add(j === answer ? 'hit' : j === pick ? 'miss' : 'dim'));
-  if (pick === answer) await kit.prompt('goal');
-  else await kit.say(optionKey(answer));
-  await sleep(600);
+  await kit.feedback(host, (voice) => pick === answer ? voice.prompt('goal') : voice.say(optionKey(answer)));
   return pick === answer;
 }
 
@@ -178,24 +174,26 @@ async function putInOrder(kit: Kit, host: HTMLElement, s: Story): Promise<boolea
   const labels = ['First', 'Next', 'Last'];
   const placed = h('ol', { class: 'placed' });
   replace(host, h('div', { class: 'stage' }, kit.header('story', 'Put it in order'),
-    h('p', { class: 'small muted' }, 'Tap what happened first, then next, then last.'), placed, h('div', { class: 'strips' }, strips.map((b) => h('div', { class: 'option' }, h('button', { class: 'speaker', 'aria-label': 'Hear this part', onClick: () => void kit.say(keyOf.get(b.textContent ?? '') ?? '') }, '🔊'), b)))));
-  await kit.prompt('story-order');
-  if (kit.independent) {
-    strips.forEach((b) => { b.disabled = true; });
-    for (const b of strips) { if (kit.closed) return false; await kit.say(keyOf.get(b.textContent ?? '') ?? ''); }
-    strips.forEach((b) => { b.disabled = false; });
-  }
+    h('p', { class: 'small muted' }, 'Tap what happened first, then next, then last.'), placed, h('div', { class: 'strips' }, strips.map((b) => h('div', { class: 'option' }, h('button', { class: 'speaker', 'aria-label': 'Hear this part', onClick: () => { kit.narrate((voice) => voice.say(keyOf.get(b.textContent ?? '') ?? '')); } }, '🔊'), b)))));
   const chosen: string[] = [];
-  await new Promise<void>((resolve) => strips.forEach((b) => b.addEventListener('click', () => {
+  await kit.respond(async (voice) => {
+    await voice.prompt('story-order');
+    if (kit.independent) for (const b of strips) {
+      if (voice.closed) break;
+      await voice.say(keyOf.get(b.textContent ?? '') ?? '');
+    }
+  }, new Promise<void>((resolve) => strips.forEach((b) => b.addEventListener('click', () => {
     chosen.push(b.textContent ?? '');
     b.disabled = true;
     placed.appendChild(h('li', {}, h('b', {}, `${labels[chosen.length - 1]}: `), b.textContent ?? ''));
-    void kit.say(keyOf.get(b.textContent ?? '') ?? '');
+    kit.narrate((voice) => voice.say(keyOf.get(b.textContent ?? '') ?? ''));
     if (chosen.length === correct.length) resolve();
-  }, { once: true })));
+  }, { once: true }))));
   const ok = chosen.every((t, i) => t === correct[i]);
   if (ok) { await kit.prompt('goal'); return true; }
   replace(placed, correct.map((t, i) => h('li', { class: 'fixed' }, h('b', {}, `${labels[i]}: `), t)));
-  for (let i = 0; i < s.order.length; i++) await kit.say(clipKey.story(s.id, String(s.order[i])));
+  await kit.feedback(host, async (voice) => {
+    for (let i = 0; i < s.order.length && !voice.closed; i++) await voice.say(clipKey.story(s.id, String(s.order[i])));
+  });
   return false;
 }

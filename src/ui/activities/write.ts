@@ -120,8 +120,8 @@ async function trace(kit: Kit, host: HTMLElement, card: Card): Promise<Outcome> 
       h('div', { class: 'row center' }, h('button', { class: 'btn soft', onClick: p.clear }, '🧽 Clear'), done)));
     await sleep(50);
     drawGuide(p, card.text, 'dotted');
-    await kit.prompt('trace-it');
-    await new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true }));
+    await kit.respond((voice) => voice.prompt('trace-it'),
+      new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true })));
     const { model, child } = grids(p, card.text);
     const score = scoreTrace(model, child, 2);
     if (score.pass) { await kit.prompt('goal'); return attempt === 0 ? 'first-try' : 'after-retry'; }
@@ -137,11 +137,12 @@ async function free(kit: Kit, host: HTMLElement, card: Card): Promise<Outcome> {
   const peek = h('div', { class: 'word small' }, card.text);
   replace(host, h('div', { class: 'stage' }, kit.header('free'), peek, p.wrap,
     h('div', { class: 'row center' }, h('button', { class: 'btn soft', onClick: p.clear }, '🧽 Clear'), done)));
-  await kit.word(card.text);
-  await sleep(1800);
-  peek.classList.add('hidden-word');
-  await kit.prompt('write-it');
-  await new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true }));
+  await kit.respond(async (voice) => {
+    await voice.word(card.text);
+    if (voice.closed) return;
+    peek.classList.add('hidden-word');
+    await voice.prompt('write-it');
+  }, new Promise<void>((resolve) => done.addEventListener('click', () => resolve(), { once: true })));
   await sleep(50);
   drawGuide(p, card.text, 'solid');
   peek.classList.remove('hidden-word');
@@ -186,9 +187,8 @@ export async function tiles(kit: Kit, host: HTMLElement, card: Card): Promise<Ou
     replace(host, h('div', { class: 'stage' }, kit.header('tiles'),
       h('button', { class: 'btn link', onClick: () => void kit.word(card.text) }, '🔊 Hear the word'),
       h('div', { class: 'slots' }, slots), h('div', { class: 'tiles bank' }, bank), h('div', { class: 'row center' }, undo, check)));
-    await kit.prompt('spell-it');
-    await kit.word(card.text);
-    await new Promise<void>((resolve) => check.addEventListener('click', () => resolve(), { once: true }));
+    await kit.respond(async (voice) => { await voice.prompt('spell-it'); await voice.word(card.text); },
+      new Promise<void>((resolve) => check.addEventListener('click', () => resolve(), { once: true })));
     if (built.join('') === parts.join('')) { await kit.prompt('goal'); return attempt === 0 ? 'first-try' : 'after-retry'; }
     await kit.prompt('try-again');
   }

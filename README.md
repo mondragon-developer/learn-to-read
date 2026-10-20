@@ -13,6 +13,8 @@ Open the app: **https://learn-to-read-eight.vercel.app**. On iPad, use Safari â†
 - **Independent iPad practice:** automatic speech checks with a listen-and-repeat fallback. Unchecked practice stays separate from accuracy and mastery; assisted grown-up modes remain available.
 - **Write it** (optional): trace, write from memory with finger or Apple Pencil, or build with letter tiles.
 - **Rewards:** every word read is a goal; goals earn blocks that build a stadium.
+- **Soccer:** pick a jersey number and jersey/shorts/cleat colors, then play before reading and between practice activities. Three swipe-to-shoot free kicks with saves, misses, weak shots, post/bar and wall collisions; one optional replay per game. Play time and soccer scores stay separate from reading minutes and rewards.
+- **Child-led pacing:** take your turn during teacher demonstrations, answer without waiting for narration to finish, and continue after one unverified listen/repeat attempt. Unverified practice never becomes a checked reading pass.
 - **Parent area** (Spanish, with English toggle): minutes per day, tricky words, story skills, Florida B.E.S.T. benchmarks, school FAST scores.
 
 Aligned with the Florida B.E.S.T. ELA grade 1 standards. Never shows a picture before the child reads (Florida bans three-cueing). All content is original.

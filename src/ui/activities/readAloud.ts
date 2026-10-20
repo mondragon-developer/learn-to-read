@@ -49,8 +49,8 @@ export class ReadAloud {
     private readonly i18n: I18n,
     preferMic: boolean,
     independent = false,
-    signal: AbortSignal = new AbortController().signal,
-    stopVoice: () => void = () => undefined,
+    private readonly signal: AbortSignal = new AbortController().signal,
+    private readonly stopVoice: () => void = () => undefined,
     private readonly state: ReadState = { health: new MicHealth(), recorderBroken: false, independent: { unavailable: false } },
   ) {
     this.independentReader = independent ? new IndependentReader(voice, checker, words, sentences, signal, stopVoice, state.independent) : null;
@@ -101,7 +101,7 @@ export class ReadAloud {
    * One attempt at a sentence. `model` plays the correct reading (with word pointing).
    * Mic failures retry silently; the caller decides about a second attempt.
    */
-  async readSentence(panel: HTMLElement, text: string, model: () => Promise<void>, label = 'Read it!'): Promise<SentenceRead> {
+  async readSentence(panel: HTMLElement, text: string, model: (stopped?: () => boolean) => Promise<void>, label = 'Read it!'): Promise<SentenceRead> {
     if (this.independentReader) return this.independentReader.readSentence(panel, text, model, label);
     let silences = 0;
     for (;;) {
@@ -138,7 +138,7 @@ export class ReadAloud {
    * If the take can't be heard, the grown-up sees why and still judges what they heard live.
    * Buttons mode: he reads live, the grown-up taps.
    */
-  private async grownUpJudge(panel: HTMLElement, model: () => Promise<void>, maxMs: number, label: string, question: string, yes: string, no: string): Promise<'yes' | 'no'> {
+  private async grownUpJudge(panel: HTMLElement, model: (stopped?: () => boolean) => Promise<void>, maxMs: number, label: string, question: string, yes: string, no: string): Promise<'yes' | 'no'> {
     let take: Take | null = null;
     let playable = false;
     const note = h('div', { class: 'rec-note' });
@@ -152,8 +152,7 @@ export class ReadAloud {
         take = r.take;
         replace(panel, h('p', { class: 'coach' }, '👂 You said…'), note);
         playable = (await playTake(this.recorder, this.i18n, take, (b) => replace(note, b))).ok;
-        replace(panel, h('p', { class: 'coach' }, '🔊 It sounds like…'), note);
-        await model();
+        await this.optionalModel(panel, model, note);
       }
     }
     return new Promise((resolve) => {
@@ -169,6 +168,21 @@ export class ReadAloud {
           h('button', { class: 'btn big ok', onClick: () => resolve('yes') }, yes),
           h('button', { class: 'btn big soft', onClick: () => resolve('no') }, no)),
         replay, note);
+    });
+  }
+
+  /** Keep the adult assessment after the recording, but make its teacher model optional. */
+  private async optionalModel(panel: HTMLElement, model: (stopped?: () => boolean) => Promise<void>, note: HTMLElement): Promise<void> {
+    this.signal.throwIfAborted();
+    await new Promise<void>((resolve, reject) => {
+      let settled = false;
+      const cleanup = (): void => { this.stopVoice(); this.signal.removeEventListener('abort', abort); };
+      const finish = (): void => { if (!settled) { settled = true; cleanup(); resolve(); } };
+      const abort = (): void => { if (!settled) { settled = true; cleanup(); reject(this.signal.reason); } };
+      this.signal.addEventListener('abort', abort, { once: true });
+      replace(panel, h('p', { class: 'coach' }, '🔊 Hear the model, or keep going.'), note,
+        h('button', { class: 'btn big ok my-turn', onClick: finish }, '▶ My turn!'));
+      void model(() => settled || this.signal.aborted).then(finish, finish);
     });
   }
 }

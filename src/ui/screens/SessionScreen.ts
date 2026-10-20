@@ -8,6 +8,9 @@ import type { AppContext, NavParams, Screen } from '../context';
 import { h, replace, sleep } from '../dom';
 import { Kit } from '../activities/kit';
 import { runStep } from '../activities/runners';
+import { soccerBreak } from '../activities/soccer';
+import { SoccerBreaks } from '@domain/rewards/Soccer';
+import { chooseSoccerKit } from '../activities/soccerPlayer';
 
 const LEAVE_HOLD_MS = 800;
 
@@ -32,6 +35,15 @@ export class SessionScreen implements Screen {
     const fill = h('div', { class: 'pitch-fill' });
     const ball = h('span', { class: 'pitch-ball', 'aria-hidden': 'true' }, '⚽');
     const stage = h('div', { class: 'stage-host' });
+    const breaks = new SoccerBreaks(plan.steps.length, profile.settings.minutes, profile.settings.soccerBreaks !== false && !params?.extra);
+    const breakProgress = h('div', { class: 'soccer-progress', 'aria-live': 'polite' });
+    const paintBreakProgress = (): void => {
+      breakProgress.hidden = !breaks.available;
+      replace(breakProgress,
+        h('span', { 'aria-hidden': 'true' }, [0, 1, 2].map((n) => h('i', { class: n < Math.floor((1 - breaks.remaining / breaks.interval) * 3) ? 'filled' : '' })), ' ⚽'),
+        h('span', {}, `${breaks.remaining} ${breaks.remaining === 1 ? 'activity' : 'activities'} until soccer`));
+    };
+    paintBreakProgress();
     const leave = h('button', { class: 'iconbtn', 'aria-label': 'Hold to leave' }, '🏠');
     let leaveTimer: number | undefined;
     leave.addEventListener('pointerdown', () => { leaveTimer = window.setTimeout(() => this.ctx.navigate('home'), LEAVE_HOLD_MS); });
@@ -42,7 +54,7 @@ export class SessionScreen implements Screen {
       h('nav', { class: 'session-skip', 'aria-label': 'Practice controls' },
         h('button', { class: 'btn soft skip-part', onClick: () => this.kit?.skipPart() }, 'Skip this part →'),
         h('button', { class: 'btn soft skip-section', onClick: () => { skipGroup = true; this.kit?.skipSection(); } }, 'Skip section ⇥')),
-      stage, flash));
+      breakProgress, stage, flash));
 
     const progress = (x: number): void => {
       const pct = `${Math.round(x * 100)}%`;
@@ -65,6 +77,26 @@ export class SessionScreen implements Screen {
 
     skipGroup = false;
     const t0 = clock.now();
+    let soccerMs = 0;
+    const playSoccer = async (chooseKit = false): Promise<void> => {
+      const started = clock.now();
+      const controls = host.querySelector<HTMLElement>('.session-skip');
+      if (controls) controls.hidden = true;
+      breakProgress.hidden = true;
+      try {
+        if (chooseKit) await kit.part(stage, chooseSoccerKit);
+        if (!kit.closed) await kit.part(stage, soccerBreak);
+      } catch (err) { if (!kit.closed) console.error('soccer break failed', err); }
+      finally {
+        soccerMs += Math.max(0, clock.now() - started);
+        if (controls) controls.hidden = false;
+      }
+    };
+    if (profile.settings.soccerBreaks !== false && !params?.extra) {
+      await playSoccer(true);
+      if (kit.closed) return;
+      paintBreakProgress();
+    }
     const groups = plan.steps.map((st) => this.group(st));
     for (let i = 0; i < plan.steps.length; i++) {
       if (kit.closed) return;
@@ -72,15 +104,28 @@ export class SessionScreen implements Screen {
       const step = plan.steps[i] as Step;
       const g = groups[i];
       kit.step = { n: groups.slice(0, i + 1).filter((x) => x === g).length, of: groups.filter((x) => x === g).length };
-      try { await kit.part(stage, (part, target) => runStep(part, target, step)); }
+      const before = kit.practiceCount;
+      let completed = false;
+      try { completed = await kit.part(stage, async (part, target) => {
+        await runStep(part, target, step);
+        return true;
+      }) === true; }
       catch (err) { if (kit.closed) return; console.error('step failed', step, err); }
       if (skipGroup) { while (groups[i + 1] === g) i++; skipGroup = false; }
+      if (kit.closed) return;
+      if (breaks.finishStep(completed && kit.practiceCount > before, i + 1 < plan.steps.length)) {
+        progress((i + 1) / plan.steps.length);
+        await playSoccer();
+      }
+      if (kit.closed) return;
+      paintBreakProgress();
     }
     if (kit.closed) return;
     host.querySelector('.session-skip')?.remove();
+    breakProgress.remove();
     progress(1);
     await kit.record('session', kit.sessionId, 'first-try', 'tap', {
-      plannedMin: profile.settings.minutes, durationMs: clock.now() - t0, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
+      plannedMin: profile.settings.minutes, durationMs: Math.max(0, clock.now() - t0 - soccerMs), soccerMs, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
       ...(params?.topic ? { topic: params.topic } : {}),
       micFallback: kit.reader.independentReader?.fallback ?? kit.grownUpMode,
       independent: kit.independent,

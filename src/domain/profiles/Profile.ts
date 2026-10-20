@@ -23,6 +23,10 @@ export interface FastScore { date: string; score: number }
 export const FAST_GRADE1_LEVEL3 = { min: 844, max: 893 } as const;
 
 export interface ProfileSettings extends SessionSettings {
+  /** Optional play breaks between completed activities; no effect on reading rewards. */
+  soccerBreaks?: boolean;
+  shortsColor?: string;
+  cleatsColor?: string;
   /**
    * How a read-aloud is checked. 'independent' (new players): automatic mic or unverified repetition.
    * 'record': he records, hears himself, hears the model,
@@ -39,6 +43,7 @@ export interface ProfileSettings extends SessionSettings {
 export const DEFAULT_SETTINGS: ProfileSettings = { minutes: 5, writing: 'trace', startUnit: 1, challenge: false, checkMode: 'independent', readingPace: 'follow', storyReading: 'sentences', voice: 'teacher' };
 
 export const JERSEY_COLORS = ['#1F7A4D', '#2D5BD0', '#D2462E', '#E8A317', '#7A3FB8', '#0F8A8A'] as const;
+export const KIT_COLORS = ['#142e46', '#f8fafc', '#252525', '#2D5BD0', '#D2462E', '#f68b36'] as const;
 
 const MAX_NAME = 20;
 
@@ -61,7 +66,9 @@ export function toProfile(x: unknown): Profile | null {
     number: Math.max(0, Math.min(99, Math.round(Number(p.number) || 0))),
     createdAt: Number(p.createdAt) || 0,
     updatedAt: Number(p.updatedAt) || 0,
-    settings: { ...DEFAULT_SETTINGS, minutes: 10, challenge: true, checkMode: 'record', ...(p.settings && typeof p.settings === 'object' ? p.settings : {}) },
+    settings: { ...DEFAULT_SETTINGS, minutes: 10, challenge: true, checkMode: 'record', ...(p.settings && typeof p.settings === 'object' ? p.settings : {}),
+      shortsColor: (KIT_COLORS as readonly string[]).includes(p.settings?.shortsColor ?? '') ? p.settings?.shortsColor : '#142e46',
+      cleatsColor: (KIT_COLORS as readonly string[]).includes(p.settings?.cleatsColor ?? '') ? p.settings?.cleatsColor : '#f8fafc' },
     fast,
   };
 }

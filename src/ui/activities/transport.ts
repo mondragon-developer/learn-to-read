@@ -1,6 +1,6 @@
 import type { AudioPort } from '@domain/audio/AudioPort';
 
-export type Command = 'word' | 'whole' | 'next';
+export type Command = 'word' | 'whole' | 'next' | 'turn';
 
 /**
  * Playback control for the reading coach: pause/continue, and commands from the control bar

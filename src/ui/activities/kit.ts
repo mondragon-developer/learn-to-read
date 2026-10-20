@@ -20,13 +20,16 @@ export class Kit implements Voice {
   readonly reader: ReadAloud;
   readonly abort = new AbortController();
   get independent(): boolean { return this.profile.settings.checkMode === 'independent'; }
-  private readonly shared: { goals: number; known: Set<string>; introduced: Set<HowToId>; parts: Kit[]; reading: ReadState };
+  private readonly shared: { goals: number; practiceCount: number; known: Set<string>; introduced: Set<HowToId>; parts: Kit[]; reading: ReadState };
   get goals(): number { return this.shared.goals; }
+  /** Includes retries and unverified practice, independent of reading accuracy. */
+  get practiceCount(): number { return this.shared.practiceCount; }
   /** Card ids already introduced to this child. */
   get known(): Set<string> { return this.shared.known; }
   set known(value: Set<string>) { this.shared.known = value; }
   readonly ctx: AppContext;
   private stopRecording: (() => void) | undefined;
+  private stopNarration: (() => void) | undefined;
   /** Set when the child leaves mid-session: nothing more gets recorded. */
   closed = false;
   /** Position of the current step among steps of its kind ("2 of 3"), set by the session. */
@@ -42,7 +45,7 @@ export class Kit implements Voice {
     private readonly onGoal: (goals: number) => void,
     parent?: Kit,
   ) {
-    this.shared = parent?.shared ?? { goals: 0, known: new Set(), introduced: new Set(), parts: [], reading: { health: new MicHealth(), recorderBroken: false, independent: { unavailable: false } } };
+    this.shared = parent?.shared ?? { goals: 0, practiceCount: 0, known: new Set(), introduced: new Set(), parts: [], reading: { health: new MicHealth(), recorderBroken: false, independent: { unavailable: false } } };
     // A skipped part owns its DOM and these guarded ports. Late results cannot speak,
     // start another recording or write an assessment into the next part.
     const audio = raw.audio;
@@ -108,9 +111,47 @@ export class Kit implements Voice {
   skipPart(): void { this.shared.parts.at(-1)?.cancel(); }
   skipSection(): void { this.shared.parts[0]?.cancel(); }
 
+  /** A narration scope can be stopped without skipping or grading the child's activity. */
+  narrate(run: (voice: Kit) => Promise<void>): () => void {
+    this.stopNarration?.();
+    const voice = new Kit(this.raw, this.profile, this.sessionId, this.onGoal, this);
+    const stop = (): void => {
+      voice.cancel();
+      this.abort.signal.removeEventListener('abort', stop);
+      if (this.stopNarration === stop) this.stopNarration = undefined;
+    };
+    if (this.closed) { stop(); return stop; }
+    this.stopNarration = stop;
+    this.abort.signal.addEventListener('abort', stop, { once: true });
+    void run(voice).catch((error: unknown) => { if (!voice.closed) console.error('narration failed', error); });
+    return stop;
+  }
+
+  /** Answers are live immediately; taking a turn cancels the remaining narration queue. */
+  async respond<T>(playback: (voice: Kit) => Promise<void>, response: Promise<T>): Promise<T> {
+    const stop = this.narrate(playback);
+    try { return await response; } finally { this.stopNarration?.(); stop(); }
+  }
+
+  /** Optional demonstration. Taking a turn is not a skip and never awards a reading pass. */
+  async model(host: HTMLElement, playback: (voice: Kit) => Promise<void>, label = 'My turn!'): Promise<void> {
+    await this.part(host, async (voice, target) => {
+      replace(target, h('p', { class: 'coach small' }, 'Listen, or take your turn when you’re ready.'),
+        h('button', { class: 'btn big ok my-turn', onClick: () => voice.cancel() }, `▶ ${label}`));
+      await playback(voice);
+    });
+  }
+
+  async feedback(host: HTMLElement, playback: (voice: Kit) => Promise<void>): Promise<void> {
+    const footer = h('div', { class: 'practice-feedback' });
+    (host.querySelector('.stage') ?? host).appendChild(footer);
+    try { await this.model(footer, playback, 'Next!'); } finally { footer.remove(); }
+  }
+
   cancel(): void {
     if (this.closed) return;
     this.closed = true;
+    this.stopNarration?.();
     this.abort.abort();
     this.stopRecording?.();
     this.raw.recorder.stop?.();
@@ -128,6 +169,7 @@ export class Kit implements Voice {
   async record(activity: Activity, itemId: string, outcome: Outcome, source: Source, meta?: Record<string, string | number | boolean>): Promise<void> {
     if (this.closed) return;
     await this.ctx.log.record({ profileId: this.profile.id, activity, itemId, outcome, source, meta: { session: this.sessionId, ...meta } });
+    if (activity !== 'session') this.shared.practiceCount++;
     if ((outcome === 'first-try' || outcome === 'after-retry') && !NOT_GOALS.has(activity)) this.goal();
   }
 

@@ -30,7 +30,7 @@ export async function newWord(kit: Kit, host: HTMLElement, card: Card): Promise<
     panel);
   replace(host, stage);
 
-  await kit.part(panel, async (part) => {
+  await kit.model(panel, async (part) => {
     if (card.kind === 'heart') await part.prompt('heart-word');
     if (parts) {
       await part.prompt(card.kind === 'challenge' ? 'listen' : 'sound-it-out');
@@ -51,6 +51,7 @@ export async function newWord(kit: Kit, host: HTMLElement, card: Card): Promise<
     if (r.outcome === 'unverified') {
       const kick = kicks[i];
       if (kick) { kick.textContent = '⭐'; kick.classList.add('practiced'); }
+      return; // One child-led attempt is enough; extra practice is always optional.
     }
     if (r.outcome === 'first-try' || r.outcome === 'after-retry') {
       kicks[i]?.classList.add('scored');
