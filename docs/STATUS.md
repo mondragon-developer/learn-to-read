@@ -2,17 +2,39 @@
 
 Update at the end of every working session. Newest log entry on top.
 
-## Snapshot (2026-10-16, end of S9)
+## Deployment (2026-10-20, S10)
 
-- Production: **https://learn-to-read-eight.vercel.app** · GitHub `mondragon-developer/learn-to-read` · app release **`37455fc`** deployed successfully through Vercel. Live WebKit check at iPad dimensions: HTTP 200, Josh selected and saved, its Fish preview fetched and played, no page errors.
-- Validation: **120/120 unit tests · 42/42 browser tests** across phone, iPad-sized WebKit and desktop; typecheck, content validation and production build pass. Browser coverage includes both voices offline, saved voice selection after reload, whole sessions, sentence continuation, skipping without grading, late speech results, and recorder shutdown. Physical-device QA remains open.
+- **Live:** [Goal Reader](https://learn-to-read-eight.vercel.app) · app release [`93de95b`](https://github.com/mondragon-developer/learn-to-read/commit/93de95b) pushed to `main`. [Vercel deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/91ykPXpCxJqkvE7tuBoMyBVE6UUD) reported **success**.
+- **Live verification:** HTTP 200 in an isolated WebKit browser at iPad dimensions; created a local test player, customized the kit, played three shots, confirmed replay availability and unchanged reading score, returned to practice, and verified all kit choices after reload. No page errors. `/sw.js` returns HTTP 200 with `Cache-Control: no-cache`. Physical-device acceptance remains open.
+
+## Independent final-checker review (2026-10-20)
+
+- A separate final-checker agent reviewed the local soccer and reading-pacing implementation. It found two actionable issues: diving-goalkeeper collision detection ignored the rendered rotation, and the story-ordering introduction could interrupt a child-selected audio clip.
+- Fixed both: the keeper renderer and save detection share one pose, and story-ordering playback replaces/cancels the active narration scope. Added a regression for raised-glove saves in both directions and a browser check that identifies the selected audio clip during a long introduction. The checker re-reviewed the fixes and reported no outstanding actionable findings.
+- Validation: **141/141 unit tests**, typecheck and content validation pass. The **57/57 full browser checks** passed before the review fixes; **18/18 affected browser checks** passed afterward, followed by **3/3 strengthened audio regression checks**, covering phone, iPad-sized WebKit and desktop. Production build and diff whitespace checks pass. Both review fixes shipped in `93de95b`.
+
+## Shipped update (2026-10-20): soccer, player kits and child-led pacing
+
+- Sessions begin with a child-facing kit picker (jersey number, jersey/shorts/cleat colors, live preview) and an optional three-shot game before learning. The kicker wears the player's first name and number. Choices are saved per profile and sanitized when imported.
+- The free-kick game stays inside the existing frame. The keeper tracks the ball about 90% of the time, reacts faster, reaches farther and raises the arms for high shots. Actual trajectories resolve goals, saves, wide/high misses, underpowered kicks, posts, crossbars and jumping-wall collisions. Frame/wall hits rebound visibly; weak shots drop to the grass. Keyboard arrows control aim and power.
+- Each game offers one three-shot replay, plus an always-available return to reading. Further breaks follow completed activities with recorded participation, including missed/unverified attempts. Skips alone do not unlock a break. At most one mid-practice break in a five-minute session or two in longer sessions; no mid-practice breaks in extra time, tiny plans, or after the final activity.
+- The parent can disable breaks per player (English/Spanish settings). Soccer results never enter the practice log or affect mastery, reading goals, or stadium blocks. Session `durationMs` excludes the break; `soccerMs` records its elapsed time separately.
+- Teacher demonstrations have immediate My turn controls; listening choices, writing Done/Check controls, and story answers work during narration. Scoped narration cancels remaining clips when the child answers or starts a replay. Independent microphone/fallback controls appear immediately, and unverified word practice finishes after one attempt rather than requiring three repetitions. Reading assessment rules stay unchanged.
+- Skip/leave cleanup uses the existing activity cancellation boundary. Game audio reuses bundled voice clips, with a local mute control. Original artwork ships in the app bundle and works offline; reduced motion suppresses continuous movement. No new dependencies or external assets.
+- Coverage includes saved kit reload, replay, all shot outcomes, complete sessions, microphone fallback and reading assessment. Reviewed phone kit/game screenshots. Final validation totals and the production check are recorded above.
+- Acceptance still needed on the child's physical iPad: swipe feel, keeper difficulty and whether the break cadence feels right.
+
+## Snapshot (2026-10-20, end of S10)
+
+- Production: **https://learn-to-read-eight.vercel.app** · GitHub `mondragon-developer/learn-to-read` · app release **`93de95b`** deployed successfully through Vercel. Live WebKit soccer/kit/return-to-reading checks passed with no page errors.
+- Validation: **141 unit tests**; **57 full browser regression checks**, then **18 checks after review fixes** and **3 strengthened audio checks**, all passing. Typecheck, content validation and production build pass. Browser coverage retains both voices offline, saved voice choice, whole sessions, sentence continuation, skipping without grading, late speech results and recorder shutdown, and adds soccer, kit persistence and interruptible narration. Physical-device QA remains open.
 - Content: 14 units · 146 word cards · 55 heart words · 25 challenge words · 10 stories (3 with a moral).
 - Audio: **969 recordings per voice, 1,938 total**. Teacher and Josh use Fish Audio; separate manifests, content-versioned MP3s, pitch-preserving speeds, offline precache. The selected voice is saved per player; installed English device voices are optional.
-- Child flow: independent practice defaults for new players; Story Time defaults to one sentence → Continue, with optional sentence playback and Skip to questions. Skip this part / Skip section stay available; a correct new word can continue after one checked reading.
+- Child flow: choose a kit and play an optional opening soccer game, then read with immediate My turn/answer controls and earned soccer breaks. One replay per game. Soccer time and scores stay separate from reading progress. Independent practice remains the default; Story Time, skip controls and checked-reading rewards retain their existing rules.
 - Settings: visible sticky **⚙️ Settings** button opens the parent gate and then the settings tab. Opening settings ends the current session; already saved answers remain. Continue-only reading is unverified practice, not a pronunciation pass.
-- Fish balance: **218,873 package credits**, verified 2026-10-16. Latest update used **335** credits for revised Teacher instructions + **12,230** for Josh = **12,565**. Website credits are used through the authorized MCP; the developer API balance is separate. Replaying or switching bundled voices uses no credits.
-- Supabase: project/migration recorded in S7–S8; code supports the explicit public environment-variable names. Email-code sign-in and two-device sync were not verified in S9.
-- Custom domain: `reading.mdragonsolutions.com` remains planned; no DNS/domain migration performed in S9. Keep the existing address until the migration checklist in `docs/DOMAIN.md` is completed.
+- Fish balance: last verified **218,873 package credits** on 2026-10-16. S10 reused bundled recordings and made no paid generation calls. Replaying or switching bundled voices uses no credits.
+- Supabase: project/migration recorded in S7–S8; code supports the explicit public environment-variable names. Email-code sign-in and two-device sync remain unverified; S10 did not change schema or account configuration.
+- Custom domain: `reading.mdragonsolutions.com` remains planned; no DNS/domain migration performed in S10. Keep the existing address until the migration checklist in `docs/DOMAIN.md` is completed.
 
 ## Milestones
 
@@ -22,16 +44,16 @@ Update at the end of every working session. Newest log entry on top.
 | M1 | Scaffold + device spike | 🟡 | `/spike.html` built (env, audio, word mic, mic-after-audio hang test, sentence mic, Pencil canvas, copy report). **Needs real-device run** |
 | M2 | Domain + tests | ✅ | Leitner, SessionPlanner, AnswerMatcher, SentenceMatcher, Grading, MicHealth, TraceScorer, Dashboard, events, PracticeLog sync, IndexedDB |
 | M3 | Content + audio | 🟡 | Content validated; Teacher + Josh generated and deployed (969 clips each), offline playback tested. Human pronunciation review, especially all 39 sound clips per voice, remains open |
-| M4 | Child experience | ✅ | Independent mode; sentence-by-sentence Story Time; skip parts/sections; continue after a correct word; visible settings and voice selector. Assisted reading remains available |
+| M4 | Child experience | ✅ | Soccer opener/breaks, personalized kit, replay and child-led narration controls deployed; existing independent/assisted reading, Story Time, settings and assessment behavior retained |
 | M5 | Writing | 🟡 | Trace (auto-scored), write-from-memory (self check), letter tiles. Needs Pencil/finger QA on devices |
 | M6 | Accounts, sync, parent area | 🟡 | Parent gate, Spanish dashboard, settings, players, backup, practice menu by standard. Supabase migration previously applied; live account configuration, email codes and multi-device sync still need verification |
-| M7 | Launch v1 | 🟡 | Vercel production live ✅; both Fish voices and new reading flow deployed; custom domain and physical-device acceptance pending |
+| M7 | Launch v1 | 🟡 | Vercel production live ✅ at `93de95b`; soccer and reading-pacing release verified live; custom domain and physical-device acceptance pending |
 | v1.1 | Homework helper + mom's Spanish + units 9–30 | ⬜ | |
 | v1.2 | Paid pronunciation (Azure) | ⬜ | |
 
-## Next session (S10): real iPad acceptance + domain/sync follow-up
+## Next session (S11): soccer/iPad acceptance + domain/sync follow-up
 
-1. Refresh the installed app on the child's iPad. Try a five-minute session and a Story Time session: Continue, skip one sentence/question, skip a section, and continue after a correct word.
+1. Refresh the installed app on the child's iPad. Check kit choices, swipe strength/aim, keeper difficulty, wall/post hits, one replay and return to reading. Try a five-minute session and Story Time with My turn/answers during narration; confirm the break cadence feels right. Keep physical-device feedback separate from browser-emulation results.
 2. In **⚙️ Settings → Voz de lectura / Reading voice**, preview Teacher and Josh, save a choice, reopen the app and try airplane-mode playback. Review all **39 sound clips per voice** in Audio Review; record any pronunciation corrections.
 3. Run `/spike.html` in Safari and from the Home Screen, especially mic-after-audio, card **3c** (record/hear yourself), and finger/Pencil tracing. Browser emulation does not establish real iPad speech-recognition reliability.
 4. Verify Supabase account configuration and email codes, then test iPad offline practice → online sync → the same history on a second device.
@@ -43,13 +65,13 @@ Update at the end of every working session. Newest log entry on top.
 2. Real iPad/iPhone checks: Safari + installed PWA, microphone permissions, audio output, offline use, finger/Pencil tracing; share `/spike.html` reports.
 3. Listen to Teacher and Josh, especially the isolated sounds, and note clips that need pronunciation corrections.
 4. Verify **Cuenta y respaldo** shows account sign-in. If needed, check the Vercel public URL/key variables and Supabase **Magic Link** / **Confirm signup** templates with `{{ .Token }}` and six-digit OTPs; sign in with the same email on each device.
-5. Dependency alerts/PR review carried forward from S8; current PR resolution was not checked during this session.
+5. Dependency alerts/PR review carried forward: GitHub reported two moderate alerts when publishing S10. Dependency changes were outside this release; investigate separately.
 
 ## Backlog (priority order)
 
 **P1 — before daily use**
 
-- [ ] Custom domain `reading.mdragonsolutions.com` (carried forward to S10; docs/DOMAIN.md) and move devices to it.
+- [ ] Custom domain `reading.mdragonsolutions.com` (carried forward to S11; docs/DOMAIN.md) and move devices to it.
 - [ ] Real-device QA: mic in Safari tab vs installed PWA; mic-after-audio hang (iOS 27); Pencil trace thresholds (`TRACE_PASS`); audio unlock.
 - [x] Generate and deploy Teacher/Josh Fish libraries; verify both offline (S9).
 - [ ] Human pronunciation review of both voices, especially the **39 isolated sound clips per voice**.
@@ -62,6 +84,7 @@ Update at the end of every working session. Newest log entry on top.
 - [ ] Placement check (a 2-minute parent-run screener) instead of choosing the start unit by hand.
 - [x] Segmenting game (Elkonin boxes, ELA.1.F.1.2.a/.d) as a fifth warm-up (S6).
 - [x] Sentence-by-sentence Story Time, skip controls, correct-word continuation, accessible Settings entry and per-player Fish voice selection (S9).
+- [x] Soccer opener/breaks, tougher keeper, wall/frame/missed/weak shots, one replay, personalized player kit and interruptible teacher narration; independent final-checker fixes and production verification (S10).
 - [ ] Accessibility pass: focus order in activities, VoiceOver labels on tiles, contrast of `.muted` on white.
 
 **P3 — v1.1 / v1.2**
@@ -74,6 +97,9 @@ Update at the end of every working session. Newest log entry on top.
 - [ ] COPPA review before any other family's children are added.
 
 ## Decisions log
+
+- 2026-10-20 · **Soccer and learning:** soccer is optional play with its own score/time; it never grades reading or changes mastery/stadium rewards. Sessions open with kit selection and a game. Further breaks require recorded participation, including misses/unverified attempts; skips alone do not unlock them. Each game offers one replay and an always-available return to reading.
+- 2026-10-20 · **Child-led narration:** demonstrations can be interrupted with My turn and answers work during narration. Scoped playback prevents canceled/replaced clips from restarting. Adult/microphone assessment remains required for checked passes; one independent listen/repeat attempt stays unverified.
 
 - 2026-10-16 · **Flexible reading:** Story Time defaults to a whole sentence with Continue; no microphone or adult per-word check is required. Guided reading remains an option. Continue records unverified practice; skips do not create passes or misses. Correct new-word results are saved before the Continue control, and three repetitions are no longer compulsory after a correct reading.
 - 2026-10-16 · **Cancellation:** each skippable part owns its DOM and guarded audio/mic access. Skipping or leaving cancels speech recognition, recording and playback; late results cannot assess the next part. Mic-failure state stays shared across the session.
@@ -102,6 +128,15 @@ Update at the end of every working session. Newest log entry on top.
 - 2026-10-04 · Validator runs through vite-node (`scripts/validate-content.ts`) so it reuses the domain's Decodability code.
 
 ## Session log
+
+### 2026-10-20 · S10 — Soccer breaks, player kits, faster learning and production release
+
+- **Shipped:** `93de95b` adds swipe-to-shoot soccer before/between learning, a stronger moving keeper with raised arms, wide/high/weak shots, wall/post/crossbar collisions, one replay, and the player's name/number on the kicker. Jersey/shorts/cleat colors and number are chosen at the start and saved per player. Existing frame, learning history and assessment rules are preserved.
+- **Learning pacing:** immediate My turn controls, active answers during teacher speech, cancellable narration/replays and one unverified independent repetition instead of three mandatory repetitions. Parent soccer opt-out, skip/leave cleanup and separate reading/soccer timing remain covered.
+- **Independent review:** final-checker found two issues: rotated keeper gloves were not reflected in save detection, and the story-order introduction could interrupt the child's selected clip. Both were fixed, regression-tested and re-reviewed with no outstanding actionable findings.
+- **Verified:** 141 unit tests, typecheck, content validation and build pass; 57 full browser checks passed before review fixes, followed by 18 affected checks and 3 strengthened narration checks on phone, iPad-sized WebKit and desktop. Physical iPad acceptance remains pending.
+- **Published:** app commit [`93de95b`](https://github.com/mondragon-developer/learn-to-read/commit/93de95b) pushed to `main`; [Vercel deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/91ykPXpCxJqkvE7tuBoMyBVE6UUD) succeeded at **https://learn-to-read-eight.vercel.app**. An isolated live WebKit check verified HTTP 200, the opening game, all three shots, replay availability, zero reading goals from soccer, return to practice and saved kit choices after reload, with no page errors. Service-worker response has `Cache-Control: no-cache`.
+- **Handoff:** tracker, milestones, decisions and next-session tasks updated after deployment. S11: real iPad swipe/difficulty/pacing feedback, phonics review, account sync verification and the existing custom-domain plan. No paid audio generation, schema changes or domain migration in S10. Existing unrelated local files remain untouched.
 
 ### 2026-10-16 · S9 — Fish voices, independent iPad practice and flexible reading
 
