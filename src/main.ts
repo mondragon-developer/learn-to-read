@@ -1,3 +1,4 @@
+import { StoriesScreen } from '@ui/screens/StoriesScreen';
 /**
  * Composition root - the only file that knows concrete implementations.
  * Swap WebSpeechChecker for a paid checker, or add Supabase keys, and nothing else changes.
@@ -100,6 +101,7 @@ async function boot(): Promise<void> {
     stadium: new StadiumScreen(ctx),
     words: new WordBankScreen(ctx),
     practice: new PracticeScreen(ctx),
+    stories: new StoriesScreen(ctx),
     parent: new ParentScreen(ctx),
     'audio-review': new AudioReviewScreen(ctx, catalog),
   });

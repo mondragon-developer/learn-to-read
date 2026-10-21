@@ -14,10 +14,11 @@ import type { I18n } from '@domain/i18n/i18n';
 import type { Profile } from '@domain/profiles/Profile';
 import type { Account } from '@platform/Account';
 
-export type ScreenId = 'players' | 'home' | 'session' | 'stadium' | 'words' | 'practice' | 'parent' | 'audio-review';
+export type ScreenId = 'players' | 'home' | 'session' | 'stadium' | 'words' | 'practice' | 'stories' | 'parent' | 'audio-review';
 
 export interface NavParams {
   settings?: boolean;
+  storyId?: string;
   extra?: boolean;
   /** Audio was unlocked by the home button in the same tap. */
   ready?: boolean;

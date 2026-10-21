@@ -4,6 +4,9 @@ Five minutes a day of reading practice for first graders — on iPad, iPhone and
 
 Open the app: **https://learn-to-read-eight.vercel.app**. On iPad, use Safari → Share → Add to Home Screen.
 
+- **Short soccer stories** — a separate library with six- to eight-sentence reads about Lamine Yamal, Cristiano Ronaldo and his clubs, Pele, Maradona, and the 2014–2022 World Cups. Proper names have listen-along support.
+- **Word help** — tap the strip below a story or sentence word to hear it and highlight the letters above your finger.
+- **Child-led word practice** — try first; sound demonstrations stay available on demand.
 - **Flexible Story Time** — read one sentence, tap Continue; skip a part or section anytime.
 - **Two Fish voices** — choose Teacher or Josh in the always-visible parent Settings.
 - **Sound games** (rhyme, robot-talk blending, clapping syllables) — audio only.
@@ -13,7 +16,8 @@ Open the app: **https://learn-to-read-eight.vercel.app**. On iPad, use Safari �
 - **Independent iPad practice:** automatic speech checks with a listen-and-repeat fallback. Unchecked practice stays separate from accuracy and mastery; assisted grown-up modes remain available.
 - **Write it** (optional): trace, write from memory with finger or Apple Pencil, or build with letter tiles.
 - **Rewards:** every word read is a goal; goals earn blocks that build a stadium.
-- **Soccer:** pick a jersey number and jersey/shorts/cleat colors, then play before reading and between practice activities. Three swipe-to-shoot free kicks with saves, misses, weak shots, post/bar and wall collisions; one optional replay per game. Play time and soccer scores stay separate from reading minutes and rewards.
+- **Pause & play:** pause a reading activity for soccer, then return to the same activity. Reading timers pause too. Soccer goals and keeper saves are saved per student and shown separately on the home screen.
+- **Soccer:** pick a jersey number and jersey/shorts/cleat colors, then play before reading and between practice activities. Three hold-to-charge, drag-to-aim free kicks (release to shoot), with about 30% goalkeeper saves on target with saves, misses, weak shots, post/bar and wall collisions; one optional replay per game. Play time and soccer scores stay separate from reading minutes and rewards.
 - **Child-led pacing:** take your turn during teacher demonstrations, answer without waiting for narration to finish, and continue after one unverified listen/repeat attempt. Unverified practice never becomes a checked reading pass.
 - **Parent area** (Spanish, with English toggle): minutes per day, tricky words, story skills, Florida B.E.S.T. benchmarks, school FAST scores.
 

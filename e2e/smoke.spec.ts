@@ -110,6 +110,7 @@ async function playMatch(page: Page, project: string, stopWhen?: () => Promise<b
     const tag = (await page.locator('.stage .tag, .howto h2').first().textContent({ timeout: 200 }).catch(() => null)) ?? '';
     if (tag && !seen.has(tag)) { seen.add(tag); await shot(page, `step-${seen.size}`, project); }
     for (const loc of order) {
+      if (stopWhen && await stopWhen()) return;
       const first = loc.first();
       if (await first.isVisible().catch(() => false)) { await first.click({ timeout: 1000 }).catch(() => undefined); break; }
     }
@@ -146,7 +147,7 @@ test('the parent gate rejects a wrong answer', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Goal Reader' })).toBeVisible();
 });
 
-test('soccer break plays three swipe shots offline without changing reading rewards', async ({ page }, info) => {
+test('soccer break plays three hold-and-drag shots offline without changing reading rewards', async ({ page }, info) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await stubDevices(page);
@@ -159,7 +160,7 @@ test('soccer break plays three swipe shots offline without changing reading rewa
   await page.getByRole('button', { name: 'Cleats: Orange', exact: true }).click();
   await page.screenshot({ path: `test-results/kit-${info.project.name}.png`, fullPage: true });
   await page.locator('.kit-start').click();
-  await playIndependently(page, '', () => page.locator('.soccer-play').isVisible());
+  await expect(page.locator('.soccer-play')).toBeVisible();
   const scoreBefore = await page.locator('.scoreboard').textContent();
   const events = (): Promise<unknown[]> => page.evaluate(async () => {
     const db = await new Promise<IDBDatabase>((resolve) => {
@@ -202,11 +203,12 @@ test('soccer break plays three swipe shots offline without changing reading rewa
     rect = (await field.boundingBox())!;
     await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height * 390 / 440);
     await page.mouse.down();
+    await expect(page.getByRole('meter', { name: 'Shot power' })).toHaveAttribute('aria-valuenow', /^(?:[6-9]\d|100)$/);
     await page.mouse.move(rect.x + rect.width * (i === 1 ? .28 : .72), rect.y + rect.height * .32, { steps: 10 });
     await page.mouse.up();
   }
   await expect(page.getByRole('heading', { name: 'Great shooting!' })).toBeVisible();
-  expect(await events()).toEqual(before);
+  expect((await events() as Array<{ activity: string }>).filter((e) => e.activity !== 'soccer')).toEqual(before);
   await expect(page.locator('.scoreboard')).toHaveText(scoreBefore!);
   await expect(page.locator('.soccer-play')).toBeHidden();
   await page.locator('.soccer-replay').click();
@@ -227,7 +229,7 @@ test('soccer break plays three swipe shots offline without changing reading rewa
   await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'bar');
   await expect(page.getByRole('heading', { name: 'Great shooting!' })).toBeVisible();
   await expect(page.locator('.soccer-replay')).toBeHidden();
-  expect(await events()).toEqual(before);
+  expect((await events() as Array<{ activity: string }>).filter((e) => e.activity !== 'soccer')).toEqual(before);
   await page.context().setOffline(false);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.locator('.soccer-back').click();
@@ -257,7 +259,7 @@ test('soccer can be left during flight and disabled in saved parent settings', a
   await setUpPlayer(page, '', true, true);
   await page.getByRole('button', { name: /Kick off!/ }).click();
   await page.locator('.kit-start').click();
-  await playIndependently(page, '', () => page.locator('.soccer-play').isVisible());
+  await expect(page.locator('.soccer-play')).toBeVisible();
   await page.locator('.soccer-play').click();
   const field = page.locator('.soccer-control');
   await field.press('ArrowLeft');
@@ -545,6 +547,7 @@ async function playIndependently(page: Page, project = '', stopWhen?: () => Prom
     if (await page.getByRole('heading', { name: 'Full time!' }).isVisible()) return;
     await expect(page.locator('.grownup-q, .grownup-note')).toHaveCount(0);
     for (const loc of controls) {
+      if (stopWhen && await stopWhen()) return;
       if (await loc.first().isVisible().catch(() => false)) {
         await loc.first().click({ timeout: 800 }).catch(() => undefined);
         break;
@@ -836,9 +839,44 @@ test('skipping a recording releases the microphone without grading the word', as
   await page.locator('.mic.rec').click();
   await expect(page.getByRole('button', { name: 'Stop recording' })).toBeVisible();
   await page.locator('.skip-part').click();
-  await expect(page.locator('.kick-label')).toContainText('2 of 3');
+  await expect(page.locator('.kick-label')).toContainText('try with a little help');
   await expect(page.locator('.mic.rec')).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as { stoppedRecordings: number }).stoppedRecordings)).toBe(1);
   expect((await practiceEvents(page)).filter((e) => e.activity === 'new-word')).toHaveLength(0);
   expect(errors).toEqual([]);
+});
+
+test('short story words highlight from below and soccer pauses preserve the sentence and student totals', async ({ page }) => {
+  await stubDevices(page);
+  await setUpPlayer(page, '', true, true);
+  await page.getByRole('button', { name: /Soccer stories/ }).click();
+  await page.getByRole('button', { name: /Lamine Yamal/ }).click();
+  await page.getByRole('button', { name: /Let’s go/ }).click();
+  await expect(page.locator('.stage-head')).toContainText('Sentence 1 of 6');
+  const word = page.locator('.line .listen-word').first();
+  const box = (await word.boundingBox())!;
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height - 12);
+  await expect(word).toHaveClass(/word-replay/);
+  await page.locator('.line').evaluate((line) => { line.setAttribute('data-preserved', 'yes'); });
+  await page.locator('.soccer-pause').click();
+  await expect(page.locator('.stage-host')).toBeHidden();
+  await page.evaluate(() => { Math.random = () => .99; });
+  await page.locator('.soccer-play').click();
+  const field = page.locator('.soccer-field');
+  const rect = (await field.boundingBox())!;
+  await page.mouse.move(rect.x + rect.width * 320 / 640, rect.y + rect.height * 390 / 440);
+  await page.mouse.down();
+  await expect(page.getByRole('meter', { name: 'Shot power' })).toHaveAttribute('aria-valuenow', /^(?:[6-9]\d|100)$/);
+  await page.mouse.move(rect.x + rect.width * 460 / 640, rect.y + rect.height * 130 / 440, { steps: 8 });
+  await page.mouse.up();
+  await expect(page.locator('.soccer-stage')).toHaveAttribute('data-outcome', 'goal');
+  await expect(page.locator('.soccer-totals')).toContainText('Soccer goals: 1');
+  // Leave before the three-shot game ends: the finished goal must already be saved.
+  await page.locator('.soccer-back').click();
+  await expect(page.locator('.line[data-preserved=yes]')).toBeVisible();
+  await expect(page.locator('.stage-head')).toContainText('Sentence 1 of 6');
+  await page.getByRole('button', { name: 'Goal Reader', exact: true }).click();
+  await expect(page.locator('.soccer-totals')).toContainText('1 goals');
+  await page.reload();
+  await expect(page.locator('.soccer-totals')).toContainText('1 goals');
 });

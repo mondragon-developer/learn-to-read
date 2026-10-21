@@ -28,7 +28,8 @@ export class SessionScreen implements Screen {
     const deck = rebuildDeck(events);
     const input = { library, deck, events, today: clock.today(), settings: profile.settings };
     const choice = params?.topic ? decodeChoice(params.topic) : null;
-    const plan = choice ? planner.planTopic(input, choice) : params?.extra ? planner.planExtra(input) : planner.plan(input);
+    const chosenStory = params?.storyId ? library.story(params.storyId) : undefined;
+    const plan = chosenStory ? { steps: [{ kind: 'story' as const, storyId: chosenStory.id }], unit: chosenStory.unit, estimatedSeconds: 240 } : choice ? planner.planTopic(input, choice) : params?.extra ? planner.planExtra(input) : planner.plan(input);
 
     let skipGroup = false;
     const score = h('b', {}, '0');
@@ -48,10 +49,12 @@ export class SessionScreen implements Screen {
     let leaveTimer: number | undefined;
     leave.addEventListener('pointerdown', () => { leaveTimer = window.setTimeout(() => this.ctx.navigate('home'), LEAVE_HOLD_MS); });
     for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) leave.addEventListener(ev, () => window.clearTimeout(leaveTimer));
+    let startManualSoccer: (() => Promise<void>) | null = null;
+    const manualSoccer = h('button', { class: 'btn soft soccer-pause', hidden: true, onClick: () => { void startManualSoccer?.(); } }, '⚽ Pause & play');
     const flash = h('div', { class: 'goal-flash', 'aria-live': 'polite' });
     replace(host, h('div', { class: 'session' },
       h('div', { class: 'session-top' }, leave, h('div', { class: 'pitch-bar', role: 'progressbar', 'aria-label': 'Match progress' }, fill, ball), h('div', { class: 'scoreboard' }, '⚽ ', score)),
-      h('nav', { class: 'session-skip', 'aria-label': 'Practice controls' },
+      h('nav', { class: 'session-skip', 'aria-label': 'Practice controls' }, manualSoccer,
         h('button', { class: 'btn soft skip-part', onClick: () => this.kit?.skipPart() }, 'Skip this part →'),
         h('button', { class: 'btn soft skip-section', onClick: () => { skipGroup = true; this.kit?.skipSection(); } }, 'Skip section ⇥')),
       breakProgress, stage, flash));
@@ -92,11 +95,49 @@ export class SessionScreen implements Screen {
         if (controls) controls.hidden = false;
       }
     };
-    if (profile.settings.soccerBreaks !== false && !params?.extra) {
+    if (profile.settings.soccerBreaks !== false && !params?.extra && !chosenStory) {
       await playSoccer(true);
       if (kit.closed) return;
       paintBreakProgress();
     }
+    let manualRunning: Promise<void> | null = null;
+    startManualSoccer = async () => {
+      if (kit.closed || manualRunning) return;
+      manualRunning = (async () => {
+        const started = clock.now();
+        const resume = kit.pause.pause();
+        const focus = document.activeElement as HTMLElement | null;
+        const controls = host.querySelector<HTMLElement>('.session-skip');
+        const playHost = h('div', { class: 'soccer-pause-host' });
+        const playKit = new Kit(this.ctx, profile, newEventId(), () => undefined);
+        const cancelPlay = (): void => playKit.cancel();
+        kit.abort.signal.addEventListener('abort', cancelPlay, { once: true });
+        stage.hidden = true;
+        stage.inert = true;
+        if (controls) controls.hidden = true;
+        breakProgress.hidden = true;
+        stage.after(playHost);
+        this.ctx.audio.stop();
+        this.ctx.checker.cancel();
+        this.ctx.recorder.stop?.();
+        try { await soccerBreak(playKit, playHost); }
+        catch (err) { if (!kit.closed) console.error('soccer pause failed', err); }
+        finally {
+          playKit.cancel();
+          kit.abort.signal.removeEventListener('abort', cancelPlay);
+          soccerMs += Math.max(0, clock.now() - started);
+          playHost.remove();
+          stage.hidden = false;
+          stage.inert = false;
+          if (controls) controls.hidden = false;
+          resume();
+          paintBreakProgress();
+          if (!kit.closed && focus?.isConnected) focus.focus({ preventScroll: true });
+        }
+      })();
+      try { await manualRunning; } finally { manualRunning = null; }
+    };
+    manualSoccer.hidden = profile.settings.soccerBreaks === false;
     const groups = plan.steps.map((st) => this.group(st));
     for (let i = 0; i < plan.steps.length; i++) {
       if (kit.closed) return;
@@ -108,6 +149,7 @@ export class SessionScreen implements Screen {
       let completed = false;
       try { completed = await kit.part(stage, async (part, target) => {
         await runStep(part, target, step);
+        await kit.pause.wait();
         return true;
       }) === true; }
       catch (err) { if (kit.closed) return; console.error('step failed', step, err); }

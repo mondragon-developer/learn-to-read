@@ -1,3 +1,4 @@
+import { listenWord } from './listenWord';
 import type { Story } from '@domain/content/types';
 import { cardId } from '@domain/content/ContentLibrary';
 import { clipKey } from '@domain/audio/AudioCatalog';
@@ -53,7 +54,7 @@ export async function story(kit: Kit, host: HTMLElement, s: Story): Promise<void
         h('div', { class: 'coach-dock' }, panel, guided ? bar.el : null)));
       if (!guided) {
         await new Promise<void>((resolve) => replace(panel,
-          h('p', { class: 'coach' }, 'Read this sentence out loud. Then tap Continue.'),
+          h('p', { class: 'coach' }, 'Read out loud. Tap below a word to hear it. Then Continue.'),
           h('button', { class: 'btn big ok read-continue', onClick: () => { part.ctx.audio.stop(); resolve(); } }, 'Continue →'),
           h('button', { class: 'btn soft', onClick: () => void pointAndRead(part, line.words, key, 'follow', () => part.closed) }, '🔊 Hear the sentence'),
           h('button', { class: 'btn link', onClick: () => { skipReading = true; part.cancel(); } }, 'Skip to questions')));
@@ -100,7 +101,7 @@ export async function story(kit: Kit, host: HTMLElement, s: Story): Promise<void
 interface Line { el: HTMLElement; words: HTMLElement[] }
 
 function lineView(kit: Kit, text: string): Line {
-  const ws = text.split(/\s+/).map((t) => h('button', { class: 'w', onClick: () => void kit.word(t.replace(/[^A-Za-z']/g, '')) }, t));
+  const ws = text.split(/\s+/).map((t) => listenWord(kit, t, 'w'));
   return { el: h('p', { class: 'line' }, ws), words: ws };
 }
 

@@ -250,7 +250,7 @@ export class SessionPlanner {
    * considered, unless none has it.
    */
   pickStory(library: ContentLibrary, events: PracticeEvent[], unit: number, skill?: StorySkill): Story | undefined {
-    const reachable = library.stories.filter((s) => s.unit <= unit);
+    const reachable = library.stories.filter((s) => s.unit <= unit && s.collection !== 'soccer');
     const withSkill = skill ? reachable.filter((s) => s.skill === skill || (skill === 'moral' && !!s.moral)) : [];
     const available = withSkill.length ? withSkill : reachable;
     if (!available.length) return undefined;

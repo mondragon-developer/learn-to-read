@@ -32,8 +32,8 @@ export async function fluency(kit: Kit, host: HTMLElement, passage: Passage): Pr
   // 1. Start
   await new Promise<void>((resolve) => replace(panel, h('button', { class: 'btn big ok', onClick: () => resolve() }, t.t('fl.start'))));
   phase = 'reading';
-  const t0 = performance.now();
-  const elapsed = (): number => Math.min(SECONDS, (performance.now() - t0) / 1000);
+  const t0 = kit.pause.now();
+  const elapsed = (): number => Math.min(SECONDS, (kit.pause.now() - t0) / 1000);
   let timer = 0;
   kit.abort.signal.addEventListener('abort', () => window.clearTimeout(timer), { once: true });
   await new Promise<void>((resolve) => {

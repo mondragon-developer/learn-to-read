@@ -95,7 +95,7 @@ export function dashboard(events: PracticeEvent[], library: ContentLibrary, toda
   }), { words: 0, wordsRead: 0, sentences: 0, whole: 0 });
 
   return {
-    unverified: events.filter((e) => e.outcome === 'unverified').sort((a, b) => b.at - a.at).slice(0, 20).map((e) => ({
+    unverified: events.filter((e) => e.outcome === 'unverified' && e.activity !== 'soccer').sort((a, b) => b.at - a.at).slice(0, 20).map((e) => ({
       day: e.day, text: String(e.meta?.text ?? library.card(e.itemId)?.text ?? e.itemId.replace(/^(blend|sound-it-out):/, '')),
     })),
     sentences,

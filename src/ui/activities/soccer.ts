@@ -1,9 +1,11 @@
-import { BALL, aimedShot, ballAt, clamp, keeperMove, keeperPose, resolveShot, swipeShot, type Shot, type ShotResult } from '@domain/rewards/Soccer';
+import { BALL, aimedShot, ballAt, clamp, keeperMove, keeperPose, resolveShot, soccerTotals, dragShot, heldPower, type Shot, type ShotResult } from '@domain/rewards/Soccer';
 import type { Kit } from './kit';
 import { h, replace, svg } from '../dom';
 import { dressPlayer, playerArt } from './soccerPlayer';
 
 export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
+  if (kit.closed) return;
+  const totals = soccerTotals(await kit.ctx.log.events(kit.profile.id));
   if (kit.closed) return;
   await new Promise<void>((resolve) => {
     let frame = 0;
@@ -23,7 +25,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     let impact: ShotResult | null = null;
     let resultStart = 0;
     let move: ReturnType<typeof keeperMove> | null = null;
-    let drag: { id: number; x: number; y: number; at: number } | null = null;
+    let drag: { id: number; x: number; y: number; at: number; aimX: number; aimY: number } | null = null;
     let keyboardX = 320;
     let keyboardPower = 0.85;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -39,6 +41,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     const say = (id: string): void => { if (!muted && !closed) void kit.prompt(id).catch(() => undefined); };
     const title = h('h2', {}, 'Soccer time!');
     const status = h('p', { class: 'soccer-status', role: 'status' }, 'Three shots. You’re the kicker!');
+    const lifetime = h('p', { class: 'soccer-totals' }, `${kit.profile.firstName} · Soccer goals: ${totals.goals} · Keeper saves: ${totals.saves}`);
     const dots = h('div', { class: 'soccer-shots', 'aria-label': 'Three shots remaining' });
     const art = svg('0 0 640 440', `
       <defs>
@@ -75,9 +78,9 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     const trail = el<SVGPathElement>('.soccer-trail');
     const sparkles = el<SVGGElement>('.soccer-sparkles');
     dressPlayer(kicker, kit.profile);
-    const control = h('div', { class: 'soccer-control', role: 'button', tabindex: '0', 'aria-label': 'Swipe the ball toward the goal. Or use left and right arrows to aim, up and down for power, then Enter to kick.' }, art);
+    const control = h('div', { class: 'soccer-control', role: 'button', tabindex: '0', 'aria-label': 'Hold the ball to charge, drag toward your target, then release. Or use left and right arrows to aim, up and down for power, then Enter to kick.' }, art);
     const powerMeter = h('div', { class: 'soccer-power', role: 'meter', 'aria-label': 'Shot power', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': '0' },
-      h('span', {}, 'Swipe up to shoot · longer and quicker = stronger'));
+      h('span', {}, 'Hold for power · drag to aim · release to shoot'));
     const play = h('button', { class: 'btn big ok soccer-play', onClick: () => {
       if (phase !== 'invite') return;
       play.hidden = true;
@@ -104,7 +107,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     } }, '🔊 Sound on');
     const panel = h('div', { class: 'stage soccer-stage' },
       h('div', { class: 'soccer-heading' }, h('span', { class: 'tag' }, 'SOCCER BREAK'), sound),
-      title, status, dots, control, powerMeter,
+      title, status, lifetime, dots, control, powerMeter,
       h('div', { class: 'row center soccer-actions' }, play, replay, back));
     replace(host, panel);
     function paintDots(): void {
@@ -121,7 +124,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       keyboardPower = 0.85;
       nextShuffle = 0;
       title.textContent = `Shot ${round + 1} of 3`;
-      status.textContent = round === 0 ? 'Swipe the ball toward the goal!' : 'Aim past the wall. Swipe to shoot!';
+      status.textContent = round === 0 ? 'Hold the ball, drag to aim, then release!' : 'Aim past the wall. Hold for power, then release!';
       back.textContent = 'Back to practice →';
       ball.setAttribute('transform', `translate(${BALL.x} ${BALL.y})`);
       kicker.setAttribute('transform', 'translate(266 399)');
@@ -135,7 +138,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       keeper.querySelectorAll('.soccer-glove-left, .soccer-glove-right').forEach((g) => g.setAttribute('cy', '-43'));
       powerMeter.setAttribute('aria-valuenow', '0');
       powerMeter.style.setProperty('--power', '0%');
-      powerMeter.firstElementChild!.textContent = 'Swipe up to shoot · longer and quicker = stronger';
+      powerMeter.firstElementChild!.textContent = 'Hold for power · drag to aim · release to shoot';
       control.setAttribute('aria-disabled', 'false');
       paintDots();
     }
@@ -156,12 +159,12 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       return { x: (event.clientX - rect.left) * 640 / rect.width, y: (event.clientY - rect.top) * 440 / rect.height };
     };
     const showAim = (aim: Shot | null): void => {
-      const p = aim ? ballAt(aim, Math.min(aim.range, .6)) : null;
+      const p = aim ? ballAt(aim, 1) : null;
       trail.setAttribute('d', p ? `M320 390Q320 320 ${p.x} ${p.y}` : '');
-      const pct = aim ? Math.round(aim.power / 1.6 * 100) : 0;
+      const pct = aim ? Math.round(aim.power / 1.15 * 100) : 0;
       powerMeter.setAttribute('aria-valuenow', String(pct));
       powerMeter.style.setProperty('--power', `${pct}%`);
-      powerMeter.firstElementChild!.textContent = !aim ? 'Swipe up to shoot' : aim.power < .5 ? 'Soft kick' : aim.power > 1.2 ? 'Big kick!' : 'Ready to shoot!';
+      powerMeter.firstElementChild!.textContent = !aim ? 'Hold for power · drag to aim' : aim.power < .5 ? 'Soft kick' : aim.power > 1.2 ? 'Big kick!' : 'Ready to shoot!';
     };
     control.addEventListener('pointerdown', (event) => {
       if (phase !== 'aim' || drag || !event.isPrimary || event.button !== 0) return;
@@ -169,25 +172,26 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       if (Math.hypot(p.x - BALL.x, p.y - BALL.y) > 65) return;
       event.preventDefault();
       control.setPointerCapture(event.pointerId);
-      drag = { id: event.pointerId, ...p, at: performance.now() };
+      drag = { id: event.pointerId, ...p, at: performance.now(), aimX: 0, aimY: 0 };
     });
     control.addEventListener('pointermove', (event) => {
       if (!drag || event.pointerId !== drag.id) return;
       const p = point(event);
-      const aim = swipeShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at);
-      showAim(aim);
+      drag.aimX = p.x - drag.x;
+      drag.aimY = p.y - drag.y;
     });
     control.addEventListener('pointerup', (event) => {
       if (!drag || event.pointerId !== drag.id) return;
       const p = point(event);
-      const next = swipeShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at);
+      const next = dragShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at);
       drag = null;
       trail.setAttribute('d', '');
       if (control.hasPointerCapture(event.pointerId)) control.releasePointerCapture(event.pointerId);
       if (next) launch(next);
-      else status.textContent = 'Start on the ball and swipe up!';
+      else showAim(null);
+      if (!next) status.textContent = 'Hold the ball, drag toward the goal, then release!';
     });
-    const cancelDrag = (): void => { drag = null; trail.setAttribute('d', ''); };
+    const cancelDrag = (): void => { drag = null; showAim(null); };
     control.addEventListener('pointercancel', cancelDrag);
     control.addEventListener('lostpointercapture', cancelDrag);
     control.addEventListener('keydown', (event) => {
@@ -208,6 +212,14 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       const dt = Math.min(50, now - (lastFrame || now));
       lastFrame = now;
       if (phase === 'aim' || phase === 'invite') {
+        if (drag) {
+          const elapsed = now - drag.at;
+          showAim(dragShot(drag.aimX, drag.aimY, elapsed));
+          const pct = Math.round(heldPower(elapsed) / 1.15 * 100);
+          powerMeter.setAttribute('aria-valuenow', String(pct));
+          powerMeter.style.setProperty('--power', `${pct}%`);
+          powerMeter.firstElementChild!.textContent = `${pct}% power · drag to aim · release to shoot`;
+        }
         if (now >= nextShuffle) {
           keeperTarget = 265 + Math.random() * 110;
           nextShuffle = now + 950 + Math.random() * 600;
@@ -230,7 +242,16 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
         }
         if (t === impact.progress) {
           const scored = impact.outcome === 'goal';
-          if (scored) goals++;
+          if (scored) { goals++; totals.goals++; }
+          if (impact.outcome === 'saved') totals.saves++;
+          lifetime.textContent = `${kit.profile.firstName} · Soccer goals: ${totals.goals} · Keeper saves: ${totals.saves}`;
+          void kit.ctx.log.record({ profileId: kit.profile.id, activity: 'soccer',
+            itemId: `soccer:${kit.sessionId}:${replayUsed ? 'replay' : 'first'}:${round}`,
+            outcome: 'unverified', source: 'tap', meta: { session: kit.sessionId, result: impact.outcome },
+          }).then(() => kit.ctx.sync.sync()).catch((error: unknown) => {
+            console.error('Could not save soccer shot', error);
+            lifetime.textContent += ' · Could not save this shot';
+          });
           round++;
           phase = 'result';
           resultStart = now;
@@ -239,9 +260,9 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
             goal: ['You scored!', 'GOOOAL! Great shot!'],
             saved: ['What a save!', 'The keeper caught it! Try a corner.'],
             wide: ['So close!', 'That went outside! Aim inside the goal.'],
-            short: ['A little more power!', 'Swipe farther and quicker next time.'],
+            short: ['A little more power!', 'Hold the ball a little longer next time.'],
             post: ['Off the post!', 'Almost! Try a little farther inside.'],
-            bar: ['Off the crossbar!', 'Almost! Try a little less power.'],
+            bar: ['Off the crossbar!', 'Almost! Aim a little lower.'],
             wall: ['Blocked by the wall!', 'Try the open side or a stronger kick.'],
           };
           const message = messages[impact.outcome];

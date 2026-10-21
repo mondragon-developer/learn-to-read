@@ -91,6 +91,11 @@ for (const s of stories) {
   const at = s.id;
   if (storyIds.has(s.id)) err(at, 'duplicate id');
   storyIds.add(s.id);
+  if (s.collection === 'soccer') {
+    if (s.tier !== 'readalong') err(at, 'football biographies need read-along support');
+    if (s.sentences.length < 6 || s.sentences.length > 10) err(at, 'football stories need 6–10 sentences');
+    if (!s.sources?.length || s.sources.some((url) => !url.startsWith('https://'))) err(at, 'factual football stories need source URLs');
+  }
   if (s.tier === 'decodable') {
     s.sentences.forEach((line, k) => {
       const r = dec.checkSentence(line, s.unit);

@@ -1,3 +1,4 @@
+import { soccerTotals } from '@domain/rewards/Soccer';
 import { trophies } from '@domain/rewards/Rewards';
 import type { AppContext, Screen } from '../context';
 import { h, replace } from '../dom';
@@ -13,6 +14,7 @@ export class HomeScreen implements Screen {
     const today = this.ctx.clock.today();
     const events = await this.ctx.log.events(p.id);
     const t = trophies(events, today);
+    const soccer = soccerTotals(events);
     const playedToday = events.some((e) => e.activity === 'session' && e.day === today);
     const pct = t.next ? Math.round(((t.next.blocks - t.blocksToNext) / t.next.blocks) * 100) : 100;
     replace(host, h('div', { class: 'screen center home' },
@@ -29,6 +31,8 @@ export class HomeScreen implements Screen {
         h('div', { class: 'stat' }, h('b', {}, `🔥 ${t.streak}`), h('span', {}, t.streak === 1 ? 'day' : 'days')),
         h('div', { class: 'stat' }, h('b', {}, `⚽ ${t.goals}`), h('span', {}, 'goals')),
         h('div', { class: 'stat' }, h('b', {}, `🧱 ${t.blocks}`), h('span', {}, 'blocks'))),
+      h('p', { class: 'soccer-totals' }, `🥅 Soccer: ${soccer.goals} goals · ${soccer.saves} keeper saves`),
+      h('button', { class: 'stadium-card stories-card', onClick: () => this.ctx.navigate('stories') }, h('span', {}, '📖 Soccer stories'), h('span', { class: 'small' }, 'Short reads about players and World Cups')),
       h('button', { class: 'practice-btn', onClick: async () => { if (await quickGate(this.ctx.i18n)) this.ctx.navigate('practice'); } },
         h('span', { 'aria-hidden': 'true' }, '🎯'), h('span', {}, 'Practice a skill'), h('span', { class: 'small muted' }, 'Grown-up picks')),
       h('button', { class: 'stadium-card words-card', onClick: () => this.ctx.navigate('words') },

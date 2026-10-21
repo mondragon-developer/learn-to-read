@@ -41,6 +41,7 @@ export function benchmarksOf(e: PracticeEvent, library: ContentLibrary): string[
     case 'story-bonus': return e.meta?.kind === 'rhyme' ? ['ELA.K.F.1.2.b'] : ['ELA.1.V.1.3'];
     case 'story-order': return ['ELA.1.R.1.1'];
     case 'retell': return ['ELA.1.R.3.2.a'];
+    case 'soccer':
     case 'session': return [];
   }
 }

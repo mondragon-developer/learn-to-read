@@ -1,0 +1,70 @@
+{
+  "id": "soccer-maradona",
+  "title": "Diego and the World Cup",
+  "tier": "readalong",
+  "collection": "soccer",
+  "unit": 1,
+  "skill": "detail",
+  "sentences": [
+    "Diego Maradona played for Argentina.",
+    "He was the captain of his team.",
+    "His team went to Mexico in 1986.",
+    "They played in the World Cup.",
+    "Argentina beat West Germany in the final.",
+    "Diego and his team won the cup."
+  ],
+  "questions": [
+    {
+      "prompt": "Which team did Diego lead?",
+      "options": [
+        "Argentina",
+        "Brazil",
+        "France"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Where was this World Cup?",
+      "options": [
+        "Spain",
+        "Italy",
+        "Mexico"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What did his team win?",
+      "options": [
+        "A book",
+        "The World Cup",
+        "A bike"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "Who is a captain?",
+    "options": [
+      "A team leader",
+      "A fan in a seat",
+      "A kind of shoe"
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    2,
+    5
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ],
+  "sources": [
+    "https://ipt.fifa.com/tournaments/mens/worldcup/1986mexico/news/worldcupathome-argentina-v-west-germany--mexico-1986-3070259"
+  ]
+}

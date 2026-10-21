@@ -63,6 +63,9 @@ export interface StoryQuestion {
 export interface Story {
   id: string;                 // 's01'
   title: string;
+  collection?: 'soccer';
+  /** Primary references for original factual read-alongs. */
+  sources?: string[];
   /** decodable: he reads it alone (validated). readalong: homework-level, app reads first. */
   tier: 'decodable' | 'readalong';
   /** Earliest unit after which the story is offered (decodable tier is validated at this unit). */

@@ -1,3 +1,4 @@
+import { PracticePause } from './practicePause';
 import { clipKey } from '@domain/audio/AudioCatalog';
 import type { Activity, Outcome, Source } from '@domain/storage/events';
 import type { Profile } from '@domain/profiles/Profile';
@@ -9,7 +10,7 @@ import { ReadAloud, type ReadState, type Voice } from './readAloud';
 import { HOWTO, type HowToId } from './howto';
 
 /** Activities that score a goal when not missed (a session summary or a story word is not a goal). */
-const NOT_GOALS: ReadonlySet<Activity> = new Set(['session', 'story-read']);
+const NOT_GOALS: ReadonlySet<Activity> = new Set(['session', 'story-read', 'soccer']);
 const PROMPTS = prompts as Record<string, string>;
 
 /**
@@ -18,6 +19,7 @@ const PROMPTS = prompts as Record<string, string>;
  */
 export class Kit implements Voice {
   readonly reader: ReadAloud;
+  readonly pause: PracticePause;
   readonly abort = new AbortController();
   get independent(): boolean { return this.profile.settings.checkMode === 'independent'; }
   private readonly shared: { goals: number; practiceCount: number; known: Set<string>; introduced: Set<HowToId>; parts: Kit[]; reading: ReadState };
@@ -45,27 +47,44 @@ export class Kit implements Voice {
     private readonly onGoal: (goals: number) => void,
     parent?: Kit,
   ) {
+    this.pause = parent?.pause ?? new PracticePause();
     this.shared = parent?.shared ?? { goals: 0, practiceCount: 0, known: new Set(), introduced: new Set(), parts: [], reading: { health: new MicHealth(), recorderBroken: false, independent: { unavailable: false } } };
     // A skipped part owns its DOM and these guarded ports. Late results cannot speak,
     // start another recording or write an assessment into the next part.
     const audio = raw.audio;
+    const playback = async (run: () => Promise<void>): Promise<void> => {
+      if (this.pause.paused) await this.pause.wait();
+      if (this.closed) return;
+      await run();
+      if (this.pause.paused) await this.pause.wait();
+    };
     this.ctx = { ...raw,
       audio: {
         unlock: () => this.closed ? Promise.resolve() : audio.unlock(),
-        play: (...args) => this.closed ? Promise.resolve() : audio.play(...args),
-        follow: (...args) => this.closed ? Promise.resolve() : audio.follow(...args),
-        sequence: (...args) => this.closed ? Promise.resolve() : audio.sequence(...args),
+        play: (...args) => playback(() => audio.play(...args)),
+        follow: (...args) => playback(() => audio.follow(...args)),
+        sequence: (...args) => playback(() => audio.sequence(...args)),
         stop: () => { if (!this.closed) audio.stop(); },
         has: (key) => audio.has(key),
       },
       checker: {
         get available() { return raw.checker.available; },
-        listen: async (opts) => { this.abort.signal.throwIfAborted(); const result = await raw.checker.listen(opts); this.abort.signal.throwIfAborted(); return result; },
+        listen: async (opts) => {
+          for (;;) {
+            await this.pause.wait();
+            this.abort.signal.throwIfAborted();
+            const result = await raw.checker.listen(opts);
+            this.abort.signal.throwIfAborted();
+            if (this.pause.paused) { await this.pause.wait(); continue; }
+            return result;
+          }
+        },
         cancel: () => { if (!this.closed) raw.checker.cancel(); },
       },
       recorder: {
         get available() { return raw.recorder.available; },
         record: async (ms) => {
+          if (this.pause.paused) await this.pause.wait();
           this.abort.signal.throwIfAborted();
           const result = await raw.recorder.record(ms);
           if (result.ok) {
@@ -73,13 +92,26 @@ export class Kit implements Voice {
             else this.stopRecording = () => result.recording.stop();
           }
           this.abort.signal.throwIfAborted();
-          return result;
+          if (!result.ok) { if (this.pause.paused) await this.pause.wait(); return result; }
+          const recording = result.recording;
+          return { ok: true, recording: { ...recording, done: recording.done.then(async (take) => {
+            if (this.pause.paused) await this.pause.wait();
+            this.abort.signal.throwIfAborted();
+            return take;
+          }) } };
         },
-        play: async (take) => { this.abort.signal.throwIfAborted(); return raw.recorder.play(take); },
+        play: async (take) => {
+          if (this.pause.paused) await this.pause.wait();
+          this.abort.signal.throwIfAborted();
+          const report = await raw.recorder.play(take);
+          if (this.pause.paused) await this.pause.wait();
+          this.abort.signal.throwIfAborted();
+          return report;
+        },
       },
     };
     const ctx = this.ctx;
-    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => ctx.audio.stop(), this.shared.reading);
+    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => { this.stopNarration?.(); ctx.audio.stop(); }, this.shared.reading);
     this.pace = profile.settings.readingPace ?? 'follow';
   }
 
@@ -167,9 +199,10 @@ export class Kit implements Voice {
   follow(key: string, words: string[], onWord: (i: number) => void): Promise<void> { return this.ctx.audio.follow(key, words, onWord); }
 
   async record(activity: Activity, itemId: string, outcome: Outcome, source: Source, meta?: Record<string, string | number | boolean>): Promise<void> {
+    await this.pause.wait();
     if (this.closed) return;
     await this.ctx.log.record({ profileId: this.profile.id, activity, itemId, outcome, source, meta: { session: this.sessionId, ...meta } });
-    if (activity !== 'session') this.shared.practiceCount++;
+    if (activity !== 'session' && activity !== 'soccer') this.shared.practiceCount++;
     if ((outcome === 'first-try' || outcome === 'after-retry') && !NOT_GOALS.has(activity)) this.goal();
   }
 
