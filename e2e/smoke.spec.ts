@@ -3,6 +3,20 @@ import { expect, test, type Page } from '@playwright/test';
 const SHOTS = process.env.SHOTS_DIR;
 test.use({ serviceWorkers: 'block' });
 
+// Retain the established SVG outcome checks as explicit unsupported-WebGL fallback coverage.
+// The primary renderer has its own world-space/touch/resource tests in soccer3d.spec.ts.
+test.beforeEach(async ({ page }, info) => {
+  if (!/^(soccer break plays|soccer can be left|soccer keeper raises|short story words highlight)/.test(info.title)) return;
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', { value: function (this: HTMLCanvasElement, ...args: unknown[]) {
+      if (args[0] === 'webgl2') return null;
+      return Reflect.apply(original, this, args);
+    } });
+  });
+});
+
+
 /** No real audio or mic in CI: device voice finishes instantly, no recognizer => Grown-up check mode. */
 async function stubDevices(page: Page): Promise<void> {
   // Flow tests use short valid recordings; real Fish playback is checked separately.

@@ -459,3 +459,84 @@ main { padding-bottom: max(100px, calc(90px + env(safe-area-inset-bottom))); }
 .listen-word:focus-visible { outline: 3px solid #267548; outline-offset: 3px; }
 .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin-bottom: 24px; }
 .story-card { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; text-align: left; padding: 20px; min-height: 100px; }
+
+/* Dream Arena: the pitch is the main surface; controls stay outside the shot. */
+.soccer-dialog:has(.soccer-stage-3d) { width: min(1240px, calc(100% - 16px)); max-height: calc(100dvh - 16px); padding: 10px; background: #102a38; border: 1px solid #43606a; box-shadow: 0 24px 100px #061a30a6; }
+.soccer-dialog:has(.soccer-stage-3d) > .soccer-dialog-close { min-height: 36px; padding: 5px 12px; margin: 0 0 4px; color: #e3eee9; background: transparent; border: 0; box-shadow: none; font-size: 14px; }
+.soccer-stage-3d.stage { display: block; padding: 0; width: 100%; max-width: none; overflow: hidden; border-radius: 18px; background: #102a38; color: #f7f3e5; gap: 0; box-shadow: none; }
+.stadium-topline { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 5px 14px 9px; min-height: 36px; }
+.stadium-brand { font-size: 12px; font-weight: 700; letter-spacing: .16em; color: #f3d28e; }
+.stadium-options { display: flex; gap: 6px; }
+.stadium-icon { border: 1px solid #4c6571; color: #d3e4e6; border-radius: 20px; padding: 6px 10px; background: transparent; font: inherit; font-size: 12px; min-height: 32px; cursor: pointer; }
+.soccer-control.stadium-view { position: relative; isolation: isolate; width: 100%; height: clamp(330px, calc(100dvh - 270px), 670px); border-radius: 15px; background: #b9dde4; overflow: hidden; box-shadow: none; outline-offset: -4px; }
+.soccer-field-3d { display: block; position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.stadium-hud { position: absolute; top: 16px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; text-shadow: 0 1px 4px #14384c35; }
+.stadium-player { display: flex; align-items: center; gap: 9px; color: #153847; }
+.stadium-player b { font-size: 19px; line-height: 1.1; }
+.stadium-player small { display: block; font-size: 9px; letter-spacing: .13em; margin-top: 4px; }
+.stadium-crest { display: grid; place-items: center; width: 38px; height: 43px; color: #ffe4a9; background: #153d52; font-weight: 700; clip-path: polygon(0 0,100% 0,100% 76%,50% 100%,0 76%); }
+.stadium-scorebox { display: flex; flex-direction: column; align-items: center; min-width: 64px; padding: 5px 12px; border: 1px solid #fff8; border-radius: 12px; color: #183c4b; background: #fff8dfb3; }
+.stadium-scorebox b { font-size: 28px; line-height: 1; font-variant-numeric: tabular-nums; }
+.stadium-scorebox small { font-size: 9px; letter-spacing: .16em; }
+.soccer-stage-3d .soccer-shots { display: flex; gap: 9px; padding: 9px 12px; margin: 0; color: #163a50; border-radius: 22px; background: #fff5d4b0; }
+.soccer-stage-3d .soccer-shots i { display: inline-grid; place-items: center; width: 19px; height: 19px; font-size: 15px; font-style: normal; opacity: .5; }
+.soccer-stage-3d .soccer-shots i.used { opacity: 1; color: #218262; }
+.stadium-intro { position: absolute; top: 50%; left: 16px; right: 16px; transform: translateY(-50%); text-align: center; pointer-events: none; color: #fff8e8; text-shadow: 0 3px 20px #0c3142; z-index: 2; }
+.stadium-intro::before { content: ''; position: absolute; inset: -35px -16px; background: linear-gradient(transparent, #123a4d8a 30%, #123a4d70 75%, transparent); z-index: -1; }
+.stadium-eyebrow { font-size: 10px; letter-spacing: .24em; font-weight: 700; }
+.soccer-stage-3d .stadium-title { font-size: clamp(32px, 5vw, 60px); line-height: 1.1; font-weight: 700; margin: 9px 0; letter-spacing: -.045em; }
+.soccer-stage-3d .soccer-status { min-height: 24px; font-size: 16px; line-height: 1.4; color: inherit; }
+.stadium-main-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; pointer-events: auto; }
+.soccer-stage-3d .stadium-play.btn { color: #183849; background: #ffdc87; font-size: 18px; border: 1px solid #ffe9b8; border-radius: 30px; padding: 13px 26px; min-height: 54px; box-shadow: 0 5px 0 #c99446, 0 10px 30px #09263a40; animation: none; }
+.stadium-intro.compact { top: 80px; transform: none; color: #183f50; text-shadow: 0 1px 5px #ffffff90; }
+.stadium-intro.compact::before, .stadium-intro.compact .stadium-eyebrow, .stadium-intro.compact .stadium-main-actions { display: none; }
+.soccer-stage-3d .stadium-intro.compact .stadium-title { font-size: 20px; margin: 0 0 3px; letter-spacing: -.02em; }
+.soccer-stage-3d .stadium-intro.compact .soccer-status { font-size: 12px; }
+.stadium-result { position: absolute; top: 45%; left: 0; right: 0; text-align: center; font-size: clamp(28px, 6vw, 72px); line-height: 1.1; font-weight: 700; font-style: italic; letter-spacing: -.045em; color: #fff6df; text-shadow: 0 3px 0 #17465b, 0 6px 25px #123142; pointer-events: none; }
+.stadium-result.goal { color: #ffdf7d; }
+.stadium-ball-marker { position: absolute; transform: translate(-50%, -50%); width: 58px; height: 58px; border: 2px solid #ffe5a9c7; border-radius: 50%; box-shadow: 0 0 0 6px #ffe5a915; pointer-events: none; }
+.stadium-ball-marker span { position: absolute; bottom: 68px; left: 50%; transform: translateX(-50%); padding: 4px 9px; border-radius: 20px; white-space: nowrap; font-size: 9px; letter-spacing: .08em; color: #fff0c9; background: #153e4dd9; }
+.soccer-stage-3d .stadium-power { position: absolute; bottom: 14px; left: 16px; width: 205px; min-height: 34px; padding: 7px 12px; border: 1px solid #ffffff6b; border-radius: 20px; color: #143b40; font-size: 11px; background: linear-gradient(90deg, #ffde89 var(--power), #eef1d5cc var(--power)); pointer-events: none; }
+.stadium-dock { padding: 12px 16px 8px; }
+.soccer-stage-3d .soccer-modes { display: flex; justify-content: center; gap: 8px; margin: 0; }
+.soccer-stage-3d .soccer-modes .btn { padding: 8px 22px; font-size: 14px; min-height: 40px; }
+.soccer-stage-3d .btn.soft { border: 1px solid #496572; color: #d7e5e5; background: #1d3b49; border-radius: 24px; box-shadow: none; }
+.soccer-stage-3d .btn[aria-pressed=true] { background: #f8d68c; color: #183c4b; border-color: #f8d68c; }
+.soccer-stage-3d .btn:disabled { opacity: .4; }
+.soccer-stage-3d .stadium-position { display: flex; justify-content: center; gap: 6px; border: 0; margin: 10px 0 0; padding: 0; }
+.stadium-position legend { float: left; font-size: 11px; align-self: center; margin: 8px 12px 0 0; color: #b5ced3; }
+.soccer-stage-3d .stadium-position .btn { padding: 5px 13px; font-size: 12px; min-height: 32px; }
+.stadium-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 10px; }
+.soccer-stage-3d .soccer-totals { color: #a5bec5; font-size: 11px; }
+.soccer-stage-3d .soccer-back { min-height: 34px; padding: 5px 15px; font-size: 12px; }
+@media (max-width: 600px) {
+  .soccer-dialog:has(.soccer-stage-3d) { width: calc(100% - 8px); max-height: calc(100dvh - 8px); padding: 5px; border-radius: 16px; }
+  .stadium-topline { padding: 4px 8px 8px; }
+  .stadium-brand { font-size: 9px; letter-spacing: .08em; }
+  .stadium-icon { font-size: 10px; padding: 4px 7px; }
+  .stadium-hud { top: 14px; left: 12px; right: 12px; }
+  .stadium-player b { font-size: 15px; }
+  .stadium-player small { font-size: 8px; }
+  .stadium-crest { width: 28px; height: 34px; font-size: 14px; }
+  .stadium-scorebox { min-width: 45px; padding: 4px 8px; }
+  .stadium-scorebox b { font-size: 23px; }
+  .soccer-stage-3d .soccer-shots { gap: 3px; padding: 6px; }
+  .stadium-intro.compact { top: 68px; }
+  .soccer-stage-3d .stadium-view { height: max(320px, calc(100dvh - 275px)); }
+  .stadium-dock { padding: 9px 8px 7px; }
+  .soccer-stage-3d .soccer-modes { gap: 5px; }
+  .soccer-stage-3d .soccer-modes .btn { padding: 7px 15px; font-size: 12px; }
+  .stadium-position legend { display: none; }
+  .soccer-stage-3d .stadium-position .btn { padding: 5px 11px; }
+  .soccer-stage-3d .soccer-totals { font-size: 9px; max-width: 180px; }
+  .soccer-stage-3d .soccer-back { font-size: 10px; padding: 6px 10px; }
+}
+@media (max-height: 550px) and (min-width: 600px) {
+  .soccer-stage-3d .stadium-view { height: 65dvh; min-height: 230px; }
+  .stadium-intro.compact { top: 60px; }
+}
+
+.stadium-intro.compact { left: 50%; right: auto; transform: translateX(-50%); width: max-content; max-width: 85%; padding: 6px 16px; border-radius: 16px; background: #fff6dfdc; border: 1px solid #ffffff82; }
+
+.stadium-loading { display: grid; place-content: center; justify-items: center; gap: 14px; min-height: 45vh; padding: 35px; border-radius: 18px; background: #102a38; color: #f5d592; font-size: 18px; }
+.stadium-loading span { font-size: 40px; }

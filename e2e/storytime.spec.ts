@@ -38,8 +38,10 @@ test('home story entrance, reading position, optional questions and soccer retur
   await dialog.getByRole('button', { name: 'Targets', exact: true }).click();
   await dialog.getByRole('button', { name: 'Left', exact: true }).click();
   await dialog.getByRole('button', { name: 'Near', exact: true }).click();
-  await expect(dialog.locator('.soccer-ball')).toHaveAttribute('transform', 'translate(220 335)');
-  await expect(dialog.locator('.soccer-keeper')).toHaveAttribute('visibility', 'hidden');
+  await expect(dialog.locator('.soccer-stage')).toHaveAttribute('data-renderer', 'three');
+  await expect(dialog.locator('.soccer-stage')).toHaveAttribute('data-origin-x', '-3');
+  await expect(dialog.locator('.soccer-stage')).toHaveAttribute('data-origin-z', '9');
+  await expect(dialog.locator('.soccer-stage')).toHaveAttribute('data-mode', 'targets');
   await dialog.locator('.soccer-control').press('Enter');
   await expect(dialog.locator('.soccer-stage')).toHaveAttribute('data-outcome', /goal|wide|post|bar|short/);
   await dialog.locator('.soccer-dialog-close').click();
@@ -157,7 +159,8 @@ test('soccer animation stops when hidden or closed and stays responsive', async 
   await expect.poll(frames).toBe(0);
   await page.evaluate(() => { delete (document as unknown as { hidden?: boolean }).hidden; document.dispatchEvent(new Event('visibilitychange')); });
   await expect.poll(frames).toBe(1);
-  await expect(page.getByRole('dialog').locator('.soccer-stage')).toHaveAttribute('data-outcome', /goal|saved|wall|short|post|bar|wide/);
+  // Slower software rendering can finish the result screen during the timing sample.
+  await expect.poll(() => page.getByRole('dialog').locator('.soccer-stage').evaluate((el) => !!el.dataset.outcome || Number(el.dataset.round) >= 2)).toBe(true);
   await page.screenshot({ path: `test-results/game-${info.project.name}.png`, fullPage: true });
   await page.getByRole('dialog').locator('.soccer-dialog-close').click();
   await expect.poll(frames).toBe(0);

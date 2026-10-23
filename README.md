@@ -15,6 +15,7 @@ Open the app: **https://learn-to-read-eight.vercel.app**. On iPad, use Safari â†
 - **Write it** (optional): trace, write from memory with finger or Apple Pencil, or build with letter tiles.
 - **Rewards:** every word read is a goal; goals earn blocks that build a stadium.
 - **Anytime soccer:** the persistent âš½ Play button opens three shots without leaving the current screen. Choose free kicks, penalties or targets; place the ball left/center/right and near/far. Reading resumes after the game; writing and timed-reading state are retained.
+- **Dream Arena 3D:** a Three.js stadium with personalized animated players, run-ups, keeper dives, spinning shots, net reactions and celebrations. Graphics adjust to slower devices; the SVG game remains the automatic fallback. See [implementation and device checks](docs/SOCCER-3D.md).
 - **Soccer:** pick a jersey number and jersey/shorts/cleat colors, then play before reading and between practice activities. Three hold-and-drag shots with saves, misses, weak shots, post/bar and wall collisions; one optional replay per scheduled break, or repeated rounds in anytime play. Play time and soccer scores stay separate from reading minutes and rewards.
 - **Child-led pacing:** take your turn during teacher demonstrations, answer without waiting for narration to finish, and continue after one unverified listen/repeat attempt. Unverified practice never becomes a checked reading pass.
 - **Parent area** (Spanish, with English toggle): minutes per day, tricky words, story skills, Florida B.E.S.T. benchmarks, school FAST scores.

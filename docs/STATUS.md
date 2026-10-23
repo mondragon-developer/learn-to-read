@@ -2,6 +2,13 @@
 
 Update at the end of every working session. Newest log entry on top.
 
+## Local implementation (2026-10-23): Dream Arena 3D
+
+- **Implemented, not deployed:** the soccer renderer now loads Three.js on demand, with an original stadium, articulated personalized players, run-up/kick/dive/celebration animation, ball spin, net response, synthesized effects and responsive behind-player camera. Penalties, free kicks, targets, movable origins, three-shot rounds and existing reading pause/resume are retained.
+- **Performance:** merged geometry, instanced crowd, bounded render resolution, one shadow light, automatic lighter rendering, reduced-motion support and one disposable animation loop. Unsupported/lost WebGL2 contexts open the previous SVG game. Main JavaScript remains about 476 KB raw; the lazy game adds about 147 KB gzip.
+- **Verified:** 161 unit tests and 93 browser scenarios passed (the full 90-scenario suite, then three added first-game-offline checks), alongside typecheck, content validation and production build. Browser coverage includes touch aiming, collisions, modes, replay, offline rounds, resource disposal, fallback and reading regressions. The installed app opens its first 3D game after the origin server is physically stopped. Physical iPad frame rate and touch acceptance remain pending; headless timings are not a physical-device guarantee.
+- [Architecture and validation notes](SOCCER-3D.md), [desktop preview](previews/soccer3d-desktop.png), [phone preview](previews/soccer3d-phone.png). Existing unrelated local files are untouched. Production still runs the narrated-stories release below.
+
 ## Deployment (2026-10-23): narrated stories and anytime soccer
 
 - **Live:** [Goal Reader](https://learn-to-read-eight.vercel.app). App release [`5194959`](https://github.com/mondragon-developer/learn-to-read/commit/5194959) was pushed to `main`; [Vercel production deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/AjYzLn7DQWWkrKXQsnrjFcnGfH5P) reported **success**.
