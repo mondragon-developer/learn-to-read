@@ -51,3 +51,18 @@ describe('interruptible teacher narration', () => {
     expect(played).toEqual(['word:cat']);
   });
 });
+
+it('holds reading audio while soccer is open and resumes without starting a queued clip early', async () => {
+  const { kit, played } = setup();
+  const resume = kit.pause();
+  const pending = kit.word('cat');
+  await Promise.resolve();
+  expect(played).toEqual([]);
+  resume();
+  await Promise.resolve();
+  await Promise.resolve();
+  await Promise.resolve();
+  expect(played).toEqual(['word:cat']);
+  kit.cancel();
+  await pending;
+});

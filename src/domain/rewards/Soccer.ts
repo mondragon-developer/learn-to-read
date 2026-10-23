@@ -1,3 +1,5 @@
+import type { PracticeEvent } from '../storage/events';
+
 /** Soccer is a play break. Its results never become reading assessments or rewards. */
 export const BALL = { x: 320, y: 390 };
 export const clamp = (n: number, min: number, max: number): number => Math.max(min, Math.min(max, n));
@@ -14,24 +16,26 @@ export function aimedShot(x: number, power: number, origin: BallPosition = BALL)
     flightMs: (1450 - power * 380) * distance, origin: { ...origin } };
 }
 
+/** Hold to charge; drag position controls aim independently of power and gesture speed. */
+export function heldPower(elapsedMs: number): number {
+  return 0.25 + clamp(elapsedMs / 1400, 0, 1) * 0.9;
+}
+
 /** Coordinates use the field's 640 × 440 viewBox, independent of screen size. */
-export function swipeShot(dx: number, dy: number, elapsedMs: number, origin: BallPosition = BALL): Shot | null {
+export function dragShot(dx: number, dy: number, elapsedMs: number, origin: BallPosition = BALL): Shot | null {
   if (dy > -12 || Math.hypot(dx, dy) < 18) return null;
-  const distance = Math.hypot(dx, dy);
-  const speed = distance / Math.max(120, elapsedMs);
-  const power = distance / 240 * 0.65 + speed / 1.5 * 0.35;
-  return aimedShot(origin.x + dx / Math.max(80, -dy) * 250, power, origin);
+  return { ...aimedShot(origin.x + dx, heldPower(elapsedMs), origin), y: clamp(origin.y + dy, 30, 360) };
 }
 
 export interface KeeperMove { startX: number; x: number; y: number; delayMs: number; moveMs: number }
-export function keeperMove(shot: Shot, startX: number, round: number, random = Math.random): KeeperMove {
-  const tracksBall = random() < 0.9;
-  const desired = tracksBall ? shot.x : (shot.x < 320 ? 445 : 195);
-  const reach = 145 + round * 12;
+export function keeperMove(shot: Shot, startX: number, _round: number, random = Math.random): KeeperMove {
+  // One decision per kick: about three saves in ten on-target shots, at every round.
+  // On misses the keeper dives away, so the rendered pose agrees with collision checks.
+  const tracksBall = random() < 0.3;
   return {
-    startX, x: clamp(desired, startX - reach, startX + reach),
-    y: tracksBall ? clamp(shot.y + 12, 115, 174) : 165,
-    delayMs: 190 - round * 25 + random() * 90,
+    startX, x: tracksBall ? shot.x : (shot.x < 320 ? 470 : 170),
+    y: tracksBall ? shot.y : 174,
+    delayMs: 220 + random() * 90,
     moveMs: 600,
   };
 }
@@ -120,4 +124,11 @@ export class SoccerBreaks {
     this.offered++;
     return true;
   }
+}
+
+/** Play totals are separate from reading goals and survive sync through shot events. */
+export function soccerTotals(events: PracticeEvent[]): { goals: number; saves: number; shots: number } {
+  const shots = events.filter((e) => e.activity === 'soccer');
+  return { shots: shots.length, goals: shots.filter((e) => e.meta?.result === 'goal').length,
+    saves: shots.filter((e) => e.meta?.result === 'saved').length };
 }

@@ -21,7 +21,7 @@ async function events(page: Page): Promise<unknown[]> {
     const req = indexedDB.open('goal-reader', 1);
     const db = await new Promise<IDBDatabase>((resolve) => { req.onsuccess = () => resolve(req.result); });
     const r = db.transaction('events').objectStore('events').getAll();
-    return new Promise<unknown[]>((resolve) => { r.onsuccess = () => { db.close(); resolve(r.result); }; });
+    return new Promise<unknown[]>((resolve) => { r.onsuccess = () => { db.close(); resolve(r.result.filter((e: { activity: string }) => e.activity !== 'soccer')); }; });
   });
 }
 
@@ -29,7 +29,7 @@ test('home story entrance, reading position, optional questions and soccer retur
   const errors: string[] = []; page.on('pageerror', (e) => errors.push(e.message));
   await setup(page);
   await page.getByRole('button', { name: /Soccer Story Time/ }).click();
-  await expect(page.locator('.story-card').filter({ hasText: 'sentences' })).toHaveCount(22);
+  await expect(page.locator('.story-card').filter({ hasText: 'sentences' })).toHaveCount(28);
   await page.getByRole('button', { name: 'Read Harry Tries Again together' }).click();
   await expect(page.locator('.story-time-line:visible')).toHaveText('Harry Kane loved soccer when he was a boy.');
   await page.locator('.story-time-next').click();

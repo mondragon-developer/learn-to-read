@@ -69,12 +69,17 @@ export class StoriesScreen implements Screen {
   private paint(): void {
     const s = this.current!;
     this.lines = s.sentences.map((text, index) => {
-      const words = text.split(/\s+/).map((word) => h('button', { class: 'w', 'aria-label': `Hear ${word}`, onClick: async () => {
+      const words = text.split(/\s+/).map((word) => h('button', { class: 'w listen-word', 'aria-label': `Hear ${word}`, onClick: async (rawEvent: Event) => {
+        const event = rawEvent as MouseEvent;
+        const button = event.currentTarget as HTMLElement;
+        if (event.detail !== 0 && event.clientY < button.querySelector('.word-letters')!.getBoundingClientRect().bottom + 3) return;
         this.stop();
+        this.lines.forEach((line) => line.querySelectorAll('.word-replay').forEach((word) => word.classList.remove('word-replay')));
+        button.classList.add('word-replay');
         const token = this.epoch;
         await this.ctx.audio.unlock();
         if (token === this.epoch && !this.closed) await this.ctx.audio.sequence(tokenize(word).map(clipKey.word), 60);
-      } }, word));
+      } }, h('span', { class: 'word-letters' }, word)));
       return h('p', { class: 'line story-time-line', 'data-sentence': String(index), hidden: this.mode === 'read' && index !== this.sentence }, words.flatMap((word, i) => i ? [' ', word] : [word]));
     });
     this.status = h('p', { class: 'small', role: 'status' }, this.mode === 'read' ? `Sentence ${this.sentence + 1} of ${s.sentences.length}` : 'Listen at your own pace.');

@@ -97,7 +97,7 @@ main { flex: 1; padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bot
 .soccer-field { display: block; width: 100%; height: auto; }
 .soccer-actions { margin-top: 8px; width: 100%; flex-wrap: wrap; }
 .soccer-actions .btn { min-height: 56px; }
-.soccer-power { --power: 0%; width: min(100%, 640px); border-radius: 12px; padding: 8px; font-size: 14px; text-align: center; background: linear-gradient(90deg, #ffe3a1 var(--power), #edf2e8 var(--power)); }
+.soccer-power { --power: 0%; width: min(100%, 640px); min-height: 64px; display: grid; place-items: center; border-radius: 12px; padding: 8px; font-size: 14px; text-align: center; background: linear-gradient(90deg, #ffe3a1 var(--power), #edf2e8 var(--power)); }
 .soccer-kit-preview { width: 150px; height: 130px; border-radius: 20px; background: #e8f3dc; }
 .soccer-kit { gap: 10px; }
 .soccer-kit-number { display: flex; align-items: center; gap: 16px; font-weight: 700; }
@@ -450,3 +450,12 @@ main { padding-bottom: max(100px, calc(90px + env(safe-area-inset-bottom))); }
 
 /* Saved notifications must never intercept a child’s swipe or tap. */
 .toast { pointer-events: none; }
+/* Separate the touch area from the print so a finger never covers the replayed word. */
+.line .listen-word, .sentence .listen-word { position: relative; padding-bottom: 30px; min-width: 44px; min-height: 60px; touch-action: manipulation; }
+.listen-word .word-letters { display: inline-block; border-radius: 6px; padding: 0 2px; }
+.listen-word::before { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 28px; height: 7px; background: #b4c8b8; border-radius: 8px; }
+.listen-word.word-replay .word-letters, .listen-word.word-listening .word-letters { background: #ffe27a; color: #172a20; box-shadow: 0 0 0 3px #ffe27a; }
+.listen-word.word-replay::before { background: #267548; }
+.listen-word:focus-visible { outline: 3px solid #267548; outline-offset: 3px; }
+.story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin-bottom: 24px; }
+.story-card { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; text-align: left; padding: 20px; min-height: 100px; }

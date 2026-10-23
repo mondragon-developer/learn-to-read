@@ -29,14 +29,15 @@ export class SessionScreen implements Screen {
     const deck = rebuildDeck(events);
     const input = { library, deck, events, today: clock.today(), settings: profile.settings };
     const choice = params?.topic ? decodeChoice(params.topic) : null;
-    const plan = choice ? planner.planTopic(input, choice) : params?.extra ? planner.planExtra(input) : planner.plan(input);
+    const chosenStory = params?.storyId ? library.story(params.storyId) : undefined;
+    const plan = chosenStory ? { steps: [{ kind: 'story' as const, storyId: chosenStory.id }], unit: chosenStory.unit, estimatedSeconds: 240 } : choice ? planner.planTopic(input, choice) : params?.extra ? planner.planExtra(input) : planner.plan(input);
 
     let skipGroup = false;
     const score = h('b', {}, '0');
     const fill = h('div', { class: 'pitch-fill' });
     const ball = h('span', { class: 'pitch-ball', 'aria-hidden': 'true' }, '⚽');
     const stage = h('div', { class: 'stage-host' });
-    const breaks = new SoccerBreaks(plan.steps.length, profile.settings.minutes, profile.settings.soccerBreaks !== false && !params?.extra);
+    const breaks = new SoccerBreaks(plan.steps.length, profile.settings.minutes, profile.settings.soccerBreaks !== false && !params?.extra && !chosenStory);
     const breakProgress = h('div', { class: 'soccer-progress', 'aria-live': 'polite' });
     const paintBreakProgress = (): void => {
       breakProgress.hidden = !breaks.available;
@@ -95,7 +96,7 @@ export class SessionScreen implements Screen {
         if (controls) controls.hidden = false;
       }
     };
-    if (profile.settings.soccerBreaks !== false && !params?.extra) {
+    if (profile.settings.soccerBreaks !== false && !params?.extra && !chosenStory) {
       await playSoccer(true);
       if (kit.closed) return;
       paintBreakProgress();

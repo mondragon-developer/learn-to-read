@@ -1,0 +1,76 @@
+{
+  "id": "soccer-yamal",
+  "title": "Lamine Yamal",
+  "tier": "readalong",
+  "collection": "soccer",
+  "unit": 1,
+  "skill": "detail",
+  "sentences": [
+    "Lamine Yamal is from Spain.",
+    "He joined Barcelona as a boy.",
+    "He learned to play with a team.",
+    "He played for the first team at fifteen.",
+    "He can run with the ball.",
+    "His skill helps his team."
+  ],
+  "questions": [
+    {
+      "prompt": "Where is Lamine from?",
+      "options": [
+        "Spain",
+        "Brazil",
+        "Italy"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Which club did he join?",
+      "options": [
+        "Juventus",
+        "Barcelona",
+        "Santos"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "How old was he on his first team debut?",
+      "options": [
+        "Ten",
+        "Twenty",
+        "Fifteen"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What is a team?",
+    "options": [
+      "A group that plays together",
+      "One shoe",
+      "A kind of ball"
+    ],
+    "answer": 0
+  },
+  "order": [
+    1,
+    2,
+    3
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ],
+  "sources": [
+    {
+      "title": "Source: www.fcbarcelona.com",
+      "url": "https://www.fcbarcelona.com/en/football/first-team/players/129404/lamine-yamal"
+    }
+  ],
+  "player": "Lamine Yamal",
+  "theme": "Young dreams",
+  "genre": "biography"
+}

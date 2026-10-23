@@ -1,0 +1,82 @@
+{
+  "id": "soccer-ronaldo-clubs",
+  "title": "Ronaldo and His Teams",
+  "tier": "readalong",
+  "collection": "soccer",
+  "unit": 1,
+  "skill": "detail",
+  "sentences": [
+    "Ronaldo played for Sporting in Portugal.",
+    "Then he joined Manchester United in England.",
+    "Next, he played for Real Madrid in Spain.",
+    "Later, he played for Juventus in Italy.",
+    "He went back to Manchester United.",
+    "Then he joined Al Nassr in Saudi Arabia.",
+    "His clubs had different shirts.",
+    "One player can be part of many teams."
+  ],
+  "questions": [
+    {
+      "prompt": "Which team came first?",
+      "options": [
+        "Real Madrid",
+        "Sporting",
+        "Juventus"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Where did he play for Juventus?",
+      "options": [
+        "Italy",
+        "Spain",
+        "England"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Which team did he go back to?",
+      "options": [
+        "Sporting",
+        "Al Nassr",
+        "Manchester United"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does different mean?",
+    "options": [
+      "Not the same",
+      "Very loud",
+      "Very small"
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    2,
+    5
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ],
+  "sources": [
+    {
+      "title": "Source: www.uefa.com",
+      "url": "https://www.uefa.com/uefachampionsleague/news/0246-0e98e228fe16-d5ff2a10c737-1000/"
+    },
+    {
+      "title": "Source: www.uefa.com",
+      "url": "https://www.uefa.com/european-qualifiers/teams/players/63706--cristiano-ronaldo/"
+    }
+  ],
+  "player": "Cristiano Ronaldo",
+  "theme": "New teams",
+  "genre": "biography"
+}

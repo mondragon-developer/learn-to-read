@@ -1,3 +1,4 @@
+import { listenWord } from './listenWord';
 import type { Card } from '@domain/content/ContentLibrary';
 import { clipKey } from '@domain/audio/AudioCatalog';
 import type { Outcome } from '@domain/storage/events';
@@ -11,50 +12,55 @@ import { sentenceMeta, sentenceOutcome } from '@domain/reading/SentenceCheck';
 const SAY_TIMES = 3;
 
 /**
- * New word (or challenge word): hear it, see its sounds (or syllables), then read it. Correct readings can continue immediately;
+ * New word: try reading, with sounds or syllables available on demand. Correct readings can continue immediately;
  * additional attempts are optional through the skip control. ELA.1.F.1.3, F.1.3.e, F.1.4.a
  */
 export async function newWord(kit: Kit, host: HTMLElement, card: Card): Promise<void> {
   const id = card.kind === 'challenge' ? 'challenge' : 'new-word';
   await kit.intro(host, id);
   const panel = h('div', { class: 'panel' });
-  const kicks = Array.from({ length: SAY_TIMES }, () => h('span', { class: 'kick' }, '⚽'));
-  const kickLabel = h('p', { class: 'small muted kick-label' }, `Try up to ${SAY_TIMES} times`);
+  const kicks = [h('span', { class: 'kick' }, '⭐')];
+  const kickLabel = h('p', { class: 'small muted kick-label' }, 'Your turn! Ask for the sounds whenever you need them.');
   const parts = card.kind === 'challenge' ? syllableTiles(card, kit.ctx.audio) : card.kind === 'decodable' ? soundTiles(card, kit.ctx.audio) : null;
   const stage = h('div', { class: 'stage' },
     kit.header(id, card.kind === 'heart' ? 'Heart word ❤️' : undefined, true),
     wordView(card),
     parts?.el,
-    h('div', { class: 'kicks', 'aria-label': `Try up to ${SAY_TIMES} times` }, kicks),
+    h('div', { class: 'kicks', 'aria-label': 'One word to explore' }, kicks),
     kickLabel,
     panel);
   replace(host, stage);
 
-  await kit.model(panel, async (part) => {
-    if (card.kind === 'heart') await part.prompt('heart-word');
-    if (parts) {
-      await part.prompt(card.kind === 'challenge' ? 'listen' : 'sound-it-out');
-      await parts.play(part.ctx.audio);
-    } else await part.word(card.text);
-  });
+  // Help stays available without making the child sit through the same demonstration.
+  let askedForHelp = false;
+  const hear = h('button', { class: 'btn soft word-help', onClick: () => {
+    askedForHelp = true;
+    kit.narrate(async (part) => {
+      if (card.kind === 'heart') await part.prompt('heart-word');
+      if (parts) await parts.play(part.ctx.audio);
+      else await part.word(card.text);
+    });
+  } }, parts ? '🔊 Help me sound it out' : '🔊 Hear this word');
+  panel.before(hear);
 
   let recorded = false;
   for (let i = 0; i < SAY_TIMES; i++) {
-    kickLabel.textContent = `Try up to ${SAY_TIMES} times: ${i + 1} of ${SAY_TIMES}`;
+    kickLabel.textContent = i === 0 ? 'Try it! The sounds are here if you need them.' : 'Let’s try with a little help.';
     const r = await kit.part(panel, (part, target) => part.reader.readWord(target, card.text, i === 0 ? 'Say it!' : 'Again!'));
     if (!r) continue;
+    if (askedForHelp && r.outcome === 'first-try') r.outcome = 'after-retry';
     if (!recorded) {
       await kit.record('new-word', card.id, r.outcome, r.source);
       if (!kit.closed) kit.known.add(card.id);
       recorded = true;
     }
     if (r.outcome === 'unverified') {
-      const kick = kicks[i];
+      const kick = kicks[0];
       if (kick) { kick.textContent = '⭐'; kick.classList.add('practiced'); }
       return; // One child-led attempt is enough; extra practice is always optional.
     }
     if (r.outcome === 'first-try' || r.outcome === 'after-retry') {
-      kicks[i]?.classList.add('scored');
+      kicks[0]?.classList.add('scored');
       if (i === 0) rewardBurst(stage, card.reward);
       kickLabel.textContent = 'You read it!';
       await kit.part(panel, async (_, target) => new Promise<void>((resolve) => replace(target,
@@ -91,7 +97,7 @@ export async function review(kit: Kit, host: HTMLElement, card: Card): Promise<v
  */
 export async function sentence(kit: Kit, host: HTMLElement, text: string, itemId: string, modelKey: string): Promise<void> {
   await kit.intro(host, 'sentence');
-  const chips = text.split(/\s+/).map((t) => h('button', { class: 'chip', onClick: () => void kit.word(t.replace(/[^A-Za-z']/g, '')) }, t));
+  const chips = text.split(/\s+/).map((t) => listenWord(kit, t, 'chip'));
   const panel = h('div', { class: 'panel' });
   const transport = new Transport(kit.ctx.audio);
   const bar = coachBar(transport);

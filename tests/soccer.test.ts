@@ -1,28 +1,29 @@
 import { describe, expect, it } from 'vitest';
-import { aimedShot, ballAt, isSaved, keeperAt, keeperMove, resolveShot, SoccerBreaks, swipeShot } from '../src/domain/rewards/Soccer';
+import { aimedShot, ballAt, isSaved, keeperAt, keeperMove, resolveShot, SoccerBreaks, dragShot } from '../src/domain/rewards/Soccer';
 import { toProfile } from '../src/domain/profiles/Profile';
 
 describe('soccer controls and fair goalkeeper', () => {
   it('ignores taps and backwards swipes, but accepts a small upward swipe', () => {
-    expect(swipeShot(0, 0, 100)).toBeNull();
-    expect(swipeShot(20, 40, 100)).toBeNull();
-    expect(swipeShot(8, -30, 400)).not.toBeNull();
+    expect(dragShot(0, 0, 100)).toBeNull();
+    expect(dragShot(20, 40, 100)).toBeNull();
+    expect(dragShot(8, -30, 400)).not.toBeNull();
   });
-  it('lets inaccurate swipes leave the goal and distinguishes weak and strong kicks', () => {
-    const left = swipeShot(-100, -140, 250)!;
-    const right = swipeShot(100, -140, 250)!;
-    expect(left.x).toBeLessThan(320);
-    expect(right.x).toBeGreaterThan(320);
-    expect(swipeShot(10000, -20, 0)!.x).toBeGreaterThan(505);
-    expect(swipeShot(0, -30, 500)!.range).toBeLessThan(1);
-    expect(swipeShot(0, -300, 100)!.flightMs).toBeLessThan(swipeShot(0, -30, 500)!.flightMs);
+  it('aims at the drag endpoint and charges with hold time, independent of distance', () => {
+    const quick = dragShot(80, -250, 100)!;
+    const held = dragShot(80, -250, 1400)!;
+    expect(held).toMatchObject({ x: 400, y: 140, range: 1 });
+    expect(held.power).toBeGreaterThan(quick.power);
+    expect(quick.range).toBeLessThan(1);
+    expect(dragShot(-100, -280, 1400)!.power).toBe(held.power);
+    expect(dragShot(80, -250, 90000)!.power).toBe(held.power);
+    expect(held.flightMs).toBeLessThan(quick.flightMs);
   });
-  it('reacts late and cannot teleport to a well-aimed corner', () => {
+  it('reacts after a delay and moves continuously', () => {
     const shot = aimedShot(470, 1);
     const move = keeperMove(shot, 230, 0, () => 0);
     expect(keeperAt(move, 100)).toEqual({ x: 230, y: 174 });
-    expect(move.x).toBe(375);
-    expect(isSaved(shot, move)).toBe(false);
+    expect(keeperAt(move, 500).x).toBeGreaterThan(230);
+    expect(keeperAt(move, 500).x).toBeLessThan(470);
   });
   it('saves only where the goalkeeper actually reaches the ball', () => {
     const shot = aimedShot(330, .75);
@@ -31,14 +32,19 @@ describe('soccer controls and fair goalkeeper', () => {
     expect(wrong.x).toBeLessThan(320);
     expect(isSaved(shot, wrong)).toBe(false);
   });
-  it('saves most ordinary on-target shots while still allowing goals', () => {
-    let saves = 0;
-    for (let i = 0; i < 100; i++) {
-      const shot = aimedShot(190 + (i % 9) * 32, .8);
-      if (isSaved(shot, keeperMove(shot, 320, 0, () => (i % 10) / 10))) saves++;
+  it('saves approximately 30% across goal locations, keeper positions and rounds', () => {
+    for (const round of [0, 1, 2]) {
+      for (const startX of [265, 320, 375]) {
+        for (const x of [190, 260, 320, 400, 450]) {
+          let saves = 0;
+          for (let i = 0; i < 100; i++) {
+            const shot = aimedShot(x, .8);
+            if (isSaved(shot, keeperMove(shot, startX, round, () => i / 100))) saves++;
+          }
+          expect(saves).toBe(30);
+        }
+      }
     }
-    expect(saves).toBeGreaterThan(65);
-    expect(saves).toBeLessThan(100);
   });
   it('saves a ball that reaches the raised glove during a dive', () => {
     for (const [x, startX] of [[460, 265], [180, 375]]) {
@@ -57,7 +63,7 @@ describe('soccer controls and fair goalkeeper', () => {
     ['goal', 460, .85, 0],
   ] as const)('resolves %s from the actual trajectory', (outcome, x, power, round) => {
     const shot = aimedShot(x, power);
-    const result = resolveShot(shot, keeperMove(shot, 230, round, () => 0), round);
+    const result = resolveShot(shot, keeperMove(shot, 230, round, () => .99), round);
     expect(result.outcome).toBe(outcome);
     expect({ x: result.x, y: result.y }).toEqual(ballAt(shot, result.progress));
   });
@@ -104,7 +110,7 @@ describe('practice break pacing', () => {
 describe('movable ball and target practice', () => {
   it('uses the selected start for trajectory and swipe aiming', () => {
     const origin = { x: 220, y: 335 };
-    const shot = swipeShot(0, -180, 300, origin)!;
+    const shot = dragShot(0, -180, 300, origin)!;
     expect(ballAt(shot, 0)).toEqual(origin);
     expect(shot.x).toBe(220);
     origin.x = 400;

@@ -2,6 +2,14 @@
 
 Update at the end of every working session. Newest log entry on top.
 
+## Release preparation (2026-10-23): preserve concurrent main changes
+
+- Before the authorized deployment, remote `main` had advanced to `898c572`. Merged its easier goalkeeper, hold-to-charge/drag aiming, separate soccer totals, on-demand word help and below-word touch strips. The global play dialog and new Story Time shelf replace duplicate entry points. Both Ronaldo accounts are retained under separate IDs.
+- Preserved all six remote stories and added their missing Fish recordings: **187 clips per voice**, **5,806 credits**, final verified balance **195,589**. The combined library has **28 stories**, including **18 soccer stories of six to eight sentences**, and **1,652 clips per voice**. All title, sentence, question and word recordings are installed.
+- Fixed phone aiming drift caused by changing power-label height inside the centered dialog. The meter reserves a stable height while charging. Existing child-led reading behavior remains; regression tests now use optional word help instead of expecting mandatory demonstrations.
+- Validation: **151 unit tests**, typecheck, content validation and build pass. The full combined browser run passed **75 checks** and identified six outdated mandatory-demo assertions; after updating those two tests across three browsers, the remaining **6/6 checks pass**. All **81 browser scenarios** are covered, including both voices offline and unchanged assessment rules. Production verification follows deployment.
+- Final build before deployment: **476 KB raw / 134 KB gzip main JavaScript**, with separately loaded soccer UI; audio library **44.95 MiB**. Compared with the initial baseline, raw main size is smaller and compressed content/offline download size is larger. Physical-device performance and human pronunciation review remain open.
+
 ## Local update (2026-10-23): soccer stories and anytime play
 
 - **Implemented locally; not deployed.** Story Time is a prominent home option on every visit, with whole-story listening, reading together, individual-word audio, pause/replay and a per-player bookmark. Optional questions come after the story; listening itself creates no assessment.

@@ -1,0 +1,76 @@
+{
+  "id": "soccer-ronaldo-career",
+  "title": "Cristiano Ronaldo",
+  "tier": "readalong",
+  "collection": "soccer",
+  "unit": 1,
+  "skill": "detail",
+  "sentences": [
+    "Cristiano Ronaldo is from Portugal.",
+    "He played for Sporting as a young player.",
+    "Next, he played for Manchester United.",
+    "Then he played for Real Madrid.",
+    "He scored many goals for his clubs.",
+    "He also plays for Portugal."
+  ],
+  "questions": [
+    {
+      "prompt": "Where is Ronaldo from?",
+      "options": [
+        "Brazil",
+        "Portugal",
+        "Spain"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Which club came before Real Madrid?",
+      "options": [
+        "Manchester United",
+        "Barcelona",
+        "Santos"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What did Ronaldo score?",
+      "options": [
+        "Baskets",
+        "Runs",
+        "Goals"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What is a club in this story?",
+    "options": [
+      "A football team",
+      "A book",
+      "A tree"
+    ],
+    "answer": 0
+  },
+  "order": [
+    1,
+    2,
+    3
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ],
+  "sources": [
+    {
+      "title": "Source: www.uefa.com",
+      "url": "https://www.uefa.com/uefachampionsleague/news/0246-0e98e228fe16-d5ff2a10c737-1000/"
+    }
+  ],
+  "player": "Cristiano Ronaldo",
+  "theme": "A soccer journey",
+  "genre": "biography"
+}

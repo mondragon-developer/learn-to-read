@@ -1,0 +1,78 @@
+{
+  "id": "soccer-world-cups",
+  "title": "Three World Cups: 2014 to 2022",
+  "tier": "readalong",
+  "collection": "soccer",
+  "unit": 1,
+  "skill": "detail",
+  "sentences": [
+    "The World Cup brings teams together.",
+    "In 2014, they played in Brazil.",
+    "Germany won that World Cup.",
+    "In 2018, they played in Russia.",
+    "France won that World Cup.",
+    "In 2022, they played in Qatar.",
+    "Argentina won that World Cup.",
+    "Each cup had a different winning team."
+  ],
+  "questions": [
+    {
+      "prompt": "Who won in Brazil in 2014?",
+      "options": [
+        "France",
+        "Germany",
+        "Argentina"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Who won in Russia in 2018?",
+      "options": [
+        "France",
+        "Brazil",
+        "Germany"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Who won in Qatar in 2022?",
+      "options": [
+        "France",
+        "Germany",
+        "Argentina"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does won mean?",
+    "options": [
+      "Was the winner",
+      "Was asleep",
+      "Was late"
+    ],
+    "answer": 0
+  },
+  "order": [
+    2,
+    4,
+    6
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ],
+  "sources": [
+    {
+      "title": "Source: www.fifa.com",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/articles/world-cup-champions-1982-2026-italy-argentina-germany-brazil-france-spain"
+    }
+  ],
+  "player": "World Cup teams",
+  "theme": "Playing together",
+  "genre": "biography"
+}

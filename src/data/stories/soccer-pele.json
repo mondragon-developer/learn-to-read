@@ -1,0 +1,76 @@
+{
+  "id": "soccer-pele",
+  "title": "Pele and Three Cups",
+  "tier": "readalong",
+  "collection": "soccer",
+  "unit": 1,
+  "skill": "detail",
+  "sentences": [
+    "Pele was a player from Brazil.",
+    "He played in the World Cup as a teen.",
+    "Brazil won the cup in 1958.",
+    "Pele won again with Brazil in 1962.",
+    "He won a third cup in 1970.",
+    "Three World Cup wins made him special."
+  ],
+  "questions": [
+    {
+      "prompt": "Which team did Pele play for?",
+      "options": [
+        "Spain",
+        "France",
+        "Brazil"
+      ],
+      "answer": 2,
+      "skill": "detail"
+    },
+    {
+      "prompt": "How many World Cups did he win?",
+      "options": [
+        "Three",
+        "One",
+        "Two"
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "When did he win his third cup?",
+      "options": [
+        "1962",
+        "1970",
+        "1958"
+      ],
+      "answer": 1,
+      "skill": "detail"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does third mean?",
+    "options": [
+      "Number one",
+      "Number three",
+      "Number two"
+    ],
+    "answer": 1
+  },
+  "order": [
+    2,
+    3,
+    4
+  ],
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.F.1.4"
+  ],
+  "sources": [
+    {
+      "title": "Source: www.fifa.com",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/articles/pele-three-world-cup-titles-only-player"
+    }
+  ],
+  "player": "Pelé",
+  "theme": "Growing with a team",
+  "genre": "biography"
+}

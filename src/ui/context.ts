@@ -18,12 +18,12 @@ export type ScreenId = 'players' | 'home' | 'stories' | 'session' | 'stadium' | 
 
 export interface NavParams {
   settings?: boolean;
+  storyId?: string;
   extra?: boolean;
   /** Audio was unlocked by the home button in the same tap. */
   ready?: boolean;
   /** A chosen topic for this session, as encodeChoice() writes it ('phonics:5', 'story:compare'). */
   topic?: string;
-  storyId?: string;
 }
 
 /** Everything a screen may depend on - built once in main.ts (composition root). */

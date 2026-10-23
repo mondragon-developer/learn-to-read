@@ -9,7 +9,7 @@ import { ReadAloud, type ReadState, type Voice } from './readAloud';
 import { HOWTO, type HowToId } from './howto';
 
 /** Activities that score a goal when not missed (a session summary or a story word is not a goal). */
-const NOT_GOALS: ReadonlySet<Activity> = new Set(['session', 'story-read']);
+const NOT_GOALS: ReadonlySet<Activity> = new Set(['session', 'story-read', 'soccer']);
 const PROMPTS = prompts as Record<string, string>;
 
 /**
@@ -24,6 +24,7 @@ export class Kit implements Voice {
   private interruptedForPlay = false;
   /** Activities with durable local state (ink, a running clock) can retain it across play. */
   onPlayBreak?: () => () => void;
+  get isPaused(): boolean { return !!this.shared.paused; }
   get goals(): number { return this.shared.goals; }
   /** Includes retries and unverified practice, independent of reading accuracy. */
   get practiceCount(): number { return this.shared.practiceCount; }
@@ -82,7 +83,7 @@ export class Kit implements Voice {
       },
     };
     const ctx = this.ctx;
-    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => ctx.audio.stop(), this.shared.reading);
+    this.reader = new ReadAloud(this, ctx.checker, ctx.recorder, ctx.matcher, ctx.sentences, ctx.i18n, profile.settings.checkMode === 'mic' || this.independent, this.independent, this.abort.signal, () => { this.stopNarration?.(); ctx.audio.stop(); }, this.shared.reading);
     this.pace = profile.settings.readingPace ?? 'follow';
   }
 
@@ -197,7 +198,7 @@ export class Kit implements Voice {
     if (this.shared.paused) await this.shared.paused;
     if (this.closed) return;
     await this.ctx.log.record({ profileId: this.profile.id, activity, itemId, outcome, source, meta: { session: this.sessionId, ...meta } });
-    if (activity !== 'session') this.shared.practiceCount++;
+    if (activity !== 'session' && activity !== 'soccer') this.shared.practiceCount++;
     if ((outcome === 'first-try' || outcome === 'after-retry') && !NOT_GOALS.has(activity)) this.goal();
   }
 
