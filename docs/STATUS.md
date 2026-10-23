@@ -2,6 +2,12 @@
 
 Update at the end of every working session. Newest log entry on top.
 
+## Deployment (2026-10-23): narrated stories and anytime soccer
+
+- **Live:** [Goal Reader](https://learn-to-read-eight.vercel.app). App release [`5194959`](https://github.com/mondragon-developer/learn-to-read/commit/5194959) was pushed to `main`; [Vercel production deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/AjYzLn7DQWWkrKXQsnrjFcnGfH5P) reported **success**.
+- **Live verification: 3/3 checks passed** in an isolated iPad-sized WebKit browser: home Story Time entry, 28-story library, movable-ball soccer and return to the same reading sentence, bookmark after reload, optional story questions, and complete title-plus-seven-sentence narration with real Teacher and Josh Fish recordings. No device-voice fallback or unintended reading assessments. The service worker returns HTTP 200 with `Cache-Control: no-cache`.
+- Predeployment validation: **151 unit tests** and all **81 browser scenarios** covered (75 passing in the full run, then six passing after updating outdated mandatory-demo assertions), including offline narration in both voices. Typecheck, content validation, production build and diff checks pass. Physical iPad acceptance and human pronunciation review remain open.
+
 ## Release preparation (2026-10-23): preserve concurrent main changes
 
 - Before the authorized deployment, remote `main` had advanced to `898c572`. Merged its easier goalkeeper, hold-to-charge/drag aiming, separate soccer totals, on-demand word help and below-word touch strips. The global play dialog and new Story Time shelf replace duplicate entry points. Both Ronaldo accounts are retained under separate IDs.
