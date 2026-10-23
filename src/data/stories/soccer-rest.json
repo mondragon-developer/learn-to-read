@@ -1,0 +1,72 @@
+{
+  "id": "soccer-rest",
+  "title": "A Rest for Tomorrow",
+  "collection": "soccer",
+  "theme": "Healthy habits",
+  "genre": "fiction",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Ben wanted to get better at soccer.",
+    "He practiced short passes with his sister.",
+    "After a while, his legs felt tired.",
+    "Ben took a break and drank some water.",
+    "That night, he put his ball away and went to bed.",
+    "The next day, he felt ready to play again.",
+    "Rest was part of taking care of his soccer dream."
+  ],
+  "questions": [
+    {
+      "prompt": "What did Ben practice?",
+      "options": [
+        "Short passes.",
+        "Long jumps.",
+        "Bike tricks."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What did Ben do when tired?",
+      "options": [
+        "Skipped sleep.",
+        "Rested and drank water.",
+        "Kept running without a break."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Good players never rest.",
+        "Sleep does not matter.",
+        "Rest is part of good practice."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ]
+}

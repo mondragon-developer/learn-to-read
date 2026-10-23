@@ -1,0 +1,79 @@
+{
+  "id": "soccer-salah",
+  "title": "Mo and the Long Trip",
+  "collection": "soccer",
+  "theme": "Dedication",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Mohamed Salah dreamed of becoming a soccer player.",
+    "As a young teenager, he traveled far to train.",
+    "He had to change buses along the way.",
+    "The trips took many hours.",
+    "It was a difficult part of his early soccer life.",
+    "He kept working toward his dream.",
+    "Years later, he still remembered those long trips."
+  ],
+  "questions": [
+    {
+      "prompt": "How did Mo travel to training?",
+      "options": [
+        "By bus.",
+        "By boat.",
+        "By airplane."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What made the trips hard?",
+      "options": [
+        "They were too short.",
+        "They took many hours.",
+        "They had no stops."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Every dream happens at once.",
+        "Practice never takes effort.",
+        "Working toward a dream can take effort."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Mohamed Salah",
+  "sources": [
+    {
+      "title": "Liverpool FC: Mohamed Salah, In the beginning",
+      "url": "https://www.liverpoolfc.com/news/first-team/283441-mohamed-salah-in-the-beginning"
+    }
+  ]
+}

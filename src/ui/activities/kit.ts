@@ -20,7 +20,10 @@ export class Kit implements Voice {
   readonly reader: ReadAloud;
   readonly abort = new AbortController();
   get independent(): boolean { return this.profile.settings.checkMode === 'independent'; }
-  private readonly shared: { goals: number; practiceCount: number; known: Set<string>; introduced: Set<HowToId>; parts: Kit[]; reading: ReadState };
+  private readonly shared: { goals: number; practiceCount: number; known: Set<string>; introduced: Set<HowToId>; parts: Kit[]; reading: ReadState; paused?: Promise<void>; resume?: () => void };
+  private interruptedForPlay = false;
+  /** Activities with durable local state (ink, a running clock) can retain it across play. */
+  onPlayBreak?: () => () => void;
   get goals(): number { return this.shared.goals; }
   /** Includes retries and unverified practice, independent of reading accuracy. */
   get practiceCount(): number { return this.shared.practiceCount; }
@@ -52,9 +55,9 @@ export class Kit implements Voice {
     this.ctx = { ...raw,
       audio: {
         unlock: () => this.closed ? Promise.resolve() : audio.unlock(),
-        play: (...args) => this.closed ? Promise.resolve() : audio.play(...args),
-        follow: (...args) => this.closed ? Promise.resolve() : audio.follow(...args),
-        sequence: (...args) => this.closed ? Promise.resolve() : audio.sequence(...args),
+        play: async (...args) => { if (this.shared.paused) await this.shared.paused; if (!this.closed) await audio.play(...args); },
+        follow: async (...args) => { if (this.shared.paused) await this.shared.paused; if (!this.closed) await audio.follow(...args); },
+        sequence: async (...args) => { if (this.shared.paused) await this.shared.paused; if (!this.closed) await audio.sequence(...args); },
         stop: () => { if (!this.closed) audio.stop(); },
         has: (key) => audio.has(key),
       },
@@ -85,27 +88,51 @@ export class Kit implements Voice {
 
   /** Run a skippable part in an isolated host; null means skipped, never incorrect. */
   async part<T>(host: HTMLElement, run: (kit: Kit, host: HTMLElement) => Promise<T>): Promise<T | null> {
-    if (this.closed) return null;
-    const child = new Kit(this.raw, this.profile, this.sessionId, this.onGoal, this);
-    child.step = this.step;
-    child.pace = this.pace;
-    const target = h('div', { class: 'activity-part' });
-    replace(host, target);
-    const cancel = (): void => child.cancel();
-    this.abort.signal.addEventListener('abort', cancel, { once: true });
-    this.shared.parts.push(child);
-    const skipped = new Promise<null>((resolve) => child.abort.signal.addEventListener('abort', () => resolve(null), { once: true }));
-    try {
-      return await Promise.race([run(child, target).catch((error: unknown) => {
-        if (child.closed) return null;
-        throw error;
-      }), skipped]);
-    } finally {
-      child.cancel();
-      this.abort.signal.removeEventListener('abort', cancel);
-      const index = this.shared.parts.indexOf(child);
-      if (index >= 0) this.shared.parts.splice(index, 1);
+    for (;;) {
+      if (this.shared.paused) await this.shared.paused;
+      if (this.closed) return null;
+      const child = new Kit(this.raw, this.profile, this.sessionId, this.onGoal, this);
+      child.step = this.step;
+      child.pace = this.pace;
+      const target = h('div', { class: 'activity-part' });
+      replace(host, target);
+      const cancel = (): void => child.cancel();
+      this.abort.signal.addEventListener('abort', cancel, { once: true });
+      this.shared.parts.push(child);
+      const skipped = new Promise<null>((resolve) => child.abort.signal.addEventListener('abort', () => resolve(null), { once: true }));
+      let result: T | null;
+      try {
+        result = await Promise.race([run(child, target).catch((error: unknown) => {
+          if (child.closed) return null;
+          throw error;
+        }), skipped]);
+      } finally {
+        child.cancel();
+        this.abort.signal.removeEventListener('abort', cancel);
+        const index = this.shared.parts.indexOf(child);
+        if (index >= 0) this.shared.parts.splice(index, 1);
+      }
+      // Restart only the interrupted leaf (e.g. this sentence), never completed steps.
+      if (!child.interruptedForPlay || this.closed) return result;
     }
+  }
+
+  pause(): () => void {
+    if (this.closed || this.shared.paused) return () => undefined;
+    this.shared.paused = new Promise<void>((resolve) => { this.shared.resume = resolve; });
+    const leaf = this.shared.parts.at(-1);
+    const restore = leaf?.onPlayBreak?.();
+    if (leaf && !restore) { leaf.interruptedForPlay = true; leaf.cancel(); }
+    this.raw.audio.stop(); this.raw.checker.cancel(); this.raw.recorder.stop?.();
+    let resumed = false;
+    return () => {
+      if (resumed) return;
+      resumed = true;
+      const resume = this.shared.resume;
+      this.shared.paused = undefined; this.shared.resume = undefined;
+      if (!leaf?.closed) restore?.();
+      resume?.();
+    };
   }
 
   skipPart(): void { this.shared.parts.at(-1)?.cancel(); }
@@ -167,6 +194,7 @@ export class Kit implements Voice {
   follow(key: string, words: string[], onWord: (i: number) => void): Promise<void> { return this.ctx.audio.follow(key, words, onWord); }
 
   async record(activity: Activity, itemId: string, outcome: Outcome, source: Source, meta?: Record<string, string | number | boolean>): Promise<void> {
+    if (this.shared.paused) await this.shared.paused;
     if (this.closed) return;
     await this.ctx.log.record({ profileId: this.profile.id, activity, itemId, outcome, source, meta: { session: this.sessionId, ...meta } });
     if (activity !== 'session') this.shared.practiceCount++;

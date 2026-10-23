@@ -1,0 +1,79 @@
+{
+  "id": "soccer-mbappe",
+  "title": "Kylian Says Hello",
+  "collection": "soccer",
+  "theme": "Respect",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Kylian Mbappe grew up in Bondy, in France.",
+    "He loved soccer and dreamed of being a player.",
+    "His neighborhood taught him something else, too.",
+    "When greeting a group, he learned to greet everyone.",
+    "He kept that habit as he grew up.",
+    "Even at a big soccer event, he greeted everyone together.",
+    "Respect is for every person, not just famous players."
+  ],
+  "questions": [
+    {
+      "prompt": "Where did Kylian grow up?",
+      "options": [
+        "Bondy.",
+        "Madeira.",
+        "Bryne."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Who did he learn to greet?",
+      "options": [
+        "Only famous people.",
+        "Everyone in the group.",
+        "Only his best friend."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Only stars deserve respect.",
+        "It is best to ignore new people.",
+        "Everyone deserves respect."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Kylian Mbappé",
+  "sources": [
+    {
+      "title": "Kylian Mbappé: A Letter to the Young Kylians",
+      "url": "https://www.theplayerstribune.com/articles/kylian-mbappe-a-letter-to-young-kylians"
+    }
+  ]
+}

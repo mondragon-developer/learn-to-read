@@ -1,0 +1,72 @@
+{
+  "id": "soccer-simple",
+  "title": "The Homemade Goal",
+  "collection": "soccer",
+  "theme": "Creativity",
+  "genre": "fiction",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Ana had a ball but no soccer goal.",
+    "Her aunt put two cones on a safe patch of grass.",
+    "Ana rolled the ball between them.",
+    "Her first kick went wide.",
+    "She tried again with a softer touch.",
+    "This time, the ball rolled through the goal.",
+    "Ana could practice with the simple things she had."
+  ],
+  "questions": [
+    {
+      "prompt": "What did Ana need?",
+      "options": [
+        "A goal.",
+        "A boat.",
+        "A book."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What helped her next kick?",
+      "options": [
+        "Closing her eyes.",
+        "A softer touch.",
+        "Turning away."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Only expensive goals work.",
+        "A missed kick means we must stop.",
+        "Simple things can help us practice."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ]
+}

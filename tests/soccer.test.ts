@@ -100,3 +100,31 @@ describe('practice break pacing', () => {
     expect(offered.flatMap((yes, i) => yes ? [i + 1] : [])).toEqual([4, 8]);
   });
 });
+
+describe('movable ball and target practice', () => {
+  it('uses the selected start for trajectory and swipe aiming', () => {
+    const origin = { x: 220, y: 335 };
+    const shot = swipeShot(0, -180, 300, origin)!;
+    expect(ballAt(shot, 0)).toEqual(origin);
+    expect(shot.x).toBe(220);
+    origin.x = 400;
+    expect(ballAt(shot, 0).x).toBe(220);
+  });
+  it('needs less force from nearer the goal and keeps all trajectories finite', () => {
+    expect(aimedShot(320, .4, { x: 220, y: 335 }).range).toBe(1);
+    expect(aimedShot(320, .4).range).toBeLessThan(1);
+    for (const x of [220, 320, 420]) for (const y of [335, 390]) for (const power of [.2, .6, 1, 1.6]) {
+      const s = aimedShot(320, power, { x, y });
+      const result = resolveShot(s, keeperMove(s, 320, 1, () => 0), 1);
+      expect(Number.isFinite(result.x) && Number.isFinite(result.y)).toBe(true);
+      expect(result.progress).toBeGreaterThan(0);
+      expect(result.progress).toBeLessThanOrEqual(1);
+    }
+  });
+  it('target practice removes the goalkeeper from collision detection', () => {
+    const shot = aimedShot(320, .8);
+    const move = keeperMove(shot, 320, 0, () => 0);
+    expect(resolveShot(shot, move, 0).outcome).toBe('saved');
+    expect(resolveShot(shot, move, 0, false).outcome).toBe('goal');
+  });
+});

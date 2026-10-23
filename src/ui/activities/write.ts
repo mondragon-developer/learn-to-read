@@ -11,6 +11,8 @@ const FONT = (px: number): string => `700 ${px}px Andika, "Comic Sans MS", syste
 /** Write It: trace, write from memory, or build with letter tiles. ELA.1.C.1.1, ELA.1.F.1.3.c */
 export async function write(kit: Kit, host: HTMLElement, card: Card, mode: 'trace' | 'free' | 'tiles'): Promise<void> {
   if (mode !== 'tiles') await kit.intro(host, mode);
+  // The modal makes the page inert; keep its canvas/tiles instead of erasing a partial word.
+  kit.onPlayBreak = () => () => undefined;
   if (mode === 'tiles') {
     const outcome = await tiles(kit, host, card); // tiles() shows its own intro
     await kit.record('write', card.id, outcome, 'tiles', { mode });

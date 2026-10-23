@@ -3479,9 +3479,2321 @@
   "model": "s2.1-pro",
   "speed": 0.8
  },
+ "story:soccer-haaland:0": {
+  "file": "audio/stories/soccer-haaland-0.e45d873950f7.mp3",
+  "hash": "e45d873950f7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:1": {
+  "file": "audio/stories/soccer-haaland-1.6b01fa6d9acf.mp3",
+  "hash": "6b01fa6d9acf",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:2": {
+  "file": "audio/stories/soccer-haaland-2.071c85d459bd.mp3",
+  "hash": "071c85d459bd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:3": {
+  "file": "audio/stories/soccer-haaland-3.533821169c0d.mp3",
+  "hash": "533821169c0d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:4": {
+  "file": "audio/stories/soccer-haaland-4.5875c7b1a8c7.mp3",
+  "hash": "5875c7b1a8c7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:5": {
+  "file": "audio/stories/soccer-haaland-5.e39acaa20454.mp3",
+  "hash": "e39acaa20454",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:6": {
+  "file": "audio/stories/soccer-haaland-6.8cd7f0a13155.mp3",
+  "hash": "8cd7f0a13155",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:bonus": {
+  "file": "audio/stories/soccer-haaland-bonus.79971e6b9741.mp3",
+  "hash": "79971e6b9741",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:bonus-o0": {
+  "file": "audio/stories/soccer-haaland-bonus-o0.c70cfabaef57.mp3",
+  "hash": "c70cfabaef57",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:bonus-o1": {
+  "file": "audio/stories/soccer-haaland-bonus-o1.ba30389c9300.mp3",
+  "hash": "ba30389c9300",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:bonus-o2": {
+  "file": "audio/stories/soccer-haaland-bonus-o2.416d8eaa6bea.mp3",
+  "hash": "416d8eaa6bea",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q0": {
+  "file": "audio/stories/soccer-haaland-q0.3de411870097.mp3",
+  "hash": "3de411870097",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q0o0": {
+  "file": "audio/stories/soccer-haaland-q0o0.04a9332b1056.mp3",
+  "hash": "04a9332b1056",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q0o1": {
+  "file": "audio/stories/soccer-haaland-q0o1.eb061c231941.mp3",
+  "hash": "eb061c231941",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q0o2": {
+  "file": "audio/stories/soccer-haaland-q0o2.8c154030c81c.mp3",
+  "hash": "8c154030c81c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q1": {
+  "file": "audio/stories/soccer-haaland-q1.50f6e37f4815.mp3",
+  "hash": "50f6e37f4815",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q1o0": {
+  "file": "audio/stories/soccer-haaland-q1o0.5453e4e0fbd7.mp3",
+  "hash": "5453e4e0fbd7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q1o1": {
+  "file": "audio/stories/soccer-haaland-q1o1.e3f99abb93c9.mp3",
+  "hash": "e3f99abb93c9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q1o2": {
+  "file": "audio/stories/soccer-haaland-q1o2.f378cd08a8d6.mp3",
+  "hash": "f378cd08a8d6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q2": {
+  "file": "audio/stories/soccer-haaland-q2.2d4ddbe5199f.mp3",
+  "hash": "2d4ddbe5199f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q2o0": {
+  "file": "audio/stories/soccer-haaland-q2o0.fab2272ff73e.mp3",
+  "hash": "fab2272ff73e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q2o1": {
+  "file": "audio/stories/soccer-haaland-q2o1.7dff0974bf95.mp3",
+  "hash": "7dff0974bf95",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:q2o2": {
+  "file": "audio/stories/soccer-haaland-q2o2.305cb9633cc4.mp3",
+  "hash": "305cb9633cc4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-haaland:title": {
+  "file": "audio/stories/soccer-haaland-title.6792215c78fa.mp3",
+  "hash": "6792215c78fa",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:0": {
+  "file": "audio/stories/soccer-kane-0.ef1700886a5a.mp3",
+  "hash": "ef1700886a5a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:1": {
+  "file": "audio/stories/soccer-kane-1.cbe480c7a303.mp3",
+  "hash": "cbe480c7a303",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:2": {
+  "file": "audio/stories/soccer-kane-2.1193e0e85fe1.mp3",
+  "hash": "1193e0e85fe1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:3": {
+  "file": "audio/stories/soccer-kane-3.19e567a6023a.mp3",
+  "hash": "19e567a6023a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:4": {
+  "file": "audio/stories/soccer-kane-4.d6e0cb5afaed.mp3",
+  "hash": "d6e0cb5afaed",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:5": {
+  "file": "audio/stories/soccer-kane-5.34efdde1c420.mp3",
+  "hash": "34efdde1c420",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:6": {
+  "file": "audio/stories/soccer-kane-6.574a4e65d42d.mp3",
+  "hash": "574a4e65d42d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:bonus": {
+  "file": "audio/stories/soccer-kane-bonus.4981b46afafb.mp3",
+  "hash": "4981b46afafb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:bonus-o0": {
+  "file": "audio/stories/soccer-kane-bonus-o0.3b7fa0c307d0.mp3",
+  "hash": "3b7fa0c307d0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:bonus-o1": {
+  "file": "audio/stories/soccer-kane-bonus-o1.1df1efec8f3c.mp3",
+  "hash": "1df1efec8f3c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:bonus-o2": {
+  "file": "audio/stories/soccer-kane-bonus-o2.d991479b7d0b.mp3",
+  "hash": "d991479b7d0b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q0": {
+  "file": "audio/stories/soccer-kane-q0.1ee448e98ea0.mp3",
+  "hash": "1ee448e98ea0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q0o0": {
+  "file": "audio/stories/soccer-kane-q0o0.878f9b0c7f36.mp3",
+  "hash": "878f9b0c7f36",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q0o1": {
+  "file": "audio/stories/soccer-kane-q0o1.58b556d60358.mp3",
+  "hash": "58b556d60358",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q0o2": {
+  "file": "audio/stories/soccer-kane-q0o2.dbd3ae960047.mp3",
+  "hash": "dbd3ae960047",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q1": {
+  "file": "audio/stories/soccer-kane-q1.049daac7857f.mp3",
+  "hash": "049daac7857f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q1o0": {
+  "file": "audio/stories/soccer-kane-q1o0.1cf93fe9e08b.mp3",
+  "hash": "1cf93fe9e08b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q1o1": {
+  "file": "audio/stories/soccer-kane-q1o1.bbae4990df66.mp3",
+  "hash": "bbae4990df66",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q1o2": {
+  "file": "audio/stories/soccer-kane-q1o2.cce00d624b5c.mp3",
+  "hash": "cce00d624b5c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q2": {
+  "file": "audio/stories/soccer-kane-q2.a74ce4213d76.mp3",
+  "hash": "a74ce4213d76",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q2o0": {
+  "file": "audio/stories/soccer-kane-q2o0.8d32b91171da.mp3",
+  "hash": "8d32b91171da",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q2o1": {
+  "file": "audio/stories/soccer-kane-q2o1.659f2e7be59d.mp3",
+  "hash": "659f2e7be59d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:q2o2": {
+  "file": "audio/stories/soccer-kane-q2o2.af4bf003566d.mp3",
+  "hash": "af4bf003566d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-kane:title": {
+  "file": "audio/stories/soccer-kane-title.49d07e21979c.mp3",
+  "hash": "49d07e21979c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:0": {
+  "file": "audio/stories/soccer-marta-0.f427ecf05072.mp3",
+  "hash": "f427ecf05072",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:1": {
+  "file": "audio/stories/soccer-marta-1.8f43e5445060.mp3",
+  "hash": "8f43e5445060",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:2": {
+  "file": "audio/stories/soccer-marta-2.88c257fc8d3b.mp3",
+  "hash": "88c257fc8d3b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:3": {
+  "file": "audio/stories/soccer-marta-3.040b8665ea18.mp3",
+  "hash": "040b8665ea18",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:4": {
+  "file": "audio/stories/soccer-marta-4.6cbb03bd0d11.mp3",
+  "hash": "6cbb03bd0d11",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:5": {
+  "file": "audio/stories/soccer-marta-5.855284c4384a.mp3",
+  "hash": "855284c4384a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:6": {
+  "file": "audio/stories/soccer-marta-6.3d58e04da194.mp3",
+  "hash": "3d58e04da194",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:bonus": {
+  "file": "audio/stories/soccer-marta-bonus.67996c48ca57.mp3",
+  "hash": "67996c48ca57",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:bonus-o0": {
+  "file": "audio/stories/soccer-marta-bonus-o0.9ee155cb83b1.mp3",
+  "hash": "9ee155cb83b1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:bonus-o1": {
+  "file": "audio/stories/soccer-marta-bonus-o1.910d94dd9c2f.mp3",
+  "hash": "910d94dd9c2f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:bonus-o2": {
+  "file": "audio/stories/soccer-marta-bonus-o2.92b4f4924c11.mp3",
+  "hash": "92b4f4924c11",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q0": {
+  "file": "audio/stories/soccer-marta-q0.add254f0d6b1.mp3",
+  "hash": "add254f0d6b1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q0o0": {
+  "file": "audio/stories/soccer-marta-q0o0.4397bc9149ae.mp3",
+  "hash": "4397bc9149ae",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q0o1": {
+  "file": "audio/stories/soccer-marta-q0o1.e579d0369425.mp3",
+  "hash": "e579d0369425",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q0o2": {
+  "file": "audio/stories/soccer-marta-q0o2.7a11417c358b.mp3",
+  "hash": "7a11417c358b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q1": {
+  "file": "audio/stories/soccer-marta-q1.12d4469e0d08.mp3",
+  "hash": "12d4469e0d08",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q1o0": {
+  "file": "audio/stories/soccer-marta-q1o0.87b7cd22ef93.mp3",
+  "hash": "87b7cd22ef93",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q1o1": {
+  "file": "audio/stories/soccer-marta-q1o1.318d82be6629.mp3",
+  "hash": "318d82be6629",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q1o2": {
+  "file": "audio/stories/soccer-marta-q1o2.5b32378eea42.mp3",
+  "hash": "5b32378eea42",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q2": {
+  "file": "audio/stories/soccer-marta-q2.ff821b6f901e.mp3",
+  "hash": "ff821b6f901e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q2o0": {
+  "file": "audio/stories/soccer-marta-q2o0.6959183eefa4.mp3",
+  "hash": "6959183eefa4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q2o1": {
+  "file": "audio/stories/soccer-marta-q2o1.ee6efedde30b.mp3",
+  "hash": "ee6efedde30b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:q2o2": {
+  "file": "audio/stories/soccer-marta-q2o2.66ea831f21f7.mp3",
+  "hash": "66ea831f21f7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-marta:title": {
+  "file": "audio/stories/soccer-marta-title.7a0bac42292c.mp3",
+  "hash": "7a0bac42292c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:0": {
+  "file": "audio/stories/soccer-mbappe-0.4145aa63a1a4.mp3",
+  "hash": "4145aa63a1a4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:1": {
+  "file": "audio/stories/soccer-mbappe-1.5c196ec5b7ee.mp3",
+  "hash": "5c196ec5b7ee",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:2": {
+  "file": "audio/stories/soccer-mbappe-2.b93fea3fd042.mp3",
+  "hash": "b93fea3fd042",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:3": {
+  "file": "audio/stories/soccer-mbappe-3.40e191c773b5.mp3",
+  "hash": "40e191c773b5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:4": {
+  "file": "audio/stories/soccer-mbappe-4.4b0b9935ca8c.mp3",
+  "hash": "4b0b9935ca8c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:5": {
+  "file": "audio/stories/soccer-mbappe-5.aae83d6f2194.mp3",
+  "hash": "aae83d6f2194",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:6": {
+  "file": "audio/stories/soccer-mbappe-6.2f732c724d4f.mp3",
+  "hash": "2f732c724d4f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:bonus": {
+  "file": "audio/stories/soccer-mbappe-bonus.7e107f83309a.mp3",
+  "hash": "7e107f83309a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:bonus-o0": {
+  "file": "audio/stories/soccer-mbappe-bonus-o0.3d1f4896598e.mp3",
+  "hash": "3d1f4896598e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:bonus-o1": {
+  "file": "audio/stories/soccer-mbappe-bonus-o1.c383befe189f.mp3",
+  "hash": "c383befe189f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:bonus-o2": {
+  "file": "audio/stories/soccer-mbappe-bonus-o2.12285e0a56ec.mp3",
+  "hash": "12285e0a56ec",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q0": {
+  "file": "audio/stories/soccer-mbappe-q0.be475fd46422.mp3",
+  "hash": "be475fd46422",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q0o0": {
+  "file": "audio/stories/soccer-mbappe-q0o0.7a2d6d1ac322.mp3",
+  "hash": "7a2d6d1ac322",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q0o1": {
+  "file": "audio/stories/soccer-mbappe-q0o1.c8b562f1d9e6.mp3",
+  "hash": "c8b562f1d9e6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q0o2": {
+  "file": "audio/stories/soccer-mbappe-q0o2.2bdf0940cc9e.mp3",
+  "hash": "2bdf0940cc9e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q1": {
+  "file": "audio/stories/soccer-mbappe-q1.ced845363fbc.mp3",
+  "hash": "ced845363fbc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q1o0": {
+  "file": "audio/stories/soccer-mbappe-q1o0.51123227a036.mp3",
+  "hash": "51123227a036",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q1o1": {
+  "file": "audio/stories/soccer-mbappe-q1o1.35331ebcd900.mp3",
+  "hash": "35331ebcd900",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q1o2": {
+  "file": "audio/stories/soccer-mbappe-q1o2.f69e749be9b6.mp3",
+  "hash": "f69e749be9b6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q2": {
+  "file": "audio/stories/soccer-mbappe-q2.6dcb7c38705a.mp3",
+  "hash": "6dcb7c38705a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q2o0": {
+  "file": "audio/stories/soccer-mbappe-q2o0.0bdeb93d189a.mp3",
+  "hash": "0bdeb93d189a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q2o1": {
+  "file": "audio/stories/soccer-mbappe-q2o1.8afd85cf09c0.mp3",
+  "hash": "8afd85cf09c0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:q2o2": {
+  "file": "audio/stories/soccer-mbappe-q2o2.74036c138487.mp3",
+  "hash": "74036c138487",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-mbappe:title": {
+  "file": "audio/stories/soccer-mbappe-title.d2550f395f66.mp3",
+  "hash": "d2550f395f66",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:0": {
+  "file": "audio/stories/soccer-messi-0.5729d16ba30a.mp3",
+  "hash": "5729d16ba30a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:1": {
+  "file": "audio/stories/soccer-messi-1.075e8aa4bad8.mp3",
+  "hash": "075e8aa4bad8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:2": {
+  "file": "audio/stories/soccer-messi-2.c3f6ca37e64c.mp3",
+  "hash": "c3f6ca37e64c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:3": {
+  "file": "audio/stories/soccer-messi-3.53ea594d5079.mp3",
+  "hash": "53ea594d5079",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:4": {
+  "file": "audio/stories/soccer-messi-4.5e5eb3c2867b.mp3",
+  "hash": "5e5eb3c2867b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:5": {
+  "file": "audio/stories/soccer-messi-5.438531524d4a.mp3",
+  "hash": "438531524d4a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:6": {
+  "file": "audio/stories/soccer-messi-6.46765c662723.mp3",
+  "hash": "46765c662723",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:bonus": {
+  "file": "audio/stories/soccer-messi-bonus.4e6fc93add6f.mp3",
+  "hash": "4e6fc93add6f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:bonus-o0": {
+  "file": "audio/stories/soccer-messi-bonus-o0.a46e26ce7f50.mp3",
+  "hash": "a46e26ce7f50",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:bonus-o1": {
+  "file": "audio/stories/soccer-messi-bonus-o1.8f8c63896b0b.mp3",
+  "hash": "8f8c63896b0b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:bonus-o2": {
+  "file": "audio/stories/soccer-messi-bonus-o2.dd37b19a8490.mp3",
+  "hash": "dd37b19a8490",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q0": {
+  "file": "audio/stories/soccer-messi-q0.3704325dcee7.mp3",
+  "hash": "3704325dcee7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q0o0": {
+  "file": "audio/stories/soccer-messi-q0o0.eba4d8b6d30d.mp3",
+  "hash": "eba4d8b6d30d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q0o1": {
+  "file": "audio/stories/soccer-messi-q0o1.aa19b1f0347e.mp3",
+  "hash": "aa19b1f0347e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q0o2": {
+  "file": "audio/stories/soccer-messi-q0o2.66a3971eb735.mp3",
+  "hash": "66a3971eb735",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q1": {
+  "file": "audio/stories/soccer-messi-q1.b55ad44fc45e.mp3",
+  "hash": "b55ad44fc45e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q1o0": {
+  "file": "audio/stories/soccer-messi-q1o0.e6e44f73a8a3.mp3",
+  "hash": "e6e44f73a8a3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q1o1": {
+  "file": "audio/stories/soccer-messi-q1o1.26f9548c90d8.mp3",
+  "hash": "26f9548c90d8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q1o2": {
+  "file": "audio/stories/soccer-messi-q1o2.3a71d7f2b9d5.mp3",
+  "hash": "3a71d7f2b9d5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q2": {
+  "file": "audio/stories/soccer-messi-q2.fcf4b537a25c.mp3",
+  "hash": "fcf4b537a25c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q2o0": {
+  "file": "audio/stories/soccer-messi-q2o0.b2332b8d9459.mp3",
+  "hash": "b2332b8d9459",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q2o1": {
+  "file": "audio/stories/soccer-messi-q2o1.7682e6034685.mp3",
+  "hash": "7682e6034685",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:q2o2": {
+  "file": "audio/stories/soccer-messi-q2o2.f102d7d2040b.mp3",
+  "hash": "f102d7d2040b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-messi:title": {
+  "file": "audio/stories/soccer-messi-title.22422d2daefd.mp3",
+  "hash": "22422d2daefd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:0": {
+  "file": "audio/stories/soccer-rest-0.a64ab120d8f7.mp3",
+  "hash": "a64ab120d8f7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:1": {
+  "file": "audio/stories/soccer-rest-1.bc900352f3b1.mp3",
+  "hash": "bc900352f3b1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:2": {
+  "file": "audio/stories/soccer-rest-2.60b98353647f.mp3",
+  "hash": "60b98353647f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:3": {
+  "file": "audio/stories/soccer-rest-3.b12e5229a316.mp3",
+  "hash": "b12e5229a316",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:4": {
+  "file": "audio/stories/soccer-rest-4.5ab60de6f5ea.mp3",
+  "hash": "5ab60de6f5ea",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:5": {
+  "file": "audio/stories/soccer-rest-5.738312dce463.mp3",
+  "hash": "738312dce463",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:6": {
+  "file": "audio/stories/soccer-rest-6.89ace9971e0b.mp3",
+  "hash": "89ace9971e0b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:bonus": {
+  "file": "audio/stories/soccer-rest-bonus.a4295b78862b.mp3",
+  "hash": "a4295b78862b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:bonus-o0": {
+  "file": "audio/stories/soccer-rest-bonus-o0.10ca081b595d.mp3",
+  "hash": "10ca081b595d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:bonus-o1": {
+  "file": "audio/stories/soccer-rest-bonus-o1.7e20ae918fc0.mp3",
+  "hash": "7e20ae918fc0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:bonus-o2": {
+  "file": "audio/stories/soccer-rest-bonus-o2.d3f4e7090cc5.mp3",
+  "hash": "d3f4e7090cc5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q0": {
+  "file": "audio/stories/soccer-rest-q0.274a01598730.mp3",
+  "hash": "274a01598730",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q0o0": {
+  "file": "audio/stories/soccer-rest-q0o0.66b2ee34e35d.mp3",
+  "hash": "66b2ee34e35d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q0o1": {
+  "file": "audio/stories/soccer-rest-q0o1.fbc6b62b6f74.mp3",
+  "hash": "fbc6b62b6f74",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q0o2": {
+  "file": "audio/stories/soccer-rest-q0o2.cfc7ad8586dd.mp3",
+  "hash": "cfc7ad8586dd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q1": {
+  "file": "audio/stories/soccer-rest-q1.0fadee0f967a.mp3",
+  "hash": "0fadee0f967a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q1o0": {
+  "file": "audio/stories/soccer-rest-q1o0.abe2e6078415.mp3",
+  "hash": "abe2e6078415",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q1o1": {
+  "file": "audio/stories/soccer-rest-q1o1.b4839e982fc9.mp3",
+  "hash": "b4839e982fc9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q1o2": {
+  "file": "audio/stories/soccer-rest-q1o2.c12f2acbea69.mp3",
+  "hash": "c12f2acbea69",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q2": {
+  "file": "audio/stories/soccer-rest-q2.d5eebe5d1676.mp3",
+  "hash": "d5eebe5d1676",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q2o0": {
+  "file": "audio/stories/soccer-rest-q2o0.096c5fb69193.mp3",
+  "hash": "096c5fb69193",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q2o1": {
+  "file": "audio/stories/soccer-rest-q2o1.ee1ab58c629d.mp3",
+  "hash": "ee1ab58c629d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:q2o2": {
+  "file": "audio/stories/soccer-rest-q2o2.aa78b705743c.mp3",
+  "hash": "aa78b705743c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-rest:title": {
+  "file": "audio/stories/soccer-rest-title.8967ac7af0bd.mp3",
+  "hash": "8967ac7af0bd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:0": {
+  "file": "audio/stories/soccer-ronaldo-0.ecf22d55d496.mp3",
+  "hash": "ecf22d55d496",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:1": {
+  "file": "audio/stories/soccer-ronaldo-1.9a80881f9f02.mp3",
+  "hash": "9a80881f9f02",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:2": {
+  "file": "audio/stories/soccer-ronaldo-2.c3c5e422e203.mp3",
+  "hash": "c3c5e422e203",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:3": {
+  "file": "audio/stories/soccer-ronaldo-3.93cfbba34f4b.mp3",
+  "hash": "93cfbba34f4b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:4": {
+  "file": "audio/stories/soccer-ronaldo-4.24335c36c9ba.mp3",
+  "hash": "24335c36c9ba",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:5": {
+  "file": "audio/stories/soccer-ronaldo-5.4447f5cb5519.mp3",
+  "hash": "4447f5cb5519",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:6": {
+  "file": "audio/stories/soccer-ronaldo-6.95e1f9604071.mp3",
+  "hash": "95e1f9604071",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:bonus": {
+  "file": "audio/stories/soccer-ronaldo-bonus.4822d2012feb.mp3",
+  "hash": "4822d2012feb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:bonus-o0": {
+  "file": "audio/stories/soccer-ronaldo-bonus-o0.c543300b8125.mp3",
+  "hash": "c543300b8125",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:bonus-o1": {
+  "file": "audio/stories/soccer-ronaldo-bonus-o1.6532390e6414.mp3",
+  "hash": "6532390e6414",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:bonus-o2": {
+  "file": "audio/stories/soccer-ronaldo-bonus-o2.5621fe2022a2.mp3",
+  "hash": "5621fe2022a2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q0": {
+  "file": "audio/stories/soccer-ronaldo-q0.81657904512d.mp3",
+  "hash": "81657904512d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q0o0": {
+  "file": "audio/stories/soccer-ronaldo-q0o0.bf8c5fe6c63e.mp3",
+  "hash": "bf8c5fe6c63e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q0o1": {
+  "file": "audio/stories/soccer-ronaldo-q0o1.1629002cf544.mp3",
+  "hash": "1629002cf544",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q0o2": {
+  "file": "audio/stories/soccer-ronaldo-q0o2.bc4f729c3251.mp3",
+  "hash": "bc4f729c3251",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q1": {
+  "file": "audio/stories/soccer-ronaldo-q1.bba9cb18c3cf.mp3",
+  "hash": "bba9cb18c3cf",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q1o0": {
+  "file": "audio/stories/soccer-ronaldo-q1o0.990f15726433.mp3",
+  "hash": "990f15726433",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q1o1": {
+  "file": "audio/stories/soccer-ronaldo-q1o1.5fb461622039.mp3",
+  "hash": "5fb461622039",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q1o2": {
+  "file": "audio/stories/soccer-ronaldo-q1o2.83939cb8c8f5.mp3",
+  "hash": "83939cb8c8f5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q2": {
+  "file": "audio/stories/soccer-ronaldo-q2.fb590300e458.mp3",
+  "hash": "fb590300e458",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q2o0": {
+  "file": "audio/stories/soccer-ronaldo-q2o0.9d84dec66dc7.mp3",
+  "hash": "9d84dec66dc7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q2o1": {
+  "file": "audio/stories/soccer-ronaldo-q2o1.ace00d0602a0.mp3",
+  "hash": "ace00d0602a0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:q2o2": {
+  "file": "audio/stories/soccer-ronaldo-q2o2.b8f8cd071a55.mp3",
+  "hash": "b8f8cd071a55",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-ronaldo:title": {
+  "file": "audio/stories/soccer-ronaldo-title.30b219877cfc.mp3",
+  "hash": "30b219877cfc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:0": {
+  "file": "audio/stories/soccer-salah-0.89381581910c.mp3",
+  "hash": "89381581910c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:1": {
+  "file": "audio/stories/soccer-salah-1.79da2b682b61.mp3",
+  "hash": "79da2b682b61",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:2": {
+  "file": "audio/stories/soccer-salah-2.c3ee254ca201.mp3",
+  "hash": "c3ee254ca201",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:3": {
+  "file": "audio/stories/soccer-salah-3.a07ae9ae6341.mp3",
+  "hash": "a07ae9ae6341",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:4": {
+  "file": "audio/stories/soccer-salah-4.80c995a8b44d.mp3",
+  "hash": "80c995a8b44d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:5": {
+  "file": "audio/stories/soccer-salah-5.c7242b08bf1c.mp3",
+  "hash": "c7242b08bf1c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:6": {
+  "file": "audio/stories/soccer-salah-6.54ca93decae6.mp3",
+  "hash": "54ca93decae6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:bonus": {
+  "file": "audio/stories/soccer-salah-bonus.20d50e19b807.mp3",
+  "hash": "20d50e19b807",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:bonus-o0": {
+  "file": "audio/stories/soccer-salah-bonus-o0.76879370a490.mp3",
+  "hash": "76879370a490",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:bonus-o1": {
+  "file": "audio/stories/soccer-salah-bonus-o1.551efc99fc80.mp3",
+  "hash": "551efc99fc80",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:bonus-o2": {
+  "file": "audio/stories/soccer-salah-bonus-o2.9ff04b14b268.mp3",
+  "hash": "9ff04b14b268",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q0": {
+  "file": "audio/stories/soccer-salah-q0.190431e89caa.mp3",
+  "hash": "190431e89caa",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q0o0": {
+  "file": "audio/stories/soccer-salah-q0o0.67afd03c9553.mp3",
+  "hash": "67afd03c9553",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q0o1": {
+  "file": "audio/stories/soccer-salah-q0o1.27622771e6fb.mp3",
+  "hash": "27622771e6fb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q0o2": {
+  "file": "audio/stories/soccer-salah-q0o2.cb1c2723dd3f.mp3",
+  "hash": "cb1c2723dd3f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q1": {
+  "file": "audio/stories/soccer-salah-q1.b2eca309296e.mp3",
+  "hash": "b2eca309296e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q1o0": {
+  "file": "audio/stories/soccer-salah-q1o0.9a807f2674c4.mp3",
+  "hash": "9a807f2674c4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q1o1": {
+  "file": "audio/stories/soccer-salah-q1o1.2caa2734167a.mp3",
+  "hash": "2caa2734167a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q1o2": {
+  "file": "audio/stories/soccer-salah-q1o2.0eb46244e2cc.mp3",
+  "hash": "0eb46244e2cc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q2": {
+  "file": "audio/stories/soccer-salah-q2.109f56c944bb.mp3",
+  "hash": "109f56c944bb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q2o0": {
+  "file": "audio/stories/soccer-salah-q2o0.1b559046024a.mp3",
+  "hash": "1b559046024a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q2o1": {
+  "file": "audio/stories/soccer-salah-q2o1.f9d032955fb6.mp3",
+  "hash": "f9d032955fb6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:q2o2": {
+  "file": "audio/stories/soccer-salah-q2o2.74074a0b4c6a.mp3",
+  "hash": "74074a0b4c6a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-salah:title": {
+  "file": "audio/stories/soccer-salah-title.c135d920db0e.mp3",
+  "hash": "c135d920db0e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:0": {
+  "file": "audio/stories/soccer-school-0.2cc64758d67a.mp3",
+  "hash": "2cc64758d67a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:1": {
+  "file": "audio/stories/soccer-school-1.edb8761c435a.mp3",
+  "hash": "edb8761c435a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:2": {
+  "file": "audio/stories/soccer-school-2.cf0d153850c2.mp3",
+  "hash": "cf0d153850c2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:3": {
+  "file": "audio/stories/soccer-school-3.339ce4a97db2.mp3",
+  "hash": "339ce4a97db2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:4": {
+  "file": "audio/stories/soccer-school-4.bcbcfdc27ec5.mp3",
+  "hash": "bcbcfdc27ec5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:5": {
+  "file": "audio/stories/soccer-school-5.4565880a5320.mp3",
+  "hash": "4565880a5320",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:6": {
+  "file": "audio/stories/soccer-school-6.c5bd6289a646.mp3",
+  "hash": "c5bd6289a646",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:bonus": {
+  "file": "audio/stories/soccer-school-bonus.800aae451a11.mp3",
+  "hash": "800aae451a11",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:bonus-o0": {
+  "file": "audio/stories/soccer-school-bonus-o0.1872db7c88ff.mp3",
+  "hash": "1872db7c88ff",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:bonus-o1": {
+  "file": "audio/stories/soccer-school-bonus-o1.382043b4f9a2.mp3",
+  "hash": "382043b4f9a2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:bonus-o2": {
+  "file": "audio/stories/soccer-school-bonus-o2.7dbb2ed82576.mp3",
+  "hash": "7dbb2ed82576",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q0": {
+  "file": "audio/stories/soccer-school-q0.13b83e7752a4.mp3",
+  "hash": "13b83e7752a4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q0o0": {
+  "file": "audio/stories/soccer-school-q0o0.3a0b6e8b32fb.mp3",
+  "hash": "3a0b6e8b32fb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q0o1": {
+  "file": "audio/stories/soccer-school-q0o1.474d8182d470.mp3",
+  "hash": "474d8182d470",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q0o2": {
+  "file": "audio/stories/soccer-school-q0o2.8fa6819bee8f.mp3",
+  "hash": "8fa6819bee8f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q1": {
+  "file": "audio/stories/soccer-school-q1.f542e32cbd1b.mp3",
+  "hash": "f542e32cbd1b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q1o0": {
+  "file": "audio/stories/soccer-school-q1o0.736cff389cbb.mp3",
+  "hash": "736cff389cbb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q1o1": {
+  "file": "audio/stories/soccer-school-q1o1.8315b69e11d3.mp3",
+  "hash": "8315b69e11d3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q1o2": {
+  "file": "audio/stories/soccer-school-q1o2.0df70c22f31d.mp3",
+  "hash": "0df70c22f31d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q2": {
+  "file": "audio/stories/soccer-school-q2.aef188c46cde.mp3",
+  "hash": "aef188c46cde",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q2o0": {
+  "file": "audio/stories/soccer-school-q2o0.d31ee60873a5.mp3",
+  "hash": "d31ee60873a5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q2o1": {
+  "file": "audio/stories/soccer-school-q2o1.435bc8ffa264.mp3",
+  "hash": "435bc8ffa264",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:q2o2": {
+  "file": "audio/stories/soccer-school-q2o2.3b1d14d7cbd2.mp3",
+  "hash": "3b1d14d7cbd2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-school:title": {
+  "file": "audio/stories/soccer-school-title.da5e73806af2.mp3",
+  "hash": "da5e73806af2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:0": {
+  "file": "audio/stories/soccer-simple-0.ad8e5d4b1a71.mp3",
+  "hash": "ad8e5d4b1a71",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:1": {
+  "file": "audio/stories/soccer-simple-1.71e48da70e18.mp3",
+  "hash": "71e48da70e18",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:2": {
+  "file": "audio/stories/soccer-simple-2.9d62a088a10b.mp3",
+  "hash": "9d62a088a10b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:3": {
+  "file": "audio/stories/soccer-simple-3.68f30182faad.mp3",
+  "hash": "68f30182faad",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:4": {
+  "file": "audio/stories/soccer-simple-4.063c4c2a70bc.mp3",
+  "hash": "063c4c2a70bc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:5": {
+  "file": "audio/stories/soccer-simple-5.c3f1bb3ee095.mp3",
+  "hash": "c3f1bb3ee095",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:6": {
+  "file": "audio/stories/soccer-simple-6.fede9b917877.mp3",
+  "hash": "fede9b917877",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:bonus": {
+  "file": "audio/stories/soccer-simple-bonus.870faff79fee.mp3",
+  "hash": "870faff79fee",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:bonus-o0": {
+  "file": "audio/stories/soccer-simple-bonus-o0.31dc173dc286.mp3",
+  "hash": "31dc173dc286",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:bonus-o1": {
+  "file": "audio/stories/soccer-simple-bonus-o1.499db56bdeae.mp3",
+  "hash": "499db56bdeae",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:bonus-o2": {
+  "file": "audio/stories/soccer-simple-bonus-o2.698256c35fa9.mp3",
+  "hash": "698256c35fa9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q0": {
+  "file": "audio/stories/soccer-simple-q0.4fbfdddf753a.mp3",
+  "hash": "4fbfdddf753a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q0o0": {
+  "file": "audio/stories/soccer-simple-q0o0.500c2b675de3.mp3",
+  "hash": "500c2b675de3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q0o1": {
+  "file": "audio/stories/soccer-simple-q0o1.f51f2b8c6a8d.mp3",
+  "hash": "f51f2b8c6a8d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q0o2": {
+  "file": "audio/stories/soccer-simple-q0o2.911e95a18568.mp3",
+  "hash": "911e95a18568",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q1": {
+  "file": "audio/stories/soccer-simple-q1.3b70237426cc.mp3",
+  "hash": "3b70237426cc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q1o0": {
+  "file": "audio/stories/soccer-simple-q1o0.a746bf0c038c.mp3",
+  "hash": "a746bf0c038c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q1o1": {
+  "file": "audio/stories/soccer-simple-q1o1.ef091bdbf2e4.mp3",
+  "hash": "ef091bdbf2e4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q1o2": {
+  "file": "audio/stories/soccer-simple-q1o2.3c9e9652b4ec.mp3",
+  "hash": "3c9e9652b4ec",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q2": {
+  "file": "audio/stories/soccer-simple-q2.4c51c3aeddf4.mp3",
+  "hash": "4c51c3aeddf4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q2o0": {
+  "file": "audio/stories/soccer-simple-q2o0.5cec9506db37.mp3",
+  "hash": "5cec9506db37",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q2o1": {
+  "file": "audio/stories/soccer-simple-q2o1.e0a93265e336.mp3",
+  "hash": "e0a93265e336",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:q2o2": {
+  "file": "audio/stories/soccer-simple-q2o2.1fc3e4e3cb23.mp3",
+  "hash": "1fc3e4e3cb23",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-simple:title": {
+  "file": "audio/stories/soccer-simple-title.2b46ca2bb4dd.mp3",
+  "hash": "2b46ca2bb4dd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:0": {
+  "file": "audio/stories/soccer-team-0.d3670b137fc2.mp3",
+  "hash": "d3670b137fc2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:1": {
+  "file": "audio/stories/soccer-team-1.91080dbc09c9.mp3",
+  "hash": "91080dbc09c9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:2": {
+  "file": "audio/stories/soccer-team-2.f947993ffa61.mp3",
+  "hash": "f947993ffa61",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:3": {
+  "file": "audio/stories/soccer-team-3.b9224d161c51.mp3",
+  "hash": "b9224d161c51",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:4": {
+  "file": "audio/stories/soccer-team-4.526fb52c9dc7.mp3",
+  "hash": "526fb52c9dc7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:5": {
+  "file": "audio/stories/soccer-team-5.5513afa04582.mp3",
+  "hash": "5513afa04582",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:6": {
+  "file": "audio/stories/soccer-team-6.30ceb9714a80.mp3",
+  "hash": "30ceb9714a80",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:bonus": {
+  "file": "audio/stories/soccer-team-bonus.10ff9a01061e.mp3",
+  "hash": "10ff9a01061e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:bonus-o0": {
+  "file": "audio/stories/soccer-team-bonus-o0.68b2bfd88649.mp3",
+  "hash": "68b2bfd88649",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:bonus-o1": {
+  "file": "audio/stories/soccer-team-bonus-o1.21027dcf9af8.mp3",
+  "hash": "21027dcf9af8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:bonus-o2": {
+  "file": "audio/stories/soccer-team-bonus-o2.10edebd59f55.mp3",
+  "hash": "10edebd59f55",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q0": {
+  "file": "audio/stories/soccer-team-q0.75effb7f5ae3.mp3",
+  "hash": "75effb7f5ae3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q0o0": {
+  "file": "audio/stories/soccer-team-q0o0.d2011d550d06.mp3",
+  "hash": "d2011d550d06",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q0o1": {
+  "file": "audio/stories/soccer-team-q0o1.494b0d55ec9a.mp3",
+  "hash": "494b0d55ec9a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q0o2": {
+  "file": "audio/stories/soccer-team-q0o2.263c37c01260.mp3",
+  "hash": "263c37c01260",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q1": {
+  "file": "audio/stories/soccer-team-q1.0ca47ff6a4f5.mp3",
+  "hash": "0ca47ff6a4f5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q1o0": {
+  "file": "audio/stories/soccer-team-q1o0.d81d2a9b5bd6.mp3",
+  "hash": "d81d2a9b5bd6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q1o1": {
+  "file": "audio/stories/soccer-team-q1o1.5a6464c93fde.mp3",
+  "hash": "5a6464c93fde",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q1o2": {
+  "file": "audio/stories/soccer-team-q1o2.300de7500914.mp3",
+  "hash": "300de7500914",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q2": {
+  "file": "audio/stories/soccer-team-q2.1ef8c9baddfd.mp3",
+  "hash": "1ef8c9baddfd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q2o0": {
+  "file": "audio/stories/soccer-team-q2o0.9d64f9e2deda.mp3",
+  "hash": "9d64f9e2deda",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q2o1": {
+  "file": "audio/stories/soccer-team-q2o1.1f3be7f454b9.mp3",
+  "hash": "1f3be7f454b9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:q2o2": {
+  "file": "audio/stories/soccer-team-q2o2.456d55bc2860.mp3",
+  "hash": "456d55bc2860",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-team:title": {
+  "file": "audio/stories/soccer-team-title.f07e7710aee4.mp3",
+  "hash": "f07e7710aee4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:0": {
+  "file": "audio/stories/soccer-vinicius-0.4121acd02ea7.mp3",
+  "hash": "4121acd02ea7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:1": {
+  "file": "audio/stories/soccer-vinicius-1.e670cde23155.mp3",
+  "hash": "e670cde23155",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:2": {
+  "file": "audio/stories/soccer-vinicius-2.c166f6819884.mp3",
+  "hash": "c166f6819884",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:3": {
+  "file": "audio/stories/soccer-vinicius-3.38753109b900.mp3",
+  "hash": "38753109b900",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:4": {
+  "file": "audio/stories/soccer-vinicius-4.5657dce8c8ce.mp3",
+  "hash": "5657dce8c8ce",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:5": {
+  "file": "audio/stories/soccer-vinicius-5.cff3aa28098b.mp3",
+  "hash": "cff3aa28098b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:6": {
+  "file": "audio/stories/soccer-vinicius-6.aaad6a0e58d1.mp3",
+  "hash": "aaad6a0e58d1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:bonus": {
+  "file": "audio/stories/soccer-vinicius-bonus.9c1a780ca3ca.mp3",
+  "hash": "9c1a780ca3ca",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:bonus-o0": {
+  "file": "audio/stories/soccer-vinicius-bonus-o0.67b21108adb8.mp3",
+  "hash": "67b21108adb8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:bonus-o1": {
+  "file": "audio/stories/soccer-vinicius-bonus-o1.90f867a0e470.mp3",
+  "hash": "90f867a0e470",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:bonus-o2": {
+  "file": "audio/stories/soccer-vinicius-bonus-o2.20d448834e0b.mp3",
+  "hash": "20d448834e0b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q0": {
+  "file": "audio/stories/soccer-vinicius-q0.ad1e9394ab3c.mp3",
+  "hash": "ad1e9394ab3c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q0o0": {
+  "file": "audio/stories/soccer-vinicius-q0o0.a70c6980ca64.mp3",
+  "hash": "a70c6980ca64",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q0o1": {
+  "file": "audio/stories/soccer-vinicius-q0o1.7c8136273188.mp3",
+  "hash": "7c8136273188",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q0o2": {
+  "file": "audio/stories/soccer-vinicius-q0o2.eadb0854d105.mp3",
+  "hash": "eadb0854d105",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q1": {
+  "file": "audio/stories/soccer-vinicius-q1.162fc548aca3.mp3",
+  "hash": "162fc548aca3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q1o0": {
+  "file": "audio/stories/soccer-vinicius-q1o0.83f9b65f58ed.mp3",
+  "hash": "83f9b65f58ed",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q1o1": {
+  "file": "audio/stories/soccer-vinicius-q1o1.a91c37e24729.mp3",
+  "hash": "a91c37e24729",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q1o2": {
+  "file": "audio/stories/soccer-vinicius-q1o2.8701398c8329.mp3",
+  "hash": "8701398c8329",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q2": {
+  "file": "audio/stories/soccer-vinicius-q2.cf02beaf893b.mp3",
+  "hash": "cf02beaf893b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q2o0": {
+  "file": "audio/stories/soccer-vinicius-q2o0.0f47c27dfdc6.mp3",
+  "hash": "0f47c27dfdc6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q2o1": {
+  "file": "audio/stories/soccer-vinicius-q2o1.57bbd0385d94.mp3",
+  "hash": "57bbd0385d94",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:q2o2": {
+  "file": "audio/stories/soccer-vinicius-q2o2.8cda563504b5.mp3",
+  "hash": "8cda563504b5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
+ "story:soccer-vinicius:title": {
+  "file": "audio/stories/soccer-vinicius-title.7c0d5f814cf8.mp3",
+  "hash": "7c0d5f814cf8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.8
+ },
  "word:a": {
   "file": "audio/words/a.e571b60e6af1.mp3",
   "hash": "e571b60e6af1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:about": {
+  "file": "audio/words/about.dab36084ea51.mp3",
+  "hash": "dab36084ea51",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3519,6 +5831,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:along": {
+  "file": "audio/words/along.f8dad3472a4e.mp3",
+  "hash": "f8dad3472a4e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:also": {
+  "file": "audio/words/also.c089ca48d711.mp3",
+  "hash": "c089ca48d711",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:am": {
   "file": "audio/words/am.47ad9cdd8b9c.mp3",
   "hash": "47ad9cdd8b9c",
@@ -3535,9 +5863,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:ana": {
+  "file": "audio/words/ana.6f8a87b645fc.mp3",
+  "hash": "6f8a87b645fc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:and": {
   "file": "audio/words/and.9ea85b5572e2.mp3",
   "hash": "9ea85b5572e2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:another": {
+  "file": "audio/words/another.2d2c78ce7382.mp3",
+  "hash": "2d2c78ce7382",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3551,9 +5895,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:arrive": {
+  "file": "audio/words/arrive.e4219dbb2814.mp3",
+  "hash": "e4219dbb2814",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:as": {
   "file": "audio/words/as.7f49d75c9a83.mp3",
   "hash": "7f49d75c9a83",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:asked": {
+  "file": "audio/words/asked.20ed7f52e8ae.mp3",
+  "hash": "20ed7f52e8ae",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3570,6 +5930,22 @@
  "word:ate": {
   "file": "audio/words/ate.762363402b72.mp3",
   "hash": "762363402b72",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:aunt": {
+  "file": "audio/words/aunt.301cc723a89d.mp3",
+  "hash": "301cc723a89d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:away": {
+  "file": "audio/words/away.0439edfa6614.mp3",
+  "hash": "0439edfa6614",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3655,9 +6031,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:be": {
+  "file": "audio/words/be.2a3491f4979e.mp3",
+  "hash": "2a3491f4979e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:because": {
   "file": "audio/words/because.6402f8bbaf42.mp3",
   "hash": "6402f8bbaf42",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:becoming": {
+  "file": "audio/words/becoming.4c06ef80283e.mp3",
+  "hash": "4c06ef80283e",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3682,6 +6074,38 @@
  "word:beg": {
   "file": "audio/words/beg.1776620acb8d.mp3",
   "hash": "1776620acb8d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:began": {
+  "file": "audio/words/began.2efbdee3d16f.mp3",
+  "hash": "2efbdee3d16f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:behave": {
+  "file": "audio/words/behave.8a89036b35b4.mp3",
+  "hash": "8a89036b35b4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:being": {
+  "file": "audio/words/being.62c83f5c0ade.mp3",
+  "hash": "62c83f5c0ade",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:belong": {
+  "file": "audio/words/belong.6b9e4f7cee77.mp3",
+  "hash": "6b9e4f7cee77",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3714,6 +6138,30 @@
  "word:beth": {
   "file": "audio/words/beth.9c5609783193.mp3",
   "hash": "9c5609783193",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:better": {
+  "file": "audio/words/better.0853f0cf074d.mp3",
+  "hash": "0853f0cf074d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:between": {
+  "file": "audio/words/between.7ba12289a4cb.mp3",
+  "hash": "7ba12289a4cb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:beyond": {
+  "file": "audio/words/beyond.7d93058c3c9d.mp3",
+  "hash": "7d93058c3c9d",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3807,9 +6255,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:bondy": {
+  "file": "audio/words/bondy.ee401f3d527b.mp3",
+  "hash": "ee401f3d527b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:bone": {
   "file": "audio/words/bone.dd2adbe301a9.mp3",
   "hash": "dd2adbe301a9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:book": {
+  "file": "audio/words/book.ff943383d23e.mp3",
+  "hash": "ff943383d23e",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3831,6 +6295,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:boy": {
+  "file": "audio/words/boy.25adc5b955bb.mp3",
+  "hash": "25adc5b955bb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:brag": {
   "file": "audio/words/brag.abfdc3636ba8.mp3",
   "hash": "abfdc3636ba8",
@@ -3839,9 +6311,41 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:brazil": {
+  "file": "audio/words/brazil.a76d28992134.mp3",
+  "hash": "a76d28992134",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:break": {
+  "file": "audio/words/break.0c3d268c24f0.mp3",
+  "hash": "0c3d268c24f0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:brother": {
+  "file": "audio/words/brother.383d9a02bf5c.mp3",
+  "hash": "383d9a02bf5c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:brown": {
   "file": "audio/words/brown.7adced7bfb1e.mp3",
   "hash": "7adced7bfb1e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:bryne": {
+  "file": "audio/words/bryne.55f4b763455a.mp3",
+  "hash": "55f4b763455a",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3895,6 +6399,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:buses": {
+  "file": "audio/words/buses.ec74f3056e76.mp3",
+  "hash": "ec74f3056e76",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:but": {
   "file": "audio/words/but.dea04ed1e25d.mp3",
   "hash": "dea04ed1e25d",
@@ -3906,6 +6418,14 @@
  "word:butterfly": {
   "file": "audio/words/butterfly.8d7359d217ef.mp3",
   "hash": "8d7359d217ef",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:by": {
+  "file": "audio/words/by.689beb2abcb3.mp3",
+  "hash": "689beb2abcb3",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3930,6 +6450,22 @@
  "word:cakes": {
   "file": "audio/words/cakes.d17fa8766271.mp3",
   "hash": "d17fa8766271",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:call": {
+  "file": "audio/words/call.3499fa066be2.mp3",
+  "hash": "3499fa066be2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:called": {
+  "file": "audio/words/called.fba918ce366a.mp3",
+  "hash": "fba918ce366a",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -3962,6 +6498,30 @@
  "word:cape": {
   "file": "audio/words/cape.89ff1c8c7685.mp3",
   "hash": "89ff1c8c7685",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:care": {
+  "file": "audio/words/care.f23beaee3880.mp3",
+  "hash": "f23beaee3880",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:cares": {
+  "file": "audio/words/cares.57bd86f0ae8a.mp3",
+  "hash": "57bd86f0ae8a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:caring": {
+  "file": "audio/words/caring.8098ef681f5f.mp3",
+  "hash": "8098ef681f5f",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4007,6 +6567,30 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:chance": {
+  "file": "audio/words/chance.0d52216a2846.mp3",
+  "hash": "0d52216a2846",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:chances": {
+  "file": "audio/words/chances.58a7f6fe7302.mp3",
+  "hash": "58a7f6fe7302",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:change": {
+  "file": "audio/words/change.3f57ab77223f.mp3",
+  "hash": "3f57ab77223f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:chat": {
   "file": "audio/words/chat.da5373646f90.mp3",
   "hash": "da5373646f90",
@@ -4031,6 +6615,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:children": {
+  "file": "audio/words/children.4bcdbd264c6a.mp3",
+  "hash": "4bcdbd264c6a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:chin": {
   "file": "audio/words/chin.73bf50f2376f.mp3",
   "hash": "73bf50f2376f",
@@ -4050,6 +6642,14 @@
  "word:chips": {
   "file": "audio/words/chips.4c910b7ff0bf.mp3",
   "hash": "4c910b7ff0bf",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:choice": {
+  "file": "audio/words/choice.d777b67e4509.mp3",
+  "hash": "d777b67e4509",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4095,6 +6695,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:coach": {
+  "file": "audio/words/coach.9a08999ef41b.mp3",
+  "hash": "9a08999ef41b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:come": {
   "file": "audio/words/come.8a60f46d5c32.mp3",
   "hash": "8a60f46d5c32",
@@ -4106,6 +6714,14 @@
  "word:cone": {
   "file": "audio/words/cone.dc93984631fb.mp3",
   "hash": "dc93984631fb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:cones": {
+  "file": "audio/words/cones.1a0bd748020f.mp3",
+  "hash": "1a0bd748020f",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4130,6 +6746,14 @@
  "word:crab": {
   "file": "audio/words/crab.3ae4f6e59a26.mp3",
   "hash": "3ae4f6e59a26",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:cristiano": {
+  "file": "audio/words/cristiano.093bc4068685.mp3",
+  "hash": "093bc4068685",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4191,6 +6815,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:day": {
+  "file": "audio/words/day.a43d9ed7e3a9.mp3",
+  "hash": "a43d9ed7e3a9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:defenders": {
+  "file": "audio/words/defenders.d3d573d70e67.mp3",
+  "hash": "d3d573d70e67",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:den": {
   "file": "audio/words/den.908dddf48bcf.mp3",
   "hash": "908dddf48bcf",
@@ -4210,6 +6850,14 @@
  "word:different": {
   "file": "audio/words/different.d8657500a5cb.mp3",
   "hash": "d8657500a5cb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:difficult": {
+  "file": "audio/words/difficult.01888610e12d.mp3",
+  "hash": "01888610e12d",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4287,6 +6935,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:door": {
+  "file": "audio/words/door.0b380363fccf.mp3",
+  "hash": "0b380363fccf",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:dot": {
   "file": "audio/words/dot.91100fda86e4.mp3",
   "hash": "91100fda86e4",
@@ -4298,6 +6954,30 @@
  "word:down": {
   "file": "audio/words/down.34dd12d74ff0.mp3",
   "hash": "34dd12d74ff0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:drank": {
+  "file": "audio/words/drank.bfb9ccfe0abb.mp3",
+  "hash": "bfb9ccfe0abb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:dream": {
+  "file": "audio/words/dream.c3e83f8c555d.mp3",
+  "hash": "c3e83f8c555d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:dreamed": {
+  "file": "audio/words/dreamed.683ac106871a.mp3",
+  "hash": "683ac106871a",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4359,6 +7039,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:each": {
+  "file": "audio/words/each.a4ecd4b8e75a.mp3",
+  "hash": "a4ecd4b8e75a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:early": {
+  "file": "audio/words/early.8388c195f54d.mp3",
+  "hash": "8388c195f54d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:eats": {
   "file": "audio/words/eats.9587d18a51a8.mp3",
   "hash": "9587d18a51a8",
@@ -4383,9 +7079,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:eight": {
+  "file": "audio/words/eight.bb9d336cfcfb.mp3",
+  "hash": "bb9d336cfcfb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:elephant": {
   "file": "audio/words/elephant.797bce822d39.mp3",
   "hash": "797bce822d39",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:else": {
+  "file": "audio/words/else.59615f82faef.mp3",
+  "hash": "59615f82faef",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:end": {
+  "file": "audio/words/end.5f0afc6bdb8e.mp3",
+  "hash": "5f0afc6bdb8e",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4399,9 +7119,65 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:enjoyed": {
+  "file": "audio/words/enjoyed.d3aadfbc62d2.mp3",
+  "hash": "d3aadfbc62d2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:erling": {
+  "file": "audio/words/erling.c45a5df6f175.mp3",
+  "hash": "c45a5df6f175",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:even": {
+  "file": "audio/words/even.d439897edfe7.mp3",
+  "hash": "d439897edfe7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:event": {
+  "file": "audio/words/event.4b9d42d710b0.mp3",
+  "hash": "4b9d42d710b0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:every": {
   "file": "audio/words/every.76e9ef31b8c5.mp3",
   "hash": "76e9ef31b8c5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:everyone": {
+  "file": "audio/words/everyone.160ae4bc9ac4.mp3",
+  "hash": "160ae4bc9ac4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:excited": {
+  "file": "audio/words/excited.9610920a4de5.mp3",
+  "hash": "9610920a4de5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:fair": {
+  "file": "audio/words/fair.ba9c6781ba9f.mp3",
+  "hash": "ba9c6781ba9f",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4415,9 +7191,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:family": {
+  "file": "audio/words/family.b05176719de3.mp3",
+  "hash": "b05176719de3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:famous": {
+  "file": "audio/words/famous.4ad27cc2254c.mp3",
+  "hash": "4ad27cc2254c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:fan": {
   "file": "audio/words/fan.618f56dff2ea.mp3",
   "hash": "618f56dff2ea",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:far": {
+  "file": "audio/words/far.c90ed8d9c32f.mp3",
+  "hash": "c90ed8d9c32f",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4455,9 +7255,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:felt": {
+  "file": "audio/words/felt.eef7d82a01b1.mp3",
+  "hash": "eef7d82a01b1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:fetch": {
   "file": "audio/words/fetch.6727a75b6fa3.mp3",
   "hash": "6727a75b6fa3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:field": {
+  "file": "audio/words/field.e4220018e9a9.mp3",
+  "hash": "e4220018e9a9",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4639,6 +7455,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:for": {
+  "file": "audio/words/for.af3800953d76.mp3",
+  "hash": "af3800953d76",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:four": {
   "file": "audio/words/four.9598bee07126.mp3",
   "hash": "9598bee07126",
@@ -4647,9 +7471,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:fourteen": {
+  "file": "audio/words/fourteen.5b62b2ffc85c.mp3",
+  "hash": "5b62b2ffc85c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:fox": {
   "file": "audio/words/fox.4970d2186a94.mp3",
   "hash": "4970d2186a94",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:france": {
+  "file": "audio/words/france.860542f7273a.mp3",
+  "hash": "860542f7273a",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4682,6 +7522,14 @@
  "word:frogs": {
   "file": "audio/words/frogs.82292f2e6616.mp3",
   "hash": "82292f2e6616",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:from": {
+  "file": "audio/words/from.7c49f5a37e5c.mp3",
+  "hash": "7c49f5a37e5c",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4751,6 +7599,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:girls": {
+  "file": "audio/words/girls.689c371e6536.mp3",
+  "hash": "689c371e6536",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:give": {
   "file": "audio/words/give.6d2be34e8e11.mp3",
   "hash": "6d2be34e8e11",
@@ -4791,9 +7647,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:goals": {
+  "file": "audio/words/goals.a82aaab9b4eb.mp3",
+  "hash": "a82aaab9b4eb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:going": {
+  "file": "audio/words/going.18f08b186079.mp3",
+  "hash": "18f08b186079",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:gold": {
   "file": "audio/words/gold.9a0060b71f02.mp3",
   "hash": "9a0060b71f02",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:good": {
+  "file": "audio/words/good.4f60e329c649.mp3",
+  "hash": "4f60e329c649",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4815,6 +7695,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:grandmother": {
+  "file": "audio/words/grandmother.d9cef20fdccd.mp3",
+  "hash": "d9cef20fdccd",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:grass": {
   "file": "audio/words/grass.cfcab45487e7.mp3",
   "hash": "cfcab45487e7",
@@ -4831,9 +7719,57 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:greet": {
+  "file": "audio/words/greet.55fa1c6b1282.mp3",
+  "hash": "55fa1c6b1282",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:greeted": {
+  "file": "audio/words/greeted.9e4f2319438e.mp3",
+  "hash": "9e4f2319438e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:greeting": {
+  "file": "audio/words/greeting.46a1e969ca1a.mp3",
+  "hash": "46a1e969ca1a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:grew": {
+  "file": "audio/words/grew.c2a9446004e4.mp3",
+  "hash": "c2a9446004e4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:grin": {
   "file": "audio/words/grin.8158e46910d9.mp3",
   "hash": "8158e46910d9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:group": {
+  "file": "audio/words/group.9af5187a4d1a.mp3",
+  "hash": "9af5187a4d1a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:grown": {
+  "file": "audio/words/grown.c6e475cf9d81.mp3",
+  "hash": "c6e475cf9d81",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4850,6 +7786,22 @@
  "word:gus": {
   "file": "audio/words/gus.6e5abe30ea26.mp3",
   "hash": "6e5abe30ea26",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:haaland": {
+  "file": "audio/words/haaland.5be05c942810.mp3",
+  "hash": "5be05c942810",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:habit": {
+  "file": "audio/words/habit.ffbeb44c15d4.mp3",
+  "hash": "ffbeb44c15d4",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -4890,6 +7842,22 @@
  "word:happy": {
   "file": "audio/words/happy.724549a90105.mp3",
   "hash": "724549a90105",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:hard": {
+  "file": "audio/words/hard.bc30f3519360.mp3",
+  "hash": "bc30f3519360",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:harry": {
+  "file": "audio/words/harry.a7b8b68e308d.mp3",
+  "hash": "a7b8b68e308d",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5079,6 +8047,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:hours": {
+  "file": "audio/words/hours.015f063ca007.mp3",
+  "hash": "015f063ca007",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:hug": {
   "file": "audio/words/hug.59065443434d.mp3",
   "hash": "59065443434d",
@@ -5151,6 +8127,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:island": {
+  "file": "audio/words/island.44714900ea80.mp3",
+  "hash": "44714900ea80",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:it": {
   "file": "audio/words/it.344084f47bc2.mp3",
   "hash": "344084f47bc2",
@@ -5175,6 +8159,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:join": {
+  "file": "audio/words/join.9625b31434c8.mp3",
+  "hash": "9625b31434c8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:joke": {
   "file": "audio/words/joke.f21f6918101f.mp3",
   "hash": "f21f6918101f",
@@ -5186,6 +8178,14 @@
  "word:josh": {
   "file": "audio/words/josh.c42b2db9b820.mp3",
   "hash": "c42b2db9b820",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:journey": {
+  "file": "audio/words/journey.3d09172d2d0d.mp3",
+  "hash": "3d09172d2d0d",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5231,9 +8231,49 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:junior": {
+  "file": "audio/words/junior.c68f77333214.mp3",
+  "hash": "c68f77333214",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:just": {
+  "file": "audio/words/just.8ef5fb5cd281.mp3",
+  "hash": "8ef5fb5cd281",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:kane": {
+  "file": "audio/words/kane.01199c1db2c7.mp3",
+  "hash": "01199c1db2c7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:kangaroo": {
   "file": "audio/words/kangaroo.e8b49b805f42.mp3",
   "hash": "e8b49b805f42",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:keep": {
+  "file": "audio/words/keep.b6535010da13.mp3",
+  "hash": "b6535010da13",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:kept": {
+  "file": "audio/words/kept.65585582fd2c.mp3",
+  "hash": "65585582fd2c",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5335,6 +8375,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:kylian": {
+  "file": "audio/words/kylian.a1d7cf695d8e.mp3",
+  "hash": "a1d7cf695d8e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:lag": {
   "file": "audio/words/lag.fa1b2128cd62.mp3",
   "hash": "fa1b2128cd62",
@@ -5383,6 +8431,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:later": {
+  "file": "audio/words/later.2f9eb9d06feb.mp3",
+  "hash": "2f9eb9d06feb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:laugh": {
   "file": "audio/words/laugh.a13fc530b242.mp3",
   "hash": "a13fc530b242",
@@ -5399,6 +8455,38 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:learned": {
+  "file": "audio/words/learned.518ab68ea554.mp3",
+  "hash": "518ab68ea554",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:learning": {
+  "file": "audio/words/learning.e76ad275e911.mp3",
+  "hash": "e76ad275e911",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:leave": {
+  "file": "audio/words/leave.fa47bbc71f6a.mp3",
+  "hash": "fa47bbc71f6a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:leaving": {
+  "file": "audio/words/leaving.6eb3cdccbb3a.mp3",
+  "hash": "6eb3cdccbb3a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:led": {
   "file": "audio/words/led.cc680c86e832.mp3",
   "hash": "cc680c86e832",
@@ -5410,6 +8498,14 @@
  "word:leg": {
   "file": "audio/words/leg.2bba9adcc6de.mp3",
   "hash": "2bba9adcc6de",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:legs": {
+  "file": "audio/words/legs.f26f28df7adc.mp3",
+  "hash": "f26f28df7adc",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5447,6 +8543,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:life": {
+  "file": "audio/words/life.3f498fa92498.mp3",
+  "hash": "3f498fa92498",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:like": {
   "file": "audio/words/like.c3248aa66ba1.mp3",
   "hash": "c3248aa66ba1",
@@ -5471,9 +8575,41 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:lionel": {
+  "file": "audio/words/lionel.815d05a9eedc.mp3",
+  "hash": "815d05a9eedc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:lip": {
   "file": "audio/words/lip.d211af332c31.mp3",
   "hash": "d211af332c31",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:lisbon": {
+  "file": "audio/words/lisbon.d22e3c7c39f7.mp3",
+  "hash": "d22e3c7c39f7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:listened": {
+  "file": "audio/words/listened.082e5067944a.mp3",
+  "hash": "082e5067944a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:little": {
+  "file": "audio/words/little.0950391e74fc.mp3",
+  "hash": "0950391e74fc",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5559,6 +8695,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:loved": {
+  "file": "audio/words/loved.6931422e6163.mp3",
+  "hash": "6931422e6163",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:luck": {
   "file": "audio/words/luck.71012d027e43.mp3",
   "hash": "71012d027e43",
@@ -5591,6 +8735,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:madeira": {
+  "file": "audio/words/madeira.369d7d761bec.mp3",
+  "hash": "369d7d761bec",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:make": {
   "file": "audio/words/make.c9e0c839726a.mp3",
   "hash": "c9e0c839726a",
@@ -5618,6 +8770,14 @@
  "word:map": {
   "file": "audio/words/map.8ac1033856b6.mp3",
   "hash": "8ac1033856b6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:marta": {
+  "file": "audio/words/marta.b2a4810058d2.mp3",
+  "hash": "b2a4810058d2",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5671,9 +8831,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:mbappe": {
+  "file": "audio/words/mbappe.6d2c9b92712f.mp3",
+  "hash": "6d2c9b92712f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:meant": {
+  "file": "audio/words/meant.48992c8020a9.mp3",
+  "hash": "48992c8020a9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:men": {
   "file": "audio/words/men.598b24f92401.mp3",
   "hash": "598b24f92401",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:messi": {
+  "file": "audio/words/messi.194aa43ede5e.mp3",
+  "hash": "194aa43ede5e",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5719,6 +8903,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:mohamed": {
+  "file": "audio/words/mohamed.4b410874e3a8.mp3",
+  "hash": "4b410874e3a8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:mom": {
   "file": "audio/words/mom.92fefd9a3e80.mp3",
   "hash": "92fefd9a3e80",
@@ -5735,9 +8927,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:more": {
+  "file": "audio/words/more.dd5ea00e2967.mp3",
+  "hash": "dd5ea00e2967",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:moth": {
   "file": "audio/words/moth.77ec834182b6.mp3",
   "hash": "77ec834182b6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:moved": {
+  "file": "audio/words/moved.601ba57f6efc.mp3",
+  "hash": "601ba57f6efc",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5839,6 +9047,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:needed": {
+  "file": "audio/words/needed.4cde57da53ee.mp3",
+  "hash": "4cde57da53ee",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:neighborhood": {
+  "file": "audio/words/neighborhood.1de98527ae30.mp3",
+  "hash": "1de98527ae30",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:nest": {
   "file": "audio/words/nest.5f844e236f82.mp3",
   "hash": "5f844e236f82",
@@ -5866,6 +9090,22 @@
  "word:next": {
   "file": "audio/words/next.9cc0001ddf49.mp3",
   "hash": "9cc0001ddf49",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:nico": {
+  "file": "audio/words/nico.c368791fe34d.mp3",
+  "hash": "c368791fe34d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:night": {
+  "file": "audio/words/night.1bd4686415d5.mp3",
+  "hash": "1bd4686415d5",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -5967,6 +9207,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:open": {
+  "file": "audio/words/open.5431f6a58764.mp3",
+  "hash": "5431f6a58764",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:orange": {
   "file": "audio/words/orange.012421a17910.mp3",
   "hash": "012421a17910",
@@ -5983,9 +9231,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:out": {
+  "file": "audio/words/out.877a73f7e97d.mp3",
+  "hash": "877a73f7e97d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:ox": {
   "file": "audio/words/ox.077fe80913a0.mp3",
   "hash": "077fe80913a0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:packed": {
+  "file": "audio/words/packed.b9efe7254145.mp3",
+  "hash": "b9efe7254145",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:page": {
+  "file": "audio/words/page.bc6f41b6947b.mp3",
+  "hash": "bc6f41b6947b",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6015,6 +9287,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:parents": {
+  "file": "audio/words/parents.aeefbfd9d6af.mp3",
+  "hash": "aeefbfd9d6af",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:park": {
   "file": "audio/words/park.67cb2bb3329e.mp3",
   "hash": "67cb2bb3329e",
@@ -6023,9 +9303,41 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:part": {
+  "file": "audio/words/part.b26a42ec182c.mp3",
+  "hash": "b26a42ec182c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:party": {
   "file": "audio/words/party.caf8dfcd204d.mp3",
   "hash": "caf8dfcd204d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:pass": {
+  "file": "audio/words/pass.42ab6e72aabf.mp3",
+  "hash": "42ab6e72aabf",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:passed": {
+  "file": "audio/words/passed.76de8bbb0b5c.mp3",
+  "hash": "76de8bbb0b5c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:passes": {
+  "file": "audio/words/passes.38c53d92b077.mp3",
+  "hash": "38c53d92b077",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6066,6 +9378,14 @@
  "word:people": {
   "file": "audio/words/people.bf43dfd9338c.mp3",
   "hash": "bf43dfd9338c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:person": {
+  "file": "audio/words/person.e362b895c62f.mp3",
+  "hash": "e362b895c62f",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6199,6 +9519,46 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:play": {
+  "file": "audio/words/play.188b7f303fc2.mp3",
+  "hash": "188b7f303fc2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:played": {
+  "file": "audio/words/played.920b96aba3ea.mp3",
+  "hash": "920b96aba3ea",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:player": {
+  "file": "audio/words/player.3543be5893fc.mp3",
+  "hash": "3543be5893fc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:players": {
+  "file": "audio/words/players.614a58db220f.mp3",
+  "hash": "614a58db220f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:playing": {
+  "file": "audio/words/playing.e71c29cea335.mp3",
+  "hash": "e71c29cea335",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:plum": {
   "file": "audio/words/plum.13085e3d31fc.mp3",
   "hash": "13085e3d31fc",
@@ -6226,6 +9586,22 @@
  "word:pot": {
   "file": "audio/words/pot.6ce18772a1ec.mp3",
   "hash": "6ce18772a1ec",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:practice": {
+  "file": "audio/words/practice.6fe38d3a0444.mp3",
+  "hash": "6fe38d3a0444",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:practiced": {
+  "file": "audio/words/practiced.2642843bb735.mp3",
+  "hash": "2642843bb735",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6311,9 +9687,49 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:read": {
+  "file": "audio/words/read.964a4cdf4973.mp3",
+  "hash": "964a4cdf4973",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:ready": {
+  "file": "audio/words/ready.0ce01c5eb4e2.mp3",
+  "hash": "0ce01c5eb4e2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:red": {
   "file": "audio/words/red.e6de345bd574.mp3",
   "hash": "e6de345bd574",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:remembered": {
+  "file": "audio/words/remembered.25dbb87ee5f3.mp3",
+  "hash": "25dbb87ee5f3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:reminds": {
+  "file": "audio/words/reminds.438486735560.mp3",
+  "hash": "438486735560",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:respect": {
+  "file": "audio/words/respect.6837db034321.mp3",
+  "hash": "6837db034321",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6391,6 +9807,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:rio": {
+  "file": "audio/words/rio.917e39c5c986.mp3",
+  "hash": "917e39c5c986",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:rip": {
   "file": "audio/words/rip.a7382f129d19.mp3",
   "hash": "a7382f129d19",
@@ -6431,9 +9855,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:rolled": {
+  "file": "audio/words/rolled.14eb34b5481d.mp3",
+  "hash": "14eb34b5481d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:ron": {
   "file": "audio/words/ron.7bca10ad8a7f.mp3",
   "hash": "7bca10ad8a7f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:ronaldo": {
+  "file": "audio/words/ronaldo.6a197195e28d.mp3",
+  "hash": "6a197195e28d",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6466,6 +9906,14 @@
  "word:rule": {
   "file": "audio/words/rule.636cc27531e3.mp3",
   "hash": "636cc27531e3",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:rules": {
+  "file": "audio/words/rules.e4ca53dda08b.mp3",
+  "hash": "e4ca53dda08b",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6514,6 +9962,14 @@
  "word:said": {
   "file": "audio/words/said.01f620d536a9.mp3",
   "hash": "01f620d536a9",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:salah": {
+  "file": "audio/words/salah.d1b50fd353dd.mp3",
+  "hash": "d1b50fd353dd",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6575,6 +10031,38 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:saw": {
+  "file": "audio/words/saw.23c3fe62d323.mp3",
+  "hash": "23c3fe62d323",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:school": {
+  "file": "audio/words/school.301a38ec17d2.mp3",
+  "hash": "301a38ec17d2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:score": {
+  "file": "audio/words/score.01b6b189bab2.mp3",
+  "hash": "01b6b189bab2",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:scoring": {
+  "file": "audio/words/scoring.4617c5c6d1af.mp3",
+  "hash": "4617c5c6d1af",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:sell": {
   "file": "audio/words/sell.1af754549f6c.mp3",
   "hash": "1af754549f6c",
@@ -6591,9 +10079,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:sentence": {
+  "file": "audio/words/sentence.0f9627f18aae.mp3",
+  "hash": "0f9627f18aae",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:set": {
   "file": "audio/words/set.c707b8710d6a.mp3",
   "hash": "c707b8710d6a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:setback": {
+  "file": "audio/words/setback.cb58d922eb7c.mp3",
+  "hash": "cb58d922eb7c",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6679,9 +10183,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:short": {
+  "file": "audio/words/short.c1b2784f5b52.mp3",
+  "hash": "c1b2784f5b52",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:shot": {
   "file": "audio/words/shot.d33303afb8d0.mp3",
   "hash": "d33303afb8d0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:should": {
+  "file": "audio/words/should.621aa626c238.mp3",
+  "hash": "621aa626c238",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:shows": {
+  "file": "audio/words/shows.a57c637d1165.mp3",
+  "hash": "a57c637d1165",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6698,6 +10226,14 @@
  "word:shuts": {
   "file": "audio/words/shuts.a62c06536373.mp3",
   "hash": "a62c06536373",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:simple": {
+  "file": "audio/words/simple.e6e65cece39d.mp3",
+  "hash": "e6e65cece39d",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6831,9 +10367,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:smiled": {
+  "file": "audio/words/smiled.a3aae1e1ff5a.mp3",
+  "hash": "a3aae1e1ff5a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:snap": {
   "file": "audio/words/snap.144c4de828ba.mp3",
   "hash": "144c4de828ba",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:so": {
+  "file": "audio/words/so.1f246f73d8dc.mp3",
+  "hash": "1f246f73d8dc",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6871,9 +10423,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:softer": {
+  "file": "audio/words/softer.6bbbe820bd9b.mp3",
+  "hash": "6bbbe820bd9b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:some": {
   "file": "audio/words/some.e3a227a4db56.mp3",
   "hash": "e3a227a4db56",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:something": {
+  "file": "audio/words/something.4299dfc64822.mp3",
+  "hash": "4299dfc64822",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6895,6 +10463,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:speaks": {
+  "file": "audio/words/speaks.6423fe7e0f84.mp3",
+  "hash": "6423fe7e0f84",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:spent": {
+  "file": "audio/words/spent.30d10aa9161b.mp3",
+  "hash": "30d10aa9161b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:spin": {
   "file": "audio/words/spin.fc4f86d45a83.mp3",
   "hash": "fc4f86d45a83",
@@ -6911,9 +10495,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:sport": {
+  "file": "audio/words/sport.9bb58f9fa933.mp3",
+  "hash": "9bb58f9fa933",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:spot": {
   "file": "audio/words/spot.51fa7074160a.mp3",
   "hash": "51fa7074160a",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:started": {
+  "file": "audio/words/started.7861baf9e575.mp3",
+  "hash": "7861baf9e575",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6935,9 +10535,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:still": {
+  "file": "audio/words/still.8b367eacc422.mp3",
+  "hash": "8b367eacc422",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:stood": {
+  "file": "audio/words/stood.ca952fcd140c.mp3",
+  "hash": "ca952fcd140c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:stop": {
   "file": "audio/words/stop.ce27b8f8edf4.mp3",
   "hash": "ce27b8f8edf4",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:story": {
+  "file": "audio/words/story.be579b44ad9f.mp3",
+  "hash": "be579b44ad9f",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -6991,6 +10615,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:support": {
+  "file": "audio/words/support.b5ffc0368e9c.mp3",
+  "hash": "b5ffc0368e9c",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:swam": {
   "file": "audio/words/swam.ee643b83809e.mp3",
   "hash": "ee643b83809e",
@@ -7039,6 +10671,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:take": {
+  "file": "audio/words/take.d0a7d62314cb.mp3",
+  "hash": "d0a7d62314cb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:taking": {
+  "file": "audio/words/taking.2645b6a223fe.mp3",
+  "hash": "2645b6a223fe",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:tall": {
   "file": "audio/words/tall.cfb8d7c6934f.mp3",
   "hash": "cfb8d7c6934f",
@@ -7079,6 +10727,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:taught": {
+  "file": "audio/words/taught.e8bf1102fa29.mp3",
+  "hash": "e8bf1102fa29",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:team": {
   "file": "audio/words/team.5ca101afd288.mp3",
   "hash": "5ca101afd288",
@@ -7087,9 +10743,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:teammate": {
+  "file": "audio/words/teammate.d53b72b773b8.mp3",
+  "hash": "d53b72b773b8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:teams": {
+  "file": "audio/words/teams.fdac20f6fe15.mp3",
+  "hash": "fdac20f6fe15",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:ted": {
   "file": "audio/words/ted.5aeee9a0274e.mp3",
   "hash": "5aeee9a0274e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:teenager": {
+  "file": "audio/words/teenager.66e4c6e8ea2a.mp3",
+  "hash": "66e4c6e8ea2a",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7127,6 +10807,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:thanked": {
+  "file": "audio/words/thanked.e3ac026f956d.mp3",
+  "hash": "e3ac026f956d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:that": {
   "file": "audio/words/that.7b6eb0f8f6e1.mp3",
   "hash": "7b6eb0f8f6e1",
@@ -7138,6 +10826,14 @@
  "word:the": {
   "file": "audio/words/the.91e173d962c0.mp3",
   "hash": "91e173d962c0",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:their": {
+  "file": "audio/words/their.dc24e129dedc.mp3",
+  "hash": "dc24e129dedc",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7191,6 +10887,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:things": {
+  "file": "audio/words/things.0d99aa19196b.mp3",
+  "hash": "0d99aa19196b",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:think": {
   "file": "audio/words/think.700090beb53a.mp3",
   "hash": "700090beb53a",
@@ -7207,9 +10911,33 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:those": {
+  "file": "audio/words/those.2e28cbf6766e.mp3",
+  "hash": "2e28cbf6766e",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:thought": {
+  "file": "audio/words/thought.55a09dd57354.mp3",
+  "hash": "55a09dd57354",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:three": {
   "file": "audio/words/three.669bc35a9717.mp3",
   "hash": "669bc35a9717",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:through": {
+  "file": "audio/words/through.1e9d40dee725.mp3",
+  "hash": "1e9d40dee725",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7319,9 +11047,41 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:too": {
+  "file": "audio/words/too.1b76ca61f8bc.mp3",
+  "hash": "1b76ca61f8bc",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:took": {
+  "file": "audio/words/took.286702f87d6d.mp3",
+  "hash": "286702f87d6d",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:top": {
   "file": "audio/words/top.95bc6816bedf.mp3",
   "hash": "95bc6816bedf",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:touch": {
+  "file": "audio/words/touch.8733f45b2098.mp3",
+  "hash": "8733f45b2098",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:toward": {
+  "file": "audio/words/toward.d10b19c7c179.mp3",
+  "hash": "d10b19c7c179",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7335,9 +11095,49 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:town": {
+  "file": "audio/words/town.e7ee9f7e5476.mp3",
+  "hash": "e7ee9f7e5476",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:train": {
+  "file": "audio/words/train.a9674c4ed3ed.mp3",
+  "hash": "a9674c4ed3ed",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:training": {
+  "file": "audio/words/training.1ac252cf9144.mp3",
+  "hash": "1ac252cf9144",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:trap": {
   "file": "audio/words/trap.9f66b55fc8e8.mp3",
   "hash": "9f66b55fc8e8",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:traveled": {
+  "file": "audio/words/traveled.2d9f66229115.mp3",
+  "hash": "2d9f66229115",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:treatment": {
+  "file": "audio/words/treatment.0a0a3c3b56d6.mp3",
+  "hash": "0a0a3c3b56d6",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7351,9 +11151,41 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:trees": {
+  "file": "audio/words/trees.2f49a27e0420.mp3",
+  "hash": "2f49a27e0420",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:tried": {
+  "file": "audio/words/tried.b98a4359b9a6.mp3",
+  "hash": "b98a4359b9a6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:trip": {
   "file": "audio/words/trip.2f1024384be5.mp3",
   "hash": "2f1024384be5",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:trips": {
+  "file": "audio/words/trips.904d9637275f.mp3",
+  "hash": "904d9637275f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:try": {
+  "file": "audio/words/try.63bdaaf4748c.mp3",
+  "hash": "63bdaaf4748c",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7423,6 +11255,22 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:used": {
+  "file": "audio/words/used.1feb8dc50f36.mp3",
+  "hash": "1feb8dc50f36",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:uses": {
+  "file": "audio/words/uses.b9eb28fc8659.mp3",
+  "hash": "b9eb28fc8659",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:very": {
   "file": "audio/words/very.729bd1c33e59.mp3",
   "hash": "729bd1c33e59",
@@ -7439,6 +11287,38 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:vini": {
+  "file": "audio/words/vini.4684a5208ceb.mp3",
+  "hash": "4684a5208ceb",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:vinicius": {
+  "file": "audio/words/vinicius.1dc5def28620.mp3",
+  "hash": "1dc5def28620",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:waiting": {
+  "file": "audio/words/waiting.e832ff12dc3f.mp3",
+  "hash": "e832ff12dc3f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:wanted": {
+  "file": "audio/words/wanted.344d39af4f6f.mp3",
+  "hash": "344d39af4f6f",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:wants": {
   "file": "audio/words/wants.cb4b10b7ceaf.mp3",
   "hash": "cb4b10b7ceaf",
@@ -7450,6 +11330,14 @@
  "word:was": {
   "file": "audio/words/was.280c2525e7ea.mp3",
   "hash": "280c2525e7ea",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:watch": {
+  "file": "audio/words/watch.6f672f63a04c.mp3",
+  "hash": "6f672f63a04c",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7479,6 +11367,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:way": {
+  "file": "audio/words/way.38036ccfdff1.mp3",
+  "hash": "38036ccfdff1",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:we": {
   "file": "audio/words/we.83869661eb6b.mp3",
   "hash": "83869661eb6b",
@@ -7490,6 +11386,14 @@
  "word:web": {
   "file": "audio/words/web.0f2dd7d329ef.mp3",
   "hash": "0f2dd7d329ef",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:well": {
+  "file": "audio/words/well.44167e83dcd9.mp3",
+  "hash": "44167e83dcd9",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7551,6 +11455,14 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:while": {
+  "file": "audio/words/while.b59dd93e77f7.mp3",
+  "hash": "b59dd93e77f7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:whip": {
   "file": "audio/words/whip.2617fd4f3913.mp3",
   "hash": "2617fd4f3913",
@@ -7586,6 +11498,14 @@
  "word:who": {
   "file": "audio/words/who.33af08e05497.mp3",
   "hash": "33af08e05497",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:wide": {
+  "file": "audio/words/wide.324f5ed38a16.mp3",
+  "hash": "324f5ed38a16",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7663,6 +11583,30 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:word": {
+  "file": "audio/words/word.317f12039049.mp3",
+  "hash": "317f12039049",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:work": {
+  "file": "audio/words/work.945ccfbde7c6.mp3",
+  "hash": "945ccfbde7c6",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:working": {
+  "file": "audio/words/working.25f17ee9d4ec.mp3",
+  "hash": "25f17ee9d4ec",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:worms": {
   "file": "audio/words/worms.b518c5c21df5.mp3",
   "hash": "b518c5c21df5",
@@ -7674,6 +11618,14 @@
  "word:would": {
   "file": "audio/words/would.f16edfba3f01.mp3",
   "hash": "f16edfba3f01",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:years": {
+  "file": "audio/words/years.dd48475e098e.mp3",
+  "hash": "dd48475e098e",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",
@@ -7719,9 +11671,25 @@
   "model": "s2.1-pro",
   "speed": 0.85
  },
+ "word:young": {
+  "file": "audio/words/young.c99b77a89bb7.mp3",
+  "hash": "c99b77a89bb7",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
  "word:your": {
   "file": "audio/words/your.5593ef940a15.mp3",
   "hash": "5593ef940a15",
+  "provider": "fish-mcp",
+  "voice": "73b5c16a6e504d6a97868581ada2b8d3",
+  "model": "s2.1-pro",
+  "speed": 0.85
+ },
+ "word:youth": {
+  "file": "audio/words/youth.f382b6202553.mp3",
+  "hash": "f382b6202553",
   "provider": "fish-mcp",
   "voice": "73b5c16a6e504d6a97868581ada2b8d3",
   "model": "s2.1-pro",

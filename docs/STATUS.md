@@ -2,6 +2,17 @@
 
 Update at the end of every working session. Newest log entry on top.
 
+## Local update (2026-10-23): soccer stories and anytime play
+
+- **Implemented locally; not deployed.** Story Time is a prominent home option on every visit, with whole-story listening, reading together, individual-word audio, pause/replay and a per-player bookmark. Optional questions come after the story; listening itself creates no assessment.
+- Added **12 soccer stories, seven sentences each**: sourced accounts about Cristiano Ronaldo, Harry Kane, Vinicius Junior, Messi, Mbappe, Haaland, Salah and Marta, plus four clearly labeled fictional tales about schoolwork, simple equipment, rest and teamwork. The library now contains **22 stories**. Sources are available to grown-ups inside the reader.
+- Generated and imported **496 new Fish recordings per voice**: **1,465 per voice / 2,930 total**. Both Teacher and Josh cover titles, every sentence, questions and new tappable words. Used **17,478 package credits**; balance returned **201,395**. Project IDs and the missing-audio workflow are recorded in SETUP.
+- A persistent student-facing Play button opens three-shot games with unlimited anytime replays. Free kicks, penalties and target practice have distinct rules. Free-kick/target ball positions change both angle and distance. Art retains lightweight SVG, with more natural kicking, keeper motion and ball shadows. Scheduled breaks keep their existing limits.
+- Playing pauses the current learning activity and excludes game time from session duration. Writing input and fluency marks/timer survive the break; other interrupted prompts resume at the same attempt. Scores stay separate from reading progress. Fixed a Saved notification intercepting desktop ball swipes.
+- Performance: soccer loads separately, decoded audio uses a 24-buffer LRU, and animation stops while hidden/closed. Main JavaScript is **436 KB raw / 126 KB gzip**, versus **554 KB / 114 KB** before this work: raw size decreased, compressed size increased with new content. The offline audio library grew from about **24.6 to 39.4 MiB**. Active-shot frame samples in local browser tests had median/p95 **16.7/16.8 ms** on phone/desktop Chromium and **17/18 ms** on iPad-sized WebKit; these are not physical-device measurements.
+- Validation: **148 unit tests**, typecheck, content validation, production build and diff whitespace checks pass. **72 full browser checks** passed across phone, iPad-sized WebKit and desktop; **six additional pause/performance checks** passed, followed by **three active-shot checks** after the final animation adjustment. Offline tests decoded every new story title/sentence in both voices with the origin server stopped. Screenshots of home, reader and game were inspected.
+- Remaining acceptance: physical iPad swipe feel, actual device frame rate and human pronunciation review. Production remains the release recorded below until this update is published.
+
 ## Deployment (2026-10-20, S10)
 
 - **Live:** [Goal Reader](https://learn-to-read-eight.vercel.app) · app release [`93de95b`](https://github.com/mondragon-developer/learn-to-read/commit/93de95b) pushed to `main`. [Vercel deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/91ykPXpCxJqkvE7tuBoMyBVE6UUD) reported **success**.

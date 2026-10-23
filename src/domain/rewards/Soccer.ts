@@ -1,22 +1,26 @@
 /** Soccer is a play break. Its results never become reading assessments or rewards. */
 export const BALL = { x: 320, y: 390 };
 export const clamp = (n: number, min: number, max: number): number => Math.max(min, Math.min(max, n));
-export interface Shot { x: number; y: number; flightMs: number; power: number; range: number; arc: number }
+export interface BallPosition { x: number; y: number }
+export type SoccerMode = 'free-kicks' | 'penalties' | 'targets';
+export interface Shot { x: number; y: number; flightMs: number; power: number; range: number; arc: number; origin?: BallPosition }
 
-export function aimedShot(x: number, power: number): Shot {
+export function aimedShot(x: number, power: number, origin: BallPosition = BALL): Shot {
   power = clamp(power, 0.12, 1.6);
-  return { x: clamp(x, 30, 610), y: 200 - (power - 0.35) * 135,
-    power, range: Math.min(1, power / 0.5), arc: 20 + power * 65,
-    flightMs: 1450 - power * 380 };
+  const distance = Math.max(.6, (origin.y - 200) / (BALL.y - 200));
+  const effective = power / distance;
+  return { x: clamp(x, 30, 610), y: 200 - (effective - 0.35) * 135,
+    power, range: Math.min(1, effective / 0.5), arc: 20 + effective * 65,
+    flightMs: (1450 - power * 380) * distance, origin: { ...origin } };
 }
 
 /** Coordinates use the field's 640 × 440 viewBox, independent of screen size. */
-export function swipeShot(dx: number, dy: number, elapsedMs: number): Shot | null {
+export function swipeShot(dx: number, dy: number, elapsedMs: number, origin: BallPosition = BALL): Shot | null {
   if (dy > -12 || Math.hypot(dx, dy) < 18) return null;
   const distance = Math.hypot(dx, dy);
   const speed = distance / Math.max(120, elapsedMs);
   const power = distance / 240 * 0.65 + speed / 1.5 * 0.35;
-  return aimedShot(BALL.x + dx / Math.max(80, -dy) * 250, power);
+  return aimedShot(origin.x + dx / Math.max(80, -dy) * 250, power, origin);
 }
 
 export interface KeeperMove { startX: number; x: number; y: number; delayMs: number; moveMs: number }
@@ -34,7 +38,8 @@ export function keeperMove(shot: Shot, startX: number, round: number, random = M
 
 export function keeperAt(move: KeeperMove, elapsedMs: number): { x: number; y: number } {
   const t = clamp((elapsedMs - move.delayMs) / move.moveMs, 0, 1);
-  return { x: move.startX + (move.x - move.startX) * t, y: 174 + (move.y - 174) * t };
+  const eased = t * t * (3 - 2 * t);
+  return { x: move.startX + (move.x - move.startX) * eased, y: 174 + (move.y - 174) * eased };
 }
 
 /** Shared by the SVG and hit detection so a diving glove can really save the ball. */
@@ -58,18 +63,27 @@ export function isSaved(shot: Shot, move: KeeperMove): boolean {
 
 export function ballAt(shot: Shot, progress: number): { x: number; y: number } {
   const t = clamp(progress, 0, shot.range);
-  return { x: BALL.x + (shot.x - BALL.x) * t,
-    y: BALL.y + (shot.y - BALL.y) * t - shot.arc * Math.sin(Math.PI * t) };
+  const origin = shot.origin ?? BALL;
+  return { x: origin.x + (shot.x - origin.x) * t,
+    y: origin.y + (shot.y - origin.y) * t - shot.arc * Math.sin(Math.PI * t) };
 }
+
+export const targetFor = (round: number): { x: number; y: number; radius: number } =>
+  ({ x: [215, 425, 320][round % 3]!, y: round % 3 === 2 ? 105 : 140, radius: 34 });
+export const hitsTarget = (shot: Shot, round: number): boolean => {
+  const target = targetFor(round);
+  return shot.range === 1 && Math.hypot(shot.x - target.x, shot.y - target.y) <= target.radius;
+};
 
 export type ShotOutcome = 'goal' | 'saved' | 'wide' | 'short' | 'post' | 'bar' | 'wall';
 export interface ShotResult { outcome: ShotOutcome; progress: number; x: number; y: number }
 export const wallCenters = (round: number): number[] => round === 0 ? [] : [280, 324].map((x) => x + (round === 2 ? 65 : 0));
 
 /** Collision order follows the flight: wall first, then range, frame, keeper and net. */
-export function resolveShot(shot: Shot, move: KeeperMove, round: number): ShotResult {
+export function resolveShot(shot: Shot, move: KeeperMove, round: number, keeperEnabled = true): ShotResult {
   const result = (outcome: ShotOutcome, progress: number): ShotResult => ({ outcome, progress, ...ballAt(shot, progress) });
-  const wallProgress = (BALL.y - 263) / (BALL.y - 200);
+  const origin = shot.origin ?? BALL;
+  const wallProgress = (origin.y - 263) / (origin.y - 200);
   if (shot.range >= wallProgress) {
     const p = ballAt(shot, wallProgress);
     const jump = 18 * Math.sin(Math.PI * wallProgress);
@@ -84,7 +98,7 @@ export function resolveShot(shot: Shot, move: KeeperMove, round: number): ShotRe
   if (shot.x >= 140 && shot.x <= 500 && Math.abs(shot.y - 80) <= 14) return result('bar', 1);
   if (shot.y >= 66 && shot.y <= 210 && Math.min(Math.abs(shot.x - left), Math.abs(shot.x - right)) <= 14) return result('post', 1);
   if (shot.x < left || shot.x > right || shot.y < 80 || shot.y > 200) return result('wide', 1);
-  return result(isSaved(shot, move) ? 'saved' : 'goal', 1);
+  return result(keeperEnabled && isSaved(shot, move) ? 'saved' : 'goal', 1);
 }
 
 /** Completed steps, never individual taps. Leave at least one learning step after a break. */

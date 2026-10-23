@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import { loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
+import { readFileSync } from 'node:fs';
 
 const src = (p: string): string => fileURLToPath(new URL(p, import.meta.url));
 
@@ -39,6 +40,16 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      {
+        name: 'playback-manifests',
+        enforce: 'pre',
+        // Voice IDs, provenance and generation hashes are build records, not playback data.
+        load(id) {
+          if (!/\/src\/data\/audio-(?:josh-)?manifest\.json$/.test(id)) return;
+          const entries = JSON.parse(readFileSync(id, 'utf8')) as Record<string, { file: string }>;
+          return JSON.stringify(Object.fromEntries(Object.entries(entries).map(([key, value]) => [key, { file: value.file }])));
+        },
+      },
       VitePWA({
         registerType: 'autoUpdate',
         includeAssets: ['icon.svg', 'favicon-32.png', 'apple-touch-icon.png'],

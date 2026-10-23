@@ -93,3 +93,15 @@ To add or update Josh recordings, pass `--manifest=src/data/audio-josh-manifest.
 - Start with five minutes. Ten-minute sessions include stories, spoken answer choices and child-led retelling. Adult-assessed one-minute fluency remains a parent-selected activity.
 - Previous assisted modes remain available under **Cómo revisar la lectura**. Test the actual iPad microphone and listen to the 39 phonics clips before relying on sound instruction.
 - 🔒 → Ajustes → FAST scores: enter the fall screening score to see the gap to Level 3.
+
+## Soccer Story Time (2026-10-23)
+
+The home screen opens the story shelf directly. Listen plays a title and all sentences in the selected voice; Read together offers a sentence speaker, tappable words, Previous and Continue. Pause or a play break retains the sentence; a resumed sentence starts from its beginning. Bookmarks are device-local per player, separate from cloud assessment history. Questions are optional after the story.
+
+Twelve new soccer stories contain seven sentences each. Eight are original accounts based on linked sources (available under For grown-ups); four are labeled original fiction. Both Fish voice libraries now contain 1,465 clips, including titles, sentences, question/answer clips and individual words. No API calls happen during playback. The installed app precaches all recordings; wait for a successful online install/update before using new stories offline.
+
+New-generation projects: Teacher `cec479eeae914a11a33b4dc9b6e327d4`, Josh `20d7dd7a9d4042f28fcd552e79959ee0`. Generation used 17,478 credits; balance afterward: 201,395. Durable MP3s and manifests are in the repository. Temporary generation plans and receipts were saved in `/private/tmp/soccer-story-audio/`; recover lost receipts by reading the two Fish projects, not by regenerating audio. `npx vite-node scripts/export-missing-audio.ts /tmp/audio-plan` exports absent files without spending credits.
+
+Automatic breaks still follow the parent setting. The separate always-visible Play button is available on student screens even when automatic breaks are off. Anytime play opens in a focus-trapped dialog and does not earn learning rewards. Closing it resumes the interrupted sentence/attempt; writing strokes and the one-minute reading clock are preserved.
+
+Audio grows the installed MP3 library from 24.6 to 39.4 MiB. Only 24 recently used recordings stay decoded in memory; other clips reload from the offline cache. Game code is loaded on demand, and its animation loop stops when hidden or closed. Physical iPad swipe feel, pronunciation listening review and low-power performance still require device acceptance.

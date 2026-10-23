@@ -14,7 +14,7 @@ import type { I18n } from '@domain/i18n/i18n';
 import type { Profile } from '@domain/profiles/Profile';
 import type { Account } from '@platform/Account';
 
-export type ScreenId = 'players' | 'home' | 'session' | 'stadium' | 'words' | 'practice' | 'parent' | 'audio-review';
+export type ScreenId = 'players' | 'home' | 'stories' | 'session' | 'stadium' | 'words' | 'practice' | 'parent' | 'audio-review';
 
 export interface NavParams {
   settings?: boolean;
@@ -23,6 +23,7 @@ export interface NavParams {
   ready?: boolean;
   /** A chosen topic for this session, as encodeChoice() writes it ('phonics:5', 'story:compare'). */
   topic?: string;
+  storyId?: string;
 }
 
 /** Everything a screen may depend on - built once in main.ts (composition root). */
@@ -47,9 +48,12 @@ export interface AppContext {
   player(): Profile | null;
   setPlayer(p: Profile | null): void;
   navigate(screen: ScreenId, params?: NavParams): void;
+  playSoccer?(): void;
 }
 
 export interface Screen {
   render(host: HTMLElement, params?: NavParams): void | Promise<void>;
   dispose?(): void;
+  /** Suspend the current activity and return its resume callback. */
+  pause?(): () => void;
 }

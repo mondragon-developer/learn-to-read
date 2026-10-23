@@ -5,9 +5,10 @@ import { h, replace, svg } from '../dom';
 /** Original vector player; jersey text is set via textContent, never interpolated markup. */
 export const playerArt = (keeper = false): string => `
   <ellipse cy="8" rx="25" ry="7" fill="#113f34" opacity=".2"/>
-  <path d="M-10-24L-13 2M10-24L15 2" stroke="#d69b70" stroke-width="9" stroke-linecap="round"/>
+  <g class="soccer-cleats" stroke="#f8fafc"><g class="soccer-leg-left"><path d="M-10-24L-12-10-13 2" fill="none" stroke="#d69b70" stroke-width="9" stroke-linecap="round"/><path d="M-13 3h-8" stroke-width="8" stroke-linecap="round"/></g>
+  <g class="soccer-leg-right"><path d="M10-24L12-10 15 2" fill="none" stroke="#d69b70" stroke-width="9" stroke-linecap="round"/><path d="M15 3h8" stroke-width="8" stroke-linecap="round"/></g>
+  </g>
   <path class="soccer-shorts" d="M-18-30H18L17-12H3L0-22-3-12H-17Z" fill="#142e46"/>
-  <path class="soccer-cleats" d="M-13 3h-8M15 3h8" stroke="#f8fafc" stroke-width="8" stroke-linecap="round"/>
   <path class="soccer-arms" d="M-15-51L-31-${keeper ? '43' : '28'}M15-51L31-${keeper ? '43' : '28'}" fill="none" stroke="#d69b70" stroke-width="9" stroke-linecap="round"/>
   ${keeper ? '<circle class="soccer-glove-left" cx="-33" cy="-43" r="8" fill="#fff"/><circle class="soccer-glove-right" cx="33" cy="-43" r="8" fill="#fff"/>' : ''}
   <path class="soccer-shirt" d="M-15-56Q0-62 15-56L19-26Q0-20-19-26Z" fill="${keeper ? '#ffd15b' : '#e96056'}"/>
@@ -19,7 +20,7 @@ export const playerArt = (keeper = false): string => `
 export function dressPlayer(player: Element, profile: Profile): void {
   player.querySelector('.soccer-shirt')?.setAttribute('fill', profile.color);
   player.querySelector('.soccer-shorts')?.setAttribute('fill', profile.settings.shortsColor ?? '#142e46');
-  player.querySelector('.soccer-cleats')?.setAttribute('stroke', profile.settings.cleatsColor ?? '#f8fafc');
+  player.querySelectorAll('.soccer-cleats').forEach((el) => el.setAttribute('stroke', profile.settings.cleatsColor ?? '#f8fafc'));
   const name = player.querySelector('.soccer-name');
   if (name) {
     name.textContent = profile.firstName;

@@ -82,3 +82,21 @@ describe('Fish voice selection', () => {
     } finally { vi.unstubAllGlobals(); }
   });
 });
+
+describe('decoded recording memory', () => {
+  it('evicts older decoded clips while keeping recent clips reusable', async () => {
+    const { vi } = await import('vitest');
+    const fetched: string[] = [];
+    vi.stubGlobal('fetch', async (url: string) => { fetched.push(url); return { ok: true, arrayBuffer: async () => new ArrayBuffer(1) }; });
+    const clips = Array.from({ length: 30 }, (_, i) => clip(`word:w${i}`, `w${i}`));
+    const engine = { context: { decodeAudioData: async () => ({ duration: 1 }) }, play: async () => undefined } as unknown as AudioEngine;
+    try {
+      const p = new WebAudioPlayer(engine, clips, new Set(clips.map((c) => c.key)), '/');
+      for (const c of clips) await p.play(c.key);
+      await p.play('word:w29');
+      expect(fetched).toHaveLength(30);
+      await p.play('word:w0');
+      expect(fetched.filter((f) => f === '/audio/w0.mp3')).toHaveLength(2);
+    } finally { vi.unstubAllGlobals(); }
+  });
+});

@@ -1,0 +1,72 @@
+{
+  "id": "soccer-school",
+  "title": "A Book Before the Ball",
+  "collection": "soccer",
+  "theme": "School and sport",
+  "genre": "fiction",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Nico put his soccer ball by the door.",
+    "He still had a short book to read.",
+    "One word was hard, so he asked Dad for help.",
+    "They read the sentence together.",
+    "Then Nico packed his book and went out to play.",
+    "At practice, he listened to his coach, too.",
+    "Nico was learning on the page and on the field."
+  ],
+  "questions": [
+    {
+      "prompt": "What did Nico do before soccer?",
+      "options": [
+        "Read a book.",
+        "Build a boat.",
+        "Paint a fence."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Who helped with a hard word?",
+      "options": [
+        "A goalkeeper.",
+        "Dad.",
+        "A shopkeeper."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Books stop us from being players.",
+        "Asking for help is bad.",
+        "There is time for learning and play."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ]
+}

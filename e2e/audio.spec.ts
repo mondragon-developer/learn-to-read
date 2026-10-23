@@ -50,6 +50,8 @@ for (const voice of ['teacher', 'josh']) test(`${voice} Fish recordings decode a
       if (!key) throw new Error(`Missing Fish recordings: ${kind}`);
       return recordings[key]!.file;
     });
+    // Every new soccer sentence and title must decode from the installed offline cache.
+    selected.push(...all.filter((key) => /^story:soccer-[^:]+:(title|\d+)$/.test(key)).map((key) => recordings[key]!.file));
     await page.goto(origin);
     await page.evaluate(async () => {
       await navigator.serviceWorker.ready;

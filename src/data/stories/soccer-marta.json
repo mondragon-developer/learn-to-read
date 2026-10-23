@@ -1,0 +1,79 @@
+{
+  "id": "soccer-marta",
+  "title": "Marta Keeps Her Dream",
+  "collection": "soccer",
+  "theme": "Belonging",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Marta grew up in a small town in Brazil.",
+    "She loved playing soccer.",
+    "Some people thought girls should not play.",
+    "Marta kept her dream of becoming a soccer player.",
+    "At fourteen, she took a long bus trip to Rio.",
+    "That trip was a big step in her soccer journey.",
+    "Her story reminds us that girls belong in soccer, too."
+  ],
+  "questions": [
+    {
+      "prompt": "What sport did Marta love?",
+      "options": [
+        "Soccer.",
+        "Golf.",
+        "Skiing."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Where did she travel at fourteen?",
+      "options": [
+        "Bondy.",
+        "Rio.",
+        "Lisbon."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Soccer is only for boys.",
+        "Other people must choose our dreams.",
+        "Girls belong in soccer, too."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Marta",
+  "sources": [
+    {
+      "title": "Marta: Letter to My Younger Self",
+      "url": "https://www.theplayerstribune.com/articles/marta-brazil-letter-to-my-younger-self"
+    }
+  ]
+}

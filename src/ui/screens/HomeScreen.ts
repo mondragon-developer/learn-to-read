@@ -17,6 +17,11 @@ export class HomeScreen implements Screen {
     const pct = t.next ? Math.round(((t.next.blocks - t.blocksToNext) / t.next.blocks) * 100) : 100;
     replace(host, h('div', { class: 'screen center home' },
       h('h1', {}, `Hi, ${p.firstName}!`),
+      h('div', { class: 'home-choices' },
+        h('button', { class: 'story-entry', onClick: () => this.ctx.navigate('stories') },
+          h('span', { class: 'tag' }, 'READ OR LISTEN'), h('strong', {}, '📖 Soccer Story Time'),
+          h('span', {}, 'Little stories. Big dreams.'), h('span', { class: 'small' }, 'Listen, or read together →')),
+        h('button', { class: 'btn soft', onClick: () => this.ctx.playSoccer?.() }, '⚽ Play soccer · 3 shots')),
       h('button', { class: 'kickoff', onClick: async () => {
         if (p.settings.checkMode === 'independent') {
           await this.ctx.audio.unlock();

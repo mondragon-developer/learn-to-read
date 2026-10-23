@@ -63,6 +63,12 @@ export interface StoryQuestion {
 export interface Story {
   id: string;                 // 's01'
   title: string;
+  collection?: 'soccer';
+  theme?: string;
+  player?: string;
+  /** Original child-friendly biographies cite evidence; invented stories are labeled fiction. */
+  genre?: 'biography' | 'fiction';
+  sources?: { title: string; url: string }[];
   /** decodable: he reads it alone (validated). readalong: homework-level, app reads first. */
   tier: 'decodable' | 'readalong';
   /** Earliest unit after which the story is offered (decodable tier is validated at this unit). */

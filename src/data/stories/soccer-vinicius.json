@@ -1,0 +1,79 @@
+{
+  "id": "soccer-vinicius",
+  "title": "Vini Helps Children Learn",
+  "collection": "soccer",
+  "theme": "Learning",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Vinicius Junior is a soccer player from Brazil.",
+    "People also call him Vini.",
+    "He cares about children learning at school.",
+    "He started a group to help children in Brazil.",
+    "The group uses sport to get children excited about learning.",
+    "Vini also speaks up for respect and fair treatment.",
+    "His work shows that players can help beyond the field."
+  ],
+  "questions": [
+    {
+      "prompt": "Where is Vini from?",
+      "options": [
+        "Brazil.",
+        "Canada.",
+        "Japan."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What does his group help children do?",
+      "options": [
+        "Buy race cars.",
+        "Learn at school.",
+        "Stay away from books."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Only goals matter.",
+        "Learning is only for grown-ups.",
+        "Helping others matters beyond the field."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Vinícius Júnior",
+  "sources": [
+    {
+      "title": "UNESCO: Vinícius Junior and education",
+      "url": "https://www.unesco.org/en/articles/vinicius-junior-named-unesco-goodwill-ambassador"
+    }
+  ]
+}

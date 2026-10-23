@@ -1,0 +1,79 @@
+{
+  "id": "soccer-ronaldo",
+  "title": "Cristiano and the Big Step",
+  "collection": "soccer",
+  "theme": "Courage",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Cristiano Ronaldo grew up on the island of Madeira.",
+    "He loved to play soccer with other children.",
+    "He played near home and at school.",
+    "As a boy, he moved to Lisbon to play soccer.",
+    "His parents helped him take this big step.",
+    "Leaving home was a hard choice for the family.",
+    "His soccer journey began with a dream and family support."
+  ],
+  "questions": [
+    {
+      "prompt": "Where did Cristiano grow up?",
+      "options": [
+        "On Madeira.",
+        "In a desert.",
+        "On a farm."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Who helped him take a big step?",
+      "options": [
+        "A pilot.",
+        "His parents.",
+        "A shopkeeper."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "We must do everything alone.",
+        "Dreams never change.",
+        "We can ask for help with a big change."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Cristiano Ronaldo",
+  "sources": [
+    {
+      "title": "UEFA: Ronaldo on his childhood",
+      "url": "https://www.uefa.com/uefaeuro/history/news/0253-0d816dccc235-61cf66bf2c76-1000--cristiano-ronaldo-on-fate-childhood-and-portugal/"
+    }
+  ]
+}

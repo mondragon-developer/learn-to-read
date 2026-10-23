@@ -67,6 +67,11 @@ export async function story(kit: Kit, host: HTMLElement, s: Story): Promise<void
     });
   }
   for (const w of [...helpedWords].filter(Boolean).slice(0, MAX_NEW_CARDS)) await kit.record('story-read', cardId(w), 'missed', kit.independent ? 'mic' : 'grownup', { story: s.id });
+  await storyActivities(kit, host, s);
+}
+
+/** Optional activities shared by lesson stories and the standalone story shelf. */
+export async function storyActivities(kit: Kit, host: HTMLElement, s: Story): Promise<void> {
 
   for (let i = 0; i < s.questions.length; i++) {
     const q = s.questions[i];

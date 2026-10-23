@@ -1,0 +1,72 @@
+{
+  "id": "soccer-team",
+  "title": "The Pass That Helped",
+  "collection": "soccer",
+  "theme": "Teamwork",
+  "genre": "fiction",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Sam wanted to score a goal.",
+    "Two defenders stood in his way.",
+    "He saw Mia waiting in an open spot.",
+    "Sam passed the ball to her.",
+    "Mia kicked, and the ball went into the goal.",
+    "She thanked Sam for the pass.",
+    "They smiled because they had helped each other."
+  ],
+  "questions": [
+    {
+      "prompt": "Who wanted to score?",
+      "options": [
+        "Sam.",
+        "Ben.",
+        "Ana."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What did Sam do when blocked?",
+      "options": [
+        "Left the field.",
+        "Passed to Mia.",
+        "Held the ball."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "We must always shoot alone.",
+        "Only the scorer matters.",
+        "Helping a teammate helps the team."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ]
+}

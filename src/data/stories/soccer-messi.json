@@ -1,0 +1,79 @@
+{
+  "id": "soccer-messi",
+  "title": "Leo Gets a Chance",
+  "collection": "soccer",
+  "theme": "Encouragement",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Lionel Messi loved soccer as a small boy.",
+    "His family called him Leo.",
+    "He went to watch games with his grandmother.",
+    "One team needed another player.",
+    "His grandmother asked the coach to let Leo play.",
+    "Leo got his chance to join the game.",
+    "A caring grown-up helped a little player get started."
+  ],
+  "questions": [
+    {
+      "prompt": "Who went to games with Leo?",
+      "options": [
+        "His grandmother.",
+        "A firefighter.",
+        "A sailor."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What did the team need?",
+      "options": [
+        "A new school.",
+        "Another player.",
+        "A bus."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Small players cannot join in.",
+        "We should never ask for a chance.",
+        "Encouraging someone can help them begin."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Lionel Messi",
+  "sources": [
+    {
+      "title": "FC Barcelona: Messi remembers Grandoli",
+      "url": "https://www.fcbarcelona.com/en/football/first-team/news/2153395/"
+    }
+  ]
+}

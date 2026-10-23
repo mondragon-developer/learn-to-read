@@ -1,0 +1,79 @@
+{
+  "id": "soccer-haaland",
+  "title": "Erling and the Team Rules",
+  "collection": "soccer",
+  "theme": "Responsibility",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Erling Haaland played soccer as a boy in Bryne.",
+    "His coach wanted the children to be good people.",
+    "The team had simple rules.",
+    "Players should arrive on time and try their best.",
+    "They should also behave well.",
+    "Erling enjoyed playing and spent lots of time training.",
+    "Being a good teammate meant more than scoring goals."
+  ],
+  "questions": [
+    {
+      "prompt": "Where did Erling play as a boy?",
+      "options": [
+        "Bryne.",
+        "Bondy.",
+        "Lisbon."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What was one team rule?",
+      "options": [
+        "Ignore the coach.",
+        "Arrive on time.",
+        "Keep the ball forever."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "Goals are the only thing that matters.",
+        "Team rules are only for coaches.",
+        "Good behavior matters as well as goals."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Erling Haaland",
+  "sources": [
+    {
+      "title": "Manchester City: The Boy From Bryne",
+      "url": "https://www.mancity.com/features/haaland/bryne/fk/"
+    }
+  ]
+}

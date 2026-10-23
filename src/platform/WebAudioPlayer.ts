@@ -122,6 +122,7 @@ export class WebAudioPlayer implements AudioPort {
     const clip = this.clip(key);
     const cacheKey = clip?.file ?? key;
     let p = this.buffers.get(cacheKey);
+    if (p) { this.buffers.delete(cacheKey); this.buffers.set(cacheKey, p); }
     if (!p) {
       const ctx = this.engine.context;
       p = clip && ctx
@@ -131,6 +132,8 @@ export class WebAudioPlayer implements AudioPort {
           .catch(() => null)
         : Promise.resolve(null);
       this.buffers.set(cacheKey, p);
+      // The MP3 remains in the offline cache; keep only a small working set decoded in RAM.
+      while (this.buffers.size > 24) this.buffers.delete(this.buffers.keys().next().value!);
       // Only successes are cached: a network blip or a call before unlock must not pin the clip to the device voice.
       void p.then((buffer) => { if (!buffer) this.buffers.delete(cacheKey); });
     }

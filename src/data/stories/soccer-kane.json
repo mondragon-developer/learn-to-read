@@ -1,0 +1,79 @@
+{
+  "id": "soccer-kane",
+  "title": "Harry Tries Again",
+  "collection": "soccer",
+  "theme": "Perseverance",
+  "genre": "biography",
+  "tier": "readalong",
+  "unit": 1,
+  "skill": "moral",
+  "sentences": [
+    "Harry Kane loved soccer when he was a boy.",
+    "He played in a park with his dad and brother.",
+    "They used two trees as a goal.",
+    "At eight, Harry had to leave one youth team.",
+    "His dad helped him keep going.",
+    "Harry kept playing and got chances with other teams.",
+    "One setback did not end his soccer dream."
+  ],
+  "questions": [
+    {
+      "prompt": "What did Harry use as a goal?",
+      "options": [
+        "Two trees.",
+        "Two beds.",
+        "Two boats."
+      ],
+      "answer": 0,
+      "skill": "detail"
+    },
+    {
+      "prompt": "Who helped Harry keep going?",
+      "options": [
+        "A baker.",
+        "His dad.",
+        "A bus driver."
+      ],
+      "answer": 1,
+      "skill": "detail"
+    },
+    {
+      "prompt": "What can we learn?",
+      "options": [
+        "One setback ends every dream.",
+        "Only new equipment helps us play.",
+        "A setback can be followed by another chance."
+      ],
+      "answer": 2,
+      "skill": "moral"
+    }
+  ],
+  "bonus": {
+    "kind": "meaning",
+    "prompt": "What does practice mean?",
+    "options": [
+      "Doing something to get better.",
+      "Giving up at once.",
+      "Never trying."
+    ],
+    "answer": 0
+  },
+  "order": [
+    0,
+    3,
+    6
+  ],
+  "reward": "⚽",
+  "benchmarks": [
+    "ELA.1.R.1.1",
+    "ELA.1.R.1.2",
+    "ELA.1.R.3.2.a"
+  ],
+  "player": "Harry Kane",
+  "sources": [
+    {
+      "title": "Harry Kane: Zero to 100",
+      "url": "https://www.theplayerstribune.com/articles/harry-kane-tottenham-zero-to-100"
+    }
+  ]
+}

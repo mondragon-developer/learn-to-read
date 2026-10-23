@@ -33,6 +33,7 @@ import { Account } from '@platform/Account';
 import { AppShell } from '@ui/AppShell';
 import { PlayersScreen } from '@ui/screens/PlayersScreen';
 import { HomeScreen } from '@ui/screens/HomeScreen';
+import { StoriesScreen } from '@ui/screens/StoriesScreen';
 import { SessionScreen } from '@ui/screens/SessionScreen';
 import { StadiumScreen } from '@ui/screens/StadiumScreen';
 import { WordBankScreen } from '@ui/screens/WordBankScreen';
@@ -67,7 +68,7 @@ async function boot(): Promise<void> {
   // One audio engine for clips and his recordings (see AudioEngine for why).
   const engine = new AudioEngine();
   // Recorded files have content-versioned names so an iPad never reuses an older voice.
-  const recordings: Record<string, { file: string; hash: string }> = manifest;
+  const recordings: Record<string, { file: string }> = manifest;
   const playbackCatalog = catalog.map((clip) => ({ ...clip, file: recordings[clip.key]?.file ?? clip.file }));
   const joshRecordings: Record<string, { file: string }> = joshManifest;
   const audio = new WebAudioPlayer(engine, playbackCatalog, new Set(Object.keys(recordings)), import.meta.env.BASE_URL, {
@@ -92,10 +93,12 @@ async function boot(): Promise<void> {
     player: () => player,
     setPlayer: (p) => { player = p; audio.selectVoice(p?.settings.voice ?? 'teacher'); writePlayer(p?.id ?? null); shell?.paintChip(); },
     navigate: (id, params) => void shell.navigate(id, params),
+    playSoccer: () => void shell.playSoccer(),
   };
   shell = new AppShell(ctx, {
     players: new PlayersScreen(ctx),
     home: new HomeScreen(ctx),
+    stories: new StoriesScreen(ctx),
     session: new SessionScreen(ctx),
     stadium: new StadiumScreen(ctx),
     words: new WordBankScreen(ctx),

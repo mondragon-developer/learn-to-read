@@ -25,6 +25,17 @@ export async function fluency(kit: Kit, host: HTMLElement, passage: Passage): Pr
   } }, tok));
   const clock = h('div', { class: 'fl-clock', 'aria-live': 'off' }, '1:00');
   const panel = h('div', { class: 'panel' });
+  let timer = 0;
+  let pausedMs = 0;
+  let pausedAt: number | null = null;
+  let continueClock: (() => void) | undefined;
+  kit.onPlayBreak = () => {
+    pausedAt = performance.now(); window.clearTimeout(timer);
+    return () => {
+      pausedMs += performance.now() - (pausedAt ?? performance.now()); pausedAt = null;
+      if (phase === 'reading') continueClock?.();
+    };
+  };
   replace(host, h('div', { class: 'stage story' }, kit.header('fluency'),
     h('div', { class: 'book' }, h('h2', { class: 'story-title' }, passage.title), h('p', { class: 'line fl-text' }, words)),
     h('div', { class: 'coach-dock' }, clock, panel)));
@@ -33,8 +44,8 @@ export async function fluency(kit: Kit, host: HTMLElement, passage: Passage): Pr
   await new Promise<void>((resolve) => replace(panel, h('button', { class: 'btn big ok', onClick: () => resolve() }, t.t('fl.start'))));
   phase = 'reading';
   const t0 = performance.now();
-  const elapsed = (): number => Math.min(SECONDS, (performance.now() - t0) / 1000);
-  let timer = 0;
+  pausedMs = 0;
+  const elapsed = (): number => Math.min(SECONDS, ((pausedAt ?? performance.now()) - t0 - pausedMs) / 1000);
   kit.abort.signal.addEventListener('abort', () => window.clearTimeout(timer), { once: true });
   await new Promise<void>((resolve) => {
     replace(panel, h('button', { class: 'btn soft', onClick: () => resolve() }, t.t('fl.early')));
@@ -43,6 +54,7 @@ export async function fluency(kit: Kit, host: HTMLElement, passage: Passage): Pr
       clock.textContent = `0:${String(Math.ceil(left)).padStart(2, '0')}`;
       if (left <= 0) resolve(); else timer = window.setTimeout(tick, 200);
     };
+    continueClock = tick;
     tick();
   });
   window.clearTimeout(timer);

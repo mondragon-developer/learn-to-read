@@ -8,7 +8,6 @@ import type { AppContext, NavParams, Screen } from '../context';
 import { h, replace, sleep } from '../dom';
 import { Kit } from '../activities/kit';
 import { runStep } from '../activities/runners';
-import { soccerBreak } from '../activities/soccer';
 import { SoccerBreaks } from '@domain/rewards/Soccer';
 import { chooseSoccerKit } from '../activities/soccerPlayer';
 
@@ -17,10 +16,12 @@ const LEAVE_HOLD_MS = 800;
 /** One match: runs the planned steps, keeps score, ends with Full Time (and optional Extra Time). */
 export class SessionScreen implements Screen {
   private kit: Kit | null = null;
+  private freePlayMs = 0;
 
   constructor(private readonly ctx: AppContext) {}
 
   async render(host: HTMLElement, params?: NavParams): Promise<void> {
+    this.freePlayMs = 0;
     const profile = this.ctx.player();
     if (!profile) { this.ctx.navigate('players'); return; }
     const { library, planner, clock } = this.ctx;
@@ -77,6 +78,7 @@ export class SessionScreen implements Screen {
 
     skipGroup = false;
     const t0 = clock.now();
+    this.freePlayMs = 0; // Kickoff play happened before the reading timer began.
     let soccerMs = 0;
     const playSoccer = async (chooseKit = false): Promise<void> => {
       const started = clock.now();
@@ -84,6 +86,7 @@ export class SessionScreen implements Screen {
       if (controls) controls.hidden = true;
       breakProgress.hidden = true;
       try {
+        const { soccerBreak } = await import('../activities/soccer');
         if (chooseKit) await kit.part(stage, chooseSoccerKit);
         if (!kit.closed) await kit.part(stage, soccerBreak);
       } catch (err) { if (!kit.closed) console.error('soccer break failed', err); }
@@ -125,7 +128,7 @@ export class SessionScreen implements Screen {
     breakProgress.remove();
     progress(1);
     await kit.record('session', kit.sessionId, 'first-try', 'tap', {
-      plannedMin: profile.settings.minutes, durationMs: Math.max(0, clock.now() - t0 - soccerMs), soccerMs, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
+      plannedMin: profile.settings.minutes, durationMs: Math.max(0, clock.now() - t0 - soccerMs - this.freePlayMs), soccerMs: soccerMs + this.freePlayMs, goals: kit.goals, steps: plan.steps.length, extra: !!params?.extra,
       ...(params?.topic ? { topic: params.topic } : {}),
       micFallback: kit.reader.independentReader?.fallback ?? kit.grownUpMode,
       independent: kit.independent,
@@ -139,6 +142,12 @@ export class SessionScreen implements Screen {
     this.kit = null;
     this.ctx.audio.stop();
     this.ctx.checker.cancel(); // the recognizer is shared; stop any listen in flight
+  }
+
+  pause(): () => void {
+    const started = this.ctx.clock.now();
+    const resume = this.kit?.pause();
+    return () => { this.freePlayMs += Math.max(0, this.ctx.clock.now() - started); resume?.(); };
   }
 
   /** Counter groups: challenge words count apart from the unit's new words. */

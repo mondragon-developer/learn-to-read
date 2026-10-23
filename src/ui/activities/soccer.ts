@@ -1,9 +1,9 @@
-import { BALL, aimedShot, ballAt, clamp, keeperMove, keeperPose, resolveShot, swipeShot, type Shot, type ShotResult } from '@domain/rewards/Soccer';
+import { BALL, aimedShot, ballAt, clamp, hitsTarget, targetFor, type BallPosition, type SoccerMode, keeperMove, keeperPose, resolveShot, swipeShot, type Shot, type ShotResult } from '@domain/rewards/Soccer';
 import type { Kit } from './kit';
 import { h, replace, svg } from '../dom';
 import { dressPlayer, playerArt } from './soccerPlayer';
 
-export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
+export async function soccerBreak(kit: Kit, host: HTMLElement, options: { anytime?: boolean } = {}): Promise<void> {
   if (kit.closed) return;
   await new Promise<void>((resolve) => {
     let frame = 0;
@@ -11,6 +11,9 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     let round = 0;
     let goals = 0;
     let replayUsed = false;
+    let mode: SoccerMode = 'free-kicks';
+    let origin: BallPosition = { ...BALL };
+    let hiddenAt: number | null = null;
     let phase: 'invite' | 'aim' | 'flight' | 'result' | 'done' = 'invite';
     let muted = false;
     let keeperX = 320;
@@ -31,6 +34,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       if (closed) return;
       closed = true;
       cancelAnimationFrame(frame);
+      document.removeEventListener('visibilitychange', visibility);
       kit.ctx.audio.stop();
       kit.abort.signal.removeEventListener('abort', finish);
       resolve();
@@ -51,10 +55,12 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       <path d="M0 111H640V144H0Z" fill="#295b5e"/>
       <path d="M0 119H640M0 133H640" stroke="#ffc86a" stroke-width="5" stroke-dasharray="5 16" opacity=".8"/>
       <path d="M0 210H640V265H0ZM0 330H640V395H0Z" fill="#43976b"/>
+      <path d="M0 440L230 144M150 440L270 144M490 440L370 144M640 440L410 144" fill="none" stroke="#a2cf83" stroke-opacity=".14" stroke-width="32"/>
       <path d="M130 199L46 436M510 199L594 436M94 300H546M240 300Q320 357 400 300" fill="none" stroke="#e0f4cc" stroke-width="3" opacity=".7"/>
       <path d="M135 200L153 80H487L505 200Z" fill="#183f42" opacity=".45"/>
       <path class="soccer-net" d="M135 200L153 80H487L505 200Z" fill="url(#soccer-net)"/>
       <path d="M135 200L153 80H487L505 200" fill="none" stroke="#f8ffff" stroke-width="9" stroke-linejoin="round"/>
+      <circle class="soccer-target" cx="215" cy="140" r="34" visibility="hidden"/>
       <g class="soccer-keeper" transform="translate(320 174)"><g transform="translate(0 38)">${playerArt(true)}</g></g>
       <g class="soccer-wall" visibility="hidden"><g transform="translate(280 263)">${playerArt()}</g><g transform="translate(324 263)">${playerArt()}</g></g>
       <ellipse class="soccer-ball-shadow" cx="320" cy="400" rx="24" ry="7" fill="#153c32" opacity=".22"/>
@@ -73,6 +79,24 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     const kicker = el<SVGGElement>('.soccer-kicker');
     const wall = el<SVGGElement>('.soccer-wall');
     const trail = el<SVGPathElement>('.soccer-trail');
+    const shadow = el<SVGEllipseElement>('.soccer-ball-shadow');
+    const target = el<SVGCircleElement>('.soccer-target');
+    const arms = keeper.querySelector('.soccer-arms')!;
+    const gloves = keeper.querySelectorAll('.soccer-glove-left, .soccer-glove-right');
+    const kickLeg = kicker.querySelector('.soccer-leg-right')!;
+    const plantLeg = kicker.querySelector('.soccer-leg-left')!;
+    const keeperLeft = keeper.querySelector('.soccer-leg-left')!;
+    const keeperRight = keeper.querySelector('.soccer-leg-right')!;
+    const startFrame = (): void => { if (!frame && !document.hidden && !closed) frame = requestAnimationFrame(tick); };
+    const visibility = (): void => {
+      if (document.hidden) { hiddenAt = performance.now(); cancelAnimationFrame(frame); frame = 0; drag = null; trail.setAttribute('d', ''); kit.ctx.audio.stop(); }
+      else if (hiddenAt !== null) {
+        const paused = performance.now() - hiddenAt;
+        shotStart += paused; resultStart += paused; resultUntil += paused; nextShuffle += paused;
+        hiddenAt = null; lastFrame = 0; if (phase !== 'done') startFrame();
+      }
+    };
+    document.addEventListener('visibilitychange', visibility);
     const sparkles = el<SVGGElement>('.soccer-sparkles');
     dressPlayer(kicker, kit.profile);
     const control = h('div', { class: 'soccer-control', role: 'button', tabindex: '0', 'aria-label': 'Swipe the ball toward the goal. Or use left and right arrows to aim, up and down for power, then Enter to kick.' }, art);
@@ -86,15 +110,15 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     } }, '⚽ Play');
     const back = h('button', { class: 'btn soft soccer-back', onClick: finish }, 'Keep reading →');
     const replay = h('button', { class: 'btn soft soccer-replay', hidden: true, onClick: () => {
-      if (phase !== 'done' || replayUsed || closed) return;
+      if (phase !== 'done' || (!options.anytime && replayUsed) || closed) return;
       replayUsed = true;
       replay.hidden = true;
       round = goals = 0;
       back.className = 'btn soft soccer-back';
       prepare();
       control.focus({ preventScroll: true });
-      frame = requestAnimationFrame(tick);
-    } }, '⚽ Play one more time');
+      startFrame();
+    } }, options.anytime ? '⚽ Play again' : '⚽ Play one more time');
     const sound = h('button', { class: 'btn small', 'aria-label': 'Mute game sounds', 'aria-pressed': 'false', onClick: () => {
       muted = !muted;
       sound.textContent = muted ? '🔇 Sound off' : '🔊 Sound on';
@@ -102,9 +126,28 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       sound.setAttribute('aria-label', muted ? 'Unmute game sounds' : 'Mute game sounds');
       if (muted) kit.ctx.audio.stop();
     } }, '🔊 Sound on');
+    const modeButtons = (['free-kicks', 'penalties', 'targets'] as const).map((value, index) =>
+      h('button', { class: 'btn soft', 'aria-pressed': String(mode === value), onClick: () => {
+        if (phase === 'flight' || phase === 'result') return;
+        mode = value; round = goals = 0; replayUsed = false; origin = { ...BALL };
+        play.hidden = true; replay.hidden = true; prepare();
+        modeButtons.forEach((b, i) => b.setAttribute('aria-pressed', String(i === index)));
+      } }, ['Free kicks', 'Penalties', 'Targets'][index]));
+    const positions = h('fieldset', { class: 'soccer-position' }, h('legend', {}, 'Place your ball'));
+    const positionButtons: HTMLButtonElement[] = [];
+    for (const [label, x, y] of [['Left', 220, 0], ['Center', 320, 0], ['Right', 420, 0], ['Near', 0, 335], ['Far', 0, 390]] as const) {
+      const button = h('button', { class: 'btn soft', onClick: () => {
+        if (phase !== 'aim') return;
+        if (x) origin.x = x; else origin.y = y;
+        prepare();
+      } }, label);
+      button.dataset.x = String(x); button.dataset.y = String(y);
+      positionButtons.push(button); positions.appendChild(button);
+    }
     const panel = h('div', { class: 'stage soccer-stage' },
       h('div', { class: 'soccer-heading' }, h('span', { class: 'tag' }, 'SOCCER BREAK'), sound),
-      title, status, dots, control, powerMeter,
+      h('nav', { class: 'soccer-modes', 'aria-label': 'Soccer game mode' }, modeButtons),
+      title, status, dots, control, positions, powerMeter,
       h('div', { class: 'row center soccer-actions' }, play, replay, back));
     replace(host, panel);
     function paintDots(): void {
@@ -121,35 +164,48 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
       keyboardPower = 0.85;
       nextShuffle = 0;
       title.textContent = `Shot ${round + 1} of 3`;
-      status.textContent = round === 0 ? 'Swipe the ball toward the goal!' : 'Aim past the wall. Swipe to shoot!';
-      back.textContent = 'Back to practice →';
-      ball.setAttribute('transform', `translate(${BALL.x} ${BALL.y})`);
-      kicker.setAttribute('transform', 'translate(266 399)');
-      wall.setAttribute('visibility', round ? 'visible' : 'hidden');
+      status.textContent = mode === 'targets' ? 'Hit the golden target!' : mode === 'free-kicks' && round > 0 ? 'Aim past the wall. Swipe to shoot!' : 'Swipe the ball toward the goal!';
+      positions.hidden = mode === 'penalties';
+      positionButtons.forEach((b) => { b.disabled = false; b.setAttribute('aria-pressed', String(Number(b.dataset.x) ? origin.x === Number(b.dataset.x) : origin.y === Number(b.dataset.y))); });
+      modeButtons.forEach((b) => { b.disabled = false; });
+      const spot = targetFor(round);
+      target.setAttribute('cx', String(spot.x)); target.setAttribute('cy', String(spot.y));
+      target.setAttribute('visibility', mode === 'targets' ? 'visible' : 'hidden');
+      keeper.setAttribute('visibility', mode === 'targets' ? 'hidden' : 'visible');
+      kickLeg.removeAttribute('transform'); plantLeg.removeAttribute('transform');
+      keeperLeft.removeAttribute('transform'); keeperRight.removeAttribute('transform');
+      back.textContent = options.anytime ? 'Back to where I was →' : 'Back to practice →';
+      ball.setAttribute('transform', `translate(${origin.x} ${origin.y})`);
+      kicker.setAttribute('transform', `translate(${origin.x - 54} ${origin.y + 9})`);
+      shadow.setAttribute('cx', String(origin.x)); shadow.setAttribute('cy', String(origin.y + 10)); shadow.setAttribute('rx', '24'); shadow.setAttribute('opacity', '.22');
+      wall.setAttribute('visibility', mode === 'free-kicks' && round ? 'visible' : 'hidden');
       wall.setAttribute('transform', `translate(${round === 2 ? 65 : 0} 0)`);
       sparkles.setAttribute('visibility', 'hidden');
       trail.setAttribute('d', '');
       panel.classList.remove('soccer-scored');
       panel.removeAttribute('data-outcome');
-      keeper.querySelector('.soccer-arms')?.setAttribute('d', 'M-15-51L-33-43M15-51L33-43');
-      keeper.querySelectorAll('.soccer-glove-left, .soccer-glove-right').forEach((g) => g.setAttribute('cy', '-43'));
+      arms?.setAttribute('d', 'M-15-51L-33-43M15-51L33-43');
+      gloves.forEach((g) => g.setAttribute('cy', '-43'));
       powerMeter.setAttribute('aria-valuenow', '0');
       powerMeter.style.setProperty('--power', '0%');
       powerMeter.firstElementChild!.textContent = 'Swipe up to shoot · longer and quicker = stronger';
       control.setAttribute('aria-disabled', 'false');
       paintDots();
+      startFrame();
     }
     function launch(next: Shot): void {
       if (phase !== 'aim' || closed) return;
       shot = next;
       move = keeperMove(next, keeperX, round);
-      impact = resolveShot(next, move, round);
+      impact = resolveShot(next, move, mode === 'free-kicks' ? round : 0, mode !== 'targets');
+      positionButtons.forEach((b) => { b.disabled = true; }); modeButtons.forEach((b) => { b.disabled = true; });
       shotStart = performance.now();
       phase = 'flight';
       drag = null;
       trail.setAttribute('d', '');
       status.textContent = 'Here comes your shot!';
       control.setAttribute('aria-disabled', 'true');
+      startFrame();
     }
     const point = (event: PointerEvent): { x: number; y: number } => {
       const rect = art.getBoundingClientRect();
@@ -157,7 +213,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     };
     const showAim = (aim: Shot | null): void => {
       const p = aim ? ballAt(aim, Math.min(aim.range, .6)) : null;
-      trail.setAttribute('d', p ? `M320 390Q320 320 ${p.x} ${p.y}` : '');
+      trail.setAttribute('d', p ? `M${origin.x} ${origin.y}Q${origin.x} ${origin.y - 70} ${p.x} ${p.y}` : '');
       const pct = aim ? Math.round(aim.power / 1.6 * 100) : 0;
       powerMeter.setAttribute('aria-valuenow', String(pct));
       powerMeter.style.setProperty('--power', `${pct}%`);
@@ -166,7 +222,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     control.addEventListener('pointerdown', (event) => {
       if (phase !== 'aim' || drag || !event.isPrimary || event.button !== 0) return;
       const p = point(event);
-      if (Math.hypot(p.x - BALL.x, p.y - BALL.y) > 65) return;
+      if (Math.hypot(p.x - origin.x, p.y - origin.y) > 65) return;
       event.preventDefault();
       control.setPointerCapture(event.pointerId);
       drag = { id: event.pointerId, ...p, at: performance.now() };
@@ -174,13 +230,13 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
     control.addEventListener('pointermove', (event) => {
       if (!drag || event.pointerId !== drag.id) return;
       const p = point(event);
-      const aim = swipeShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at);
+      const aim = swipeShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at, origin);
       showAim(aim);
     });
     control.addEventListener('pointerup', (event) => {
       if (!drag || event.pointerId !== drag.id) return;
       const p = point(event);
-      const next = swipeShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at);
+      const next = swipeShot(p.x - drag.x, p.y - drag.y, performance.now() - drag.at, origin);
       drag = null;
       trail.setAttribute('d', '');
       if (control.hasPointerCapture(event.pointerId)) control.releasePointerCapture(event.pointerId);
@@ -196,14 +252,15 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
         event.preventDefault();
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') keyboardX = clamp(keyboardX + (event.key === 'ArrowLeft' ? -40 : 40), 30, 610);
         else keyboardPower = clamp(keyboardPower + (event.key === 'ArrowUp' ? .15 : -.15), .15, 1.6);
-        showAim(aimedShot(keyboardX, keyboardPower));
+        showAim(aimedShot(keyboardX, keyboardPower, origin));
         status.textContent = `Aim ${keyboardX < 290 ? 'left' : keyboardX > 350 ? 'right' : 'middle'}. ↑↓ power. Enter to kick.`;
       } else if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        launch(aimedShot(keyboardX, keyboardPower));
+        launch(aimedShot(keyboardX, keyboardPower, origin));
       }
     });
     function tick(now: number): void {
+      frame = 0;
       if (closed || kit.closed) { finish(); return; }
       const dt = Math.min(50, now - (lastFrame || now));
       lastFrame = now;
@@ -214,6 +271,9 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
         }
         if (!reduced) keeperX += clamp(keeperTarget - keeperX, -dt * 0.045, dt * 0.045);
         keeper.setAttribute('transform', `translate(${keeperX} 174)`);
+        const step = !reduced && Math.abs(keeperTarget - keeperX) > 2 ? Math.sin(now / 95) * 11 : 0;
+        keeperLeft.setAttribute('transform', `rotate(${step} -10 -24)`);
+        keeperRight.setAttribute('transform', `rotate(${-step} 10 -24)`);
       } else if (phase === 'flight' && shot && move && impact) {
         const elapsed = Math.max(0, now - shotStart - 240);
         const t = clamp(elapsed / shot.flightMs, 0, impact.progress);
@@ -222,14 +282,26 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
           const { x, y } = ballAt(shot, t);
           ball.setAttribute('transform', `translate(${x} ${y}) scale(${1 - 0.52 * t}) rotate(${t * 300})`);
           keeper.setAttribute('transform', `translate(${k.x} ${k.y}) rotate(${k.angle})`);
-          kicker.setAttribute('transform', `translate(${266 + 28 * Math.min(1, (now - shotStart) / 240)} 384) rotate(-10)`);
+          const windup = clamp((now - shotStart) / 240, 0, 1);
+          const follow = clamp(elapsed / 340, 0, 1);
+          kicker.setAttribute('transform', `translate(${origin.x - 54 + 28 * windup} ${origin.y + 9 - 12 * windup}) rotate(${-8 * windup})`);
+          // Contact coincides with flight starting at 240ms; the leg then follows through.
+          const kickAngle = windup < .6 ? 32 * Math.sin(windup / .6 * Math.PI / 2)
+            : windup < 1 ? 32 - (windup - .6) / .4 * 87 : -55 * (1 - follow);
+          kickLeg.setAttribute('transform', `rotate(${kickAngle} 10 -24)`);
+          plantLeg.setAttribute('transform', `rotate(${8 * windup} -10 -24)`);
+          const groundY = origin.y + (200 - origin.y) * t;
+          shadow.setAttribute('cx', String(x)); shadow.setAttribute('cy', String(groundY + 8));
+          shadow.setAttribute('rx', String(24 * (1 - .52 * t)));
+          shadow.setAttribute('opacity', String(.22 - .12 * Math.sin(Math.PI * t)));
           wall.setAttribute('transform', `translate(${round === 2 ? 65 : 0} ${-18 * Math.sin(Math.PI * t)})`);
           const handY = k.handY;
-          keeper.querySelector('.soccer-arms')?.setAttribute('d', `M-15-51L-33 ${handY}M15-51L33 ${handY}`);
-          keeper.querySelectorAll('.soccer-glove-left, .soccer-glove-right').forEach((g) => g.setAttribute('cy', String(handY)));
+          arms?.setAttribute('d', `M-15-51L-33 ${handY}M15-51L33 ${handY}`);
+          gloves.forEach((g) => g.setAttribute('cy', String(handY)));
         }
         if (t === impact.progress) {
-          const scored = impact.outcome === 'goal';
+          const scored = impact.outcome === 'goal' && (mode !== 'targets' || hitsTarget(shot, round));
+          panel.dataset.targetHit = String(mode === 'targets' && scored);
           if (scored) goals++;
           round++;
           phase = 'result';
@@ -244,7 +316,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
             bar: ['Off the crossbar!', 'Almost! Try a little less power.'],
             wall: ['Blocked by the wall!', 'Try the open side or a stronger kick.'],
           };
-          const message = messages[impact.outcome];
+          const message = mode === 'targets' && impact.outcome === 'goal' ? (scored ? ['Target hit!', 'Right on the golden spot!'] : ['In the goal!', 'Try the golden spot next time.']) : messages[impact.outcome];
           title.textContent = message[0]!;
           status.textContent = message[1]!;
           panel.dataset.outcome = impact.outcome;
@@ -258,7 +330,7 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
         if (['wall', 'post', 'bar'].includes(impact.outcome)) {
           ball.setAttribute('transform', `translate(${impact.x + (impact.x < 320 ? 32 : -32) * bounce} ${impact.y + 55 * bounce - 20 * Math.sin(Math.PI * bounce)}) scale(${1 - .52 * impact.progress})`);
         } else if (impact.outcome === 'short') {
-          const ground = BALL.y - (BALL.y - 200) * impact.progress;
+          const ground = origin.y - (origin.y - 200) * impact.progress;
           ball.setAttribute('transform', `translate(${impact.x} ${impact.y + (ground - impact.y) * bounce}) scale(${1 - .52 * impact.progress})`);
         }
       } else if (phase === 'result' && now >= resultUntil) {
@@ -266,15 +338,17 @@ export async function soccerBreak(kit: Kit, host: HTMLElement): Promise<void> {
         else {
           phase = 'done';
           title.textContent = 'Great shooting!';
-          status.textContent = `${goals} ${goals === 1 ? 'goal' : 'goals'}! Let’s read some more.`;
+          status.textContent = mode === 'targets' ? `${goals} of 3 targets hit!` : `${goals} ${goals === 1 ? 'goal' : 'goals'}! Great practice.`;
+          modeButtons.forEach((b) => { b.disabled = false; });
+          positionButtons.forEach((b) => { b.disabled = true; });
           kicker.setAttribute('transform', 'translate(300 370) rotate(-8)');
           sparkles.setAttribute('visibility', 'visible');
           back.className = 'btn big ok soccer-back';
-          replay.hidden = replayUsed;
+          replay.hidden = !options.anytime && replayUsed;
           back.focus({ preventScroll: true });
         }
       }
-      if (phase !== 'done') frame = requestAnimationFrame(tick);
+      if (phase !== 'done' && (!reduced || phase === 'flight' || phase === 'result')) startFrame();
     }
     paintDots();
     frame = requestAnimationFrame(tick);
