@@ -2,9 +2,10 @@
 
 Update at the end of every working session. Newest log entry on top.
 
-## Local fix (2026-10-25): keeper dives from the hips
+## Deployment (2026-10-25): keeper dives from the hips
 
-- **Implemented, not deployed.** Dives used to rotate the keeper around his feet, so he tipped over with planted feet. The body now turns around the hips (`KEEPER_HIPS`): the hips arc toward the ball, the body leans in early, the feet trail and leave the grass, then he lands on his side or his feet. Save detection uses the same pose. Hip travel is capped at 1.8 m and hip rise at 0.3 m, so the far post and top corner stay out of reach; every computer-striker aim stays saveable.
+- **Live:** release [`84cfd6b`](https://github.com/mondragon-developer/learn-to-read/commit/84cfd6b) pushed to `main`; [Vercel production deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/CXnut4Nf98RCmmwmgRvgA7HxV5n1) reported **success**. The live game chunk carries the new keeper limits, and **8/8 soccer checks passed** against production in iPad-sized WebKit and phone-sized Chromium. Physical iPad feel remains the hands-on check.
+- Dives used to rotate the keeper around his feet, so he tipped over with planted feet. The body now turns around the hips (`KEEPER_HIPS`): the hips arc toward the ball, the body leans in early, the feet trail and leave the grass, then he lands on his side or his feet. Save detection uses the same pose. Hip travel is capped at 1.8 m and hip rise at 0.3 m, so the far post and top corner stay out of reach; every computer-striker aim stays saveable.
 - Fixed a one-frame blank flash when automatic graphics lowered resolution (the resize now happens before drawing).
 - Validation: **167 unit tests**, typecheck, content validation, build and the **full 96-scenario browser suite** pass; frame-by-frame dive captures inspected.
 
