@@ -246,10 +246,11 @@ export class SoccerScene {
         this.matrix.rotation.set(n + after * 5, after * 8, n); this.matrix.updateMatrix(); this.confetti.setMatrixAt(i, this.matrix.matrix);
       } this.confetti.instanceMatrix.needsUpdate = true;
     }
-    this.renderer.render(this.world, this.camera); this.frames++;
+    // Lower quality before drawing: resizing clears the canvas, so doing it after the render flashes an empty frame.
     const dt = this.previous ? f.now - this.previous : 0; this.previous = f.now;
     if (this.quality === 'auto' && dt > 25 && dt < 150 && !this.reduced) this.slow++; else this.slow = Math.max(0, this.slow - .3);
     if (this.slow > 45 && this.scale > .7) { this.scale = this.scale > .85 ? .85 : .7; this.renderer.shadowMap.enabled = false; this.resize(); this.slow = 0; }
+    this.renderer.render(this.world, this.camera); this.frames++;
     if (this.frames % 30 === 0 || this.frames === 1) {
       this.canvas.dataset.drawCalls = String(this.renderer.info.render.calls); this.canvas.dataset.triangles = String(this.renderer.info.render.triangles);
       this.canvas.dataset.renderScale = String(this.scale); this.canvas.dataset.frames = String(this.frames);

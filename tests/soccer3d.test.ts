@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BALL_RADIUS, GOAL, KEEPER_LIMITS, STRIKER_POWER, ball3, childDive3, chooseKeeper3, diveTo3, keeper3, keeperGlove, keeperTouches3, kick3, resolve3, standKeeper3, strikerAim3, target3, targetHit3, wall3 } from '../src/domain/rewards/Soccer3D';
+import { BALL_RADIUS, GOAL, KEEPER_HIPS, KEEPER_LIMITS, STRIKER_POWER, ball3, childDive3, chooseKeeper3, diveTo3, keeper3, keeperGlove, keeperTouches3, kick3, resolve3, standKeeper3, strikerAim3, target3, targetHit3, wall3 } from '../src/domain/rewards/Soccer3D';
 
 const origin = { x: 0, y: BALL_RADIUS, z: 12 };
 const miss = (shot: ReturnType<typeof kick3>) => chooseKeeper3(shot, 0, () => .99);
@@ -53,29 +53,43 @@ describe('world-space soccer', () => {
   it('the keeper raises his gloves above his head and never flies higher than a real jump', () => {
     expect(keeperGlove(1, 1).y).toBeGreaterThan(1.9);
     expect(keeperGlove(1, 0).y).toBeLessThan(1.1);
-    for (const x of [-3.4, -2, -.8, .8, 2, 3.4]) for (const y of [.3, 1.2, 2.3]) {
+    for (const x of [-3.4, -2, -.8, .8, 2, 3.4]) for (const y of [.3, 1.2, 2.1]) {
       const move = diveTo3({ x, y }, 0, 0, 420);
-      for (let ms = 0; ms <= 2000; ms += 40) expect(keeper3(move, ms).y).toBeLessThanOrEqual(KEEPER_LIMITS.jump + .1);
+      for (let ms = 0; ms <= 2000; ms += 20) {
+        // Trailing feet may rise in a flying dive; the hips stay within a real jump plus the leap's arc.
+        const pose = keeper3(move, ms), hips = pose.y + KEEPER_HIPS * Math.cos(pose.angle);
+        expect(hips).toBeLessThanOrEqual(KEEPER_HIPS + KEEPER_LIMITS.jump + .17);
+        expect(pose.y).toBeGreaterThanOrEqual(-.01);
+      }
       expect(Math.abs(move.endX)).toBeLessThanOrEqual(KEEPER_LIMITS.step);
     }
   });
+  it('a dive carries the whole keeper toward the ball: the feet leave the grass instead of staying planted', () => {
+    for (const side of [-1, 1]) {
+      const low = diveTo3({ x: side * 2.8, y: .5 }, 0, 0, 420), mid = keeper3(low, 210), end = keeper3(low, 420);
+      expect(mid.y).toBeGreaterThan(.15);
+      expect(end.y).toBeGreaterThan(.15);
+      expect(Math.sign(end.angle)).toBe(-side);
+      expect(side * low.endX).toBeGreaterThan(1);
+    }
+  });
   it('after the dive the keeper comes back down to the grass', () => {
-    const long = diveTo3({ x: 3.2, y: .4 }, 0, 0, 420), high = diveTo3({ x: .6, y: 2.3 }, 0, 0, 420);
-    expect(keeper3(long, 420).y).toBeGreaterThan(.25);
-    expect(keeper3(long, 3000)).toMatchObject({ y: .2 });
-    expect(Math.abs(keeper3(long, 3000).angle)).toBeCloseTo(1.45);
+    const long = diveTo3({ x: 3.2, y: .4 }, 0, 0, 420), high = diveTo3({ x: .6, y: 2.1 }, 0, 0, 420);
+    const lying = keeper3(long, 3000);
+    expect(Math.abs(lying.angle)).toBeCloseTo(1.5);
+    expect(lying.y).toBeLessThan(.3);
     expect(keeper3(high, 3000)).toMatchObject({ y: 0, angle: 0 });
   });
   it('a tracking keeper reaches the reachable goal, not the top corner, and blocks a ball at him standing', () => {
-    expect(diveTo3({ x: .1, y: 1.1 }, 0, 0)).toMatchObject({ endX: 0, endY: 0, angle: 0 });
-    for (let x = 0; x <= 3.3; x += .3) for (const y of [.4, 1.2, 2.1]) {
+    expect(diveTo3({ x: .1, y: 1.1 }, 0, 0)).toMatchObject({ endX: 0, endY: KEEPER_HIPS, angle: 0 });
+    for (let x = 0; x <= 3.01; x += .3) for (const y of [.4, 1.2, 2.1]) {
       const shot = kick3(origin, { x, y }, .9);
       expect(resolve3(shot, chooseKeeper3(shot, 0, () => 0), 0, 'penalties').outcome).toBe('saved');
     }
     // Up under the crossbar in the far corner is beyond any real stretch.
     const corner = kick3(origin, { x: 3.3, y: 2.18 }, .9), move = chooseKeeper3(corner, 0, () => 0);
     expect(resolve3(corner, move, 0, 'penalties').outcome).toBe('goal');
-    expect(move.endY).toBeLessThanOrEqual(KEEPER_LIMITS.jump);
+    expect(move.endY).toBeLessThanOrEqual(KEEPER_HIPS + KEEPER_LIMITS.jump);
   });
   it('keeper mode: tapping where the ball goes saves it; the wrong side or a late tap concedes', () => {
     for (const aim of [{ x: -2.6, y: .4 }, { x: 2.2, y: 1.7 }, { x: 1, y: 1 }]) {

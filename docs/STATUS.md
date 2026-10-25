@@ -2,6 +2,12 @@
 
 Update at the end of every working session. Newest log entry on top.
 
+## Local fix (2026-10-25): keeper dives from the hips
+
+- **Implemented, not deployed.** Dives used to rotate the keeper around his feet, so he tipped over with planted feet. The body now turns around the hips (`KEEPER_HIPS`): the hips arc toward the ball, the body leans in early, the feet trail and leave the grass, then he lands on his side or his feet. Save detection uses the same pose. Hip travel is capped at 1.8 m and hip rise at 0.3 m, so the far post and top corner stay out of reach; every computer-striker aim stays saveable.
+- Fixed a one-frame blank flash when automatic graphics lowered resolution (the resize now happens before drawing).
+- Validation: **167 unit tests**, typecheck, content validation, build and the **full 96-scenario browser suite** pass; frame-by-frame dive captures inspected.
+
 ## Deployment (2026-10-25): Goalkeeper mode and smoother players
 
 - **Live:** [Goal Reader](https://learn-to-read-eight.vercel.app). Release [`e67e04c`](https://github.com/mondragon-developer/learn-to-read/commit/e67e04c) was pushed to `main`; [Vercel production deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/2D4qFZYiVMXq8SuRMcyE6LbnAAfE) reported **success**.
