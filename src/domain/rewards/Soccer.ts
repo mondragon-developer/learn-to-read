@@ -126,9 +126,9 @@ export class SoccerBreaks {
   }
 }
 
-/** Play totals are separate from reading goals and survive sync through shot events. */
+/** Play totals are separate from reading goals and survive sync through shot events. `saves` are the child's own, as goalkeeper. */
 export function soccerTotals(events: PracticeEvent[]): { goals: number; saves: number; shots: number } {
   const shots = events.filter((e) => e.activity === 'soccer');
   return { shots: shots.length, goals: shots.filter((e) => e.meta?.result === 'goal').length,
-    saves: shots.filter((e) => e.meta?.result === 'saved').length };
+    saves: shots.filter((e) => e.meta?.result === 'keeper-save').length };
 }

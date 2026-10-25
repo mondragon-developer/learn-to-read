@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BALL_RADIUS, GOAL, ball3, chooseKeeper3, keeper3, keeperTouches3, kick3, resolve3, target3, targetHit3, wall3 } from '../src/domain/rewards/Soccer3D';
+import { BALL_RADIUS, GOAL, KEEPER_LIMITS, STRIKER_POWER, ball3, childDive3, chooseKeeper3, diveTo3, keeper3, keeperGlove, keeperTouches3, kick3, resolve3, standKeeper3, strikerAim3, target3, targetHit3, wall3 } from '../src/domain/rewards/Soccer3D';
 
 const origin = { x: 0, y: BALL_RADIUS, z: 12 };
 const miss = (shot: ReturnType<typeof kick3>) => chooseKeeper3(shot, 0, () => .99);
@@ -49,5 +49,49 @@ describe('world-space soccer', () => {
     expect(resolve3(shot, chooseKeeper3(shot, 0, () => 0), 0, 'targets').outcome).toBe('goal');
     expect(targetHit3(shot, 0)).toBe(true);
     expect(targetHit3(kick3(origin, { x: 0, y: .8 }, .9), 0)).toBe(false);
+  });
+  it('the keeper raises his gloves above his head and never flies higher than a real jump', () => {
+    expect(keeperGlove(1, 1).y).toBeGreaterThan(1.9);
+    expect(keeperGlove(1, 0).y).toBeLessThan(1.1);
+    for (const x of [-3.4, -2, -.8, .8, 2, 3.4]) for (const y of [.3, 1.2, 2.3]) {
+      const move = diveTo3({ x, y }, 0, 0, 420);
+      for (let ms = 0; ms <= 2000; ms += 40) expect(keeper3(move, ms).y).toBeLessThanOrEqual(KEEPER_LIMITS.jump + .1);
+      expect(Math.abs(move.endX)).toBeLessThanOrEqual(KEEPER_LIMITS.step);
+    }
+  });
+  it('after the dive the keeper comes back down to the grass', () => {
+    const long = diveTo3({ x: 3.2, y: .4 }, 0, 0, 420), high = diveTo3({ x: .6, y: 2.3 }, 0, 0, 420);
+    expect(keeper3(long, 420).y).toBeGreaterThan(.25);
+    expect(keeper3(long, 3000)).toMatchObject({ y: .2 });
+    expect(Math.abs(keeper3(long, 3000).angle)).toBeCloseTo(1.45);
+    expect(keeper3(high, 3000)).toMatchObject({ y: 0, angle: 0 });
+  });
+  it('a tracking keeper reaches the reachable goal, not the top corner, and blocks a ball at him standing', () => {
+    expect(diveTo3({ x: .1, y: 1.1 }, 0, 0)).toMatchObject({ endX: 0, endY: 0, angle: 0 });
+    for (let x = 0; x <= 3.3; x += .3) for (const y of [.4, 1.2, 2.1]) {
+      const shot = kick3(origin, { x, y }, .9);
+      expect(resolve3(shot, chooseKeeper3(shot, 0, () => 0), 0, 'penalties').outcome).toBe('saved');
+    }
+    // Up under the crossbar in the far corner is beyond any real stretch.
+    const corner = kick3(origin, { x: 3.3, y: 2.18 }, .9), move = chooseKeeper3(corner, 0, () => 0);
+    expect(resolve3(corner, move, 0, 'penalties').outcome).toBe('goal');
+    expect(move.endY).toBeLessThanOrEqual(KEEPER_LIMITS.jump);
+  });
+  it('keeper mode: tapping where the ball goes saves it; the wrong side or a late tap concedes', () => {
+    for (const aim of [{ x: -2.6, y: .4 }, { x: 2.2, y: 1.7 }, { x: 1, y: 1 }]) {
+      const shot = kick3(origin, aim, STRIKER_POWER);
+      expect(resolve3(shot, childDive3(shot, { x: aim.x + .6, y: aim.y - .4 }, 0, 0), 0, 'keeper').outcome).toBe('saved');
+      expect(resolve3(shot, childDive3(shot, { x: -aim.x * 1.5, y: 1 }, 0, 0), 0, 'keeper').outcome).toBe('goal');
+      expect(resolve3(shot, childDive3(shot, aim, 0, shot.flightMs), 0, 'keeper').outcome).toBe('goal');
+    }
+    const middle = kick3(origin, { x: .2, y: 1 }, STRIKER_POWER);
+    expect(resolve3(middle, standKeeper3(middle, 0), 0, 'keeper').outcome).toBe('saved');
+  });
+  it('the computer striker mostly hits the target', () => {
+    let seed = 1; const random = (): number => (seed = seed * 16807 % 2147483647) / 2147483647;
+    const aims = Array.from({ length: 400 }, () => strikerAim3(random));
+    const onTarget = aims.filter((a) => Math.abs(a.x) < GOAL.halfWidth && a.y < GOAL.height).length;
+    expect(onTarget / aims.length).toBeGreaterThan(.8);
+    expect(onTarget).toBeLessThan(aims.length);
   });
 });

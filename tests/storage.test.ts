@@ -182,15 +182,15 @@ it('keeps soccer totals per student through offline sync and backup, without rea
   const remote = new FakeRemote();
   const ipad = device(remote, new FixedClock(0), 'soccer-ipad');
   const laptop = device(remote, new FixedClock(0), 'soccer-laptop');
-  for (const [profileId, result] of [['p1', 'goal'], ['p1', 'saved'], ['p2', 'goal']]) {
+  for (const [profileId, result] of [['p1', 'goal'], ['p1', 'keeper-save'], ['p1', 'saved'], ['p2', 'goal']]) {
     await ipad.log.record({ profileId: profileId!, activity: 'soccer', itemId: 'soccer:test', outcome: 'unverified', source: 'tap', meta: { result: result! } });
   }
-  expect(soccerTotals(await ipad.log.events('p1'))).toEqual({ goals: 1, saves: 1, shots: 2 });
+  expect(soccerTotals(await ipad.log.events('p1'))).toEqual({ goals: 1, saves: 1, shots: 3 });
   expect(trophies(await ipad.log.events('p1'), 0)).toMatchObject({ goals: 0, streak: 0 });
   await ipad.sync.sync();
   await laptop.sync.sync();
   expect(soccerTotals(await laptop.log.events('p2'))).toEqual({ goals: 1, saves: 0, shots: 1 });
   const restored = device(null, new FixedClock(0), 'restored');
   await restored.backup.importJson(await ipad.backup.exportJson());
-  expect(soccerTotals(await restored.log.events('p1'))).toEqual({ goals: 1, saves: 1, shots: 2 });
+  expect(soccerTotals(await restored.log.events('p1'))).toEqual({ goals: 1, saves: 1, shots: 3 });
 });

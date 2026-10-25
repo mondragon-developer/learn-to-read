@@ -316,7 +316,6 @@ export async function soccerBreak(kit: Kit, host: HTMLElement, options: { anytim
           const scored = impact.outcome === 'goal' && (mode !== 'targets' || hitsTarget(shot, round));
           panel.dataset.targetHit = String(mode === 'targets' && scored);
           if (scored) { goals++; totals.goals++; }
-          if (impact.outcome === 'saved') totals.saves++;
           lifetime.textContent = `${kit.profile.firstName} · Soccer goals: ${totals.goals} · Keeper saves: ${totals.saves}`;
           void kit.ctx.log.record({ profileId: kit.profile.id, activity: 'soccer',
             itemId: `soccer:${kit.sessionId}:${Date.now()}:${round}`,

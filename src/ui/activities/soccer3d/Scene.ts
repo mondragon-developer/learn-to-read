@@ -1,13 +1,16 @@
 import * as T from 'three';
-import { character, football, labelTexture, MeshBuilder, turf, type Rig } from './Assets';
+import { character, football, keeperLook, labelTexture, MeshBuilder, playerLook, turf, type Look, type Rig } from './Assets';
 import { BALL_RADIUS, GOAL, ball3, kick3, keeper3, wall3, target3, clamp3, mix, type Aim3, type Impact3, type Keeper3, type Kick3, type Mode3, type Vec3 } from '@domain/rewards/Soccer3D';
 import type { Profile } from '@domain/profiles/Profile';
 
 export interface Frame3 {
   mode: Mode3; round: number; origin: Vec3; phase: 'invite' | 'aim' | 'flight' | 'result' | 'done';
   now: number; keeperX: number; shot?: Kick3; move?: Keeper3; impact?: Impact3; elapsed: number; scored: boolean; aim?: Aim3; aimPower?: number;
+  /** Keeper mode: where the child tapped to dive. */
+  dive?: Aim3;
 }
 export const RUNUP_MS = 680;
+const UNITED: Look = { name: 'UNITED', number: 4, shirt: '#d95a50', shorts: '#f6e9d5', cleats: '#26364d', skin: '#bd8057' };
 /** Renderer owns GPU resources, but no animation loop or game timers. */
 export class SoccerScene {
   readonly canvas: HTMLCanvasElement;
@@ -15,10 +18,14 @@ export class SoccerScene {
   private world = new T.Scene();
   private camera = new T.PerspectiveCamera(44, 1, .1, 110);
   private kicker: Rig; private keeper: Rig; private defenders: Rig[];
+  /** Keeper mode swaps in a computer striker and the child's own goalkeeper. */
+  private striker: Rig; private myKeeper: Rig;
   private ball = football();
   private sun = new T.DirectionalLight('#fff1c7', 3.1);
   private net: T.LineSegments; private netRest: Float32Array;
   private target: T.Mesh; private crosshair: T.Mesh;
+  /** Keeper mode: a glowing ring under the striker's ball so a child can find it. */
+  private spot: T.Mesh;
   private arc: T.Line;
   private confetti: T.InstancedMesh;
   private crowd: T.Group[] = [];
@@ -45,10 +52,11 @@ export class SoccerScene {
     this.world.add(this.sun, this.sun.target);
     this.stadium();
     this.net = this.goal(); this.netRest = new Float32Array(this.net.geometry.getAttribute('position').array);
-    this.kicker = character(profile); this.keeper = character(profile, true, '#956342');
-    this.defenders = [character({ ...profile, firstName: 'UNITED', number: 4, color: '#d95a50', settings: { ...profile.settings, shortsColor: '#f6e9d5', cleatsColor: '#26364d' } }),
-      character({ ...profile, firstName: 'UNITED', number: 6, color: '#d95a50', settings: { ...profile.settings, shortsColor: '#f6e9d5', cleatsColor: '#26364d' } }, false, '#8c5c42')];
-    this.world.add(this.ball, this.kicker.root, this.keeper.root, ...this.defenders.map((d) => d.root));
+    this.kicker = character(playerLook(profile));
+    this.keeper = character({ name: 'KEEPER', number: 1, shirt: '#f6bc45', shorts: '#153349', cleats: '#ff6842', skin: '#956342', keeper: true });
+    this.defenders = [character(UNITED), character({ ...UNITED, number: 6, skin: '#8c5c42' })];
+    this.striker = character({ ...UNITED, number: 9, skin: '#a86f4c' }); this.myKeeper = character(keeperLook(profile));
+    this.world.add(this.ball, this.kicker.root, this.keeper.root, this.striker.root, this.myKeeper.root, ...this.defenders.map((d) => d.root));
     for (let i = 0; i < 5; i++) {
       const shadow = new T.Mesh(new T.CircleGeometry(1, 24), new T.MeshBasicMaterial({ color: '#0b3528', transparent: true, opacity: .16, depthWrite: false }));
       shadow.rotation.x = -Math.PI / 2; shadow.position.y = .015; this.shadows.push(shadow); this.world.add(shadow);
@@ -56,7 +64,8 @@ export class SoccerScene {
     const ringMaterial = new T.MeshBasicMaterial({ color: '#ffd275', transparent: true, opacity: .95, depthTest: true });
     this.target = new T.Mesh(new T.TorusGeometry(.53, .045, 6, 48), ringMaterial); this.target.position.z = .08;
     this.crosshair = new T.Mesh(new T.TorusGeometry(.2, .025, 5, 28), new T.MeshBasicMaterial({ color: '#fff8bc', transparent: true, opacity: .85 })); this.crosshair.position.z = .15;
-    this.world.add(this.target, this.crosshair);
+    this.spot = new T.Mesh(new T.RingGeometry(.3, .4, 32).rotateX(-Math.PI / 2), new T.MeshBasicMaterial({ color: '#fff2a8', transparent: true, opacity: .9, depthWrite: false }));
+    this.spot.position.y = .02; this.world.add(this.target, this.crosshair, this.spot);
     this.arc = new T.Line(new T.BufferGeometry().setAttribute('position', new T.Float32BufferAttribute(new Float32Array(75), 3)), new T.LineDashedMaterial({ color: '#fff7b5', dashSize: .18, gapSize: .16, transparent: true, opacity: .65 }));
     this.world.add(this.arc);
     this.confetti = new T.InstancedMesh(new T.PlaneGeometry(.08, .19), new T.MeshBasicMaterial({ side: T.DoubleSide }), 70);
@@ -75,6 +84,8 @@ export class SoccerScene {
     architecture.box(47, .4, 47, '#233f40', 0, -.28, 9, 0, .01);
     for (let row = 0; row < 7; row++) {
       architecture.box(43, .62, 1.35, row % 2 ? '#285469' : '#326075', 0, .3 + row * .62, -6 - row * 1.12);
+      // The far end is only seen from behind the goal in keeper mode.
+      architecture.box(43, .62, 1.35, row % 2 ? '#285469' : '#326075', 0, .3 + row * .62, 26 + row * 1.12);
       for (const side of [-1, 1]) architecture.box(1.35, .62, 33, '#2c576b', side * (18 + row * 1.12), .3 + row * .62, 6);
     }
     architecture.box(46, .24, 4, '#e1d8bc', 0, 5.8, -12.3).box(46, .18, .2, '#ffca76', 0, 5.69, -10.3);
@@ -91,14 +102,14 @@ export class SoccerScene {
     banner.position.set(0, .58, -4.6); this.world.add(banner);
     const scoreboard = new T.Mesh(new T.PlaneGeometry(10, 1.25), new T.MeshBasicMaterial({ map: labelTexture('GOAL READER  ★  DREAM ARENA', '#0d293d', '#f5e5b7') }));
     scoreboard.position.set(0, 5.15, -10.55); this.world.add(scoreboard);
-    for (let section = 0; section < 3; section++) {
-      const people = new T.Group(); const count = 126;
+    for (let section = 0; section < 6; section++) {
+      const people = new T.Group(); const count = 126, far = section >= 3;
       const bodies = new T.InstancedMesh(new T.CapsuleGeometry(.16, .22, 2, 6), new T.MeshLambertMaterial(), count);
       const heads = new T.InstancedMesh(new T.SphereGeometry(.12, 6, 4), new T.MeshLambertMaterial(), count);
       const colors = ['#d1c795', '#5da6ac', '#f7b257', '#edf0d2', '#db745b', '#283a56'];
       let n = 0; const temp = new T.Object3D();
       for (let row = 0; row < 6; row++) for (let col = 0; col < 21; col++) {
-        const x = -19.4 + section * 13 + col * .6, y = 1.02 + row * .62, z = -6.1 - row * 1.12;
+        const x = -19.4 + (section % 3) * 13 + col * .6, y = 1.02 + row * .62, z = far ? 26.1 + row * 1.12 : -6.1 - row * 1.12;
         temp.position.set(x, y, z); temp.updateMatrix(); bodies.setMatrixAt(n, temp.matrix); bodies.setColorAt(n, new T.Color(colors[(col * 7 + row * 3 + section) % colors.length]));
         temp.position.y += .32; temp.updateMatrix(); heads.setMatrixAt(n, temp.matrix); heads.setColorAt(n, new T.Color(['#c78f67', '#8e6048', '#e0b28c'][(row + col) % 3])); n++;
       }
@@ -143,7 +154,7 @@ export class SoccerScene {
     const rect = this.host.getBoundingClientRect(); this.width = Math.max(1, rect.width); this.height = Math.max(1, rect.height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.scale));
     this.renderer.setSize(this.width, this.height, false); this.camera.aspect = this.width / this.height;
-    this.camera.fov = this.camera.aspect < .85 ? 55 : 44; this.camera.updateProjectionMatrix(); this.requestFrame();
+    this.camera.updateProjectionMatrix(); this.requestFrame();
   }
   setQuality(low: boolean): void {
     this.quality = low ? 'low' : 'auto'; this.scale = low ? .85 : 1.25; this.renderer.shadowMap.enabled = !low; this.resize();
@@ -163,19 +174,36 @@ export class SoccerScene {
     const progress = f.shot ? clamp3((f.elapsed - RUNUP_MS) / f.shot.flightMs, 0, f.impact?.t ?? 1) : 0;
     const run = clamp3(f.elapsed / RUNUP_MS, 0, 1), after = result ? clamp3(f.elapsed / 1000, 0, 1) : 0;
     // Camera stays still throughout aiming, so finger position and the target agree.
-    const push = this.reduced ? 0 : flight ? progress * .9 : result && f.scored ? 1.5 * after : 0;
-    const portrait = this.camera.aspect < .85;
-    this.camera.position.set(f.origin.x * .65 + (portrait ? .8 : 1.5), portrait ? 5.2 : 4.4, f.origin.z + (portrait ? 10 : 7.6) - push);
-    this.camera.lookAt(f.origin.x * .17, .85, f.origin.z * .42 - push * .7); this.camera.updateMatrixWorld();
-    this.kicker.root.position.set(f.origin.x - .22, 0, f.origin.z + 1.5 - (flight ? run * 1.02 : result ? 1.02 : 0));
-    this.kicker.root.rotation.set(0, Math.PI + (f.scored && result ? Math.PI * after : 0), 0);
-    if (flight && run < .78) this.kicker.pose(time, 'run');
-    else if (flight) this.kicker.pose(time, 'kick', f.elapsed < RUNUP_MS ? mix(.8, -.6, (run - .78) / .22) : -(.6 + .6 * Math.sin(clamp3((f.elapsed - RUNUP_MS) / 450, 0, 1) * Math.PI)) * (1 - clamp3((f.elapsed - RUNUP_MS) / 500, 0, 1)));
-    else this.kicker.pose(time, result && f.scored ? 'celebrate' : 'idle');
-    this.keeper.root.visible = f.mode !== 'targets';
-    const keeperPose = f.move && (flight || result) ? keeper3(f.move, flight ? Math.max(0, f.elapsed - RUNUP_MS) : f.shot!.flightMs) : { x: f.keeperX, y: 0, angle: 0, dive: 0 };
-    this.keeper.root.position.set(keeperPose.x, keeperPose.y, .2); this.keeper.root.rotation.z = keeperPose.angle;
-    this.keeper.pose(time, 'keeper', keeperPose.dive);
+    const keeperMode = f.mode === 'keeper', portrait = this.camera.aspect < .85;
+    const shooter = keeperMode ? this.striker : this.kicker, goalie = keeperMode ? this.myKeeper : this.keeper;
+    // In keeper mode a goal belongs to the striker, so only the child's own player celebrates.
+    const celebrate = result && f.scored && !keeperMode;
+    const fov = keeperMode ? (portrait ? 80 : 50) : (portrait ? 55 : 44);
+    if (this.camera.fov !== fov) { this.camera.fov = fov; this.camera.updateProjectionMatrix(); }
+    if (keeperMode) {
+      // Behind the child's goalkeeper, far enough back that both posts fit, but in front of the crowd behind the goal.
+      const distance = clamp3(4.3 / (Math.tan(T.MathUtils.degToRad(fov / 2)) * this.camera.aspect), 5.2, 7.6);
+      this.camera.position.set(0, 1.75 + distance * .3, -distance); this.camera.lookAt(0, 1.05, 6);
+    } else {
+      // Camera stays still throughout aiming, so finger position and the target agree.
+      const push = this.reduced ? 0 : flight ? progress * .9 : celebrate ? 1.5 * after : 0;
+      this.camera.position.set(f.origin.x * .65 + (portrait ? .8 : 1.5), portrait ? 5.2 : 4.4, f.origin.z + (portrait ? 10 : 7.6) - push);
+      this.camera.lookAt(f.origin.x * .17, .85, f.origin.z * .42 - push * .7);
+    }
+    this.camera.updateMatrixWorld();
+    this.kicker.root.visible = !keeperMode; this.striker.root.visible = keeperMode;
+    this.keeper.root.visible = f.mode !== 'targets' && !keeperMode; this.myKeeper.root.visible = keeperMode;
+    shooter.root.position.set(f.origin.x - .22, 0, f.origin.z + 1.5 - (flight ? run * 1.02 : result ? 1.02 : 0));
+    shooter.root.rotation.set(0, Math.PI + (celebrate ? Math.PI * after : 0), 0);
+    if (flight && run < .78) shooter.pose(time, 'run');
+    else if (flight) shooter.pose(time, 'kick', f.elapsed < RUNUP_MS ? mix(.8, -.6, (run - .78) / .22) : -(.6 + .6 * Math.sin(clamp3((f.elapsed - RUNUP_MS) / 450, 0, 1) * Math.PI)) * (1 - clamp3((f.elapsed - RUNUP_MS) / 500, 0, 1)));
+    else shooter.pose(time, celebrate ? 'celebrate' : 'idle');
+    // After the shot the keeper keeps moving: he holds the stretch, then lands on the grass.
+    const keeperPose = f.move && f.shot && (flight || result)
+      ? keeper3(f.move, flight ? Math.max(0, f.elapsed - RUNUP_MS) : f.shot.flightMs * (f.impact?.t ?? 1) + f.elapsed)
+      : { x: f.keeperX, y: 0, angle: 0, dive: 0 };
+    goalie.root.position.set(keeperPose.x, keeperPose.y, .2); goalie.root.rotation.z = keeperPose.angle;
+    goalie.pose(time, 'keeper', keeperPose.dive);
     const wall = wall3(f.round, f.mode);
     this.defenders.forEach((rig, i) => { const p = wall[i]; rig.root.visible = !!p; if (p) { rig.root.position.set(p.x, flight ? Math.sin(Math.PI * progress) * .22 : 0, p.z); rig.pose(time, 'idle'); } });
     let position: Vec3 = f.origin;
@@ -187,11 +215,14 @@ export class SoccerScene {
       else position = { x: impact.x + (impact.x > 0 ? -.4 : .4) * after, y: Math.max(BALL_RADIUS, impact.y * (1 - after) + Math.sin(after * Math.PI) * .5), z: impact.z + after * 2 };
     }
     this.ball.position.set(position.x, position.y, position.z); this.ball.rotation.set(progress * 22 + after * 4, progress * 8, progress * 3);
-    const roots = [this.kicker.root, this.keeper.root, ...this.defenders.map((d) => d.root), this.ball];
+    const roots = [shooter.root, goalie.root, ...this.defenders.map((d) => d.root), this.ball];
     this.shadows.forEach((s, i) => { const object = roots[i]!; s.visible = object.visible && !this.renderer.shadowMap.enabled; s.position.set(object.position.x, .018, object.position.z); const size = i === 4 ? .23 : .55; s.scale.set(size, size * .65, 1); });
+    this.spot.visible = keeperMode && (f.phase === 'aim' || (flight && f.elapsed < RUNUP_MS));
+    if (this.spot.visible) { this.spot.position.set(f.origin.x, .02, f.origin.z); this.spot.scale.setScalar(this.reduced ? 1 : 1 + Math.sin(time * 5) * .12); }
     const target = target3(f.round); this.target.visible = f.mode === 'targets'; this.target.position.set(target.x, target.y, .08);
     this.target.scale.setScalar(this.reduced ? 1 : 1 + Math.sin(time * 3) * .05);
-    this.crosshair.visible = !!f.aim && f.phase === 'aim'; this.arc.visible = this.crosshair.visible;
+    this.crosshair.visible = (!!f.aim && f.phase === 'aim') || (!!f.dive && flight); this.arc.visible = !!f.aim && f.phase === 'aim';
+    if (f.dive && flight) this.crosshair.position.set(f.dive.x, f.dive.y, -.05);
     if (f.aim && this.arc.visible) {
       this.crosshair.position.set(f.aim.x, f.aim.y, .15);
       const attribute = this.arc.geometry.getAttribute('position');

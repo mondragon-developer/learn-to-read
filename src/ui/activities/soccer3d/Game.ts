@@ -1,9 +1,11 @@
 import { SoccerScene, RUNUP_MS, type Frame3 } from './Scene';
 import { StadiumSound } from './Sound';
-import { BALL_RADIUS, kick3, chooseKeeper3, resolve3, targetHit3, target3, clamp3, type Vec3, type Aim3, type Kick3, type Impact3, type Keeper3, type Mode3 } from '@domain/rewards/Soccer3D';
+import { BALL_RADIUS, STRIKER_POWER, kick3, chooseKeeper3, childDive3, standKeeper3, strikerAim3, resolve3, targetHit3, target3, clamp3, type Vec3, type Aim3, type Kick3, type Impact3, type Keeper3, type Mode3 } from '@domain/rewards/Soccer3D';
 import { heldPower, soccerTotals } from '@domain/rewards/Soccer';
 import type { Kit } from '../kit';
 import { h, replace } from '../../dom';
+
+const keeperResult = (outcome: Impact3['outcome']): string => outcome === 'saved' ? 'keeper-save' : outcome === 'goal' ? 'keeper-goal' : 'keeper-miss';
 
 /** Returns false only when the simple renderer should take over. */
 export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: boolean }): Promise<boolean> {
@@ -16,6 +18,8 @@ export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: b
     let phase: Frame3['phase'] = 'invite', origin: Vec3 = { x: 0, y: BALL_RADIUS, z: 12 }, aim: Aim3 = { x: 0, y: 1.3 };
     let shot: Kick3 | undefined, impact: Impact3 | undefined, move: Keeper3 | undefined;
     let started = 0, resultAt = 0, hiddenAt: number | null = null, scored = false, kicked = false;
+    // Keeper mode: the striker starts on his own after a short pause; the child gets one dive per shot.
+    let readyAt = 0, dive: Aim3 | undefined;
     let drag: { id: number; x: number; y: number; at: number; moved: boolean } | null = null;
     let keeperX = 0, last = 0, muted = false, low = false;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -30,7 +34,7 @@ export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: b
     const title = h('h2', { class: 'stadium-title' }, 'Your moment.');
     const status = h('p', { class: 'soccer-status', role: 'status' }, 'Three shots. Make them yours.');
     const dots = h('div', { class: 'soccer-shots', 'aria-label': 'Three shots remaining' });
-    const tally = h('b', { class: 'stadium-score' }, '0');
+    const tally = h('b', { class: 'stadium-score' }, '0'), tallyLabel = h('small', {}, 'GOALS');
     const lifetime = h('span', { class: 'soccer-totals' }, `Soccer goals: ${totals.goals} · Keeper saves: ${totals.saves}`);
     const field = h('div', { class: 'soccer-control stadium-view', tabindex: '0', role: 'group', 'aria-label': 'Hold the ball for power, drag to aim at the goal, then release. Arrow keys aim; Enter shoots.' });
     const marker = h('span', { class: 'stadium-ball-marker', 'aria-hidden': 'true' }, h('span', {}, 'HOLD & AIM'));
@@ -50,18 +54,18 @@ export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: b
     const quality = h('button', { class: 'stadium-icon', 'aria-label': 'Use lighter graphics', 'aria-pressed': 'false', onClick: () => {
       low = !low; scene?.setQuality(low); quality.textContent = low ? 'Graphics: Light' : 'Graphics: Auto'; quality.setAttribute('aria-pressed', String(low)); quality.setAttribute('aria-label', low ? 'Use automatic graphics' : 'Use lighter graphics'); startFrame();
     } }, 'Graphics: Auto');
-    const modes = (['penalties', 'free-kicks', 'targets'] as const).map((value, i) => h('button', { class: 'btn soft', 'aria-pressed': String(mode === value), onClick: () => {
+    const modes = (['penalties', 'free-kicks', 'targets', 'keeper'] as const).map((value, i) => h('button', { class: 'btn soft', 'aria-pressed': String(mode === value), onClick: () => {
       if (phase === 'flight' || phase === 'result') return;
       mode = value; round = goals = 0; match++; origin = { x: 0, y: BALL_RADIUS, z: value === 'free-kicks' ? 14 : 12 }; tally.textContent = '0';
       modes.forEach((button, index) => button.setAttribute('aria-pressed', String(index === i))); prepare();
-    } }, ['Penalties', 'Free kicks', 'Targets'][i]));
+    } }, ['Penalties', 'Free kicks', 'Targets', 'Goalkeeper'][i]));
     const position = h('fieldset', { class: 'soccer-position stadium-position', hidden: true }, h('legend', {}, 'Ball position'));
     const positions = ([['Left', -3, 0], ['Center', 0, 0], ['Right', 3, 0], ['Near', 0, 9], ['Far', 0, 14]] as const).map(([label, x, z]) => {
       const button = h('button', { class: 'btn soft', onClick: () => { if (phase !== 'aim') return; if (z) origin.z = z; else origin.x = x; prepare(); } }, label);
       button.dataset.x = String(x); button.dataset.z = String(z); position.appendChild(button); return button;
     });
     const intro = h('div', { class: 'stadium-intro' }, h('span', { class: 'stadium-eyebrow' }, 'WELCOME TO DREAM ARENA'), title, status, h('div', { class: 'stadium-main-actions' }, play, replay));
-    const hud = h('div', { class: 'stadium-hud' }, h('div', { class: 'stadium-player' }, h('span', { class: 'stadium-crest' }, String(kit.profile.number)), h('div', {}, h('b', {}, kit.profile.firstName), h('small', {}, 'DREAM TEAM'))), dots, h('div', { class: 'stadium-scorebox' }, tally, h('small', {}, 'GOALS')));
+    const hud = h('div', { class: 'stadium-hud' }, h('div', { class: 'stadium-player' }, h('span', { class: 'stadium-crest' }, String(kit.profile.number)), h('div', {}, h('b', {}, kit.profile.firstName), h('small', {}, 'DREAM TEAM'))), dots, h('div', { class: 'stadium-scorebox' }, tally, tallyLabel));
     field.append(marker, hud, intro, resultBadge, power);
     const panel = h('div', { class: 'stage soccer-stage soccer-stage-3d', 'data-renderer': 'three' },
       h('div', { class: 'stadium-topline' }, h('span', { class: 'stadium-brand' }, '★ DREAM ARENA'), h('div', { class: 'stadium-options' }, quality, audio)),
@@ -74,47 +78,65 @@ export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: b
       panel.dataset.originX = String(origin.x); panel.dataset.originZ = String(origin.z);
       replace(dots, [0, 1, 2].map((i) => h('i', { class: i < round ? 'used' : '', 'aria-hidden': 'true' }, i < round ? '✓' : '●')));
       dots.setAttribute('aria-label', `${3 - round} shots remaining`);
-      position.hidden = mode === 'penalties';
+      position.hidden = mode === 'penalties' || mode === 'keeper';
       positions.forEach((button) => { button.disabled = phase !== 'aim'; button.setAttribute('aria-pressed', String(Number(button.dataset.z) ? origin.z === Number(button.dataset.z) : origin.x === Number(button.dataset.x))); });
       modes.forEach((button) => { button.disabled = phase === 'flight' || phase === 'result'; });
-      marker.hidden = phase !== 'aim'; power.hidden = phase !== 'aim';
+      marker.hidden = phase !== 'aim' || mode === 'keeper'; power.hidden = phase !== 'aim' || mode === 'keeper';
+      tallyLabel.textContent = mode === 'keeper' ? 'SAVES' : 'GOALS';
       play.hidden = phase !== 'invite'; replay.hidden = phase !== 'done' || (!options.anytime && replayUsed);
       intro.classList.toggle('compact', phase === 'aim' || phase === 'flight' || phase === 'result');
       field.dataset.aiming = String(phase === 'aim');
     }
     function prepare(): void {
-      if (closed) return; phase = 'aim'; shot = undefined; impact = undefined; move = undefined; drag = null; scored = false; kicked = false;
+      if (closed) return; phase = 'aim'; shot = undefined; impact = undefined; move = undefined; drag = null; scored = false; kicked = false; dive = undefined;
       aim = mode === 'targets' ? target3(round) : { x: 0, y: 1.3 };
-      title.textContent = `Shot ${round + 1} of 3`;
-      status.textContent = mode === 'targets' ? 'Aim for the golden ring.' : mode === 'free-kicks' && round > 0 ? 'Find a way past the wall.' : 'Hold the ball. Aim. Release!';
+      title.textContent = mode === 'keeper' ? `Save ${round + 1} of 3` : `Shot ${round + 1} of 3`;
+      status.textContent = mode === 'keeper' ? 'Watch the ball. Tap where it goes!' : mode === 'targets' ? 'Aim for the golden ring.' : mode === 'free-kicks' && round > 0 ? 'Find a way past the wall.' : 'Hold the ball. Aim. Release!';
+      if (mode === 'keeper') { keeperX = 0; readyAt = performance.now() + 1400; }
       resultBadge.textContent = ''; panel.removeAttribute('data-outcome'); panel.removeAttribute('data-target-hit');
       power.setAttribute('aria-valuenow', '0'); power.style.setProperty('--power', '0%'); powerLabel.textContent = 'Hold the ball for power'; paint(); startFrame();
     }
     function launch(force: number): void {
-      if (phase !== 'aim' || closed) return; sound.unlock(); shot = kick3(origin, aim, force); move = chooseKeeper3(shot, keeperX);
+      if (phase !== 'aim' || closed) return; sound.unlock();
+      if (mode === 'keeper') { shot = kick3(origin, strikerAim3(), STRIKER_POWER); move = standKeeper3(shot, keeperX); }
+      else { shot = kick3(origin, aim, force); move = chooseKeeper3(shot, keeperX); }
       impact = resolve3(shot, move, round, mode); phase = 'flight'; started = performance.now(); drag = null; kicked = false;
-      title.textContent = 'Here we go!'; status.textContent = ''; paint(); startFrame();
+      title.textContent = mode === 'keeper' ? 'Here it comes!' : 'Here we go!'; status.textContent = mode === 'keeper' ? 'Tap where the ball goes!' : ''; paint(); startFrame();
+    }
+    /** Keeper mode: one dive per shot, toward the tapped point in the goal. */
+    function diveAt(target: Aim3, now: number): void {
+      if (mode !== 'keeper' || phase !== 'flight' || !shot || dive) return;
+      dive = target; move = childDive3(shot, target, keeperX, Math.max(0, now - started - RUNUP_MS));
+      impact = resolve3(shot, move, round, mode); status.textContent = ''; startFrame();
     }
     function settle(now: number): void {
       if (!shot || !impact) return;
-      scored = impact.outcome === 'goal' && (mode !== 'targets' || targetHit3(shot, round));
-      if (scored) { goals++; totals.goals++; } if (impact.outcome === 'saved') totals.saves++;
+      // In keeper mode the child wins whenever the striker does not score.
+      scored = mode === 'keeper' ? impact.outcome !== 'goal' : impact.outcome === 'goal' && (mode !== 'targets' || targetHit3(shot, round));
+      if (scored) goals++;
+      if (scored && mode !== 'keeper') totals.goals++; if (mode === 'keeper' && impact.outcome === 'saved') totals.saves++;
       tally.textContent = String(goals); lifetime.textContent = `Soccer goals: ${totals.goals} · Keeper saves: ${totals.saves}`;
       void kit.ctx.log.record({ profileId: kit.profile.id, activity: 'soccer', itemId: `soccer:${kit.sessionId}:${match}:${round}`,
-        outcome: 'unverified', source: 'tap', meta: { session: kit.sessionId, result: mode === 'targets' ? (scored ? 'goal' : 'target-miss') : impact.outcome, mode },
+        outcome: 'unverified', source: 'tap', meta: { session: kit.sessionId, result: mode === 'keeper' ? keeperResult(impact.outcome) : mode === 'targets' ? (scored ? 'goal' : 'target-miss') : impact.outcome, mode },
       }).then(() => kit.ctx.sync.sync()).catch(() => { lifetime.textContent += ' · Score could not be saved'; });
       panel.dataset.outcome = impact.outcome; panel.dataset.targetHit = String(mode === 'targets' && scored);
       const messages: Record<Impact3['outcome'], [string, string]> = {
         goal: ['GOOOAL!', 'Beautiful finish!'], saved: ['WHAT A SAVE!', 'Try a corner next time.'], wide: ['SO CLOSE!', 'Aim inside the white posts.'],
         short: ['A LITTLE MORE!', 'Hold longer to build power.'], post: ['OFF THE POST!', 'Just a little farther inside.'], bar: ['CROSSBAR!', 'Try aiming a little lower.'], wall: ['BLOCKED!', 'Look for space beside the wall.'],
       };
-      const message = mode === 'targets' && impact.outcome === 'goal' ? scored ? ['TARGET HIT!', 'Right on the golden spot!'] : ['IN THE NET!', 'Try the golden ring next time.'] : messages[impact.outcome];
+      const keeperMessages: Record<Impact3['outcome'], [string, string]> = {
+        saved: ['WHAT A SAVE!', 'Super hands, keeper!'], goal: ['SO CLOSE!', 'Watch the ball, then tap where it goes.'], wide: ['IT\u2019S WIDE!', 'Great pressure, keeper!'],
+        short: ['TOO SOFT!', 'An easy one for you.'], post: ['OFF THE POST!', 'Lucky bounce, keeper!'], bar: ['OFF THE BAR!', 'Lucky bounce, keeper!'], wall: ['BLOCKED!', 'Great defending!'],
+      };
+      const message = mode === 'keeper' ? keeperMessages[impact.outcome] : mode === 'targets' && impact.outcome === 'goal' ? scored ? ['TARGET HIT!', 'Right on the golden spot!'] : ['IN THE NET!', 'Try the golden ring next time.'] : messages[impact.outcome];
       resultBadge.textContent = message[0]!; resultBadge.classList.toggle('goal', scored); title.textContent = message[0]!; status.textContent = message[1]!;
       sound.impact(scored, impact.outcome === 'post' || impact.outcome === 'bar');
-      if (!muted) void kit.prompt(scored ? 'goal' : 'so-close').catch(() => undefined);
+      // The recorded "Goal!" would be wrong for a save, so keeper wins use the stadium fanfare alone.
+      if (!muted && !(mode === 'keeper' && scored)) void kit.prompt(scored ? 'goal' : 'so-close').catch(() => undefined);
       phase = 'result'; resultAt = now; paint();
     }
     field.addEventListener('pointerdown', (event) => {
+      if (mode === 'keeper' && scene && event.isPrimary) { if (phase === 'flight') { event.preventDefault(); diveAt(scene.aimAt(event.clientX, event.clientY), performance.now()); } return; }
       if (phase !== 'aim' || !scene || !event.isPrimary || event.button !== 0 || drag) return;
       const rect = field.getBoundingClientRect(), p = scene.project(origin);
       if (Math.hypot(event.clientX - rect.left - p.x, event.clientY - rect.top - p.y) > 65) return;
@@ -135,6 +157,13 @@ export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: b
     const cancelDrag = (): void => { drag = null; power.setAttribute('aria-valuenow', '0'); power.style.setProperty('--power', '0%'); startFrame(); };
     field.addEventListener('pointercancel', cancelDrag); field.addEventListener('lostpointercapture', () => { if (drag) cancelDrag(); });
     field.addEventListener('keydown', (event) => {
+      if (mode === 'keeper') {
+        const dir = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: 0, Enter: 0, ' ': 0 }[event.key];
+        if (dir === undefined || phase !== 'flight' || !scene) return;
+        // Arrow keys follow the screen: find which world side is on the left from behind the goal.
+        event.preventDefault(); const left = scene.project({ x: 1, y: 1, z: 0 }).x < scene.project({ x: -1, y: 1, z: 0 }).x ? 1 : -1;
+        diveAt({ x: -dir * left * 2.2, y: event.key === 'ArrowUp' ? 2 : dir ? 1.1 : 1.2 }, performance.now()); return;
+      }
       if (phase !== 'aim') return;
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
         event.preventDefault(); if (event.key === 'ArrowLeft') aim.x -= .55; if (event.key === 'ArrowRight') aim.x += .55;
@@ -146,23 +175,26 @@ export async function play3D(kit: Kit, host: HTMLElement, options: { anytime?: b
     function tick(now: number): void {
       frame = 0; if (closed || kit.closed) { finish(); return; }
       const dt = last ? Math.min(60, now - last) : 0; last = now;
-      if (phase === 'aim' || phase === 'invite') keeperX += (Math.sin(now / 1400) * .65 - keeperX) * dt / 900;
+      if ((phase === 'aim' || phase === 'invite') && mode !== 'keeper') keeperX += (Math.sin(now / 1400) * .65 - keeperX) * dt / 900;
+      if (phase === 'aim' && mode === 'keeper' && now >= readyAt) launch(STRIKER_POWER);
       if (drag) { const percent = Math.round(heldPower(now - drag.at) / 1.15 * 100); power.setAttribute('aria-valuenow', String(percent)); power.style.setProperty('--power', `${percent}%`); powerLabel.textContent = `${percent}% power · release to shoot`; }
       if (phase === 'flight' && shot && impact) {
         if (now - started >= RUNUP_MS && !kicked) { sound.kick(); kicked = true; }
         if (now - started >= RUNUP_MS + shot.flightMs * impact.t) settle(now);
       } else if (phase === 'result' && now - resultAt > 2300) {
         round++;
-        if (round < 3) prepare(); else { phase = 'done'; title.textContent = 'Great shooting!'; status.textContent = mode === 'targets' ? `${goals} of 3 targets hit. Want another round?` : `${goals} ${goals === 1 ? 'goal' : 'goals'}. Your next big moment is waiting.`; resultBadge.textContent = ''; paint(); back.focus({ preventScroll: true }); }
+        if (round < 3) prepare(); else { phase = 'done'; title.textContent = mode === 'keeper' ? 'Great keeping!' : 'Great shooting!'; status.textContent = mode === 'keeper' ? `${goals} of 3 shots stopped. Want another round?` : mode === 'targets' ? `${goals} of 3 targets hit. Want another round?` : `${goals} ${goals === 1 ? 'goal' : 'goals'}. Your next big moment is waiting.`; resultBadge.textContent = ''; paint(); back.focus({ preventScroll: true }); }
       }
       scene?.draw({ mode, round: Math.min(round, 2), origin, phase, now, keeperX, shot, move, impact,
-        elapsed: phase === 'flight' ? now - started : phase === 'result' || phase === 'done' ? now - resultAt : 0, scored, aim: phase === 'aim' ? aim : undefined, aimPower: drag ? heldPower(now - drag.at) : .85 });
+        elapsed: phase === 'flight' ? now - started : phase === 'result' || phase === 'done' ? now - resultAt : 0, scored, aim: phase === 'aim' && mode !== 'keeper' ? aim : undefined, aimPower: drag ? heldPower(now - drag.at) : .85, dive });
+      if (scene && mode === 'keeper' && phase === 'flight' && shot) { const p = scene.project({ ...shot.aim, z: 0 }); field.dataset.shotX = String(p.x); field.dataset.shotY = String(p.y); }
       if (scene && phase === 'aim') { const p = scene.project(origin); marker.style.left = `${p.x}px`; marker.style.top = `${p.y}px`; field.dataset.ballX = String(p.x); field.dataset.ballY = String(p.y); const goal = scene.project({ ...aim, z: 0 }); field.dataset.aimX = String(goal.x); field.dataset.aimY = String(goal.y); }
-      if (phase !== 'done' && (!reduced || phase === 'flight' || phase === 'result' || drag)) startFrame();
+      // Keeper mode keeps ticking while waiting: the striker's start is timed by this loop, even with reduced motion.
+      if (phase !== 'done' && (!reduced || phase === 'flight' || phase === 'result' || drag || (mode === 'keeper' && phase === 'aim'))) startFrame();
     }
     function visibility(): void {
       if (document.hidden) { hiddenAt = performance.now(); cancelAnimationFrame(frame); frame = 0; drag = null; sound.stop(); kit.ctx.audio.stop(); }
-      else if (hiddenAt !== null) { const delta = performance.now() - hiddenAt; started += delta; resultAt += delta; hiddenAt = null; last = 0; scene?.resetClock(); startFrame(); }
+      else if (hiddenAt !== null) { const delta = performance.now() - hiddenAt; started += delta; resultAt += delta; readyAt += delta; hiddenAt = null; last = 0; scene?.resetClock(); startFrame(); }
     }
     kit.abort.signal.addEventListener('abort', abort, { once: true }); document.addEventListener('visibilitychange', visibility);
     try { scene = new SoccerScene(field, kit.profile, reduced, () => finish(false), startFrame); }

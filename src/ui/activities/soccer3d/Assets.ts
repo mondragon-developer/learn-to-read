@@ -2,6 +2,7 @@ import * as T from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { Profile } from '@domain/profiles/Profile';
+import { keeperRaise } from '@domain/rewards/Soccer3D';
 
 /** Original, locally authored stadium and articulated character meshes; no downloaded art. */
 export class MeshBuilder {
@@ -30,70 +31,125 @@ export interface Rig {
   root: T.Group; body: T.Group; arms: T.Group[]; forearms: T.Group[]; legs: T.Group[]; knees: T.Group[];
   pose(time: number, motion?: 'idle' | 'run' | 'kick' | 'keeper' | 'celebrate', amount?: number): void;
 }
-export function character(profile: Pick<Profile, 'firstName' | 'number' | 'color' | 'settings'>, keeper = false, skin = '#bd8057'): Rig {
+/** Everything that varies between players; the body itself is shared. */
+export interface Look { name: string; number: number; shirt: string; shorts: string; cleats: string; skin: string; keeper?: boolean }
+export const playerLook = (profile: Pick<Profile, 'firstName' | 'number' | 'color' | 'settings'>): Look => ({
+  name: profile.firstName, number: profile.number, shirt: profile.color, skin: '#bd8057',
+  shorts: profile.settings.shortsColor ?? '#142e46', cleats: profile.settings.cleatsColor ?? '#f8fafc',
+});
+/** The child's goalkeeper kit keeps his name and number but never matches his outfield shirt. */
+export const keeperLook = (profile: Pick<Profile, 'firstName' | 'number' | 'color' | 'settings'>): Look => ({
+  ...playerLook(profile), keeper: true, shirt: profile.color === '#E8A317' ? '#35c47f' : '#f6bc45', shorts: '#153349', cleats: '#ff6842',
+});
+
+// Torso silhouette (radius by height); the back print follows the same curve so it sits on the shirt.
+const TORSO: [number, number][] = [[.25, .84], [.245, .95], [.255, 1.1], [.275, 1.27], [.292, 1.39], [.272, 1.47], [.2, 1.525], [.09, 1.555], [.001, 1.56]];
+const TORSO_DEPTH = .72;
+function torsoRadius(y: number): number {
+  for (let i = 1; i < TORSO.length; i++) {
+    const [r0, y0] = TORSO[i - 1]!, [r1, y1] = TORSO[i]!;
+    if (y <= y1) return mix(r0, r1, clamp((y - y0) / (y1 - y0), 0, 1));
+  }
+  return 0;
+}
+const mix = (a: number, b: number, t: number): number => a + (b - a) * t;
+const clamp = (v: number, a: number, b: number): number => Math.max(a, Math.min(b, v));
+/** Capsule from the joint (y=0) down to `length`, so neighbouring segments share a round joint and bend without gaps. */
+const limb = (radius: number, length: number): T.BufferGeometry => new T.CapsuleGeometry(radius, length, 4, 12).translate(0, -length / 2, 0);
+
+function backPrint(look: Look): T.Mesh {
+  const canvas = document.createElement('canvas'); canvas.width = canvas.height = 512;
+  const ctx = canvas.getContext('2d')!; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.lineJoin = 'round';
+  const write = (text: string, y: number, size: number, maxWidth: number, outline: number): void => {
+    ctx.font = `900 ${size}px system-ui, -apple-system, "Arial Black", sans-serif`;
+    const fit = Math.min(1, maxWidth / Math.max(1, ctx.measureText(text).width));
+    ctx.font = `900 ${Math.floor(size * fit)}px system-ui, -apple-system, "Arial Black", sans-serif`;
+    // A dark outline keeps white lettering readable on every shirt colour, yellow included.
+    ctx.lineWidth = outline; ctx.strokeStyle = 'rgba(8, 22, 36, .9)'; ctx.strokeText(text, 256, y);
+    ctx.fillStyle = '#ffffff'; ctx.fillText(text, 256, y);
+  };
+  write(look.name.toUpperCase(), 110, 108, 440, 16);
+  write(String(look.number), 430, 310, 400, 22);
+  const texture = new T.CanvasTexture(canvas); texture.colorSpace = T.SRGBColorSpace; texture.anisotropy = 4;
+  const geometry = new T.PlaneGeometry(.44, .46, 18, 12).rotateY(Math.PI).translate(0, 1.205, 0);
+  const position = geometry.getAttribute('position');
+  for (let i = 0; i < position.count; i++) {
+    const x = position.getX(i), r = torsoRadius(position.getY(i));
+    position.setZ(i, -(TORSO_DEPTH * Math.sqrt(Math.max(0, r * r - x * x)) + .01));
+  }
+  geometry.computeVertexNormals();
+  return new T.Mesh(geometry, new T.MeshStandardMaterial({ map: texture, emissiveMap: texture, emissive: '#ffffff', emissiveIntensity: .6, transparent: true, depthWrite: false, roughness: .8, polygonOffset: true, polygonOffsetFactor: -2 }));
+}
+
+export function character(look: Look): Rig {
   const root = new T.Group(), body = new T.Group(); root.add(body);
-  const shirt = keeper ? '#f6bc45' : profile.color, shorts = keeper ? '#153349' : profile.settings.shortsColor ?? '#142e46';
-  const shoes = keeper ? '#ff6842' : profile.settings.cleatsColor ?? '#f8fafc';
-  const b = new MeshBuilder();
-  b.ellipsoid(.31, .38, .2, shirt, 0, 1.2, 0).box(.54, .2, .32, shirt, 0, .99, 0)
-    .box(.52, .23, .34, shorts, 0, .82, 0)
-    .ellipsoid(.09, .15, .09, skin, 0, 1.57, 0)
-    .ellipsoid(.255, .29, .235, skin, 0, 1.82, .015)
-    .ellipsoid(.055, .085, .045, skin, -.25, 1.82, 0).ellipsoid(.055, .085, .045, skin, .25, 1.82, 0)
-    .ellipsoid(.045, .05, .048, '#cd9168', 0, 1.79, .244)
-    .ellipsoid(.045, .055, .017, '#fffef4', -.087, 1.845, .227).ellipsoid(.045, .055, .017, '#fffef4', .087, 1.845, .227)
-    .ellipsoid(.021, .032, .012, '#162437', -.084, 1.843, .243).ellipsoid(.021, .032, .012, '#162437', .084, 1.843, .243)
-    .box(.08, .018, .025, '#2c252b', -.09, 1.922, .217, -.09).box(.08, .018, .025, '#2c252b', .09, 1.922, .217, .09)
-    .box(.075, .018, .018, '#784533', 0, 1.703, .229)
-    .add(new T.SphereGeometry(1, 16, 8, 0, Math.PI * 2, 0, Math.PI * .52).scale(.268, .24, .246), '#232b36', 0, 1.9, -.015)
-    .ellipsoid(.16, .09, .13, '#232b36', -.08, 2.09, .09)
-    .box(.12, .12, .027, '#ffe2a2', -.15, 1.34, .185, .1)
-    .box(.045, .38, .024, '#ffffff', -.24, 1.2, .13).box(.045, .38, .024, '#ffffff', .24, 1.2, .13);
-  body.add(b.mesh());
-  const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 256;
-  const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = 'white'; ctx.textAlign = 'center'; ctx.font = `bold ${Math.min(28, 205 / Math.max(1, profile.firstName.length))}px sans-serif`;
-  ctx.fillText(keeper ? 'KEEPER' : profile.firstName.toUpperCase(), 128, 42);
-  ctx.font = 'bold 142px sans-serif'; ctx.fillText(keeper ? '1' : String(profile.number), 128, 199);
-  const texture = new T.CanvasTexture(canvas); texture.colorSpace = T.SRGBColorSpace;
-  const print = new T.Mesh(new T.PlaneGeometry(.38, .41), new T.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, side: T.DoubleSide }));
-  print.position.set(0, 1.2, -.199); print.rotation.y = Math.PI; body.add(print);
+  const { shirt, shorts, skin, keeper } = look, trim = keeper ? '#173a52' : '#f7f4ea', hair = '#1f2731', shoes = look.cleats;
+  const torso = new T.LatheGeometry(TORSO.map(([r, y]) => new T.Vector2(r, y)), 22).scale(1, 1, TORSO_DEPTH);
+  const pelvis = new T.LatheGeometry([[.001, .7], [.2, .705], [.235, .76], [.238, .84], [.215, .9]].map(([r, y]) => new T.Vector2(r!, y!)), 20).scale(1, 1, TORSO_DEPTH);
+  const b = new MeshBuilder()
+    .add(torso, shirt).add(pelvis, shorts)
+    .add(new T.TorusGeometry(.083, .022, 6, 20).rotateX(Math.PI / 2).scale(1, 1, .85), trim, 0, 1.548, 0)
+    .add(new T.CylinderGeometry(.068, .075, .18, 12), skin, 0, 1.6, 0)
+    .ellipsoid(.045, .045, .012, '#ffd36b', -.13, 1.33, .205)
+    // Head: face, ears, eyes with a highlight, brows, small nose and a smile.
+    .ellipsoid(.25, .27, .235, skin, 0, 1.84, .01)
+    .ellipsoid(.05, .075, .04, skin, -.245, 1.82, 0).ellipsoid(.05, .075, .04, skin, .245, 1.82, 0)
+    .ellipsoid(.05, .058, .02, '#fffef6', -.088, 1.85, .222).ellipsoid(.05, .058, .02, '#fffef6', .088, 1.85, .222)
+    .ellipsoid(.027, .034, .012, '#1a2433', -.085, 1.846, .24).ellipsoid(.027, .034, .012, '#1a2433', .085, 1.846, .24)
+    .ellipsoid(.009, .009, .005, '#ffffff', -.076, 1.858, .251).ellipsoid(.009, .009, .005, '#ffffff', .094, 1.858, .251)
+    .box(.085, .02, .022, hair, -.09, 1.925, .214, -.08).box(.085, .02, .022, hair, .09, 1.925, .214, .08)
+    .ellipsoid(.034, .03, .03, '#b0704b', 0, 1.79, .244)
+    .add(new T.TorusGeometry(.048, .011, 6, 14, Math.PI).rotateZ(Math.PI), '#7a3b2c', 0, 1.752, .222)
+    // Short hair: a cap with a soft fringe instead of a separate bun.
+    .add(new T.SphereGeometry(1, 20, 10, 0, Math.PI * 2, 0, Math.PI * .56).scale(.264, .25, .254), hair, 0, 1.87, -.008);
+  for (const x of [-.13, -.045, .045, .13]) b.ellipsoid(.07, .045, .05, hair, x, 2.02, .175 - Math.abs(x) * .3);
+  body.add(b.mesh(), backPrint(look));
   const arms: T.Group[] = [], forearms: T.Group[] = [], legs: T.Group[] = [], knees: T.Group[] = [];
   for (const side of [-1, 1]) {
     const arm = new T.Group(); arm.position.set(side * .32, 1.44, 0); body.add(arm); arms.push(arm);
-    arm.add(new MeshBuilder().ellipsoid(.115, .16, .12, shirt, 0, -.085, 0)
-      .ellipsoid(.082, .18, .085, skin, 0, -.2, 0).mesh());
+    arm.add(new MeshBuilder().ellipsoid(.105, .1, .1, shirt, 0, -.01, 0)
+      .add(new T.CylinderGeometry(.1, .09, .17, 14), shirt, 0, -.08, 0)
+      .add(new T.TorusGeometry(.09, .014, 6, 16).rotateX(Math.PI / 2), trim, 0, -.162, 0)
+      .add(limb(.066, .3), skin).mesh());
     const elbow = new T.Group(); elbow.position.y = -.3; arm.add(elbow); forearms.push(elbow);
-    const lower = new MeshBuilder().ellipsoid(.071, .15, .075, skin, 0, -.13, 0);
-    if (keeper) lower.box(.2, .19, .12, '#f3f5e9', 0, -.27, .015, 0, .05).box(.14, .055, .15, '#ff714a', 0, -.2, .015);
-    else lower.ellipsoid(.073, .09, .075, skin, 0, -.28, 0);
+    const lower = new MeshBuilder().add(limb(.06, .2), skin);
+    if (keeper) {
+      lower.add(new T.CylinderGeometry(.075, .07, .07, 14), '#ff714a', 0, -.19, 0)
+        .box(.18, .2, .11, '#f6f7ef', 0, -.28, .01, 0, .045)
+        .box(.05, .1, .07, '#f6f7ef', -side * .085, -.24, .05, -side * .5, .022);
+    } else {
+      lower.ellipsoid(.062, .078, .052, skin, 0, -.272, 0).ellipsoid(.024, .04, .024, skin, -side * .04, -.25, .035);
+    }
     elbow.add(lower.mesh());
-    const hip = new T.Group(); hip.position.set(side * .155, .8, 0); body.add(hip); legs.push(hip);
-    hip.add(new MeshBuilder().box(.23, .19, .32, shorts, 0, -.07, 0)
-      .ellipsoid(.096, .19, .1, skin, 0, -.24, 0).mesh());
+    const hip = new T.Group(); hip.position.set(side * .12, .8, 0); body.add(hip); legs.push(hip);
+    hip.add(new MeshBuilder().add(new T.CylinderGeometry(.13, .128, .22, 14), shorts, 0, -.05, 0)
+      .add(limb(.083, .36), skin).mesh());
     const knee = new T.Group(); knee.position.y = -.36; hip.add(knee); knees.push(knee);
-    knee.add(new MeshBuilder().ellipsoid(.079, .16, .09, '#f8f5e8', 0, -.14, 0)
-      .box(.164, .045, .185, shirt, 0, -.025, 0)
-      .box(.205, .13, .36, shoes, 0, -.34, .07, 0, .055)
-      .box(.21, .035, .36, '#152332', 0, -.398, .07)
-      .box(.12, .018, .14, '#f4eddf', 0, -.268, .09).mesh());
+    knee.add(new MeshBuilder().add(limb(.074, .3), skin)
+      .add(new T.CylinderGeometry(.085, .077, .26, 14), '#f7f4ea', 0, -.2, 0)
+      .add(new T.CylinderGeometry(.087, .087, .045, 14), shirt, 0, -.09, 0)
+      .box(.155, .11, .3, shoes, 0, -.35, .06, 0, .05)
+      .box(.16, .028, .31, '#152332', 0, -.405, .06, 0, .012)
+      .box(.1, .012, .12, '#f4eddf', 0, -.292, .1, 0, .005).mesh());
   }
   const rig: Rig = { root, body, arms, forearms, legs, knees, pose(time, motion = 'idle', amount = 1) {
     const wave = Math.sin(time * 9), breath = Math.sin(time * 2.4);
     body.position.y = motion === 'run' ? Math.abs(wave) * .055 : motion === 'celebrate' ? Math.abs(Math.sin(time * 7)) * .24 : breath * .012;
     body.rotation.set(0, 0, 0);
-    arms.forEach((arm, i) => { arm.rotation.set(0, 0, (i ? 1 : -1) * .12); forearms[i]!.rotation.x = -.15; });
+    arms.forEach((arm, i) => { arm.rotation.set(0, 0, (i ? 1 : -1) * .14); forearms[i]!.rotation.x = -.22; });
     legs.forEach((leg, i) => { leg.rotation.set(0, 0, 0); knees[i]!.rotation.x = 0; });
     if (motion === 'run') {
-      legs.forEach((leg, i) => { leg.rotation.x = wave * (i ? 1 : -1) * .7 * amount; knees[i]!.rotation.x = Math.max(0, -wave * (i ? 1 : -1)) * .65; arms[i]!.rotation.x = -leg.rotation.x * .65; });
+      legs.forEach((leg, i) => { leg.rotation.x = wave * (i ? 1 : -1) * .7 * amount; knees[i]!.rotation.x = Math.max(0, -wave * (i ? 1 : -1)) * .9; arms[i]!.rotation.x = -leg.rotation.x * .65; forearms[i]!.rotation.x = -.9; });
       body.rotation.x = .1;
     } else if (motion === 'kick') {
-      legs[0]!.rotation.x = amount; knees[0]!.rotation.x = Math.max(0, amount) * .65;
+      legs[0]!.rotation.x = amount; knees[0]!.rotation.x = Math.max(0, amount) * .8;
       arms[0]!.rotation.z = -.75; arms[1]!.rotation.z = .6; body.rotation.x = -.1;
     } else if (motion === 'keeper') {
-      arms[0]!.rotation.z = -(.45 + .8 * amount); arms[1]!.rotation.z = .45 + .8 * amount;
-      forearms.forEach((elbow) => { elbow.rotation.x = -.4 * (1 - amount); });
-      legs[0]!.rotation.z = -.16; legs[1]!.rotation.z = .16;
+      // Ready stance at 0: knees bent, gloves out in front. At 1: both arms straight up past the head.
+      const ready = 1 - amount;
+      arms.forEach((arm, i) => { arm.rotation.z = (i ? 1 : -1) * keeperRaise(amount); forearms[i]!.rotation.x = -1.1 * ready; });
+      legs.forEach((leg, i) => { leg.rotation.set(-.25 * ready, 0, (i ? 1 : -1) * mix(.05, .2, ready)); knees[i]!.rotation.x = .5 * ready; });
+      body.position.y -= .05 * ready; body.rotation.x = .08 * ready;
     } else if (motion === 'celebrate') {
       arms[0]!.rotation.z = -2.7; arms[1]!.rotation.z = 2.7; body.rotation.y = Math.sin(time * 2) * .18;
     }

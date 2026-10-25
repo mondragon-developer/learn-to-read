@@ -53,6 +53,36 @@ test('3D game loads on demand, touch shots score, modes and movable origins work
   expect(errors).toEqual([]);
 });
 
+test('goalkeeper mode: the child dives where he taps, saves count, and the striker can score', async ({ page }) => {
+  const errors: string[] = []; page.on('pageerror', (e) => errors.push(e.message));
+  await page.addInitScript(() => { Math.random = () => .99; });
+  await openGame(page);
+  const stage = page.locator('.soccer-stage'), field = page.locator('.soccer-control');
+  await page.getByRole('button', { name: 'Goalkeeper', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Save 1 of 3' })).toBeVisible();
+  await expect(page.locator('.stadium-scorebox small')).toHaveText('SAVES');
+  await expect(page.locator('.stadium-position')).toBeHidden();
+  // The striker starts on his own; tap where his shot is heading.
+  await expect(stage).toHaveAttribute('data-phase', 'flight', { timeout: 5000 });
+  await expect(field).toHaveAttribute('data-shot-x', /\d/);
+  const shot = await field.evaluate((el) => { const r = el.getBoundingClientRect(); return { x: r.x + Number(el.dataset.shotX), y: r.y + Number(el.dataset.shotY), left: r.x + r.width * .08 }; });
+  await page.mouse.click(shot.x, shot.y);
+  await expect(stage).toHaveAttribute('data-outcome', 'saved', { timeout: 5000 });
+  await expect(page.locator('.stadium-score')).toHaveText('1');
+  await expect(page.getByRole('heading', { name: 'WHAT A SAVE!' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Save 2 of 3' })).toBeVisible({ timeout: 5000 });
+  await expect(stage).toHaveAttribute('data-phase', 'flight', { timeout: 5000 });
+  const far = await field.evaluate((el) => { const r = el.getBoundingClientRect(); return { x: r.x + r.width - Number(el.dataset.shotX), y: r.y + Number(el.dataset.shotY) }; });
+  await page.mouse.click(far.x, far.y);
+  await expect(stage).toHaveAttribute('data-outcome', 'goal', { timeout: 5000 });
+  await expect(page.locator('.stadium-score')).toHaveText('1');
+  await page.locator('.soccer-dialog-close').click();
+  await page.getByRole('button', { name: 'Goal Reader', exact: true }).click();
+  await expect(page.locator('.soccer-totals')).toContainText('1 keeper saves');
+  await expect(page.locator('.soccer-totals')).toContainText('0 goals');
+  expect(errors).toEqual([]);
+});
+
 test('three shots and replays work offline; closing releases the graphics context', async ({ page }) => {
   await openGame(page); await page.getByRole('button', { name: 'Targets', exact: true }).click();
   await page.context().setOffline(true);

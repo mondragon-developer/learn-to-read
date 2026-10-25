@@ -1,7 +1,7 @@
 /** World-space soccer rules. Metres, y up, the goal line at z=0. No renderer dependency. */
 export interface Vec3 { x: number; y: number; z: number }
 export interface Aim3 { x: number; y: number }
-export type Mode3 = 'free-kicks' | 'penalties' | 'targets';
+export type Mode3 = 'free-kicks' | 'penalties' | 'targets' | 'keeper';
 export type Outcome3 = 'goal' | 'saved' | 'wide' | 'short' | 'post' | 'bar' | 'wall';
 export const GOAL = { halfWidth: 3.66, height: 2.44, depth: 1.65, post: .065 };
 export const BALL_RADIUS = .18;
@@ -21,32 +21,76 @@ export function ball3(shot: Kick3, progress: number): Vec3 {
 }
 export interface Keeper3 { start: number; endX: number; endY: number; angle: number; delay: number; duration: number }
 export interface KeeperPose3 { x: number; y: number; angle: number; dive: number }
-export const KEEPER_GLOVE = { x: .88, y: 1.27 };
+/** One straight-arm model shared by the keeper mesh and save detection: shoulder pivot, reach and raise angles. */
+export const KEEPER_ARM = { shoulderX: .32, shoulderY: 1.44, length: .58, ready: .55, raised: 2.7 };
+/** A keeper can push about one and a half metres sideways and leave the grass by half a metre, no more. */
+export const KEEPER_LIMITS = { step: 1.6, jump: .5, tilt: 1.42, hold: 350, land: 380 };
+const KEEPER_BODY = { y: 1.18, rx: .39, ry: .72, legs: .28 };
+/** Torso and head ellipse plus the legs, in the keeper's own coordinates (feet at the origin). */
+const bodyBlocks = (x: number, y: number, scale = 1): boolean =>
+  Math.hypot(x / KEEPER_BODY.rx, (y - KEEPER_BODY.y) / KEEPER_BODY.ry) <= scale || (Math.abs(x) < KEEPER_BODY.legs * scale && y > -.1 && y < .6);
+export const keeperRaise = (dive: number): number => mix(KEEPER_ARM.ready, KEEPER_ARM.raised, dive);
+export function keeperGlove(side: number, dive: number): Aim3 {
+  const a = keeperRaise(dive);
+  return { x: side * (KEEPER_ARM.shoulderX + KEEPER_ARM.length * Math.sin(a)), y: KEEPER_ARM.shoulderY - KEEPER_ARM.length * Math.cos(a) };
+}
 export function rotateXY(x: number, y: number, angle: number): Aim3 {
   return { x: x * Math.cos(angle) - y * Math.sin(angle), y: x * Math.sin(angle) + y * Math.cos(angle) };
 }
-export function chooseKeeper3(shot: Kick3, start: number, random = Math.random): Keeper3 {
-  const tracks = random() < .3;
-  const side = shot.aim.x >= start ? 1 : -1;
-  const diveSide = tracks ? side : -side;
-  const angle = -diveSide * .9;
-  const hand = rotateXY(diveSide * KEEPER_GLOVE.x, KEEPER_GLOVE.y, angle);
-  return { start, endX: tracks ? shot.aim.x - hand.x : diveSide * 2.6,
-    endY: tracks ? Math.max(0, shot.aim.y - hand.y) : .15,
-    angle, delay: 140 + random() * 80, duration: Math.min(530, shot.flightMs - 250) };
+/** Feet position and body tilt that bring a raised glove closest to the target within the step and jump limits. */
+export function keeperReach(target: Aim3, start: number): { x: number; y: number; angle: number } {
+  // A ball into the body is blocked standing; anything else is reached for with a glove.
+  if (bodyBlocks(target.x - start, target.y, .9)) return { x: start, y: 0, angle: 0 };
+  const side = target.x >= start ? 1 : -1, glove = keeperGlove(side, 1);
+  let best = { x: start, y: 0, angle: 0 }, bestScore = Infinity;
+  for (let i = 0; i <= 28; i++) {
+    const tilt = KEEPER_LIMITS.tilt * i / 28, angle = -side * tilt, g = rotateXY(glove.x, glove.y, angle);
+    const x = clamp3(target.x - g.x, start - KEEPER_LIMITS.step, start + KEEPER_LIMITS.step);
+    // Long, low dives keep the body just above the grass instead of sinking into it.
+    const y = clamp3(target.y - g.y, .32 * Math.sin(tilt), KEEPER_LIMITS.jump);
+    const score = Math.hypot(x + g.x - target.x, y + g.y - target.y) + y * .1 + Math.max(0, side * (start - x)) * .3;
+    if (score < bestScore) { bestScore = score; best = { x, y, angle }; }
+  }
+  return best;
 }
+export function diveTo3(target: Aim3, start: number, delay: number, duration = 420): Keeper3 {
+  const end = keeperReach(target, start);
+  return { start, endX: end.x, endY: end.y, angle: end.angle, delay, duration };
+}
+export function chooseKeeper3(shot: Kick3, start: number, random = Math.random): Keeper3 {
+  const tracks = random() < .3, side = shot.aim.x >= start ? 1 : -1;
+  return diveTo3(tracks ? shot.aim : { x: -side * 2.8, y: .9 }, start, 140 + random() * 80, Math.min(530, shot.flightMs - 250));
+}
+/** Dive, hold the stretch, then come back to the grass: long dives land on their side, short reaches on the feet. */
 export function keeper3(move: Keeper3, elapsed: number): KeeperPose3 {
   const t = clamp3((elapsed - move.delay) / move.duration, 0, 1), ease = t * t * (3 - 2 * t);
-  return { x: mix(move.start, move.endX, ease), y: move.endY * ease + Math.sin(Math.PI * t) * .22,
-    angle: move.angle * ease, dive: ease };
+  const pose = { x: mix(move.start, move.endX, ease), y: move.endY * ease + Math.sin(Math.PI * t) * .1, angle: move.angle * ease, dive: ease };
+  const land = clamp3((elapsed - move.delay - move.duration - KEEPER_LIMITS.hold) / KEEPER_LIMITS.land, 0, 1);
+  if (land === 0) return pose;
+  const lie = Math.abs(move.angle) > .7, fall = land * land;
+  return { x: pose.x, y: mix(move.endY, lie ? .2 : 0, fall), angle: mix(move.angle, lie ? Math.sign(move.angle) * 1.45 : 0, fall), dive: lie ? 1 : mix(1, .3, fall) };
 }
 export function keeperTouches3(p: Vec3, pose: KeeperPose3): boolean {
   const local = rotateXY(p.x - pose.x, p.y - pose.y, -pose.angle);
-  // Body/head capsules plus the same outstretched hand locations used by the rig.
-  const body = Math.hypot(local.x / .39, (local.y - 1.18) / .72) <= 1;
-  const gloves = [-1, 1].some((side) => Math.hypot(local.x - side * KEEPER_GLOVE.x, local.y - KEEPER_GLOVE.y) < .31);
+  // Body, head and legs plus the same glove locations used by the rig.
+  const body = bodyBlocks(local.x, local.y);
+  const gloves = [-1, 1].some((side) => { const g = keeperGlove(side, pose.dive); return Math.hypot(local.x - g.x, local.y - g.y) < .31; });
   return body || gloves;
 }
+/** The computer striker when the child keeps goal: mostly on target and within a diving keeper's reach. */
+export const STRIKER_POWER = .62;
+export function strikerAim3(random = Math.random): Aim3 {
+  const side = random() < .5 ? -1 : 1, roll = random();
+  if (roll < .12) return { x: side * (GOAL.halfWidth + .5), y: .5 + random() };
+  return { x: side * (.7 + random() * 2.2), y: .3 + random() * 1.6 };
+}
+/** The child's tap: close enough to the ball counts as reading it, and the dive is timed to meet it. */
+export function childDive3(shot: Kick3, tap: Aim3, start: number, tappedAt: number): Keeper3 {
+  const target = Math.hypot(tap.x - shot.aim.x, tap.y - shot.aim.y) < 1.1 ? shot.aim : tap;
+  const duration = 380, arrival = shot.flightMs * (1 - .2 / shot.origin.z);
+  return diveTo3(target, start, Math.max(tappedAt, arrival - duration - 40), duration);
+}
+export const standKeeper3 = (shot: Kick3, start: number): Keeper3 => ({ start, endX: start, endY: 0, angle: 0, delay: Math.max(0, shot.flightMs - 420), duration: 300 });
 export function wall3(round: number, mode: Mode3): Vec3[] {
   if (mode !== 'free-kicks' || round === 0) return [];
   return [-.42, .42].map((x) => ({ x: x + (round === 2 ? 1.3 : 0), y: 0, z: 5.2 }));

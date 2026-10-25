@@ -8,6 +8,8 @@ The game uses Three.js 0.186.1. The reading app keeps its existing DOM renderer.
 - Original articulated player meshes have jersey names/numbers, saved shirt/shorts/cleat colors, faces, gloves, run-up, kick, dive and celebration poses. Geometry and canvas textures are authored in source; no downloaded player likenesses, external models, paid generation jobs or asset-service credentials are involved.
 - The pitch, stands, crowd sections, tubular goal frame and net are dimensional. The ball spins, the net ripples on a goal, and a short confetti burst and original synthesized fanfare accompany the existing Fish goal cue.
 - Hold the marked ball for power, drag toward the goal, and release. Keyboard arrows move the aim; Enter/Space shoots. The aiming guide uses the same trajectory calculation as the ball.
+- Goalkeeper mode: the camera sits behind the child's keeper and a computer striker shoots; a tap near the ball's path dives to meet it (`childDive3`), and the save counts toward the child's keeper saves.
+- Keeper reach is one model (`KEEPER_ARM`, `keeperGlove`, `keeperReach`) used by the rig's arm angles and by save detection, with a 1.6 m step and 0.5 m jump limit; after the dive the keeper holds, then lands.
 - Penalties, free kicks and targets retain three-shot rounds. Free kicks and targets allow left/centre/right and near/far origins. Anytime replays and the original scheduled-break limit remain. Soccer totals stay separate from reading assessments.
 
 ## Boundaries
