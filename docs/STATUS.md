@@ -2,9 +2,14 @@
 
 Update at the end of every working session. Newest log entry on top.
 
-## Local implementation (2026-10-25): smoother players, readable kits, real keeper, Goalkeeper mode
+## Deployment (2026-10-25): Goalkeeper mode and smoother players
 
-- **Implemented, not deployed or committed.** Players are rebuilt from round-jointed capsules (shoulder, elbow, hip and knee bend without gaps), a tapered shirt with collar and sleeve trim, hands, boots, smile and short hair. The name and number sit on a curved back print with a dark outline and a slight glow, readable on every shirt colour at game distance.
+- **Live:** [Goal Reader](https://learn-to-read-eight.vercel.app). Release [`e67e04c`](https://github.com/mondragon-developer/learn-to-read/commit/e67e04c) was pushed to `main`; [Vercel production deployment](https://vercel.com/mondragon-developers-projects/learn-to-read/2D4qFZYiVMXq8SuRMcyE6LbnAAfE) reported **success**.
+- **Live verification: 8/8 passed** in isolated iPad-sized WebKit and phone-sized Chromium browsers: on-demand 3D loading, touch shots and modes, Goalkeeper mode (tap-to-dive save, wrong-side goal, save shown in home totals), offline three-shot rounds and replay, graphics-context release and context-loss fallback. `/sw.js` returns HTTP 200 with `Cache-Control: no-cache`. Physical iPad feel remains the hands-on check.
+
+## Implementation (2026-10-25): smoother players, readable kits, real keeper, Goalkeeper mode
+
+- Players are rebuilt from round-jointed capsules (shoulder, elbow, hip and knee bend without gaps), a tapered shirt with collar and sleeve trim, hands, boots, smile and short hair. The name and number sit on a curved back print with a dark outline and a slight glow, readable on every shirt colour at game distance.
 - **Keeper:** one shared arm model drives both the mesh and save detection. The keeper stands ready with gloves forward, raises both arms over the head when he dives, steps at most 1.6 m, leaves the grass at most 0.5 m, holds the stretch, then lands (on his side after long dives, on his feet after short reaches). Legs now block low balls at the keeper. Top corners under the bar stay out of reach.
 - **Goalkeeper mode:** fourth mode. The camera sits behind the child's keeper (his name and number, keeper-coloured kit) and fits both posts on phone, iPad and laptop. A computer striker shoots on his own after a short pause; a tap near the ball's path dives to meet it, a late or wrong-side tap concedes. Arrow keys/Enter dive for keyboard players. A far stand and a glowing ring under the striker's ball were added for this view.
 - **Totals:** `soccerTotals().saves` now counts the child's own saves (`keeper-save`); computer-keeper saves against his shots are no longer shown as his. Keeper rounds never add to goals. Saves play the stadium fanfare without the recorded "Goal!".
